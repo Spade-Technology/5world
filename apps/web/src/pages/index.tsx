@@ -1,9 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
 
-import { api } from "~/utils/api";
 import { HeaderManifesto } from "~/components/layout/header";
 import Blockies from "react-18-blockies";
 
@@ -39,9 +37,16 @@ const Home: NextPage = () => {
         <HeaderManifesto />
         <div>
           <SectionOne />
-          \azeazqsdqsdqsd
-          <Color color="#1D555C" left="500px" size="300px" />
+
+          <Color
+            colorFrom={"#00FF19"}
+            colorTo={"#0038FF"}
+            left={"-550px"}
+            size={"400px"}
+            opacity={0.7}
+          />
           <SectionTwo />
+
           <Signing />
         </div>
         <FooterManifesto />
@@ -53,17 +58,29 @@ const Home: NextPage = () => {
 export default Home;
 
 type colorProps = {
-  color: string;
+  colorFrom: string;
+  colorTo?: string;
   left: string;
   size?: string;
+  opacity?: number;
 };
 
-function Color({ color, left, size }: colorProps) {
+function Color({ colorFrom, colorTo, left, size, opacity }: colorProps) {
   // take 0 horizontal space, but create a circle gradient with the color passed in
   return (
     <div className=" absolute left-1/2 -translate-x-1/2">
       <div
-        className={`relative h-[1000px] w-[1000px] rounded-full bg-gradient-radial from-[${color}] to-transparent blur-3xl translate-x-[${left}]`}
+        className={`relative rounded-full`}
+        style={{
+          width: size,
+          height: size,
+          transform: `translateX(${left})`,
+          backgroundImage: `radial-gradient(circle, ${colorFrom} 0%,  ${
+            colorTo || "transparent"
+          } 100%)`,
+          filter: `blur(999px)`,
+          opacity: opacity,
+        }}
       ></div>
     </div>
   );
@@ -86,6 +103,13 @@ function Signing() {
   return (
     <section>
       <div className=" mx-auto max-w-[850px]">
+        <Color
+          colorFrom={"#00FF19"}
+          colorTo={"#0038FF"}
+          left={"0px"}
+          size={"400px"}
+          opacity={0.7}
+        />
         <svg
           width="598"
           height="525"
@@ -319,6 +343,12 @@ function SectionTwo() {
           with it.
         </span>
       </div>
+      <Color
+        colorFrom={"#11C6FF"}
+        left={"550px"}
+        size={"400px"}
+        opacity={0.7}
+      />
       <h3 className="mx-auto my-48 mr-auto max-w-[1153px] text-center font-heading text-[56px] font-medium leading-none text-white">
         V DAO is a decentralized community of creators, contributors, artists,
         <br />
@@ -372,6 +402,12 @@ function SectionTwo() {
           core values, we welcome you into the V community and hope that you
           will contribute towards building the new world systems.
         </span>
+        <Color
+          colorFrom={"#00FFA5"}
+          left={"-550px"}
+          size={"400px"}
+          opacity={0.7}
+        />
         <h3 className="mt-40 mr-auto text-left font-heading text-3xl font-medium text-vdao-light">
           V DAO Objectives
         </h3>
@@ -427,7 +463,7 @@ function SectionTwo() {
         </h4>
         <br />
 
-        <span className="">
+        <span className="mr-auto">
           If you agree with this manifesto and want to be part of our community,
           please{" "}
           <u>
