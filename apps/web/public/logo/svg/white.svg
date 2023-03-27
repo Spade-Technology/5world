@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1815.997" height="432.994" viewBox="0 0 1815.997 432.994">
+  <g id="VDAO-white" transform="translate(-52.07 -323.503)">
+    <path id="Path_214" data-name="Path 214" d="M697.016,215.993c0,119.287-96.706,215.993-215.993,215.993S265.03,335.28,265.03,215.993,361.735,0,481.023,0,697.016,96.705,697.016,215.993" transform="translate(1171.052 324.003)" fill="#fff"/>
+    <path id="Union_23" data-name="Union 23" d="M0,431.994V0H215.992C335.273,0,431.984,96.708,431.984,216S335.273,431.994,215.992,431.994Z" transform="translate(585.883 324.003)" fill="#fff" stroke="rgba(0,0,0,0)" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_213" data-name="Path 213" d="M429.077,0l124.7,215.993,124.7,215.993H179.67l124.7-215.993Z" transform="translate(797.863 324.003)" fill="#fff"/>
+    <g id="Group_117" data-name="Group 117" transform="translate(52.07 324.005)">
+      <path id="Path_207" data-name="Path 207" d="M69.3.007,198,222.9,326.686,0Z" transform="translate(172.133)" fill="#fff"/>
+      <path id="Path_208" data-name="Path 208" d="M17.32.006,236.569,379.724l21.153-36.635L59.627,0Z" transform="translate(43.019 0.006)" fill="#fff"/>
+      <path id="Path_209" data-name="Path 209" d="M34.661,0l189.044,327.4,21.115-36.583L76.9,0Z" transform="translate(86.091 0.007)" fill="#fff"/>
+      <path id="Path_210" data-name="Path 210" d="M0,0,249.421,431.981,270.539,395.4,42.24,0Z" transform="translate(0 0.009)" fill="#fff"/>
+      <path id="Path_211" data-name="Path 211" d="M51.981,0,210.853,275.15l21.115-36.576L94.218,0Z" transform="translate(129.111 0.004)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

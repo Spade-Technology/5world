@@ -14,6 +14,13 @@ const config = {
           lightpurple: "#F8F2FF",
         },
       },
+      fontFamily: {
+        body: ["Satoshi", "sans-serif"],
+        heading: ["Clash Display", "sans-serif"],
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+      },
     },
   },
   plugins: [],

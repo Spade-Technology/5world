@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+h1 {
+  font-family: "Clash Display", sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+/* only spans that aren't in a button */
+span {
+  font-family: "Satoshi", sans-serif;
+  font-size: 1.27rem;
+  color: #fff;
+
+  /* weight */
+  font-weight: 300;
+}
+
+/* for spans that are children of buttons */
+button span {
+  font-family: "Clash Display", sans-serif;
+
+  /* default */
+  font-size: 1em;
+  font-weight: 500;
+}
