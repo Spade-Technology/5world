@@ -80,24 +80,23 @@ type colorProps = {
 function Color({ colorFrom, colorTo, left, size, opacity }: colorProps) {
   // take 0 horizontal space, but create a circle gradient with the color passed in
   return (
-    <></>
-    // <div className="overflow-hidden">
-    //   <div className=" absolute left-1/2 -translate-x-1/2">
-    //     <div
-    //       className={`relative rounded-full`}
-    //       style={{
-    //         width: size,
-    //         height: size,
-    //         transform: `translateX(${left})`,
-    //         backgroundImage: `radial-gradient(circle, ${colorFrom} 0%,  ${
-    //           colorTo || "transparent"
-    //         } 100%)`,
-    //         filter: `blur(999px)`,
-    //         opacity: opacity,
-    //       }}
-    //     ></div>
-    //   </div>
-    // </div>
+    <div className="overflow-hidden">
+      <div className=" absolute left-1/2 -translate-x-1/2">
+        <div
+          className={`relative rounded-full`}
+          style={{
+            width: size,
+            height: size,
+            transform: `translateX(${left})`,
+            backgroundImage: `radial-gradient(circle, ${colorFrom} 0%,  ${
+              colorTo || "transparent"
+            } 100%)`,
+            filter: `blur(999px)`,
+            opacity: opacity,
+          }}
+        ></div>
+      </div>
+    </div>
   );
 }
 
@@ -131,6 +130,7 @@ function Signing({
           message: "Signed Manifesto",
           description: "You have successfully signed the manifesto",
           placement: "top",
+          className: "bg-",
         });
       });
     },
