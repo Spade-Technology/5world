@@ -136,10 +136,18 @@ function Signing({
                 You have successfully signed the manifesto
               </span>
               <Image src={VDAOTweetManifesto} alt="VDAO Tweet Manifesto" />
+              <Button
+                type="primary"
+                className="!h-10"
+                href="https://twitter.com/intent/tweet?text=I%20agree%20to%20the%20terms%20of%20the%20Manifesto%20of%20the%20VDAO%20Project.%20https%3A%2F%2Fvdao.app%2Fmanifesto%20%23vdao"
+              >
+                Share on Twitter
+              </Button>
             </div>
           ),
           placement: "top",
           className: "!bg-vdao-dark !text-white",
+
           duration: 150,
         });
       });
