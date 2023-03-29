@@ -4,6 +4,7 @@ import React from "react";
 
 type Props = {
   signatures?: number;
+  ref?: any;
 };
 
 const Footer = (props: Props) => {
@@ -29,7 +30,14 @@ const FooterManifesto = (props: Props) => {
           <span className="text-base font-medium text-black">
             {props.signatures || 0} Signatures
           </span>
-          <Button type="primary" className="!h-10 w-44 !bg-vdao-dark">
+          <Button
+            type="primary"
+            className="!h-10 w-44 !bg-vdao-dark"
+            onClick={() => {
+              const element = document.getElementById("SignModule");
+              element?.scrollIntoView({ block: "end", behavior: "smooth" });
+            }}
+          >
             Sign Manifesto
           </Button>
         </div>

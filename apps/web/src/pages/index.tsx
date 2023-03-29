@@ -18,14 +18,18 @@ import { VDAOConnectButton } from "~/components/walletconnect/connectbutton";
 import { useAccount } from "wagmi";
 
 import { useSignMessage } from "wagmi";
-import { verifyMessage } from "ethers/lib/utils";
+
 import { api } from "~/utils/api";
 import { prisma } from "~/server/db";
-import { number } from "zod";
+import { useRef } from "react";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
+import { useSession } from "next-auth/react";
 
 dayjs.extend(relativeTime);
 
 const Home: NextPage<any> = ({ signatures }) => {
+  const ref = useRef(null);
+
   return (
     <>
       <Head>
@@ -43,7 +47,7 @@ const Home: NextPage<any> = ({ signatures }) => {
       </Head>
       <main className="bg-vdao-deep">
         <HeaderManifesto signatures={signatures.total} />
-        <div>
+        <div className="px-4">
           <SectionOne />
 
           <Color
@@ -55,9 +59,9 @@ const Home: NextPage<any> = ({ signatures }) => {
           />
           <SectionTwo />
 
-          <Signing signatures={signatures} />
+          <Signing signatures={signatures} ref={ref} />
         </div>
-        <FooterManifesto signatures={signatures.total} />
+        <FooterManifesto signatures={signatures.total} ref={ref} />
       </main>
     </>
   );
@@ -76,36 +80,43 @@ type colorProps = {
 function Color({ colorFrom, colorTo, left, size, opacity }: colorProps) {
   // take 0 horizontal space, but create a circle gradient with the color passed in
   return (
-    <div className=" absolute left-1/2 -translate-x-1/2">
-      <div
-        className={`relative rounded-full`}
-        style={{
-          width: size,
-          height: size,
-          transform: `translateX(${left})`,
-          backgroundImage: `radial-gradient(circle, ${colorFrom} 0%,  ${
-            colorTo || "transparent"
-          } 100%)`,
-          filter: `blur(999px)`,
-          opacity: opacity,
-        }}
-      ></div>
-    </div>
+    <></>
+    // <div className="overflow-hidden">
+    //   <div className=" absolute left-1/2 -translate-x-1/2">
+    //     <div
+    //       className={`relative rounded-full`}
+    //       style={{
+    //         width: size,
+    //         height: size,
+    //         transform: `translateX(${left})`,
+    //         backgroundImage: `radial-gradient(circle, ${colorFrom} 0%,  ${
+    //           colorTo || "transparent"
+    //         } 100%)`,
+    //         filter: `blur(999px)`,
+    //         opacity: opacity,
+    //       }}
+    //     ></div>
+    //   </div>
+    // </div>
   );
 }
 
 function Signing({
   signatures,
+  ref,
 }: {
   signatures: { total: number; list: any[] };
+  ref: any;
 }) {
   const list = signatures.list;
 
   // wagmi get address
   const { address } = useAccount();
   const { mutateAsync } = api.manifesto.sign.useMutation();
+  const { openConnectModal } = useConnectModal();
 
   const [notificationApi, contextHolder] = notification.useNotification();
+  const { status } = useSession();
 
   const { data, error, isLoading, signMessage } = useSignMessage({
     onSuccess: async (data, variables) => {
@@ -133,14 +144,13 @@ function Signing({
     });
   };
 
-  let step = 0;
-  if (address) step = 2;
+  let step = address && status === "authenticated" ? 2 : address ? 1 : 0;
 
   return (
     <section>
       {contextHolder}
-      <div className=" mx-auto max-w-[850px]">
-        <div className="mx-auto my-20 w-96 rounded-lg bg-vdao-dark p-4 ">
+      <div className="mx-auto max-w-[850px]" id="SignModule">
+        <div className="max-w-96 mx-auto my-20 rounded-lg bg-vdao-dark p-4 ">
           <span className="text-lg font-medium">
             Sign the manifesto with 3 simple steps
           </span>
@@ -152,10 +162,9 @@ function Signing({
 
               {/* step 1 */}
               <div
-                className={
-                  " mx-auto h-14 w-[2px] scale-110 rounded-full bg-vdao-light " +
-                  (step < 1 && "opacity-0")
-                }
+                className={`mx-auto h-14 w-[2px] scale-110 rounded-full bg-vdao-light ${
+                  step < 1 ? "opacity-0" : ""
+                }`}
               />
               <div
                 className={`z-10 h-5 w-5 rounded-full ${
@@ -167,7 +176,7 @@ function Signing({
               <div
                 className={
                   " mx-auto h-14 w-[2px] scale-110 rounded-full bg-vdao-light " +
-                  (step < 2 && "opacity-0")
+                  (step < 2 ? "opacity-0" : "")
                 }
               />
               <div
@@ -190,6 +199,7 @@ function Signing({
                     : "!border-vdao-light"
                 }`}
                 disabled={step != 1}
+                onClick={openConnectModal}
                 type={"primary"}
               >
                 Sign in With Ethereum
@@ -228,14 +238,14 @@ function Signing({
           <span className="text-3xl">Signed By :</span>
           <span className="text-3xl">{signatures.total} Signatures</span>
         </div>
-        <div className="mt-3 rounded-xl bg-vdao-dark py-5 px-6">
+        <div className="max-w-96 mt-3 rounded-xl bg-vdao-dark py-5 px-6 ">
           {list.map((item, i) => (
             <>
               <div
                 key={i}
-                className="mt-4 flex flex-row items-center justify-between"
+                className="mt-4 flex w-full flex-row items-center justify-between"
               >
-                <div className="flex items-center gap-3">
+                <div className="flex w-full items-center  gap-3">
                   <Blockies
                     seed={item.eoa}
                     size={20}
@@ -245,7 +255,9 @@ function Signing({
                     spotColor="#9ac79a"
                     className="identicon rounded-full"
                   />
-                  <span className="text-[14px]">{item?.name || item?.eoa}</span>
+                  <span className=" w-24 overflow-hidden overflow-ellipsis text-[14px] md:w-full">
+                    {item?.name || item?.eoa}
+                  </span>
                 </div>
                 <span className="text-[14px]">
                   {dayjs(item.signedAt).fromNow()}
@@ -258,9 +270,9 @@ function Signing({
           ))}
         </div>
       </div>
-      <div className="mx-auto mt-60 mb-48 flex max-w-[1150px] justify-evenly">
+      <div className="mx-auto mt-60 mb-48 flex max-w-[1150px] flex-col justify-evenly md:flex-row">
         <div className="flex w-full flex-col">
-          <h3 className="mr-auto mt-9 max-w-[1153px] text-left font-heading text-[56px] font-light leading-none text-vdao-light ">
+          <h3 className="mr-auto mt-9 max-w-[1153px] text-left font-heading text-2xl font-light leading-none text-vdao-light md:text-[56px] ">
             <b className="font-semibold">Feeling inspired?</b>
             <br />
             Want to get more involved?
@@ -276,7 +288,7 @@ function Signing({
           width={500}
           height={500}
           alt="apply"
-          className="w-1/3 translate-y-5 -translate-x-20 scale-150 transform"
+          className="mx-auto w-1/2 scale-150 transform md:w-1/3 md:translate-y-5 md:-translate-x-20"
         />
       </div>
     </section>
@@ -455,12 +467,14 @@ function SectionTwo() {
 
 function SectionOne() {
   return (
-    <section className="mx-auto mt-32 flex  w-[1280px] flex-col items-center">
-      <h1 className="text-8xl font-medium text-vdao-light">VDAO Manifesto</h1>
+    <section className="mx-auto mt-32 flex max-w-[1280px] flex-col items-center">
+      <h1 className="text-4xl font-medium text-vdao-light md:text-8xl">
+        VDAO Manifesto
+      </h1>
       <h2 className="mt-6 text-3xl font-medium text-white">
         Restoring Ecosystems From the Soil up.
       </h2>
-      <div className="mt-14 flex ">
+      <div className="mt-14 flex flex-col-reverse md:flex-row ">
         <Image
           src={VDAOGetInvolved}
           alt="VDAO"
@@ -469,12 +483,12 @@ function SectionOne() {
           className="mx-auto"
         />
         {/* line height 28px */}
-        <div className="my-auto flex w-1/2 flex-col gap-4 font-body text-base font-medium leading-7 text-vdao-light">
+        <div className="my-auto flex flex-col gap-4 font-body text-base font-medium leading-7 text-vdao-light md:w-1/2">
           <span className="mb-1 text-white">
             Complete all 4 steps to join the Vcommunity & gain full access to
             future benefits.
           </span>
-          <div className="mb-1 flex w-2/3 gap-3">
+          <div className="mb-1 flex gap-3 md:w-2/3">
             <Image src={Tick} alt="VDAO" width={20} height={20} />
             <span>
               Read the manifesto below and <u>sign</u> using your wallet if you
@@ -500,15 +514,17 @@ function SectionOne() {
 }
 
 export async function getServerSideProps() {
-  const total = await prisma.signatures.count();
+  const total_p = await prisma.signatures.count();
 
   // last 10 signatures
-  const list = await prisma.signatures.findMany({
+  const list_p = prisma.signatures.findMany({
     orderBy: {
       createdAt: "desc",
     },
     take: 10,
   });
+
+  const [total, list] = await Promise.all([total_p, list_p]);
 
   return {
     props: {
