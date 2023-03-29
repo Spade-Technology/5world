@@ -7,7 +7,9 @@ import Blockies from "react-18-blockies";
 
 // VDAO-get-involved.png
 import VDAOGetInvolved from "public/illustrations/home/PNG/VDAO-get-involved.png";
+import VDAOTweetManifesto from "public/illustrations/home/PNG/tweet-manifesto.png";
 import VDAOApply from "public/illustrations/apply/PNG/VDAO-apply.png";
+
 import Tick from "public/icons/home/tick.svg";
 import Image from "next/image";
 import { Button, Divider, notification } from "antd";
@@ -80,7 +82,7 @@ type colorProps = {
 function Color({ colorFrom, colorTo, left, size, opacity }: colorProps) {
   // take 0 horizontal space, but create a circle gradient with the color passed in
   return (
-    <div className="overflow-hidden">
+    <div className="relative overflow-hidden md:overflow-visible">
       <div className=" absolute left-1/2 -translate-x-1/2">
         <div
           className={`relative rounded-full`}
@@ -127,10 +129,18 @@ function Signing({
         message: variables.message.toString(),
       }).then((res) => {
         notificationApi.success({
-          message: "Signed Manifesto",
-          description: "You have successfully signed the manifesto",
+          message: <span>Signed Manifesto</span>,
+          description: (
+            <div className="flex flex-col gap-4">
+              <span className="text-base">
+                You have successfully signed the manifesto
+              </span>
+              <Image src={VDAOTweetManifesto} alt="VDAO Tweet Manifesto" />
+            </div>
+          ),
           placement: "top",
-          className: "bg-",
+          className: "!bg-vdao-dark !text-white",
+          duration: 150,
         });
       });
     },
