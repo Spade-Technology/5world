@@ -4,10 +4,13 @@ import {
   type NextAuthOptions,
   type DefaultSession,
 } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "~/env.mjs";
+import { SiweMessage } from "siwe";
 import { prisma } from "~/server/db";
+import { getCsrfToken } from "next-auth/react";
+import { IncomingMessage } from "http";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -17,51 +20,83 @@ import { prisma } from "~/server/db";
  */
 declare module "next-auth" {
   interface Session extends DefaultSession {
+    address: string | undefined | null;
     user: {
-      id: string;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
   }
-
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
 }
 
-/**
- * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
- *
- * @see https://next-auth.js.org/configuration/options
- */
-export const authOptions: NextAuthOptions = {
-  callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
-        // session.user.role = user.role; <-- put other properties on the session here
-      }
-      return session;
-    },
-  },
-  adapter: PrismaAdapter(prisma),
-  providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+export function getAuthOptions(req: IncomingMessage): NextAuthOptions {
+  const providers = [
+    CredentialsProvider({
+      async authorize(credentials) {
+        try {
+          const siwe = new SiweMessage(
+            JSON.parse(credentials?.message || "{}")
+          );
+
+          const nextAuthUrl =
+            process.env.NEXTAUTH_URL ||
+            (process.env.VERCEL_URL
+              ? `https://${process.env.VERCEL_URL}`
+              : null);
+          if (!nextAuthUrl) {
+            return null;
+          }
+
+          const nextAuthHost = new URL(nextAuthUrl).host;
+          if (siwe.domain !== nextAuthHost) {
+            return null;
+          }
+
+          if (siwe.nonce !== (await getCsrfToken({ req }))) {
+            return null;
+          }
+
+          await siwe.validate(credentials?.signature || "");
+          return {
+            id: siwe.address,
+          };
+        } catch (e) {
+          return null;
+        }
+      },
+      credentials: {
+        message: {
+          label: "Message",
+          placeholder: "0x0",
+          type: "text",
+        },
+        signature: {
+          label: "Signature",
+          placeholder: "0x0",
+          type: "text",
+        },
+      },
+      name: "Ethereum",
     }),
-    /**
-     * ...add more providers here.
-     *
-     * Most other providers require a bit more work than the Discord provider. For example, the
-     * GitHub provider requires you to add the `refresh_token_expires_in` field to the Account
-     * model. Refer to the NextAuth.js docs for the provider you want to use. Example:
-     *
-     * @see https://next-auth.js.org/providers/github
-     */
-  ],
-};
+  ];
+
+  return {
+    callbacks: {
+      async session({ session, token }) {
+        session.address = token.sub;
+        session.user = {
+          name: token.sub,
+        };
+        return session;
+      },
+    },
+    // https://next-auth.js.org/configuration/providers/oauth
+    providers,
+    secret: process.env.NEXTAUTH_JWT_SECRET,
+    session: {
+      strategy: "jwt",
+    },
+  };
+}
 
 /**
  * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
@@ -72,5 +107,5 @@ export const getServerAuthSession = (ctx: {
   req: GetServerSidePropsContext["req"];
   res: GetServerSidePropsContext["res"];
 }) => {
-  return getServerSession(ctx.req, ctx.res, authOptions);
+  return getServerSession(ctx.req, ctx.res, getAuthOptions(ctx.req));
 };

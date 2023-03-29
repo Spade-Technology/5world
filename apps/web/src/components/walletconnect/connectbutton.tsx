@@ -1,9 +1,10 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-const buttonStyle =
-  "rounded-lg border-[1px] border-vdao-light py-2 px-5 font-heading font-medium text-vdao-light";
+export const VDAOConnectButton = ({ className }: { className?: string }) => {
+  const buttonStyle =
+    "rounded-md border-[1px] border-vdao-light h-10 px-5 font-heading font-medium text-vdao-light " +
+    className;
 
-export const VDAOConnectButton = () => {
   return (
     <ConnectButton.Custom>
       {({

@@ -5,7 +5,7 @@ import {
 } from "@rainbow-me/rainbowkit";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { mainnet } from "wagmi/chains";
-
+import merge from "lodash.merge";
 import { publicProvider } from "wagmi/providers/public";
 
 const { chains, provider } = configureChains([mainnet], [publicProvider()]);
@@ -28,7 +28,14 @@ interface Props {
 const Web3Context = (props: Props) => {
   return (
     <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains} theme={darkTheme()}>
+      <RainbowKitProvider
+        chains={chains}
+        theme={merge(darkTheme(), {
+          colors: {
+            accentColor: "#36DFAE",
+          },
+        })}
+      >
         {props.children}
       </RainbowKitProvider>
     </WagmiConfig>

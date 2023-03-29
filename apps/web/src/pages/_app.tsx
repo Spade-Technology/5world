@@ -1,7 +1,13 @@
 import "~/styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
+
 import { type AppType } from "next/app";
 import { type Session } from "next-auth";
+
+import {
+  RainbowKitSiweNextAuthProvider,
+  GetSiweMessageOptions,
+} from "@rainbow-me/rainbowkit-siwe-next-auth";
 import { SessionProvider } from "next-auth/react";
 import { StyleProvider } from "@ant-design/cssinjs";
 
@@ -9,7 +15,15 @@ import { api } from "~/utils/api";
 
 import Web3Context from "~/components/web3context";
 import { ConfigProvider, theme } from "antd";
+import {
+  RainbowKitAuthenticationProvider,
+  RainbowKitProvider,
+} from "@rainbow-me/rainbowkit";
 // antd css
+
+const getSiweMessageOptions: GetSiweMessageOptions = () => ({
+  statement: "Sign in to VDAO",
+});
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -17,20 +31,24 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <Web3Context>
-        <ConfigProvider
-          theme={{
-            token: {
-              colorPrimary: "#36DFAE",
-              fontFamily: "Clash Display",
-            },
-          }}
-        >
-          <StyleProvider hashPriority="high">
-            <Component {...pageProps} />
-          </StyleProvider>
-        </ConfigProvider>
-      </Web3Context>
+      <RainbowKitSiweNextAuthProvider
+        getSiweMessageOptions={getSiweMessageOptions}
+      >
+        <Web3Context>
+          <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: "#36DFAE",
+                fontFamily: "Clash Display",
+              },
+            }}
+          >
+            <StyleProvider hashPriority="high">
+              <Component {...pageProps} />
+            </StyleProvider>
+          </ConfigProvider>
+        </Web3Context>
+      </RainbowKitSiweNextAuthProvider>
     </SessionProvider>
   );
 };
