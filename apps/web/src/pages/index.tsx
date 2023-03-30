@@ -1,4 +1,4 @@
-import { type NextPage } from "next";
+import { NextApiRequest, NextApiResponse, type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -30,6 +30,8 @@ import { useSession } from "next-auth/react";
 dayjs.extend(relativeTime);
 
 const Home: NextPage<any> = ({ signatures }) => {
+  console.log(signatures);
+
   const ref = useRef(null);
 
   return (
@@ -139,7 +141,7 @@ function Signing({
               <Button
                 type="primary"
                 className="!h-10"
-                href="https://twitter.com/intent/tweet?text=I%20agree%20to%20the%20terms%20of%20the%20Manifesto%20of%20the%20VDAO%20Project.%20https%3A%2F%2Fvdao.io%2Fmanifesto%20%23vdao"
+                href="https://twitter.com/intent/tweet?text=I%20just%20signed%20the%20VDAO%20Manifesto.%20You%20need%20to%20check%20this%20out%20!%20https%3A%2F%2Fwww.vdao.io"
               >
                 Share on Twitter
               </Button>
@@ -278,7 +280,7 @@ function Signing({
                   </span>
                 </div>
                 <span className="text-[14px]">
-                  {dayjs(item.signedAt).fromNow()}
+                  {dayjs(item.updatedAt).fromNow()}
                 </span>
               </div>
               {i !== list.length - 1 && (
@@ -531,18 +533,28 @@ function SectionOne() {
   );
 }
 
-export async function getServerSideProps() {
-  const total_p = await prisma.signatures.count();
-
-  // last 10 signatures
+export async function getServerSideProps({
+  req,
+  res,
+}: {
+  req: NextApiRequest;
+  res: NextApiResponse;
+}) {
+  const total_p = prisma.signatures.count();
   const list_p = prisma.signatures.findMany({
     orderBy: {
       createdAt: "desc",
     },
+    // last 10 signatures
     take: 10,
   });
 
   const [total, list] = await Promise.all([total_p, list_p]);
+
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=60, stale-while-revalidate=86400"
+  );
 
   return {
     props: {
