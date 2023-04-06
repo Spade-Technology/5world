@@ -3,7 +3,6 @@ import Head from "next/head";
 import Link from "next/link";
 
 import { HeaderManifesto } from "~/components/layout/header";
-import Blockies from "react-18-blockies";
 
 // VDAO-get-involved.png
 import VDAOGetInvolved from "public/illustrations/home/PNG/VDAO-get-involved.png";
@@ -23,15 +22,13 @@ import { useSignMessage } from "wagmi";
 
 import { api } from "~/utils/api";
 import { prisma } from "~/server/db";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useSession } from "next-auth/react";
 
 dayjs.extend(relativeTime);
 
 const Home: NextPage<any> = ({ signatures }) => {
-  console.log(signatures);
-
   const ref = useRef(null);
 
   return (
@@ -106,12 +103,11 @@ function Color({ colorFrom, colorTo, left, size, opacity }: colorProps) {
 
 function Signing({
   signatures,
-  ref,
 }: {
   signatures: { total: number; list: any[] };
-  ref: any;
 }) {
   const list = signatures.list;
+  const [step, setStep] = useState(0);
 
   // wagmi get address
   const { address } = useAccount();
@@ -142,6 +138,7 @@ function Signing({
                 type="primary"
                 className="!h-10"
                 href="https://twitter.com/intent/tweet?text=I%20just%20signed%20the%20VDAO%20Manifesto.%20You%20need%20to%20check%20this%20out%20!%20https%3A%2F%2Fwww.vdao.io"
+                target="_blank"
               >
                 Share on Twitter
               </Button>
@@ -164,13 +161,21 @@ function Signing({
     });
   };
 
-  let step = address && status === "authenticated" ? 2 : address ? 1 : 0;
+  useEffect(() => {
+    if (address && status === "authenticated") {
+      setStep(2);
+    } else if (address && status !== "authenticated") {
+      setStep(1);
+    } else if (!address) {
+      setStep(0);
+    }
+  }, [address, status]);
 
   return (
     <section>
       {contextHolder}
       <div className="mx-auto max-w-[850px]" id="SignModule">
-        <div className="max-w-96 mx-auto my-20 rounded-lg bg-vdao-dark p-4 ">
+        <div className="mx-auto my-20 w-[350px] rounded-lg bg-vdao-dark p-4 ">
           <span className="text-lg font-medium">
             Sign the manifesto with 3 simple steps
           </span>
@@ -186,6 +191,7 @@ function Signing({
                   step < 1 ? "opacity-0" : ""
                 }`}
               />
+
               <div
                 className={`z-10 h-5 w-5 rounded-full ${
                   step >= 1 ? "bg-[#36DFAE]" : "bg-[#9B9B9B]"
@@ -194,10 +200,9 @@ function Signing({
 
               {/* step 2 */}
               <div
-                className={
-                  " mx-auto h-14 w-[2px] scale-110 rounded-full bg-vdao-light " +
-                  (step < 2 ? "opacity-0" : "")
-                }
+                className={`mx-auto h-14 w-[2px] scale-110 rounded-full bg-vdao-light ${
+                  step < 2 ? "opacity-0" : ""
+                }`}
               />
               <div
                 className={`z-10 h-5 w-5 rounded-full ${
@@ -266,20 +271,20 @@ function Signing({
                 className="mt-4 flex w-full flex-row items-center justify-between"
               >
                 <div className="flex w-full items-center  gap-3">
-                  <Blockies
-                    seed={item.eoa}
-                    size={20}
-                    scale={2.5}
-                    color="#91ffc8"
-                    bgColor="#f4ffee"
-                    spotColor="#9ac79a"
-                    className="identicon rounded-full"
+                  <div
+                    className="rounded-full"
+                    style={{
+                      background:
+                        "linear-gradient(221.35deg, #36DFAE 0%, #28B6A5 36.46%, #1D555C 100%)",
+                      width: "44px",
+                      height: "44px",
+                    }}
                   />
-                  <span className=" w-24 overflow-hidden overflow-ellipsis text-[14px] md:w-full">
+                  <span className=" w-48 overflow-hidden overflow-ellipsis text-[14px] md:w-full">
                     {item?.name || item?.eoa}
                   </span>
                 </div>
-                <span className="text-[14px]">
+                <span className="w-full text-right text-[14px]">
                   {dayjs(item.updatedAt).fromNow()}
                 </span>
               </div>
@@ -293,13 +298,13 @@ function Signing({
       <div className="mx-auto mt-60 mb-48 flex max-w-[1150px] flex-col justify-evenly md:flex-row">
         <div className="flex w-full flex-col">
           <h3 className="mr-auto mt-9 max-w-[1153px] text-left font-heading text-2xl font-light leading-none text-vdao-light md:text-[56px] ">
-            <b className="font-semibold">Feeling inspired?</b>
+            <b className="font-medium">Feeling inspired?</b>
             <br />
             Want to get more involved?
             <br />
-            <b className="font-semibold">APPLY TO JOIN THE DAO.</b>
+            <b className="font-medium">APPLY TO JOIN THE DAO.</b>
           </h3>
-          <Button type="primary" className="mt-10 w-32">
+          <Button type="primary" className="mt-10 !h-10 w-40 !rounded-sm">
             Join Now
           </Button>
         </div>
@@ -475,10 +480,7 @@ function SectionTwo() {
 
         <span className="mr-auto">
           If you agree with this manifesto and want to be part of our community,
-          please{" "}
-          <u>
-            <Link href="#">sign here.</Link>
-          </u>
+          please <u>sign here.</u>
         </span>
       </div>
     </section>
@@ -563,7 +565,7 @@ export async function getServerSideProps({
         list: list.map((item) => ({
           eoa: item.eoa,
           signature: item.signature,
-          updatedAt: item.updatedAt.toString(),
+          updatedAt: item.createdAt.toString(),
         })),
       },
     },
