@@ -25,8 +25,8 @@ const Header = (props: Props) => {
         </Link>
         <div className="ml-72 flex justify-between gap-9">
           <Link href="/">Home</Link>
-          <Link href="/participate">Participate</Link>
-          <Link href="/getfunding">Get Funding</Link>
+          <Link href="/apply">Participate</Link>
+          <Link href="/funding">Get Funding</Link>
           <Link href="/donate">Donate</Link>
           <Link href="/about">About</Link>
         </div>
@@ -84,7 +84,7 @@ const HeaderManifesto = (props: Props) => {
           <span className="my-auto text-lg font-medium text-white">
             {props.signatures || 0} Signatures
           </span>
-          <VDAOConnectButton />
+          <VDAOConnectButton className="border-vdao-light text-vdao-light" />
         </div>
       </div>
     </div>
