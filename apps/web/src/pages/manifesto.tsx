@@ -25,6 +25,7 @@ import { prisma } from "~/server/db";
 import { useEffect, useRef, useState } from "react";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useSession } from "next-auth/react";
+import PrimaryButton from "~/styles/shared/primaryButton";
 
 dayjs.extend(relativeTime);
 
@@ -304,9 +305,10 @@ function Signing({
             <br />
             <b className="font-medium">APPLY TO JOIN THE DAO.</b>
           </h3>
-          <Button type="primary" className="mt-10 !h-10 w-40 !rounded-sm">
+          {/* <Button type="primary" className="mt-10 !h-10 w-40 !rounded-sm bg-vdao-dark">
             Join Now
-          </Button>
+          </Button> */}
+          <PrimaryButton text="Join Now" className="mt-10 px-8 py-4 text-2xl" />
         </div>
         <Image
           src={VDAOApply}
