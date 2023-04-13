@@ -20,7 +20,9 @@ const Header = (props: Props) => {
   return (
     <header className="h-24">
       <div className="mx-auto flex h-24 max-w-[1280px] items-center justify-between">
-        <Image src={logo} alt="VDAO" height={30} />
+        <Link href="/">
+          <Image src={logo} alt="VDAO" height={30} />
+        </Link>
         <div className="ml-72 flex justify-between gap-9">
           <Link href="/">Home</Link>
           <Link href="/participate">Participate</Link>
