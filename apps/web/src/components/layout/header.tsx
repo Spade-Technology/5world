@@ -3,17 +3,52 @@ import React from "react";
 import Image from "next/image";
 
 import logo from "public/logo/png/color.png";
+
 import discord from "public/illustrations/socials/discord.svg";
+import discordCircle from "public/illustrations/socials/discordCircle.svg";
+import discourse from "public/illustrations/socials/discourse.svg";
 import twitter from "public/illustrations/socials/twitter.svg";
 import { Divider } from "antd";
 import { VDAOConnectButton } from "../walletconnect/connectbutton";
+import Link from "next/link";
 
 type Props = {
   signatures?: number;
 };
 
 const Header = (props: Props) => {
-  return <div>Header</div>;
+  return (
+    <header className="h-24">
+      <div className="mx-auto flex h-24 max-w-[1280px] items-center justify-between">
+        <Image src={logo} alt="VDAO" height={30} />
+        <div className="ml-72 flex justify-between gap-9">
+          <Link href="/">Home</Link>
+          <Link href="/participate">Participate</Link>
+          <Link href="/getfunding">Get Funding</Link>
+          <Link href="/donate">Donate</Link>
+          <Link href="/about">About</Link>
+        </div>
+        <div className="flex gap-7">
+          <Image
+            src={discourse}
+            alt="VDAO"
+            width={30}
+            height={30}
+            className="hidden md:block"
+          />
+          <Image
+            src={discordCircle}
+            alt="VDAO"
+            width={30}
+            height={30}
+            className="hidden md:block"
+          />
+        </div>
+
+        <VDAOConnectButton className="border-vdao-dark text-vdao-dark" />
+      </div>
+    </header>
+  );
 };
 
 const HeaderManifesto = (props: Props) => {

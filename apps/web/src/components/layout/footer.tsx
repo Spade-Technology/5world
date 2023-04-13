@@ -1,6 +1,12 @@
 import { Button } from "antd";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import logo from "public/logo/png/color.png";
+
+import discord from "public/illustrations/socials/discord.svg";
+import discourse from "public/illustrations/socials/discourse.svg";
+import twitter from "public/illustrations/socials/twitter.svg";
 
 type Props = {
   signatures?: number;
@@ -8,7 +14,49 @@ type Props = {
 };
 
 const Footer = (props: Props) => {
-  return <div>Footer</div>;
+  return (
+    <footer>
+      <div className="mx-auto flex h-24 max-w-[1280px] flex-col gap-4 py-16 ">
+        <div className="flex justify-between">
+          <Image src={logo} alt="VDAO" height={30} className="mb-auto" />
+          <div>
+            <span className="font-medium text-vdao-dark">Participate</span>
+            <div className="mt-8 flex flex-col gap-4">
+              <Link href="/apply">Apply</Link>
+              <Link href="/nft">NFT Collections</Link>
+              <Link href="/donate">Donate</Link>
+              <Link href="/getfunding">Get Funding</Link>
+            </div>
+          </div>
+          <div>
+            <span className="font-medium text-vdao-dark">Community</span>
+            <div className="mt-8 flex flex-col gap-4">
+              <Link href="#">Discord</Link>
+              <Link href="#">Forum</Link>
+            </div>
+          </div>
+          <div>
+            <span className="font-medium text-vdao-dark">Organisation</span>
+            <div className="mt-8 flex flex-col gap-4">
+              <Link href="#">About Us</Link>
+              <Link href="#">Analytics</Link>
+              <Link href="#">Whitepaper</Link>
+            </div>
+          </div>
+          <div>
+            <span className="font-medium text-vdao-dark">Legal</span>
+            <div className="mt-8 flex flex-col gap-4">
+              <Link href="#">Terms of Service</Link>
+              <Link href="#">Privacy Policy</Link>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-vdao-dark">© 2023 5th World</span>
+        </div>
+      </div>
+    </footer>
+  );
 };
 
 const FooterManifesto = (props: Props) => {
