@@ -9,7 +9,7 @@ import {
   AboutUsVisionMissionComponent,
 } from "~/components/pages/about";
 
-const Home: NextPage = () => {
+const AboutUs: NextPage = () => {
   return (
     <>
       <Header />
@@ -29,4 +29,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default AboutUs;
