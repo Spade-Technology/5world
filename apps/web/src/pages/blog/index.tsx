@@ -2,12 +2,13 @@ import Description from "~/components/commonComponents/description";
 import Header from "~/components/layout/header";
 import DownwardsArrow from "public/icons/blog/polygonDownwards.svg";
 import Image from "next/image";
-import { blogDetails } from "./components/blogDetails";
-import BlogCard from "./components/blogCard";
+
+import BlogCard from "~/components/pages/blog/blogCard";
 import LeftArrow from "public/icons/blog/leftArrow.svg";
 import RightArrow from "public/icons/blog/rightArrow.svg";
 import Subscription from "~/components/commonComponents/subscription";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { blogDetails } from "~/components/pages/blog/blogDetails";
 
 const Blog = () => {
   const [pageCount, setPageCount] = useState(1);
@@ -88,7 +89,7 @@ const Blog = () => {
           })}
       </div>
 
-      <div className="justify-center md:justify-end mr-20 flex py-11 md:py-14 ">
+      <div className="mr-20 flex justify-center py-11 md:justify-end md:py-14 ">
         <Image
           src={LeftArrow}
           alt=""

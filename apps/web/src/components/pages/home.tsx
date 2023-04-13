@@ -132,7 +132,7 @@ export function HomeGetInvolvedComponent() {
         </span>
       </div>
       <div className="flex">
-        <Image src={VDAOGetInvolved} alt="VDAO" className="w-full" />
+        <Image src={VDAOGetInvolved} alt="VDAO" height={750} width={750} />
         <div className="flex w-full justify-center">
           <div className=" flex max-w-xs flex-col gap-16">
             <div className="flex flex-col">

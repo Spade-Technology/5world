@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { type } from "os";
 
@@ -51,12 +52,11 @@ const BlogCard = ({ blog, showBorder }: cardProps) => {
           {blog.about}
         </div>
 
-        <div
-          className="mb-10 w-fit cursor-pointer border-b-2 border-b-vdao-light font-heading text-xl font-medium md:mb-0 "
-          onClick={() => router.push(`/blogDetails?id=${blog.id}`)}
-        >
-          Read More
-        </div>
+        <Link href={"/blog/details?id=" + blog.id}>
+          <div className="mb-10 w-fit cursor-pointer border-b-2 border-b-vdao-light font-heading text-xl font-medium md:mb-0 ">
+            Read More
+          </div>
+        </Link>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { blogDetails } from "~/pages/blog/components/blogDetails";
+import { blogDetails } from "./blogDetails";
+import Header from "~/components/layout/header";
 
 type DetailProps = {
   id: string | string[];
@@ -72,7 +73,7 @@ const Details = ({ id }: DetailProps) => {
         <div className="mt-[114px] border-t-[1px] border-t-vdao-dark">
           <div className="pt-[30px] text-lg font-bold">About Author</div>
 
-          <div className="flex pt-[26.8px] gap-[30px] justify-between">
+          <div className="flex justify-between gap-[30px] pt-[26.8px]">
             <div>
               <Image
                 src={details?.createdByProfile}
@@ -82,9 +83,11 @@ const Details = ({ id }: DetailProps) => {
                 className="rounded-full"
               />
             </div>
-            <div className="font-light pl-10">
+            <div className="pl-10 font-light">
               <div className="text-[22px]">{details?.createdBy}</div>
-              <div className="pt-[14px] text-black text-lg">{details?.about}</div>
+              <div className="pt-[14px] text-lg text-black">
+                {details?.about}
+              </div>
             </div>
           </div>
         </div>
