@@ -1,6 +1,6 @@
 import Image from "next/image";
 import IllustrationImage from "public/illustrations/apply/PNG/VDAO-apply.png";
-import PrimaryButton from "~/styles/shared/primaryButton";
+import PrimaryButton from "~/styles/shared/buttons/primaryButton";
 
 type CardProps = {
   buttonText: string;

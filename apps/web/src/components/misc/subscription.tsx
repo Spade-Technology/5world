@@ -1,4 +1,4 @@
-import DarkButton from "~/styles/shared/darkButton";
+import DarkButton from "~/styles/shared/buttons/darkButton";
 
 const Subscription = () => {
   const containerClass = "flex px-6 py-14 flex-col";

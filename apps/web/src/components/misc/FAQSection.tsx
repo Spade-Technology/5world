@@ -1,39 +1,20 @@
 import Image from "next/image";
 import UpWardsArrow from "public/icons/apply/FAQ-arrow-up.png";
 import { useState } from "react";
+import { FAQS } from "../pages/apply/faqs";
 
-const FAQSection = () => {
+type FAQProps = {
+  FAQS: {
+    title: string;
+    description: string;
+  }[];
+};
+
+const FAQSection = (props: FAQProps) => {
   const [index, setIndex] = useState<number>(0);
-  const FAQS = [
-    {
-      title: "Morbi turpis mi, faucibus vitae.",
-      description:
-        "Sed quis sapien nec erat blandit cursus eget at risus. Cras maximus orci ultricies mi tempor pellentesque.",
-    },
-    {
-      title: "Aenean venenatis erat eget placerat.",
-      description:
-        "Sed quis sapien nec erat blandit cursus eget at risus. Cras maximus orci ultricies mi tempor pellentesque.",
-    },
-    {
-      title: "Vivamus facilisis odio non orci malesuada.",
-      description:
-        "Sed quis sapien nec erat blandit cursus eget at risus. Cras maximus orci ultricies mi tempor pellentesque.",
-    },
-    {
-      title: "Morbi turpis mi, faucibus vitae.",
-      description:
-        "Sed quis sapien nec erat blandit cursus eget at risus. Cras maximus orci ultricies mi tempor pellentesque.",
-    },
-    {
-      title: "Aenean venenatis erat eget placerat.",
-      description:
-        "Sed quis sapien nec erat blandit cursus eget at risus. Cras maximus orci ultricies mi tempor pellentesque.",
-    },
-  ];
 
   return (
-    <div className="mx-10 my-20 flex flex-col md:mx-20 md:mt-28 md:flex-row md:gap-9">
+    <div className="mx-10 my-20 flex flex-col bg-white text-vdao-dark md:mx-20 md:mt-28 md:flex-row md:gap-9">
       <div className="w-96 text-5xl font-medium ">
         {" "}
         Frequently asked Questions{" "}
@@ -44,7 +25,7 @@ const FAQSection = () => {
           mi, faucibus vitae elementum id, tristique at lectus.
         </div>
 
-        {FAQS.map((faq, idx) => {
+        {props.FAQS.map((faq, idx) => {
           return (
             <div className="mt-5 flex cursor-pointer justify-between gap-9 md:mt-10">
               <div>

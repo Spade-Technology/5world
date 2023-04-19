@@ -1,4 +1,4 @@
-import Description from "~/components/commonComponents/description";
+import Description from "~/components/misc/description";
 import Header from "~/components/layout/header";
 import DownwardsArrow from "public/icons/blog/polygonDownwards.svg";
 import Image from "next/image";
@@ -6,7 +6,7 @@ import Image from "next/image";
 import BlogCard from "~/components/pages/blog/blogCard";
 import LeftArrow from "public/icons/blog/leftArrow.svg";
 import RightArrow from "public/icons/blog/rightArrow.svg";
-import Subscription from "~/components/commonComponents/subscription";
+import Subscription from "~/components/misc/subscription";
 import { useEffect, useState } from "react";
 import { blogDetails } from "~/components/pages/blog/blogDetails";
 
@@ -58,7 +58,7 @@ const Blog = () => {
     <div className="w-full bg-white text-vdao-dark">
       <Header />
 
-      <Description title={`Blog`} description="" />
+      <Description title={<div>Blog</div>} description={<></>} />
 
       <div>
         <div className="flex flex-col-reverse gap-3 px-10 md:absolute md:right-0 md:mr-20 md:flex-row md:px-0">

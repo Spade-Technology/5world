@@ -3,7 +3,7 @@ import applyImage from "public/illustrations/apply/PNG/VDAO-apply-graphic.png";
 
 const SectionOne = () => {
   /** styles for both mobile and web */
-  const containerClass = "flex flex-col-reverse mx-10";
+  const containerClass = "flex flex-col-reverse mx-6";
   return (
     <div className={`${containerClass} md:flex-row md:gap-36 md:px-20`}>
       <div className="flex-1 md:py-20">

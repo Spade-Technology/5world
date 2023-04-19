@@ -25,7 +25,7 @@ import { prisma } from "~/server/db";
 import { useEffect, useRef, useState } from "react";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useSession } from "next-auth/react";
-import PrimaryButton from "~/styles/shared/primaryButton";
+import PrimaryButton from "~/styles/shared/buttons/primaryButton";
 
 dayjs.extend(relativeTime);
 

@@ -7,6 +7,10 @@ import logo from "public/logo/png/color.png";
 import discord from "public/illustrations/socials/discord.svg";
 import discordCircle from "public/illustrations/socials/discordCircle.svg";
 import discourse from "public/illustrations/socials/discourse.svg";
+
+import darkDiscourse from "public/illustrations/socials/darkDiscourse.svg";
+import darkDiscord from "public/illustrations/socials/darkDiscord.svg";
+
 import twitter from "public/illustrations/socials/twitter.svg";
 import { Divider } from "antd";
 import { VDAOConnectButton } from "../walletconnect/connectbutton";
@@ -14,11 +18,13 @@ import Link from "next/link";
 
 type Props = {
   signatures?: number;
+  className?: string;
+  invertImages?: boolean;
 };
 
 const Header = (props: Props) => {
   return (
-    <header className="h-24">
+    <header className={`h-24 ${props.className} `}>
       <div className="mx-auto flex h-24 max-w-[1280px] items-center justify-between">
         <Link href="/">
           <Image src={logo} alt="VDAO" height={30} />
@@ -32,14 +38,14 @@ const Header = (props: Props) => {
         </div>
         <div className="flex gap-7">
           <Image
-            src={discourse}
+            src={props.invertImages ? darkDiscourse : discourse}
             alt="VDAO"
             width={30}
             height={30}
             className="hidden md:block"
           />
           <Image
-            src={discordCircle}
+            src={props.invertImages ? darkDiscord : discordCircle}
             alt="VDAO"
             width={30}
             height={30}
@@ -47,7 +53,13 @@ const Header = (props: Props) => {
           />
         </div>
 
-        <VDAOConnectButton className="border-vdao-dark text-vdao-dark" />
+        <VDAOConnectButton
+          className={
+            props.invertImages
+              ? "border-vdao-light text-vdao-light"
+              : "border-vdao-dark text-vdao-dark"
+          }
+        />
       </div>
     </header>
   );
