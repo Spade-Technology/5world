@@ -16,19 +16,32 @@ type Props = {
   signatures?: number;
 };
 
+type NavigationElement = {
+  name: string;
+  link: string;
+};
+
+const navigationElements: NavigationElement[] = [
+  { name: "Home", link: "/" },
+  { name: "Participate", link: "/apply" },
+  { name: "Get Funding", link: "/funding" },
+  { name: "Donate", link: "/donate" },
+  { name: "About", link: "/about" },
+];
+
 const Header = (props: Props) => {
   return (
     <header className="h-24">
-      <div className="mx-auto flex h-24 max-w-[1280px] items-center justify-between">
+      <div className="mx-auto hidden h-24 max-w-[1280px] items-center justify-between md:flex ">
         <Link href="/">
           <Image src={logo} alt="VDAO" height={30} />
         </Link>
         <div className="ml-72 flex justify-between gap-9">
-          <Link href="/">Home</Link>
-          <Link href="/apply">Participate</Link>
-          <Link href="/funding">Get Funding</Link>
-          <Link href="/donate">Donate</Link>
-          <Link href="/about">About</Link>
+          {navigationElements.map((element) => (
+            <Link href={element.link} key={element.name}>
+              {element.name}
+            </Link>
+          ))}
         </div>
         <div className="flex gap-7">
           <Image
