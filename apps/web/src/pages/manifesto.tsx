@@ -317,7 +317,7 @@ function Signing({
           width={500}
           height={500}
           alt="apply"
-          className="mx-auto w-1/2 scale-150 transform md:w-1/3 md:translate-y-5 md:-translate-x-20"
+          className="pointer-events-none mx-auto w-1/2 scale-150 transform md:w-1/3 md:translate-y-5 md:-translate-x-20"
         />
       </div>
     </section>
