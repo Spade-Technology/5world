@@ -25,7 +25,7 @@ import { prisma } from "~/server/db";
 import { useEffect, useRef, useState } from "react";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useSession } from "next-auth/react";
-import PrimaryButton from "~/styles/shared/primaryButton";
+import PrimaryButton from "~/styles/shared/buttons/primaryButton";
 
 dayjs.extend(relativeTime);
 
@@ -41,13 +41,6 @@ const Home: NextPage<any> = ({ signatures }) => {
           content="Restoring Ecosystems From the Soil up."
         />
         <link rel="icon" href="/favicon.ico" />
-        <link
-          href="https://fonts.cdnfonts.com/css/clash-display"
-          rel="stylesheet"
-        />
-        <link href="https://fonts.cdnfonts.com/css/satoshi" rel="stylesheet" />
-
-        <link href="https://fonts.cdnfonts.com/css/inter" rel="stylesheet" />
       </Head>
       <main className="bg-vdao-deep">
         <HeaderManifesto signatures={signatures.total} />

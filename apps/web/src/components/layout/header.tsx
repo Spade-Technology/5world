@@ -7,6 +7,10 @@ import logo from "public/logo/png/color.png";
 import discord from "public/illustrations/socials/discord.svg";
 import discordCircle from "public/illustrations/socials/discordCircle.svg";
 import discourse from "public/illustrations/socials/discourse.svg";
+
+import darkDiscourse from "public/illustrations/socials/darkDiscourse.svg";
+import darkDiscord from "public/illustrations/socials/darkDiscord.svg";
+
 import twitter from "public/illustrations/socials/twitter.svg";
 import { Collapse, Divider } from "antd";
 import { VDAOConnectButton } from "../walletconnect/connectbutton";
@@ -16,6 +20,8 @@ const { Panel } = Collapse;
 
 type Props = {
   signatures?: number;
+  className?: string;
+  invertImages?: boolean;
 };
 
 type NavigationElement = {
@@ -62,7 +68,7 @@ const Header = (props: Props) => {
         <Link href="/">
           <Image src={logo} alt="VDAO" height={30} />
         </Link>
-        <div className="ml-72 flex justify-between gap-9">
+        <div className="ml-72 flex justify-between gap-9 text-vdao-dark">
           {navigationElements.map((element) => (
             <Link href={element.link} key={element.name}>
               {element.name}
@@ -71,14 +77,14 @@ const Header = (props: Props) => {
         </div>
         <div className="flex gap-7">
           <Image
-            src={discourse}
+            src={props.invertImages ? darkDiscourse : discourse}
             alt="VDAO"
             width={30}
             height={30}
             className="hidden md:block"
           />
           <Image
-            src={discordCircle}
+            src={props.invertImages ? darkDiscord : discordCircle}
             alt="VDAO"
             width={30}
             height={30}
@@ -86,7 +92,13 @@ const Header = (props: Props) => {
           />
         </div>
 
-        <VDAOConnectButton className="border-vdao-dark text-vdao-dark" />
+        <VDAOConnectButton
+          className={
+            props.invertImages
+              ? "border-vdao-light text-vdao-light"
+              : "border-vdao-dark text-vdao-dark"
+          }
+        />
       </div>
 
       {/* Mobile */}

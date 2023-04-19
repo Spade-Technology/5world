@@ -1,4 +1,4 @@
-import PrimaryButton from "~/styles/shared/primaryButton";
+import PrimaryButton from "~/styles/shared/buttons/primaryButton";
 
 const HowToApply = () => {
   return (
