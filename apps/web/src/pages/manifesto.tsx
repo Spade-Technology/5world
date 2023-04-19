@@ -46,6 +46,9 @@ const Home: NextPage<any> = ({ signatures }) => {
           rel="stylesheet"
         />
         <link href="https://fonts.cdnfonts.com/css/satoshi" rel="stylesheet" />
+
+        <link href="https://fonts.cdnfonts.com/css/inter" rel="stylesheet">
+
       </Head>
       <main className="bg-vdao-deep">
         <HeaderManifesto signatures={signatures.total} />

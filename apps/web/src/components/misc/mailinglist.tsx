@@ -1,29 +1,34 @@
-import { Button, Input } from "antd";
+import DarkButton from "~/styles/shared/darkButton";
 
-export function MailingListComponent() {
+const MailingListComponent = () => {
+  const containerClass = "flex px-6 py-14 flex-col";
   return (
-    <section className="flex flex-col items-center bg-vdao-lightpurple py-24">
-      <div className="flex gap-48">
-        <div className="flex w-full flex-col">
-          <h1 className="text-center text-5xl font-medium text-vdao-dark">
-            Join Our Mailing List
-          </h1>
-          <span className="text-vdao-dark">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi turpis
-            mi.
-          </span>
+    <div
+      className={` ${containerClass} bg-vdao-lightpurple md:flex-row md:px-40 md:py-24`}
+    >
+      <div className="flex-1">
+        <div className="font-heading text-5xl font-medium">
+          Join Our
+          <br /> Mailing List
         </div>
-        <div className="flex w-full items-center gap-4">
-          <Input
-            placeholder="Enter your email"
-            className="h-8 w-96 "
-            type="email"
-          />
-          <Button type="primary" className="h-8 !bg-vdao-dark">
-            Subscribe
-          </Button>
+        <div className="pt-8 pr-32 text-2xl font-normal md:pt-9">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi turpis
+          mi.
         </div>
       </div>
-    </section>
+
+      <div className="flex flex-1 flex-col justify-end pt-8 md:flex-row md:pt-24">
+        <input
+          placeholder="Enter your email"
+          className="h-10 w-full rounded-md pl-5 text-vdao-dark outline-none outline-vdao-dark placeholder:text-vdao-dark placeholder:opacity-50"
+        />
+        <DarkButton
+          text="Subscribe"
+          className="mt-6 h-10 py-2 font-heading md:mt-0 md:ml-5"
+        />
+      </div>
+    </div>
   );
-}
+};
+
+export default MailingListComponent;

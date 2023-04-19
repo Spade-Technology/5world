@@ -8,6 +8,31 @@ h1 {
   font-weight: 700;
 }
 
+.h3 {
+  font-family: "Clash Display", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.big-text-mobile {
+  font-family: "Satoshi", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 26px;
+}
+
+.small-text {
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+}
+
 /* only spans that aren't in a button */
 span {
   font-family: "Satoshi", sans-serif;
@@ -25,4 +50,10 @@ button span {
   /* default */
   font-size: 1em;
   font-weight: 500;
+
+  color: inherit;
+}
+
+.antd-stop-propagation span {
+  color: inherit;
 }

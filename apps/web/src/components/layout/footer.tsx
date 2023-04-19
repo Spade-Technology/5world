@@ -16,9 +16,20 @@ type Props = {
 const Footer = (props: Props) => {
   return (
     <footer>
-      <div className="mx-auto flex h-24 max-w-[1280px] flex-col gap-4 py-16 ">
-        <div className="flex justify-between">
-          <Image src={logo} alt="VDAO" height={30} className="mb-auto" />
+      <div className="mx-auto flex h-24 max-w-[1280px] flex-col gap-4 py-16 px-6">
+        <Image
+          src={logo}
+          alt="VDAO"
+          height={30}
+          className="mb-auto block md:hidden"
+        />
+        <div className="my-16 grid grid-cols-2 justify-between gap-16 md:mt-0 md:grid-cols-5 md:gap-0">
+          <Image
+            src={logo}
+            alt="VDAO"
+            height={30}
+            className="mb-auto hidden md:block"
+          />
           <div>
             <span className="font-medium text-vdao-dark">Participate</span>
             <div className="mt-8 flex flex-col gap-4">
@@ -62,7 +73,7 @@ const Footer = (props: Props) => {
 const FooterManifesto = (props: Props) => {
   return (
     <div className="bg-white px-14 py-10">
-      <div className="mx-auto flex max-w-[1280px]  flex-col gap-10">
+      <div className="mx-auto flex max-w-[1280px] flex-col gap-10">
         <div className="flex gap-9">
           <Link href="#">
             <h2>Home</h2>

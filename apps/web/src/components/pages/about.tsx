@@ -5,9 +5,9 @@ import Image from "next/image";
 
 export function AboutUsCoreTeamComponent() {
   return (
-    <section className="mx-auto my-36 flex max-w-[1280px] flex-col">
-      <div className="flex w-full">
-        <h1 className="mb-6 w-full text-left text-5xl font-medium">
+    <section className="px6 mx-auto my-36 flex max-w-[1280px] flex-col px-6 md:px-0">
+      <div className="flex w-full flex-col md:flex-row">
+        <h1 className="mb-6 w-full text-left text-4xl font-medium md:text-5xl">
           Our Core Team
         </h1>
         <div className="ml-auto max-w-md text-2xl font-medium text-vdao-dark">
@@ -17,7 +17,52 @@ export function AboutUsCoreTeamComponent() {
       </div>
       <div className="mt-20 flex">
         <div className="flex w-full justify-center">
-          <div className="flex flex-row gap-16">
+          <div className="flex flex-col gap-16 md:flex-row">
+            <div className="flex flex-col">
+              <div className="h-72 w-72 bg-vdao-lightpurple  opacity-70"></div>
+              <h1 className="mt-5 font-body text-2xl font-medium text-vdao-dark">
+                Full Name
+              </h1>
+              <h1 className=" mt-2 font-body text-xl font-normal text-vdao-dark">
+                Title
+              </h1>
+            </div>
+            <div className="flex flex-col">
+              <div className="h-72 w-72 bg-vdao-lightpurple  opacity-70"></div>
+              <h1 className="mt-5 font-body text-2xl font-medium text-vdao-dark">
+                Full Name
+              </h1>
+              <h1 className=" mt-2 font-body text-xl font-normal text-vdao-dark">
+                Title
+              </h1>
+            </div>
+            <div className="flex flex-col">
+              <div className="h-72 w-72 bg-vdao-lightpurple  opacity-70"></div>
+              <h1 className="mt-5 font-body text-2xl font-medium text-vdao-dark">
+                Full Name
+              </h1>
+              <h1 className=" mt-2 font-body text-xl font-normal text-vdao-dark">
+                Title
+              </h1>
+            </div>
+            <div className="flex flex-col">
+              <div className="h-72 w-72 bg-vdao-lightpurple  opacity-70"></div>
+              <h1 className="mt-5 font-body text-2xl font-medium text-vdao-dark">
+                Full Name
+              </h1>
+              <h1 className=" mt-2 font-body text-xl font-normal text-vdao-dark">
+                Title
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="mx-auto mt-20 flex w-full">
+        <h1 className="mb-6 w-full text-left text-5xl font-medium">Advisors</h1>
+      </div>
+      <div className="flex">
+        <div className="flex w-full justify-center">
+          <div className="flex flex-col gap-16 md:flex-row">
             <div className="flex flex-col">
               <div className="h-72 w-72 bg-vdao-lightpurple  opacity-70"></div>
               <h1 className="mt-5 font-body text-2xl font-medium text-vdao-dark">
@@ -59,59 +104,12 @@ export function AboutUsCoreTeamComponent() {
       </div>
       <div className="mx-auto mt-20 flex w-full">
         <h1 className="mb-6 w-full text-left text-5xl font-medium">
-          Our Core Team
+          Guardians
         </h1>
       </div>
       <div className="flex">
         <div className="flex w-full justify-center">
-          <div className="flex flex-row gap-16">
-            <div className="flex flex-col">
-              <div className="h-72 w-72 bg-vdao-lightpurple  opacity-70"></div>
-              <h1 className="mt-5 font-body text-2xl font-medium text-vdao-dark">
-                Full Name
-              </h1>
-              <h1 className=" mt-2 font-body text-xl font-normal text-vdao-dark">
-                Title
-              </h1>
-            </div>
-            <div className="flex flex-col">
-              <div className="h-72 w-72 bg-vdao-lightpurple  opacity-70"></div>
-              <h1 className="mt-5 font-body text-2xl font-medium text-vdao-dark">
-                Full Name
-              </h1>
-              <h1 className=" mt-2 font-body text-xl font-normal text-vdao-dark">
-                Title
-              </h1>
-            </div>
-            <div className="flex flex-col">
-              <div className="h-72 w-72 bg-vdao-lightpurple  opacity-70"></div>
-              <h1 className="mt-5 font-body text-2xl font-medium text-vdao-dark">
-                Full Name
-              </h1>
-              <h1 className=" mt-2 font-body text-xl font-normal text-vdao-dark">
-                Title
-              </h1>
-            </div>
-            <div className="flex flex-col">
-              <div className="h-72 w-72 bg-vdao-lightpurple  opacity-70"></div>
-              <h1 className="mt-5 font-body text-2xl font-medium text-vdao-dark">
-                Full Name
-              </h1>
-              <h1 className=" mt-2 font-body text-xl font-normal text-vdao-dark">
-                Title
-              </h1>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="mx-auto mt-20 flex w-full">
-        <h1 className="mb-6 w-full text-left text-5xl font-medium">
-          Our Core Team
-        </h1>
-      </div>
-      <div className="flex">
-        <div className="flex w-full justify-center">
-          <div className="flex flex-row gap-16">
+          <div className="flex flex-col gap-16 md:flex-row">
             <div className="flex flex-col">
               <div className="h-72 w-72 bg-vdao-lightpurple  opacity-70"></div>
               <h1 className="mt-5 font-body text-2xl font-medium text-vdao-dark">
@@ -157,10 +155,10 @@ export function AboutUsCoreTeamComponent() {
 
 export function AboutUsVisionMissionComponent() {
   return (
-    <section className="my-36 flex py-24 text-vdao-dark">
+    <section className="my-36 flex flex-col overflow-hidden py-24 px-6 text-vdao-dark md:flex-row md:px-0">
       <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-20">
-        <div className="flex">
-          <h1 className="mb-6 w-full text-center text-5xl font-medium underline">
+        <div className="flex flex-col md:flex-row">
+          <h1 className="mb-6 w-full text-4xl font-medium underline md:text-center md:text-5xl">
             Vision
           </h1>
           <div className="mr-auto w-full text-lg">
@@ -172,8 +170,8 @@ export function AboutUsVisionMissionComponent() {
             </div>
           </div>
         </div>
-        <div className="flex">
-          <h1 className="mb-6 w-full text-center text-5xl font-medium underline">
+        <div className="flex flex-col md:flex-row">
+          <h1 className="mb-6 w-full text-4xl font-medium underline md:text-center md:text-5xl">
             Mission
           </h1>
           <div className="mr-auto w-full text-lg">
@@ -196,7 +194,7 @@ export function AboutUsVisionMissionComponent() {
       <Image
         src={VisionPersionImage}
         alt="VDAO"
-        className="mt-auto h-1/6 w-1/6 scale-150"
+        className="mt-auto ml-10 md:h-1/6 md:w-1/6 md:scale-150"
       />
     </section>
   );
@@ -204,20 +202,20 @@ export function AboutUsVisionMissionComponent() {
 
 export function AboutUsCoreValueComponent() {
   return (
-    <section className="my-36 bg-vdao-deep py-24 text-vdao-light">
+    <section className="my-36 overflow-hidden bg-vdao-deep py-24 px-6 text-vdao-light md:px-0">
       <div className="mx-auto flex max-w-[1440px] flex-col ">
         <div className="mx-auto w-full max-w-[1280px] ">
-          <h1 className="mb-6 w-full text-left text-5xl font-medium">
+          <h1 className="mb-6 w-full text-left text-4xl font-medium md:text-5xl">
             Our Core Value
           </h1>
         </div>
-        <div className="mt-12 flex">
+        <div className="mt-12 flex flex-col-reverse md:flex-row">
           <Image
             src={CoreValueBeaverHero}
             alt="VDAO"
-            className="mt-auto -mb-32 h-full w-1/3"
+            className="mt-auto h-full scale-125 md:-mb-32 md:w-1/3 md:scale-100"
           />
-          <div className="grid w-full grid-flow-col grid-cols-2 grid-rows-2  gap-10">
+          <div className="grid w-full grid-cols-1 grid-rows-4 gap-4 md:grid-cols-2 md:grid-rows-2  md:gap-10">
             <div className="flex max-w-[340px] flex-col gap-4">
               <h1 className="text-2xl font-medium">Faireness & Caring</h1>
               <span className="text-lg font-normal">
@@ -263,9 +261,11 @@ export function AboutUsCoreValueComponent() {
 
 export function AboutUsComponent() {
   return (
-    <section className="mx-auto my-16  flex w-full max-w-[1280px] flex-col">
-      <h1 className="mb-6 w-1/2 text-left text-8xl font-medium">About Us</h1>
-      <div className="ml-auto mr-24 w-2/6 font-body text-2xl font-medium text-vdao-dark">
+    <section className="my-16 flex w-full max-w-[1280px] flex-col px-6 md:mx-auto md:px-0">
+      <h1 className="mb-6 text-left text-4xl font-medium md:w-1/2 md:text-8xl">
+        About Us
+      </h1>
+      <div className="ml-auto mr-12 font-body text-2xl font-medium text-vdao-dark md:mr-24 md:w-2/6">
         Global ecosystem regeneration is a positive sum game: the more effort we
         put in, the more we benefit.
         <br />

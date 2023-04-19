@@ -1,9 +1,10 @@
 import Description from "~/components/commonComponents/description";
-import Subscription from "~/components/commonComponents/subscription";
+
 import Header from "~/components/layout/header";
 import Offers from "~/components/pages/funding/offers";
 import HowToApply from "~/components/pages/funding/howToApply";
 import Footer from "~/components/layout/footer";
+import MailingListComponent from "~/components/misc/mailinglist";
 
 const GetFunding = () => {
   return (
@@ -19,7 +20,7 @@ const GetFunding = () => {
 
         <HowToApply />
 
-        <Subscription />
+        <MailingListComponent />
       </div>
       <Footer />
     </>

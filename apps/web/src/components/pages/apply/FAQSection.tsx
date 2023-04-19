@@ -34,10 +34,7 @@ const FAQSection = () => {
 
   return (
     <div className="mx-10 my-20 flex flex-col md:mx-20 md:mt-28 md:flex-row md:gap-9">
-      <div className="w-96 text-5xl font-medium ">
-        {" "}
-        Frequently asked Questions{" "}
-      </div>
+      <div className=" text-5xl font-medium ">Frequently asked Questions </div>
       <div className="mt-5 flex-1">
         <div className="text-xl font-normal md:pr-10">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi turpis

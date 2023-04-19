@@ -1,8 +1,8 @@
-import { Button, Input } from "antd";
 import { type NextPage } from "next";
+
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
-import { MailingListComponent } from "~/components/misc/mailinglist";
+import MailingListComponent from "~/components/misc/mailinglist";
 
 import {
   HomeCommunityComponent,

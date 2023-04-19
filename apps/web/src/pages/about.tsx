@@ -2,6 +2,7 @@ import { type NextPage } from "next";
 
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
+import MailingListComponent from "~/components/misc/mailinglist";
 
 import {
   AboutUsComponent,
@@ -9,8 +10,6 @@ import {
   AboutUsCoreValueComponent,
   AboutUsVisionMissionComponent,
 } from "~/components/pages/about";
-
-import { MailingListComponent } from "~/components/misc/mailinglist";
 
 const AboutUs: NextPage = () => {
   return (

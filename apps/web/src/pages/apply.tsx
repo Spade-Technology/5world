@@ -1,8 +1,9 @@
 import React from "react";
 import Description from "~/components/commonComponents/description";
-import Subscription from "~/components/commonComponents/subscription";
+
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
+import MailingListComponent from "~/components/misc/mailinglist";
 
 import FAQSection from "~/components/pages/apply/FAQSection";
 import SectionOne from "~/components/pages/apply/sectionOne";
@@ -26,7 +27,7 @@ const apply = (props: Props) => {
 
         <FAQSection />
 
-        <Subscription />
+        <MailingListComponent />
       </div>
       <Footer />
     </>

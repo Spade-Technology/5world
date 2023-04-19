@@ -6,9 +6,10 @@ import Image from "next/image";
 import BlogCard from "~/components/pages/blog/blogCard";
 import LeftArrow from "public/icons/blog/leftArrow.svg";
 import RightArrow from "public/icons/blog/rightArrow.svg";
-import Subscription from "~/components/commonComponents/subscription";
+
 import { useEffect, useState } from "react";
 import { blogDetails } from "~/components/pages/blog/blogDetails";
+import MailingListComponent from "~/components/misc/mailinglist";
 
 const Blog = () => {
   const [pageCount, setPageCount] = useState(1);
@@ -125,7 +126,7 @@ const Blog = () => {
         />
       </div>
 
-      <Subscription />
+      <MailingListComponent />
     </div>
   );
 };
