@@ -13,7 +13,7 @@ const Description = (props: Props) => {
 
   return (
     <div
-      className={`${containerClass} md:flex-row md:gap-14 md:px-20 ${
+      className={`${containerClass} mx-auto max-w-[1280px] md:flex-row md:gap-14 ${
         props.invertColors ? "bg-vdao-deep text-white" : ""
       }`}
     >

@@ -11,8 +11,8 @@ const Donate = () => {
   return (
     <>
       <Header className="bg-vdao-deep text-white" invertImages={true} />
-      <div className="w-fit ">
-        <div className="max-w-[1280px] bg-vdao-deep">
+      <div className="w-screen overflow-hidden bg-vdao-deep">
+        <div className="mx-auto max-w-[1280px]">
           <Description
             invertColors={true}
             title={<div className="pr-[23px] ">Donate</div>}

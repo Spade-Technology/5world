@@ -4,16 +4,16 @@ import PurpleButton from "~/styles/shared/buttons/purpleButton";
 
 const HowItWorks = () => {
   return (
-    <div className="bg-vdao-deep px-10 py-20 text-white md:py-[140px] md:px-20">
-      <div className="flex flex-col  gap-10 md:flex-row md:gap-[22px]">
+    <div className="mx-auto max-w-[1280px] bg-vdao-deep px-6 py-20 text-white md:py-[140px]">
+      <div className="flex flex-col gap-10 md:flex-row md:gap-[22px]">
         <div className="flex-1">
-          <span className="mr-5 underline underline-offset-8 font-heading text-4xl font-medium md:float-right">
+          <span className="mr-5 font-heading text-4xl font-medium underline underline-offset-8 md:float-right">
             How it works
           </span>
         </div>
         <div className="flex-1">
           <Image src={groupImage} alt="group-image" />
-          <div className="pt-[30px] md:pr-28 font-body text-lg font-normal">
+          <div className="pt-[30px] font-body text-lg font-normal md:pr-28">
             Participating in a VDAO NFT auction is not only a chance to show
             your financial support for this mission, but also gives exclusive
             access to the wider VDAO ecosystem, including real-world learning

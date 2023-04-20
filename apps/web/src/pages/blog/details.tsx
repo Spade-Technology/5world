@@ -12,12 +12,13 @@ const BlogDetails = () => {
   const {
     query: { id },
   } = router;
-  console.log("router", router, id);
+
   return (
     <>
       <Header />
-      <div className="bg-white text-vdao-dark">
-        <Link href="/blog" className="mx-10 flex gap-3 md:mx-20">
+
+      <div className="mx-auto max-w-[1280px] bg-white text-vdao-dark">
+        <Link href="/blog" className="mt-5 mb-8 flex gap-3">
           <Image src={BackArrow} alt="" width={20} />
           <div className="text-lg"> Back</div>
         </Link>
@@ -26,6 +27,7 @@ const BlogDetails = () => {
 
         <Recommends />
       </div>
+
       <Footer />
     </>
   );

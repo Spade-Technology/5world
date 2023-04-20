@@ -12,7 +12,7 @@ const BlogCard = ({ blog, showBorder }: cardProps) => {
   const router = useRouter();
   return (
     <div
-      className={`gap-12pt-10 mx-10 flex flex-col gap-12 md:mx-20 md:flex-row md:py-16  ${
+      className={`gap-12pt-10 flex flex-col gap-12 md:flex-row md:py-16  ${
         showBorder ? "border-b-[1px] border-black " : ""
       } `}
     >

@@ -5,7 +5,9 @@ const SectionOne = () => {
   /** styles for both mobile and web */
   const containerClass = "flex flex-col-reverse mx-6";
   return (
-    <div className={`${containerClass} md:flex-row md:gap-36 md:px-20`}>
+    <div
+      className={`${containerClass} mx-auto max-w-[1280px] px-6 md:flex-row md:gap-36 md:px-20`}
+    >
       <div className="flex-1 md:py-20">
         <div className="pt-14 text-3xl font-medium md:pt-12">Head</div>
         <div className="pt-5 text-lg font-normal md:pt-4">
@@ -31,8 +33,8 @@ const SectionOne = () => {
           events both internally and externally.
         </div>
       </div>
-      
-      <div className="flex-1 md:pt-36">
+
+      <div className="mx-auto flex-1 md:my-auto md:scale-125">
         <Image
           src={applyImage}
           alt="VDAO-header"

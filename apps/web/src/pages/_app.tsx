@@ -30,26 +30,28 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <SessionProvider session={session}>
-      <RainbowKitSiweNextAuthProvider
-        getSiweMessageOptions={getSiweMessageOptions}
-      >
-        <Web3Context>
-          <ConfigProvider
-            theme={{
-              token: {
-                colorPrimary: "#36DFAE",
-                fontFamily: "Clash Display",
-              },
-            }}
-          >
-            <StyleProvider hashPriority="high">
-              <Component {...pageProps} />
-            </StyleProvider>
-          </ConfigProvider>
-        </Web3Context>
-      </RainbowKitSiweNextAuthProvider>
-    </SessionProvider>
+    <>
+      <SessionProvider session={session}>
+        <RainbowKitSiweNextAuthProvider
+          getSiweMessageOptions={getSiweMessageOptions}
+        >
+          <Web3Context>
+            <ConfigProvider
+              theme={{
+                token: {
+                  colorPrimary: "#36DFAE",
+                  fontFamily: "Clash Display",
+                },
+              }}
+            >
+              <StyleProvider hashPriority="high">
+                <Component {...pageProps} />
+              </StyleProvider>
+            </ConfigProvider>
+          </Web3Context>
+        </RainbowKitSiweNextAuthProvider>
+      </SessionProvider>
+    </>
   );
 };
 

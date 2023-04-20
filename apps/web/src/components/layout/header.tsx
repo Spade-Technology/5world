@@ -12,7 +12,7 @@ import darkDiscourse from "public/illustrations/socials/darkDiscourse.svg";
 import darkDiscord from "public/illustrations/socials/darkDiscord.svg";
 
 import twitter from "public/illustrations/socials/twitter.svg";
-import { Collapse, Divider } from "antd";
+import { Collapse, Divider, Tooltip } from "antd";
 import { VDAOConnectButton } from "../walletconnect/connectbutton";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -70,9 +70,29 @@ const Header = (props: Props) => {
         </Link>
         <div className="ml-72 flex justify-between gap-9 text-vdao-dark">
           {navigationElements.map((element) => (
-            <Link href={element.link} key={element.name}>
-              {element.name}
-            </Link>
+            <Tooltip
+              placement="bottomLeft"
+              color="white"
+              title={
+                element.children &&
+                element.children.length > 0 && (
+                  <div className="flex flex-col gap-5 px-10 py-8">
+                    {element.children?.map((child) => (
+                      <Link
+                        className="small-text !text-vdao-dark"
+                        href={child.link}
+                        key={child.name}
+                      >
+                        {child.name}
+                      </Link>
+                    ))}
+                  </div>
+                )
+              }
+              key={element.name}
+            >
+              <Link href={element.link}>{element.name}</Link>
+            </Tooltip>
           ))}
         </div>
         <div className="flex gap-7">
@@ -108,7 +128,7 @@ const Header = (props: Props) => {
         </Link>
         <button
           onClick={toggleMobileMenu}
-          className="rounded-md p-2 text-vdao-dark transition-all focus:outline-none focus:ring-2 focus:ring-vdao-dark focus:ring-offset-2"
+          className="rounded-md px-2 text-vdao-dark transition-all focus:outline-none focus:ring-2 focus:ring-vdao-dark focus:ring-offset-2"
         >
           <span className="sr-only">Open menu</span>
           <svg

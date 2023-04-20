@@ -9,20 +9,19 @@ const GetFunding = () => {
   return (
     <>
       <Header />
-      <div className="w-fit bg-white text-vdao-dark">
+      <div className="w-screen bg-white text-vdao-dark">
         <Description
           title={
-            <div>
-              Get
-              <br /> Funding
-            </div>
+            <p>
+              Get <br /> Funding{" "}
+            </p>
           }
           description={
-            <div>
+            <p>
               VDAO welcomes all funding proposals that align with its vision and
               mission of regenerating our planet through systems thinking,
               research, and innovation.
-            </div>
+            </p>
           }
         />
 

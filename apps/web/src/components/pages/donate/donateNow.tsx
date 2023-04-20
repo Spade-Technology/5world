@@ -57,7 +57,7 @@ const DonateNow = (props: Props) => {
             </div>
           </form>
 
-          <div className="mt-[30px] flex w-[353px] rounded-md border-[1px] border-solid border-black">
+          <div className="mt-[30px] flex rounded-md border-[1px] border-solid border-black md:w-[353px]">
             <div className="flex flex-1 border-r-[1px] border-r-black bg-vdao-lightpurple py-[10px] px-[15px]">
               <Image src={ETHIcon} alt="ETHIcon" />
               <div className="px-[10px] text-lg font-medium text-vdao-dark">

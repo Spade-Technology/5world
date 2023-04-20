@@ -10,13 +10,15 @@ const Details = ({ id }: DetailProps) => {
   const details = blogDetails[Number(id)];
 
   return (
-    <div className=" mx-10 mt-10 md:mx-20 ">
+    <div className=" mx-6 mt-10 mb-24">
       <div className="mx-60">
         <div className="text-lg font-bold ">{details?.createdAt}</div>
+
         <div className="pt-5 font-heading text-3xl font-medium">
           {details?.heading}
         </div>
-        <div className="flex pt-2">
+
+        <div className="mx-auto flex">
           <Image
             src={details?.createdByProfile}
             alt=""

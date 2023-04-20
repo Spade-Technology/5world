@@ -18,7 +18,7 @@ const Card = (props: CardProps) => {
         {props.description}
       </div>
       <div className="mt-8 flex-1">
-        <PrimaryButton text={props.buttonText} className= "py-1" />
+        <PrimaryButton text={props.buttonText} className="py-1" />
       </div>
     </div>
   );
@@ -27,8 +27,9 @@ const Card = (props: CardProps) => {
 const SectionTwo = () => {
   /** Common styled for both mobile and web */
   const containerClass = "";
+
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="mx-auto flex max-w-[1440px] flex-col md:flex-row">
       <div className="flex-1">
         <Image
           src={IllustrationImage}

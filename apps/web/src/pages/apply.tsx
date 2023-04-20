@@ -16,7 +16,7 @@ const apply = (props: Props) => {
   return (
     <>
       <Header />
-      <div className="w-fit bg-white text-vdao-dark">
+      <div className="w-screen bg-white text-vdao-dark">
         <Description
           title={
             <div>
