@@ -6,7 +6,7 @@ import Image from "next/image";
 const Badges = () => {
   return (
     <div className="max-w-[1280px] px-16 pt-[42px] pb-[60px] font-body text-white md:px-0 md:pb-[120px] md:pt-[5.64px]">
-      <div className="flex flex-col gap-10 md:flex-row md:gap-[120px]">
+      <div className="xl:px-O flex flex-col gap-10 px-0 md:flex-row md:gap-[120px] md:px-12">
         <div className="flex-1">
           <Image src={GoldBadge} alt="GoldBadge" className="mx-auto" />
           <div className="border-b-2 border-b-white pt-4 pb-[20px] text-center font-heading text-3xl font-medium md:pt-[71px]">

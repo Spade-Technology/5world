@@ -8,7 +8,9 @@ const Description = (props: Props) => {
   /** Common Styles for mobile and web */
   const containerClass =
     "flex justify-items-end gap-8 text-lg px-6 py-16 flex-col font-normal";
+
   const titleClass = "flex-1 text-5xl";
+
   const descriptionClass = "flex-1 text-lg px-0.5";
 
   return (

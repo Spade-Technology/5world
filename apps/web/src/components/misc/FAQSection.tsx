@@ -14,7 +14,7 @@ const FAQSection = (props: FAQProps) => {
   const [index, setIndex] = useState<number>(0);
 
   return (
-    <div className="mx-10 my-20 flex max-w-[1280px] flex-col bg-white text-vdao-dark md:mx-auto md:mt-28  md:gap-9">
+    <div className="xl:px-O mx-10 my-20 flex max-w-[1280px] flex-col bg-white px-0 text-vdao-dark md:mx-auto md:mt-28 md:gap-9 md:px-12">
       <div className="w-full font-heading text-3xl font-medium md:text-5xl">
         Frequently asked Questions
       </div>

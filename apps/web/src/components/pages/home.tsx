@@ -25,7 +25,7 @@ import PleasrHouseLogo from "public/thirdparty/pleasrHouse.png";
 
 export function HomeCTAComponent() {
   return (
-    <section className="flex flex-col items-center bg-gradient-to-r from-vdao-light to-vdao-dark py-24 px-6 md:px-0">
+    <section className="flex flex-col items-center bg-gradient-to-r from-vdao-light to-vdao-dark py-24 px-6 md:px-8 xl:px-0">
       <h1 className="text-center text-5xl font-medium text-white">
         Ready to Join?
       </h1>
@@ -42,7 +42,7 @@ export function HomeCTAComponent() {
 
 export function HomePartnersComponent() {
   return (
-    <section className="overflow-hidden px-6 text-vdao-dark md:px-0">
+    <section className="overflow-hidden px-6 text-vdao-dark md:px-8 xl:px-0">
       <div className="mx-auto flex max-w-[1440px] flex-col md:flex-row">
         <div className="mt-24 max-w-[1280px] md:mx-auto md:w-1/2 ">
           <h1 className="mb-6 w-full text-left text-5xl font-medium">
@@ -72,8 +72,8 @@ export function HomePartnersComponent() {
 export function HomeCommunityComponent() {
   return (
     <section className="mt-36 overflow-hidden bg-vdao-dark px-6 text-vdao-light  md:px-0">
-      <div className="mx-auto flex max-w-[1440px] flex-col">
-        <div className="mx-auto mt-24 w-full max-w-[1280px] ">
+      <div className="mx-auto flex max-w-[1440px] flex-col ">
+        <div className="xl:p-O mx-auto mt-24 w-full max-w-[1280px] p-0 md:px-8">
           <h1 className="mb-6 w-full text-left text-5xl font-medium">
             Community
           </h1>
@@ -87,7 +87,7 @@ export function HomeCommunityComponent() {
             alt="VDAO"
             className="my-10 scale-125 md:my-0 md:w-1/3 md:scale-100"
           />
-          <div className="grid w-full grid-flow-col grid-cols-1 grid-rows-4 gap-12 md:grid-cols-2 md:grid-rows-2">
+          <div className="gapx-8 grid w-full grid-flow-col grid-cols-1 grid-rows-4 md:grid-cols-2 md:grid-rows-2">
             <div className="flex max-w-[340px] flex-col gap-4">
               <h1 className="text-2xl font-medium">Apolitical</h1>
               <span className="text-lg font-normal">
@@ -126,7 +126,7 @@ export function HomeCommunityComponent() {
 
 export function HomeGetInvolvedComponent() {
   return (
-    <section className="mx-6 my-36 flex max-w-[1440px] flex-col md:mx-auto">
+    <section className="xl:p-O mx-6 my-36 flex max-w-[1440px] flex-col p-0 md:px-8 lg:mx-auto">
       <div className="mx-auto w-full max-w-[1280px]">
         <h1 className="mb-6 w-full text-left text-5xl font-medium">
           Get Involved
@@ -135,16 +135,16 @@ export function HomeGetInvolvedComponent() {
           Support VDAOs mission in 3 ways:
         </span>
       </div>
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col lg:flex-row">
         <Image
           src={VDAOGetInvolved}
           alt="VDAO"
           height={750}
           width={750}
-          className="my-10 md:my-auto md:h-[750px] md:w-[750px]"
+          className=" my-auto h-[45vw] w-[45vw] xl:!h-[750px] xl:!w-[750px]"
         />
         <div className="flex w-full justify-center">
-          <div className=" flex max-w-xs flex-col gap-16">
+          <div className="flex max-w-xs flex-col gap-16">
             <div className="flex flex-col">
               <h1 className="mb-4 text-2xl font-medium text-vdao-dark">
                 NFT Auction
@@ -212,7 +212,7 @@ const ObjectiveSubComponent = ({
 
 export function HomeObjectivesComponent() {
   return (
-    <section className="mx-auto mt-36 flex max-w-[1440px] flex-col">
+    <section className="xl:p-O mx-auto mt-36 flex max-w-[1440px] flex-col p-0 md:px-8">
       <h1 className="w-full text-center text-5xl font-medium">
         Core Objectives
       </h1>
@@ -244,13 +244,13 @@ export function HomeObjectivesComponent() {
 
 export function HomeIntroComponent() {
   return (
-    <section className="mx-auto mt-36 flex max-w-[1440px] flex-col-reverse overflow-hidden px-6 md:flex-row md:px-0">
+    <section className="mx-auto mt-36 flex max-w-[1440px] flex-col-reverse overflow-hidden px-6 md:flex-row md:px-8 xl:px-0 ">
       <Image
         src={IntroHero}
         alt="VDAO"
-        className="-translate-x-16 scale-150 md:-mt-14 md:w-1/2 md:translate-x-0 md:scale-100"
+        className="my-auto h-1/2 w-1/2 -translate-x-16 scale-150 md:-mt-14 md:translate-x-0 md:scale-100 "
       />
-      <div className="z-10 flex flex-col">
+      <div className="z-10 flex w-full flex-col">
         <h1 className="text-5xl font-medium ">Introduction</h1>
         <span className="mt-9 text-vdao-dark">
           VDAO funds regenerative agriculture research and development (R&D)

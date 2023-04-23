@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export function AboutUsCoreTeamComponent() {
   return (
-    <section className="px6 mx-auto my-36 flex max-w-[1280px] flex-col px-6 md:px-0">
+    <section className="xl:px-O mx-auto my-36 flex max-w-[1280px] flex-col px-6 md:px-12">
       <div className="flex w-full flex-col md:flex-row">
         <h1 className="mb-6 w-full text-left text-4xl font-medium md:text-5xl">
           Our Core Team
@@ -17,7 +17,7 @@ export function AboutUsCoreTeamComponent() {
       </div>
       <div className="mt-20 flex">
         <div className="flex w-full justify-center">
-          <div className="flex flex-col gap-16 md:flex-row">
+          <div className="grid grid-cols-1 gap-16 md:grid-cols-3 xl:grid-cols-5">
             <div className="flex flex-col">
               <div className="h-72 w-72 bg-vdao-lightpurple  opacity-70"></div>
               <h1 className="mt-5 font-body text-2xl font-medium text-vdao-dark">
@@ -62,7 +62,7 @@ export function AboutUsCoreTeamComponent() {
       </div>
       <div className="flex">
         <div className="flex w-full justify-center">
-          <div className="flex flex-col gap-16 md:flex-row">
+          <div className="grid grid-cols-1 gap-16 md:grid-cols-3 xl:grid-cols-5">
             <div className="flex flex-col">
               <div className="h-72 w-72 bg-vdao-lightpurple  opacity-70"></div>
               <h1 className="mt-5 font-body text-2xl font-medium text-vdao-dark">
@@ -109,7 +109,7 @@ export function AboutUsCoreTeamComponent() {
       </div>
       <div className="flex">
         <div className="flex w-full justify-center">
-          <div className="flex flex-col gap-16 md:flex-row">
+          <div className="grid grid-cols-1 gap-16 md:grid-cols-3 xl:grid-cols-5">
             <div className="flex flex-col">
               <div className="h-72 w-72 bg-vdao-lightpurple  opacity-70"></div>
               <h1 className="mt-5 font-body text-2xl font-medium text-vdao-dark">
@@ -155,7 +155,7 @@ export function AboutUsCoreTeamComponent() {
 
 export function AboutUsVisionMissionComponent() {
   return (
-    <section className="my-36 flex flex-col overflow-hidden py-24 px-6 text-vdao-dark md:flex-row md:px-0">
+    <section className="xl:px-O my-36 flex flex-col overflow-hidden  py-24 px-6 text-vdao-dark md:flex-row md:px-12">
       <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-20">
         <div className="flex flex-col md:flex-row">
           <h1 className="mb-6 w-full text-4xl font-medium underline md:text-center md:text-5xl">
@@ -202,7 +202,7 @@ export function AboutUsVisionMissionComponent() {
 
 export function AboutUsCoreValueComponent() {
   return (
-    <section className="my-36 overflow-hidden bg-vdao-deep py-24 px-6 text-vdao-light md:px-0">
+    <section className="xl:px-O my-36 bg-vdao-deep py-24  px-6 text-vdao-light md:px-12 xl:overflow-hidden">
       <div className="mx-auto flex max-w-[1440px] flex-col ">
         <div className="mx-auto w-full max-w-[1280px] ">
           <h1 className="mb-6 w-full text-left text-4xl font-medium md:text-5xl">
@@ -261,7 +261,7 @@ export function AboutUsCoreValueComponent() {
 
 export function AboutUsComponent() {
   return (
-    <section className="my-16 flex w-full max-w-[1280px] flex-col px-6 md:mx-auto md:px-0">
+    <section className="xl:px-O my-16 flex w-full max-w-[1280px] flex-col px-6 md:mx-auto md:px-12 ">
       <h1 className="mb-6 text-left text-4xl font-medium md:w-1/2 md:text-8xl">
         About Us
       </h1>

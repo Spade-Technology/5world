@@ -19,6 +19,7 @@ import {
   RainbowKitAuthenticationProvider,
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
+import Head from "next/head";
 // antd css
 
 const getSiweMessageOptions: GetSiweMessageOptions = () => ({
@@ -31,6 +32,15 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <>
+      <Head>
+        <link
+          href="https://fonts.cdnfonts.com/css/clash-display"
+          rel="stylesheet"
+        />
+        <link href="https://fonts.cdnfonts.com/css/satoshi" rel="stylesheet" />
+        <link href="https://fonts.cdnfonts.com/css/inter" rel="stylesheet" />
+      </Head>
+
       <SessionProvider session={session}>
         <RainbowKitSiweNextAuthProvider
           getSiweMessageOptions={getSiweMessageOptions}

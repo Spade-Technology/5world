@@ -64,11 +64,11 @@ const Header = (props: Props) => {
   return (
     <header className="h-24">
       {/* Desktop */}
-      <div className="z-50 mx-auto hidden h-24 max-w-[1280px] items-center justify-between md:flex ">
+      <div className="z-50 mx-auto hidden h-24 max-w-[1280px] items-center justify-between px-0 md:flex md:px-6 xl:px-0">
         <Link href="/">
           <Image src={logo} alt="VDAO" height={30} />
         </Link>
-        <div className="ml-72 flex justify-between gap-9 text-vdao-dark">
+        <div className="flex justify-between gap-9 text-vdao-dark xl:ml-72">
           {navigationElements.map((element) => (
             <Tooltip
               placement="bottomLeft"
@@ -95,7 +95,7 @@ const Header = (props: Props) => {
             </Tooltip>
           ))}
         </div>
-        <div className="flex gap-7">
+        <div className="hidden gap-7 lg:flex">
           <Image
             src={props.invertImages ? darkDiscourse : discourse}
             alt="VDAO"
@@ -163,7 +163,7 @@ const Header = (props: Props) => {
       >
         <div className="antd-stop-propagation space-y-1 px-6 pt-2 pb-3">
           {navigationElements.map((element) => (
-            <MobileSubmenu element={element} />
+            <MobileSubmenu element={element} key={element.name} />
           ))}
         </div>
         <div className="flex flex-col items-center pt-4 pb-3">
@@ -190,7 +190,7 @@ const MobileSubmenu = (props: { element: NavigationElement }) => {
   const toggleChild = () => hasChildren && setIsChildOpen(!isChildOpen);
 
   return (
-    <div>
+    <>
       <button
         onClick={hasChildren ? toggleChild : () => router.push(element.link)}
         className={
@@ -238,7 +238,7 @@ const MobileSubmenu = (props: { element: NavigationElement }) => {
             </Link>
           ))}
       </div>
-    </div>
+    </>
   );
 };
 
