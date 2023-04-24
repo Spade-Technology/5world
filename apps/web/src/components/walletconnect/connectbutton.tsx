@@ -1,9 +1,25 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import Link from "next/link";
 
-export const VDAOConnectButton = ({ className }: { className?: string }) => {
+export const VDAOConnectButton = ({
+  className,
+  web2,
+}: {
+  className?: string;
+  web2?: boolean;
+}) => {
   const buttonStyle = `rounded-md border-[1px] h-10 px-5 font-heading font-medium ${
     className ? className : ""
   }`;
+
+  if (web2)
+    return (
+      <Link href="/app">
+        <button type="button" className={buttonStyle}>
+          Open App
+        </button>
+      </Link>
+    );
 
   return (
     <ConnectButton.Custom>

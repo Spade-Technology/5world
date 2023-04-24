@@ -17,25 +17,9 @@ import {
 const Home: NextPage = () => {
   return (
     <>
-      <Header web2/>
+      <Header />
 
-      <div className="w-full text-vdao-dark ">
-        <HomeWelcomeComponent />
-
-        <HomeIntroComponent />
-
-        <HomeObjectivesComponent />
-
-        <HomeGetInvolvedComponent />
-
-        <HomeCommunityComponent />
-
-        <HomePartnersComponent />
-
-        <HomeCTAComponent />
-
-        <MailingListComponent />
-      </div>
+      <div className="w-full text-vdao-dark ">Welcome to VDAO</div>
 
       <Footer />
     </>

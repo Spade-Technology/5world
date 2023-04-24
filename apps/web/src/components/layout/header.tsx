@@ -21,7 +21,7 @@ const { Panel } = Collapse;
 type Props = {
   signatures?: number;
   className?: string;
-  invertImages?: boolean;
+  web2?: boolean;
 };
 
 type NavigationElement = {
@@ -62,13 +62,18 @@ const Header = (props: Props) => {
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   return (
-    <header className="h-24">
+    <header className={"h-24 " + (props.web2 ? "bg-white" : "bg-vdao-deep")}>
       {/* Desktop */}
       <div className="z-50 mx-auto hidden h-24 max-w-[1280px] items-center justify-between px-0 md:flex md:px-6 xl:px-0">
         <Link href="/">
           <Image src={logo} alt="VDAO" height={30} />
         </Link>
-        <div className="flex justify-between gap-9 text-vdao-dark xl:ml-72">
+        <div
+          className={
+            "flex justify-between gap-9 xl:ml-72 " +
+            (props.web2 ? "text-vdao-dark" : "text-white")
+          }
+        >
           {navigationElements.map((element) => (
             <Tooltip
               placement="bottomLeft"
@@ -79,7 +84,7 @@ const Header = (props: Props) => {
                   <div className="flex flex-col gap-5 px-10 py-8">
                     {element.children?.map((child) => (
                       <Link
-                        className="small-text !text-vdao-dark"
+                        className="small-text"
                         href={child.link}
                         key={child.name}
                       >
@@ -97,14 +102,14 @@ const Header = (props: Props) => {
         </div>
         <div className="hidden gap-7 lg:flex">
           <Image
-            src={props.invertImages ? darkDiscourse : discourse}
+            src={props.web2 ? discourse : darkDiscourse}
             alt="VDAO"
             width={30}
             height={30}
             className="hidden md:block"
           />
           <Image
-            src={props.invertImages ? darkDiscord : discordCircle}
+            src={props.web2 ? discordCircle : darkDiscord}
             alt="VDAO"
             width={30}
             height={30}
@@ -113,16 +118,17 @@ const Header = (props: Props) => {
         </div>
 
         <VDAOConnectButton
+          web2={props.web2}
           className={
-            props.invertImages
-              ? "border-vdao-light text-vdao-light"
-              : "border-vdao-dark text-vdao-dark"
+            props.web2
+              ? "border-vdao-dark text-vdao-dark"
+              : "border-vdao-light text-vdao-light"
           }
         />
       </div>
 
       {/* Mobile */}
-      <div className="my-16 flex w-screen items-center justify-between px-4 md:hidden">
+      <div className="flex w-screen items-center justify-between py-16 px-4 md:hidden">
         <Link href="/">
           <Image src={logo} alt="VDAO" height={30} />
         </Link>
@@ -172,7 +178,10 @@ const Header = (props: Props) => {
             <Image src={discordCircle} alt="VDAO" width={50} height={50} />
           </div>
           <div className="flex items-center px-5">
-            <VDAOConnectButton className="border-vdao-dark text-vdao-dark" />
+            <VDAOConnectButton
+              className="border-vdao-dark text-vdao-dark"
+              web2={props.web2}
+            />
           </div>
         </div>
       </div>
