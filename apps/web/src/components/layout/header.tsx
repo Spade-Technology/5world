@@ -163,13 +163,18 @@ const Header = (props: Props) => {
 
       <div
         className={
-          "absolute z-50 w-screen -translate-x-full bg-white transition-all md:hidden " +
-          (isMobileMenuOpen && "!translate-x-0")
+          "absolute z-50 w-screen -translate-x-full transition-all md:hidden " +
+          (props.web2 ? "bg-white " : "bg-vdao-deep ") +
+          (isMobileMenuOpen && "!translate-x-0 ")
         }
       >
         <div className="antd-stop-propagation space-y-1 px-6 pt-2 pb-3">
           {navigationElements.map((element) => (
-            <MobileSubmenu element={element} key={element.name} />
+            <MobileSubmenu
+              element={element}
+              key={element.name}
+              web2={props.web2}
+            />
           ))}
         </div>
         <div className="flex flex-col items-center pt-4 pb-3">
@@ -189,8 +194,11 @@ const Header = (props: Props) => {
   );
 };
 
-const MobileSubmenu = (props: { element: NavigationElement }) => {
-  const { element } = props;
+const MobileSubmenu = (props: {
+  element: NavigationElement;
+  web2?: boolean;
+}) => {
+  const { element, web2 } = props;
 
   const [isChildOpen, setIsChildOpen] = useState(false);
   const router = useRouter();
@@ -203,8 +211,12 @@ const MobileSubmenu = (props: { element: NavigationElement }) => {
       <button
         onClick={hasChildren ? toggleChild : () => router.push(element.link)}
         className={
-          "h3 flex w-full items-center justify-between py-2 text-left text-base font-medium text-vdao-dark hover:bg-opacity-75 focus:outline-none " +
-          (isChildOpen && "text-vdao-light")
+          "h3 flex w-full items-center justify-between py-2 text-left text-base font-medium hover:bg-opacity-75 focus:outline-none " +
+          (isChildOpen
+            ? "text-vdao-light"
+            : web2
+            ? "text-vdao-dark "
+            : "text-white ")
         }
       >
         {element.name}
@@ -230,7 +242,7 @@ const MobileSubmenu = (props: { element: NavigationElement }) => {
       <div
         style={{
           maxHeight: isChildOpen
-            ? `${(element?.children?.length || 0) * 2}rem`
+            ? `${(element?.children?.length || 0) * 3}rem`
             : "0",
           overflow: "hidden",
           transition: "max-height 0.3s ease-in-out",
@@ -241,7 +253,10 @@ const MobileSubmenu = (props: { element: NavigationElement }) => {
             <Link
               href={child.link}
               key={child.name}
-              className="big-text-mobile block py-1 pl-4 text-sm font-medium text-vdao-dark hover:bg-opacity-75"
+              className={
+                "big-text-mobile block py-1 pl-4 text-sm font-medium last:mb-4 hover:bg-opacity-75 " +
+                (web2 ? "text-vdao-dark " : "text-white ")
+              }
             >
               {child.name}
             </Link>
