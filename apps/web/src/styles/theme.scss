@@ -1,0 +1,115 @@
+$clash: "clash display";
+$sat: "satoshi";
+$inter: "inter";
+$darkGreen: #1d555c;
+$lightGreen: #36dfae;
+$white: #ffffff;
+$semiWhite: #f8f2ff;
+
+// SMALL SCREEN WIDTH PIXEL CALCULATOR
+@function scaleX($value, $ideal: 390, $current: 100vw) {
+  @return calc(#{$value} * (#{$current} / #{$ideal}));
+}
+@function scaleY($value, $ideal: 878, $current: 100vh) {
+  @return calc(#{$value} * (#{$current} / #{$ideal}));
+}
+@mixin size(
+  $height: "",
+  $width: "",
+  $minHeight: "",
+  $bottom: "",
+  $top: "",
+  $left: "",
+  $right: "",
+  $border: "",
+  $borderRadius: "",
+  $bg: "",
+  $mTop: "",
+  $pos: "",
+  $padding: "",
+  $margin: ""
+) {
+  position: $pos;
+  bottom: #{scaleX($bottom)};
+  top: #{scaleX($top)};
+  left: #{scaleX($left)};
+  right: #{scaleX($right)};
+  height: #{scaleX($height)};
+  margin-top: #{scaleX($mTop)};
+  padding: $padding;
+  margin: $margin;
+  width: #{scaleX($width)};
+  border: $border;
+  border-radius: #{scaleX($borderRadius)};
+  background: $bg;
+}
+
+@mixin fonts(
+  $fFamily: "",
+  $fStyle: "",
+  $fSize: "",
+  $color: "",
+  $fWeight: "",
+  $lH: ""
+) {
+  font-family: $fFamily;
+  font-style: $fStyle;
+  font-size: #{scaleX($fSize)};
+  font-weight: $fWeight;
+  color: $color;
+  line-height: #{scaleX($lH)};
+}
+
+// LARGE SCREEN WIDTH PIXEL CALCULATOR
+@function scaleXL($value, $ideal: 1440, $current: 100vw) {
+  @return calc(#{$value} * (#{$current} / #{$ideal}));
+}
+@function scaleYL($value, $ideal: 4009, $current: 100vh) {
+  @return calc(#{$value} * (#{$current} / #{$ideal}));
+}
+@mixin sizeL(
+  $height: "",
+  $width: "",
+  $minHeight: "",
+  $bottom: "",
+  $top: "",
+  $left: "",
+  $right: "",
+  $border: "",
+  $borderRadius: "",
+  $bg: "",
+  $mTop: "",
+  $pos: "",
+  $padding: "",
+  $margin: ""
+) {
+  position: $pos;
+  bottom: #{scaleXL($bottom)};
+  top: #{scaleXL($top)};
+  left: #{scaleXL($left)};
+  right: #{scaleXL($right)};
+  height: #{scaleXL($height)};
+  margin-top: #{scaleXL($mTop)};
+  padding: $padding;
+  margin: $margin;
+  width: #{scaleXL($width)};
+  border: $border;
+  border-radius: #{scaleXL($borderRadius)};
+  background: $bg;
+}
+
+@mixin fontsL(
+  $fFamily: "",
+  $fStyle: "",
+  $fSize: "",
+  $color: "",
+  $fWeight: "",
+  $lH: ""
+) {
+  font-family: $fFamily;
+  font-style: $fStyle;
+  font-size: #{scaleXL($fSize)};
+  font-weight: $fWeight;
+  color: $color;
+  line-height: #{scaleXL($lH)};
+}
