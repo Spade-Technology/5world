@@ -6,7 +6,10 @@ const Grants = () => {
   return (
     <>
       <Header web3 />
-      <GrantsRound />
+
+      <div className="w-full text-vdao-dark">
+        <GrantsRound />
+      </div>
 
       <Footer />
     </>

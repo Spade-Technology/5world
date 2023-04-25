@@ -13,10 +13,13 @@ const NFT = () => {
     <>
       <Header className="bg-vdao-deep text-white" />
 
+      <div className="w-full text-vdao-dark">
       <NFTCollections />
 
       <FAQSection FAQS={FAQS} />
+
       <MailingListComponent />
+      </ div>
 
       <Footer />
     </>

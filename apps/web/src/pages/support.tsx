@@ -7,7 +7,9 @@ const Support = () => {
     <>
       <Header web3 />
 
-      <MemberSuport />
+      <div className="w-full text-vdao-dark">
+        <MemberSuport />
+      </div>
 
       <Footer />
     </>

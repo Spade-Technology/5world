@@ -19,7 +19,7 @@ const Home: NextPage = () => {
     <>
       <Header web2/>
 
-      <div className="w-full text-vdao-dark ">
+      <div className="w-full text-vdao-dark">
         <HomeWelcomeComponent />
 
         <HomeIntroComponent />

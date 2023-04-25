@@ -7,9 +7,13 @@ const Steward = () => {
   return (
     <>
       <Header web3 />
-      <StewardProfile />
 
-      <StewardCards />
+      <div className="w-full text-vdao-dark">
+        <StewardProfile />
+
+        <StewardCards />
+      </div>
+
       <Footer />
     </>
   );

@@ -7,8 +7,13 @@ const Election = () => {
   return (
     <>
       <Header web3 />
-      <StewardElection />
-      <ElectionCards />
+
+      <div className="w-full text-vdao-dark">
+        <StewardElection />
+
+        <ElectionCards />
+      </div>
+
       <Footer />
     </>
   );

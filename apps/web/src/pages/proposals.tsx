@@ -6,7 +6,11 @@ const Proposals = () => {
   return (
     <>
       <Header web3 />
-      <OperationalProposals />
+
+      <div className="w-full text-vdao-dark">
+        <OperationalProposals />
+      </div>
+
       <Footer />
     </>
   );

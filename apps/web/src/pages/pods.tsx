@@ -7,8 +7,12 @@ const Pods = () => {
     return(<>
       <Header web3 />
 
+      <div className="w-full text-vdao-dark">
       <PodsProfile />
+
       <PodCards />
+      </div>
+      
       <Footer />
     </>)
 }
