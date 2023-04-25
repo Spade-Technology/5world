@@ -1,5 +1,5 @@
 @import "../../styles/theme.scss";
-@media (max-width: 576px) {
+@media (max-width: 640px) {
   header {
     .title {
       @include size($mTop: 116, $width: 324);
@@ -330,7 +330,7 @@
     }
   }
 }
-@media (min-width: 576.1px) {
+@media (min-width: 640.1px) {
   header {
     .title {
       @include sizeL($mTop: 119);

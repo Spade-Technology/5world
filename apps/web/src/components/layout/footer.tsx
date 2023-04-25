@@ -31,8 +31,12 @@ const Footer = (props: Props) => {
           return (
             <div key={index}>
               <div className={footerStyle.title}>{title}</div>
-              {text.map(({ text }) => {
-                return <div className={footerStyle.text}>{text}</div>;
+              {text.map(({ text, url }, index) => {
+                return (
+                  <Link href={url} key={index}>
+                    <div className={footerStyle.text}>{text}</div>
+                  </Link>
+                );
               })}
             </div>
           );

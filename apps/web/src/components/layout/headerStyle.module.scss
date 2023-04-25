@@ -1,5 +1,5 @@
 @import "../../styles//theme.scss";
-@media (max-width: 576px) {
+@media (max-width: 640px) {
   .mobileNav {
     display: flex;
     justify-content: space-between;
@@ -16,7 +16,7 @@
     }
   }
 }
-@media (min-width: 576.1px) {
+@media (min-width: 640.1px) {
   .mobileNav {
     display: none;
   }
