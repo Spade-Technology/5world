@@ -42,6 +42,7 @@ const Home: NextPage<any> = ({ signatures }) => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <main className="bg-vdao-deep">
         <HeaderManifesto signatures={signatures.total} />
         <div className="px-4">

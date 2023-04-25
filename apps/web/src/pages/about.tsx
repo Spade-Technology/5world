@@ -14,23 +14,10 @@ import {
 const AboutUs: NextPage = () => {
   return (
     <>
-      <Header />
+      <Header web2 />
+
       <div className="w-full text-vdao-dark">
         <AboutUsComponent />
-        {/* <Description
-          title={<div>About Us</div>}
-          description={
-            <div>
-              Global ecosystem regeneration is a positive sum game: the more
-              effort we put in, the more we benefit.
-              <br />
-              <br />
-              Regardless of our political views, lifestyle or opinions, we can
-              all agree that regenerating degraded ecosystems is both neccessary
-              and worthwhile.
-            </div>
-          }
-        /> */}
 
         <AboutUsCoreValueComponent />
 
@@ -40,6 +27,7 @@ const AboutUs: NextPage = () => {
 
         <MailingListComponent />
       </div>
+
       <Footer />
     </>
   );

@@ -10,7 +10,8 @@ import MailingListComponent from "~/components/misc/mailinglist";
 const NFTCollections = () => {
   return (
     <>
-      <Header className="bg-vdao-deep text-white" invertImages={true} />
+      <Header className="bg-vdao-deep text-white" />
+
       <div className="w-screen bg-vdao-deep">
         <Description
           invertColors={true}
@@ -34,6 +35,7 @@ const NFTCollections = () => {
             </div>
           }
         />
+
         <HowItWorks />
       </div>
 

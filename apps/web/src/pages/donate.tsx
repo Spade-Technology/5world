@@ -10,8 +10,8 @@ import WhatsInIt from "~/components/pages/donate/whatsInIt";
 const Donate = () => {
   return (
     <>
-      <Header className="bg-vdao-deep text-white" invertImages={true} />
-      <div className="w-screen overflow-hidden bg-vdao-deep">
+      <Header className="bg-vdao-deep text-white" />
+      <div className=" overflow-hidden bg-vdao-deep">
         <div className="mx-auto max-w-[1280px]">
           <Description
             invertColors={true}

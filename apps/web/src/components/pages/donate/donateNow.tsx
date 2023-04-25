@@ -14,7 +14,7 @@ const DonateNow = (props: Props) => {
   return (
     <div
       className={
-        "mx-6 rounded-[20px] bg-white p-[50px] font-body text-vdao-dark md:mx-20 " +
+        "mx-6 rounded-2xl bg-white p-14 font-body text-vdao-dark md:mx-20 " +
         props.className
       }
     >

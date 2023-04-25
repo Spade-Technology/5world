@@ -8,7 +8,7 @@ import Description from "~/components/misc/description";
 const GetFunding = () => {
   return (
     <>
-      <Header />
+      <Header web2 />
       <div className="w-screen bg-white text-vdao-dark">
         <Description
           title={
