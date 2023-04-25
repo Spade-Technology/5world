@@ -21,7 +21,7 @@ const HowItWorks = () => {
           </div>
 
           <PurpleButton
-            text="Comming Soon"
+            text="Coming Soon"
             className="mt-[38px] py-[5px] font-heading text-xl font-medium"
           />
         </div>

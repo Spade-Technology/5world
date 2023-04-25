@@ -1,20 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { type } from "os";
 
 type cardProps = {
   blog: any;
   showBorder: boolean;
+  id: number;
 };
 
-const BlogCard = ({ blog, showBorder }: cardProps) => {
-  const router = useRouter();
+const BlogCard = ({ blog, showBorder, id }: cardProps) => {
   return (
     <div
-      className={`gap-12pt-10 flex flex-col gap-12 md:flex-row md:py-16  ${
+      className={`flex flex-col gap-12 md:flex-row md:pb-16  ${
         showBorder ? "border-b-[1px] border-black " : ""
-      } `}
+      } ${id > 0 ? "pt-10" : ""} `}
     >
       <div>
         <Image src={blog.image} alt="" />

@@ -57,14 +57,14 @@ const Blog = () => {
 
   return (
     <>
-      <Header />
+      <Header web2 />
       <div className="mx-auto max-w-[1280px] bg-white  text-vdao-dark">
-        <h1 className="px-6 pt-16 pb-10 text-8xl font-medium md:pb-16">Blog</h1>
+        <h1 className="px-6 pt-16 pb-10 text-8xl font-medium md:pb-0">Blog</h1>
 
         <div className="flex w-full flex-col-reverse justify-end gap-3 py-10 px-6 md:mr-20 md:flex-row md:px-0 md:py-16">
           <div className="flex h-10 w-full cursor-pointer justify-between rounded-md bg-vdao-dark px-5 py-1  text-white md:mx-0 md:w-48 md:py-2">
-            <span className="text-lg">Catagory</span>
-            <Image src={DownwardsArrow} alt="" height={8} width={10} />
+            <span className="text-lg my-auto">Catagory</span>
+            <Image src={DownwardsArrow} alt="" height={8} width={10} className="my-auto" />
           </div>
 
           <div>
@@ -83,6 +83,7 @@ const Blog = () => {
                   blog={blog}
                   key={idx}
                   showBorder={idx + 1 < updatedBlogs.length}
+                  id={idx}
                 />
               );
             })}
