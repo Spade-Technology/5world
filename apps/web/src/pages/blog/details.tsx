@@ -15,7 +15,7 @@ const BlogDetails = () => {
 
   return (
     <>
-      <Header />
+      <Header web2 />
 
       <div className="mx-auto max-w-[1280px] bg-white text-vdao-dark">
         <Link href="/blog" className="mt-5 mb-8 flex gap-3">

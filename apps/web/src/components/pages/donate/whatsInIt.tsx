@@ -1,8 +1,8 @@
 const WhatsInIt = () => {
   return (
-    <div className="xl:px-O mt-[60px] max-w-[1280px] px-6 font-body text-white md:mx-[140px] md:mt-[140px] md:px-12 xl:mx-[348px]">
+    <div className="xl:px-O mt-[60px] max-w-[1280px] px-6 font-body text-white md:ml-[140px] md:mt-[140px] md:px-12 xl:ml-[348px] md:mr-[100px]">
       <div className="mx-auto flex flex-col justify-between gap-5 md:flex-row md:gap-[43px] ">
-        <div className="flex-none font-heading text-4xl font-medium underline underline-offset-8 md:w-[225px]">
+        <div className="flex-none font-heading text-4xl font-medium underline underline-offset-8">
           What’s in it for me?
         </div>
 

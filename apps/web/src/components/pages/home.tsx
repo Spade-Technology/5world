@@ -276,7 +276,7 @@ export function HomeWelcomeComponent() {
     <section className="mx-auto flex max-w-[1440px] flex-col overflow-hidden">
       <div className="mx-auto mt-28 flex flex-col">
         <h1 className="text-center text-7xl font-medium">
-          Re:imagine the future
+          Re : imagine the future
         </h1>
         <h4 className="mt-5 text-center font-body text-2xl font-medium">
           A dao to restore ecosystems from the soil up.

@@ -7,7 +7,7 @@ type Props = {
 const Description = (props: Props) => {
   /** Common Styles for mobile and web */
   const containerClass =
-    "flex justify-items-end gap-8 text-lg px-6 py-16 flex-col font-normal";
+    "flex justify-items-end gap-8 text-lg px-6 md:px-0 pt-[76px] md:py-16 flex-col font-normal";
 
   const titleClass = "flex-1 text-5xl";
 
