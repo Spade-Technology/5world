@@ -22,7 +22,7 @@ type Props = {
   signatures?: number;
   className?: string;
   web2?: boolean;
-  web3?:boolean
+  web3?: boolean;
 };
 
 type NavigationElement = {
@@ -82,10 +82,10 @@ const Header = (props: Props) => {
               title={
                 element.children &&
                 element.children.length > 0 && (
-                  <div className="flex flex-col gap-5 px-10 py-8">
+                  <div className="flex flex-col gap-5 px-10 py-8 ">
                     {element.children?.map((child) => (
                       <Link
-                        className="small-text"
+                        className="small-text !text-vdao-dark hover:opacity-80"
                         href={child.link}
                         key={child.name}
                       >
