@@ -3,12 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import logo from "public/logo/png/color.png";
-import footerStyle from "./footerStyle.module.scss";
 
 import discord from "public/illustrations/socials/discord.svg";
 import discourse from "public/illustrations/socials/discourse.svg";
 import twitter from "public/illustrations/socials/twitter.svg";
-import { footerTexts } from "./mockData";
 
 type Props = {
   signatures?: number;
@@ -17,32 +15,57 @@ type Props = {
 
 const Footer = (props: Props) => {
   return (
-    <footer className={footerStyle.footer}>
-      <div>
-        <img
-          src={"/logo/svg/VDAO-color.svg"}
+    <footer>
+      <div className="mx-auto flex h-24 max-w-[1280px] flex-col gap-4 py-16 px-6">
+        <Image
+          src={logo}
           alt="VDAO"
-          className={footerStyle.img}
+          height={30}
+          className="mb-auto block md:hidden"
         />
-        <div className={footerStyle.copyL}>© 2023 5th World</div>
-      </div>
-      <section>
-        {footerTexts.map(({ title, text }, index) => {
-          return (
-            <div key={index}>
-              <div className={footerStyle.title}>{title}</div>
-              {text.map(({ text, url }, index) => {
-                return (
-                  <Link href={url} key={index}>
-                    <div className={footerStyle.text}>{text}</div>
-                  </Link>
-                );
-              })}
+        <div className="my-16 grid grid-cols-2 justify-between gap-16 md:mt-0 md:grid-cols-5 md:gap-0">
+          <Image
+            src={logo}
+            alt="VDAO"
+            height={30}
+            className="mb-auto hidden md:block"
+          />
+          <div>
+            <span className="font-medium text-vdao-dark">Participate</span>
+            <div className="mt-8 flex flex-col gap-4">
+              <Link href="/apply">Apply</Link>
+              <Link href="/nft">NFT Collections</Link>
+              <Link href="/donate">Donate</Link>
+              <Link href="/getfunding">Get Funding</Link>
             </div>
-          );
-        })}
-      </section>
-      <div className={footerStyle.copy}>© 2023 5th World</div>
+          </div>
+          <div>
+            <span className="font-medium text-vdao-dark">Community</span>
+            <div className="mt-8 flex flex-col gap-4">
+              <Link href="#">Discord</Link>
+              <Link href="#">Forum</Link>
+            </div>
+          </div>
+          <div>
+            <span className="font-medium text-vdao-dark">Organisation</span>
+            <div className="mt-8 flex flex-col gap-4">
+              <Link href="#">About Us</Link>
+              <Link href="#">Analytics</Link>
+              <Link href="#">Whitepaper</Link>
+            </div>
+          </div>
+          <div>
+            <span className="font-medium text-vdao-dark">Legal</span>
+            <div className="mt-8 flex flex-col gap-4">
+              <Link href="#">Terms of Service</Link>
+              <Link href="#">Privacy Policy</Link>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-vdao-dark">© 2023 5th World</span>
+        </div>
+      </div>
     </footer>
   );
 };

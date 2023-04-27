@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import headerStyle from "./headerStyle.module.scss";
+
 import Image from "next/image";
 
 import logo from "public/logo/png/color.png";
@@ -129,11 +129,14 @@ const Header = (props: Props) => {
       </div>
 
       {/* Mobile */}
-      <div className={headerStyle.mobileNav}>
+      <div className="my-16 flex w-screen items-center justify-between px-4 md:hidden">
         <Link href="/">
           <Image src={logo} alt="VDAO" height={30} />
         </Link>
-        <button onClick={toggleMobileMenu} className="">
+        <button
+          onClick={toggleMobileMenu}
+          className="rounded-md px-2 text-vdao-dark transition-all focus:outline-none focus:ring-2 focus:ring-vdao-dark focus:ring-offset-2"
+        >
           <span className="sr-only">Open menu</span>
           <svg
             className="h-8 w-8"
