@@ -7,6 +7,7 @@ import logo from "public/logo/png/color.png";
 import discord from "public/illustrations/socials/discord.svg";
 import discourse from "public/illustrations/socials/discourse.svg";
 import twitter from "public/illustrations/socials/twitter.svg";
+import { footerTexts } from "./mockData";
 
 type Props = {
   signatures?: number;

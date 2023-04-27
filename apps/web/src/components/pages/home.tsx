@@ -11,7 +11,6 @@ import InnovateIcon from "public/icons/home/VDAO-icon-home-innovate.svg";
 
 import VDAOGetInvolved from "public/illustrations/home/PNG/VDAO-get-involved.png";
 
-import Calc from "~/styles/widthCalculator";
 import { cardList, communityTexts, getInvolvedTexts } from "./mockData";
 import { Button } from "antd";
 
@@ -246,8 +245,8 @@ export function HomeObjectivesComponent() {
           title="Imagine"
           description="Our art and our vision helps others to experience how the world might look and feel once VDAO’s core mission is achieved."
         />
-      </div>
-    </section>
+      </section>
+    </article>
   );
 }
 
@@ -284,12 +283,12 @@ export function HomeIntroComponent() {
         </div>
       </section>
       <img
-        src={"/media/VDAO-introduction 1.svg"}
+        src={"/illustrations/home/SVG/VDAO-introduction 1.svg"}
         alt="VDAO"
         className={` mt-[7.986vw] hidden h-[23.681vw] w-[46.528vw] object-contain sm:block`}
       />
       <img
-        src={"/media/illustraion02 (1).svg"}
+        src={"/illustrations/home/SVG/illustraion02 (1).svg"}
         alt="VDAO"
         className={` mt-[5.128vw] mb-[8.462vw] h-[57.692vw] w-[100vw] sm:hidden`}
       />
