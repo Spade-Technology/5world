@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import logo from "public/logo/png/color.png";
-import footerStyle from "./footerStyle.module.scss";
 
 import discord from "public/illustrations/socials/discord.svg";
 import discourse from "public/illustrations/socials/discourse.svg";
@@ -17,24 +16,41 @@ type Props = {
 
 const Footer = (props: Props) => {
   return (
-    <footer className={footerStyle.footer}>
+    <footer className={` flex flex-col md:flex-row`}>
       <div>
         <img
           src={"/logo/svg/VDAO-color.svg"}
           alt="VDAO"
-          className={footerStyle.img}
+          className={`mt-[15.385vw] ml-[7.1719vw] h-[7.692vw] w-[32.231vw] md:mt-[4.167vw] md:mr-[11.34vw] md:ml-[10.486vw] md:h-[2.083vw] md:w-[8.729vw]`}
         />
-        <div className={footerStyle.copyL}>© 2023 5th World</div>
+        <div
+          className={`inter mt-[21.319vw] mb-[2.083vw] ml-[10.486vw] hidden text-[1.111vw] text-vdao-dark sm:block`}
+        >
+          © 2023 5th World
+        </div>
       </div>
-      <section>
+      <section
+        className={`ml-[7.179vw] flex flex-wrap justify-between md:ml-0`}
+      >
         {footerTexts.map(({ title, text }, index) => {
           return (
-            <div key={index}>
-              <div className={footerStyle.title}>{title}</div>
+            <div
+              key={index}
+              className={`w-[38.462vw] md:mr-[6.042vw] md:w-[8.681vw]`}
+            >
+              <div
+                className={`clash mt-[16.41vw] mb-[8.718vw] text-[5.128vw] font-medium text-vdao-dark md:mb-[2.431vw] md:mt-[4.167vw] md:text-[1.839vw]`}
+              >
+                {title}
+              </div>
               {text.map(({ text, url }, index) => {
                 return (
                   <Link href={url} key={index}>
-                    <div className={footerStyle.text}>{text}</div>
+                    <div
+                      className={`inter mb-[4.615vw] font-normal text-vdao-dark text-[4.103] md:mb-[1.25vw]`}
+                    >
+                      {text}
+                    </div>
                   </Link>
                 );
               })}
@@ -42,7 +58,11 @@ const Footer = (props: Props) => {
           );
         })}
       </section>
-      <div className={footerStyle.copy}>© 2023 5th World</div>
+      <div
+        className={` inter mt-[35.641vw] mb-[15.897vw] ml-[7.179vw] text-[4.103vw] font-normal text-vdao-dark md:hidden`}
+      >
+        © 2023 5th World
+      </div>
     </footer>
   );
 };
