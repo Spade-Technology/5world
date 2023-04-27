@@ -17,9 +17,9 @@ import {
 const Home: NextPage = () => {
   return (
     <>
-      <Header web2/>
+      <Header web2 />
 
-      <div className="w-full text-vdao-dark">
+      <div>
         <HomeWelcomeComponent />
 
         <HomeIntroComponent />

@@ -19,7 +19,6 @@ h1 {
 
 /* FONTS FAMILY */
 .clash {
-
   font-family: "Clash Display", sans-serif;
 }
 
@@ -70,4 +69,8 @@ button span {
 
 .antd-stop-propagation span {
   color: inherit;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
