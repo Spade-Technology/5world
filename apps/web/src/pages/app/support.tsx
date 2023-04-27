@@ -1,14 +1,14 @@
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
-import GrantsRound from "~/components/pages/grants/grantsRound";
+import MemberSuport from "~/components/pages/support/memberSupport";
 
-const Grants = () => {
+const Support = () => {
   return (
     <>
-      <Header web3 />
+      <Header />
 
       <div className="w-full text-vdao-dark">
-        <GrantsRound />
+        <MemberSuport />
       </div>
 
       <Footer />
@@ -16,4 +16,4 @@ const Grants = () => {
   );
 };
 
-export default Grants;
+export default Support;

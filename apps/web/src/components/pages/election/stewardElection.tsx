@@ -8,7 +8,7 @@ const StewardElection = () => {
         invertColors={true}
         title={
           <div>
-            GrantSteward
+            Steward
             <br />
             Election
           </div>

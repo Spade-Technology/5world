@@ -1,14 +1,14 @@
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
-import MemberSuport from "~/components/pages/support/memberSupport";
+import OperationalProposals from "~/components/pages/proposals/operationalProposals";
 
-const Support = () => {
+const Proposals = () => {
   return (
     <>
-      <Header web3 />
+      <Header />
 
       <div className="w-full text-vdao-dark">
-        <MemberSuport />
+        <OperationalProposals />
       </div>
 
       <Footer />
@@ -16,4 +16,4 @@ const Support = () => {
   );
 };
 
-export default Support;
+export default Proposals;

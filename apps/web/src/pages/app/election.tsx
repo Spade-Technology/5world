@@ -6,7 +6,7 @@ import StewardElection from "~/components/pages/election/stewardElection";
 const Election = () => {
   return (
     <>
-      <Header web3 />
+      <Header />
 
       <div className="w-full text-vdao-dark">
         <StewardElection />

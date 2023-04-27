@@ -22,7 +22,6 @@ type Props = {
   signatures?: number;
   className?: string;
   web2?: boolean;
-  web3?: boolean;
 };
 
 type NavigationElement = {
@@ -31,7 +30,7 @@ type NavigationElement = {
   children?: NavigationElement[];
 };
 
-const navigationElements: NavigationElement[] = [
+const navigationElementsWeb2: NavigationElement[] = [
   { name: "Home", link: "/" },
   {
     name: "Participate",
@@ -57,13 +56,31 @@ const navigationElements: NavigationElement[] = [
   },
 ];
 
+const navigationElementsWeb3: NavigationElement[] = [
+  { name: "Home", link: "/" },
+  {
+    name: "Vote",
+    link: "#",
+    children: [
+      { name: "Operational Proposals", link: "/app/proposals" },
+      { name: "Grants Round", link: "/grants" },
+      { name: "Steward Election", link: "/app/steward" },
+      { name: "Forum Discussion", link: "#" },
+    ],
+  },
+  { name: "Steward Profile", link: "/app/steward" },
+  { name: "Prods Profile", link: "/app/support" },
+  { name: "Support", link: "/app/support" },
+  { name: "Analytics", link: "/app/analytics" },
+];
+
 const Header = (props: Props) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   return (
-    <header className={"h-24 " + (props.web2 ? "bg-white" : "bg-vdao-deep")}>
+    <header className={props.web2 ? "bg-white" : "bg-vdao-deep"}>
       {/* Desktop */}
       <div className="z-50 mx-auto hidden h-24 max-w-[1280px] items-center justify-between px-0 md:flex md:px-6 xl:px-0">
         <Link href="/">
@@ -71,35 +88,37 @@ const Header = (props: Props) => {
         </Link>
         <div
           className={
-            "flex justify-between gap-9 xl:ml-72 " +
+            "xl:ml-54 flex justify-between gap-9 " +
             (props.web2 ? "text-vdao-dark" : "text-white")
           }
         >
-          {navigationElements.map((element) => (
-            <Tooltip
-              placement="bottomLeft"
-              color="white"
-              title={
-                element.children &&
-                element.children.length > 0 && (
-                  <div className="flex flex-col gap-5 px-10 py-8 ">
-                    {element.children?.map((child) => (
-                      <Link
-                        className="small-text !text-vdao-dark hover:opacity-80"
-                        href={child.link}
-                        key={child.name}
-                      >
-                        {child.name}
-                      </Link>
-                    ))}
-                  </div>
-                )
-              }
-              key={element.name}
-            >
-              <Link href={element.link}>{element.name}</Link>
-            </Tooltip>
-          ))}
+          {(props.web2 ? navigationElementsWeb2 : navigationElementsWeb3).map(
+            (element) => (
+              <Tooltip
+                placement="bottomLeft"
+                color="white"
+                title={
+                  element.children &&
+                  element.children.length > 0 && (
+                    <div className="flex flex-col gap-5 px-10 py-8 ">
+                      {element.children?.map((child) => (
+                        <Link
+                          className="small-text !text-vdao-dark hover:opacity-80"
+                          href={child.link}
+                          key={child.name}
+                        >
+                          {child.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )
+                }
+                key={element.name}
+              >
+                <Link href={element.link}>{element.name}</Link>
+              </Tooltip>
+            )
+          )}
         </div>
         <div className="hidden gap-7 lg:flex">
           <Image
@@ -129,7 +148,7 @@ const Header = (props: Props) => {
       </div>
 
       {/* Mobile */}
-      <div className="my-16 flex w-screen items-center justify-between px-4 md:hidden">
+      <div className="flex w-screen items-center justify-between py-16 px-4 md:hidden">
         <Link href="/">
           <Image src={logo} alt="VDAO" height={30} />
         </Link>
@@ -170,13 +189,15 @@ const Header = (props: Props) => {
         }
       >
         <div className="antd-stop-propagation space-y-1 px-6 pt-2 pb-3">
-          {navigationElements.map((element) => (
-            <MobileSubmenu
-              element={element}
-              key={element.name}
-              web2={props.web2}
-            />
-          ))}
+          {(props.web2 ? navigationElementsWeb2 : navigationElementsWeb3).map(
+            (element) => (
+              <MobileSubmenu
+                element={element}
+                key={element.name}
+                web2={props.web2}
+              />
+            )
+          )}
         </div>
         <div className="flex flex-col items-center pt-4 pb-3">
           <div className="my-10 flex gap-7">

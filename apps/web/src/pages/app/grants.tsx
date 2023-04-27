@@ -1,14 +1,14 @@
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
-import OperationalProposals from "~/components/pages/proposals/operationalProposals";
+import GrantsRound from "~/components/pages/grants/grantsRound";
 
-const Proposals = () => {
+const Grants = () => {
   return (
     <>
-      <Header web3 />
+      <Header />
 
       <div className="w-full text-vdao-dark">
-        <OperationalProposals />
+        <GrantsRound />
       </div>
 
       <Footer />
@@ -16,4 +16,4 @@ const Proposals = () => {
   );
 };
 
-export default Proposals;
+export default Grants;

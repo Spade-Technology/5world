@@ -6,7 +6,7 @@ import StewardProfile from "~/components/pages/steward/stewardProfile";
 const Steward = () => {
   return (
     <>
-      <Header web3 />
+      <Header />
 
       <div className="w-full text-vdao-dark">
         <StewardProfile />
