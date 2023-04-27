@@ -16,7 +16,7 @@ type Props = {
 
 const Footer = (props: Props) => {
   return (
-    <footer className={` flex flex-col md:flex-row`}>
+    <footer className={`flex flex-col md:flex-row`}>
       <div>
         <img
           src={"/logo/svg/VDAO-color.svg"}
@@ -47,7 +47,7 @@ const Footer = (props: Props) => {
                 return (
                   <Link href={url} key={index}>
                     <div
-                      className={`inter mb-[4.615vw] font-normal text-vdao-dark text-[4.103] md:mb-[1.25vw]`}
+                      className={`inter mb-[4.615vw] font-normal text-vdao-dark text-[4.103] md:mb-[1.25vw] md:text-[1.111vw]`}
                     >
                       {text}
                     </div>
