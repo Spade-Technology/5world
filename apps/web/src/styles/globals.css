@@ -17,6 +17,20 @@ h1 {
   line-height: 2.25rem;
 }
 
+/* FONTS FAMILY */
+.clash {
+
+  font-family: "Clash Display", sans-serif;
+}
+
+.inter {
+  font-family: "Inter", sans-serif;
+}
+
+.satoshi {
+  font-family: "Satoshi", sans-serif;
+}
+
 .big-text-mobile {
   font-family: "Satoshi", sans-serif;
   font-style: normal;

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import Image from "next/image";
 
 import logo from "public/logo/png/color.png";
@@ -22,6 +21,7 @@ type Props = {
   signatures?: number;
   className?: string;
   web2?: boolean;
+  web3?: boolean;
 };
 
 type NavigationElement = {
@@ -148,13 +148,15 @@ const Header = (props: Props) => {
       </div>
 
       {/* Mobile */}
-      <div className="flex w-screen items-center justify-between py-16 px-4 md:hidden">
+      <div
+        className={`mt-[15.385vw] ml-[6.154vw] mr-[6.154vw] flex w-[87.692vw] justify-between md:hidden`}
+      >
         <Link href="/">
           <Image src={logo} alt="VDAO" height={30} />
         </Link>
         <button
           onClick={toggleMobileMenu}
-          className="rounded-md px-2 text-vdao-dark transition-all focus:outline-none focus:ring-2 focus:ring-vdao-dark focus:ring-offset-2"
+          className="rounded-[2.051vw] border-[0.513vw] border-solid border-transparent p-[1.026vw] duration-100 focus:border-vdao-dark"
         >
           <span className="sr-only">Open menu</span>
           <svg

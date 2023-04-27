@@ -15,56 +15,52 @@ type Props = {
 
 const Footer = (props: Props) => {
   return (
-    <footer>
-      <div className="mx-auto flex h-24 max-w-[1280px] flex-col gap-4 py-16 px-6">
-        <Image
-          src={logo}
+    <footer className={`flex flex-col md:flex-row`}>
+      <div>
+        <img
+          src={"/logo/svg/VDAO-color.svg"}
           alt="VDAO"
-          height={30}
-          className="mb-auto block md:hidden"
+          className={`mt-[15.385vw] ml-[7.1719vw] h-[7.692vw] w-[32.231vw] md:mt-[4.167vw] md:mr-[11.34vw] md:ml-[10.486vw] md:h-[2.083vw] md:w-[8.729vw]`}
         />
-        <div className="my-16 grid grid-cols-2 justify-between gap-16 md:mt-0 md:grid-cols-5 md:gap-0">
-          <Image
-            src={logo}
-            alt="VDAO"
-            height={30}
-            className="mb-auto hidden md:block"
-          />
-          <div>
-            <span className="font-medium text-vdao-dark">Participate</span>
-            <div className="mt-8 flex flex-col gap-4">
-              <Link href="/apply">Apply</Link>
-              <Link href="/nft">NFT Collections</Link>
-              <Link href="/donate">Donate</Link>
-              <Link href="/getfunding">Get Funding</Link>
-            </div>
-          </div>
-          <div>
-            <span className="font-medium text-vdao-dark">Community</span>
-            <div className="mt-8 flex flex-col gap-4">
-              <Link href="#">Discord</Link>
-              <Link href="#">Forum</Link>
-            </div>
-          </div>
-          <div>
-            <span className="font-medium text-vdao-dark">Organisation</span>
-            <div className="mt-8 flex flex-col gap-4">
-              <Link href="#">About Us</Link>
-              <Link href="#">Analytics</Link>
-              <Link href="#">Whitepaper</Link>
-            </div>
-          </div>
-          <div>
-            <span className="font-medium text-vdao-dark">Legal</span>
-            <div className="mt-8 flex flex-col gap-4">
-              <Link href="#">Terms of Service</Link>
-              <Link href="#">Privacy Policy</Link>
-            </div>
-          </div>
+        <div
+          className={`inter mt-[21.319vw] mb-[2.083vw] ml-[10.486vw] hidden text-[1.111vw] text-vdao-dark sm:block`}
+        >
+          © 2023 5th World
         </div>
-        <div className="flex justify-between">
-          <span className="text-vdao-dark">© 2023 5th World</span>
-        </div>
+      </div>
+      <section
+        className={`ml-[7.179vw] flex flex-wrap justify-between md:ml-0`}
+      >
+        {footerTexts.map(({ title, text }, index) => {
+          return (
+            <div
+              key={index}
+              className={`w-[38.462vw] md:mr-[6.042vw] md:w-[8.681vw]`}
+            >
+              <div
+                className={`clash mt-[16.41vw] mb-[8.718vw] text-[5.128vw] font-medium text-vdao-dark md:mb-[2.431vw] md:mt-[4.167vw] md:text-[1.839vw]`}
+              >
+                {title}
+              </div>
+              {text.map(({ text, url }, index) => {
+                return (
+                  <Link href={url} key={index}>
+                    <div
+                      className={`inter mb-[4.615vw] font-normal text-vdao-dark text-[4.103] md:mb-[1.25vw] md:text-[1.111vw]`}
+                    >
+                      {text}
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          );
+        })}
+      </section>
+      <div
+        className={` inter mt-[35.641vw] mb-[15.897vw] ml-[7.179vw] text-[4.103vw] font-normal text-vdao-dark md:hidden`}
+      >
+        © 2023 5th World
       </div>
     </footer>
   );
