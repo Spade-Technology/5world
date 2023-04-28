@@ -129,7 +129,7 @@ const Header = (props: Props) => {
       </div>
 
       {/* Mobile */}
-      <div className={headerStyle.mobileNav}>
+      {/* <div className={headerStyle.mobileNav}>
         <Link href="/">
           <Image src={logo} alt="VDAO" height={30} />
         </Link>
@@ -155,7 +155,7 @@ const Header = (props: Props) => {
             />
           </svg>
         </button>
-      </div>
+      </div> */}
 
       {/* Mobile menu */}
 

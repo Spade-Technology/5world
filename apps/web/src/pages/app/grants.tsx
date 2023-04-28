@@ -1,6 +1,7 @@
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
-import GrantsRound from "~/components/pages/grants/grantsRound";
+import GrantCards from "~/components/pages/app/grants/grantCards";
+import GrantsRound from "~/components/pages/app/grants/grantsRound";
 
 const Grants = () => {
   return (
@@ -9,6 +10,8 @@ const Grants = () => {
 
       <div className="w-full text-vdao-dark">
         <GrantsRound />
+
+        <GrantCards />
       </div>
 
       <Footer />
