@@ -16,7 +16,7 @@ type Props = {
 
 const Footer = (props: Props) => {
   return (
-    <footer className={`flex flex-col md:flex-row`}>
+    <footer className={`flex flex-col bg-white md:flex-row`}>
       <div>
         <img
           src={"/logo/svg/VDAO-color.svg"}
@@ -24,7 +24,7 @@ const Footer = (props: Props) => {
           className={`mt-[15.385vw] ml-[7.1719vw] h-[7.692vw] w-[32.231vw] md:mt-[4.167vw] md:mr-[11.34vw] md:ml-[10.486vw] md:h-[2.083vw] md:w-[8.729vw]`}
         />
         <div
-          className={`inter mt-[21.319vw] mb-[2.083vw] ml-[10.486vw] hidden text-[1.111vw] text-vdao-dark sm:block`}
+          className={`inter mt-[21.319vw] mb-[2.083vw] ml-[10.486vw] hidden text-[1.111vw] text-vdao-dark md:block`}
         >
           © 2023 5th World
         </div>

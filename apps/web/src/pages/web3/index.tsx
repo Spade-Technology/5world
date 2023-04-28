@@ -1,26 +1,33 @@
 import React from "react";
+import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
 import {
   HomeDashboardComponentOne,
+  HomeDashboardComponentThree,
+  HomeDashboardComponentTwo,
   HomeWelcomeComponent,
 } from "~/components/pages/web3/home/home";
 
 interface Types {
-  okay: string;
+  error: false;
 }
 
 const Index: React.FC<Types> = () => {
   return (
-    <div className="bg-vdao-deep">
+    <div className="overflow-hidden bg-vdao-deep">
       <Header web3 />
 
-      <article>
+      <article className="">
         <HomeWelcomeComponent />
 
         <section className="flex flex-wrap">
           <HomeDashboardComponentOne />
+          <HomeDashboardComponentTwo />
+          <HomeDashboardComponentThree />
         </section>
       </article>
+
+      <Footer />
     </div>
   );
 };
