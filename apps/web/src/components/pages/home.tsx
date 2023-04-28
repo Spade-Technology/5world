@@ -141,7 +141,7 @@ export function HomeGetInvolvedComponent() {
           alt="VDAO"
           height={750}
           width={750}
-          className=" my-auto h-[45vw] w-[45vw] xl:!h-[750px] xl:!w-[750px]"
+          className=" my-auto mx-auto h-[45vw] w-[45vw] xl:!h-[750px] xl:!w-[750px]"
         />
         <div className="flex w-full justify-center">
           <div className="flex max-w-xs flex-col gap-16">
@@ -248,7 +248,7 @@ export function HomeIntroComponent() {
       <Image
         src={IntroHero}
         alt="VDAO"
-        className="my-auto h-1/2 w-1/2 -translate-x-16 scale-150 md:-mt-14 md:translate-x-0 md:scale-100 "
+        className="my-auto mx-auto h-1/2 w-1/2 -translate-x-16 scale-150 md:-mt-14 md:translate-x-0 md:scale-100 "
       />
       <div className="z-10 flex w-full flex-col">
         <h1 className="text-5xl font-medium ">Introduction</h1>

@@ -1,27 +1,27 @@
 import { type NextPage } from "next";
 
-import Footer from "~/components/layout/footer";
-import Header from "~/components/layout/header";
-import MailingListComponent from "~/components/misc/mailinglist";
-
+import Page from "~/components/layout/page";
 import {
-  HomeCommunityComponent,
-  HomeCTAComponent,
-  HomeGetInvolvedComponent,
-  HomeIntroComponent,
-  HomeObjectivesComponent,
-  HomePartnersComponent,
-  HomeWelcomeComponent,
-} from "~/components/pages/home";
+  NewMembersComponent,
+  ProfileHomeComponent,
+  StatisticsHomeComponent,
+  WelcomeComponent,
+} from "~/components/pages/web3home";
 
 const Home: NextPage = () => {
   return (
     <>
-      <Header />
+      <Page>
+        <WelcomeComponent />
 
-      <div className="w-full text-vdao-dark ">Welcome to VDAO</div>
+        <section className="mx-6 grid max-w-[1280px] gap-5 pb-32 lg:grid-cols-3 xl:mx-auto">
+          <ProfileHomeComponent />
 
-      <Footer />
+          <NewMembersComponent />
+
+          <StatisticsHomeComponent />
+        </section>
+      </Page>
     </>
   );
 };

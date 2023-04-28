@@ -10,15 +10,14 @@ import { FAQS } from "~/components/pages/apply/faqs";
 import Description from "~/components/misc/description";
 import FAQSection from "~/components/misc/FAQSection";
 import ApplyDescription from "~/components/pages/apply/description";
+import Page from "~/components/layout/page";
 
 type Props = {};
 
 const apply = (props: Props) => {
   return (
     <>
-      <Header web2 />
-
-      <div className="w-screen bg-white text-vdao-dark">
+      <Page web2>
         <ApplyDescription />
 
         <SectionOne />
@@ -28,9 +27,7 @@ const apply = (props: Props) => {
         <FAQSection FAQS={FAQS} />
 
         <MailingListComponent />
-      </div>
-
-      <Footer />
+      </Page>
     </>
   );
 };

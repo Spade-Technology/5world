@@ -97,7 +97,7 @@ export const Card = () => {
         </div>
 
         <div className="flex flex-col justify-between pt-[30px] md:flex-row md:pt-10">
-          <div className="py-[5px] md:pl-[30px] text-xl font-medium">
+          <div className="py-[5px] text-xl font-medium md:pl-[30px]">
             Delegate your vote
           </div>
 

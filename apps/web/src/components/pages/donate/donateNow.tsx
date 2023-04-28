@@ -118,8 +118,6 @@ const DonateNow = (props: Props) => {
           </div>
         </div>
       </div>
-
-      
     </div>
   );
 };

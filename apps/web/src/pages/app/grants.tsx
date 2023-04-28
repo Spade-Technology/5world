@@ -1,17 +1,14 @@
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
+import Page from "~/components/layout/page";
 import GrantsRound from "~/components/pages/grants/grantsRound";
 
 const Grants = () => {
   return (
     <>
-      <Header />
-
-      <div className="w-full text-vdao-dark">
+      <Page>
         <GrantsRound />
-      </div>
-
-      <Footer />
+      </Page>
     </>
   );
 };

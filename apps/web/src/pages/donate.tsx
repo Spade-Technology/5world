@@ -1,5 +1,6 @@
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
+import Page from "~/components/layout/page";
 import MailingListComponent from "~/components/misc/mailinglist";
 
 import Badges from "~/components/pages/donate/badges";
@@ -10,9 +11,7 @@ import WhatsInIt from "~/components/pages/donate/whatsInIt";
 const Donate = () => {
   return (
     <>
-      <Header className="bg-vdao-deep text-white" />
-
-      <div className="overflow-hidden bg-vdao-deep">
+      <Page web2>
         <div className="mx-auto max-w-[1280px]">
           <DonateDescription />
 
@@ -24,9 +23,7 @@ const Donate = () => {
         </div>
 
         <MailingListComponent />
-      </div>
-
-      <Footer />
+      </Page>
     </>
   );
 };

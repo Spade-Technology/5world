@@ -1,7 +1,6 @@
 import { type NextPage } from "next";
 
-import Footer from "~/components/layout/footer";
-import Header from "~/components/layout/header";
+import Page from "~/components/layout/page";
 import MailingListComponent from "~/components/misc/mailinglist";
 
 import {
@@ -17,9 +16,7 @@ import {
 const Home: NextPage = () => {
   return (
     <>
-      <Header web2/>
-
-      <div className="w-full text-vdao-dark">
+      <Page web2>
         <HomeWelcomeComponent />
 
         <HomeIntroComponent />
@@ -35,9 +32,7 @@ const Home: NextPage = () => {
         <HomeCTAComponent />
 
         <MailingListComponent />
-      </div>
-
-      <Footer />
+      </Page>
     </>
   );
 };

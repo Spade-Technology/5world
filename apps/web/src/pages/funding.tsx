@@ -5,12 +5,12 @@ import Footer from "~/components/layout/footer";
 import MailingListComponent from "~/components/misc/mailinglist";
 
 import GetFundingDescription from "~/components/pages/funding/description";
+import Page from "~/components/layout/page";
 
 const GetFunding = () => {
   return (
     <>
-      <Header web2 />
-      <div className="w-screen bg-white text-vdao-dark">
+      <Page web2>
         <GetFundingDescription />
 
         <Offers />
@@ -18,8 +18,7 @@ const GetFunding = () => {
         <HowToApply />
 
         <MailingListComponent />
-      </div>
-      <Footer />
+      </Page>
     </>
   );
 };

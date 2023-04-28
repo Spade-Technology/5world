@@ -31,7 +31,7 @@ export const RecommendedCard = (Props: RecommendedProps) => {
     <>
       <div className="float-left">
         <Image src={Props.blog?.image} alt="" />
-        <div className="text-lg font-bold pt-5">{Props.blog?.createdAt}</div>
+        <div className="pt-5 text-lg font-bold">{Props.blog?.createdAt}</div>
         <div className="pt-5 text-3xl font-medium">{Props.blog?.heading}</div>
         <div className="mx-auto flex pt-2">
           <Image
