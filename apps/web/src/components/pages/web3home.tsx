@@ -95,9 +95,13 @@ export function ProfileHomeComponent() {
 
 export function WelcomeComponent() {
   return (
-    <section className="relative mx-auto flex max-w-[1680px] flex-col items-center pt-16">
-      <Image src={MainHero} alt="VDAO Web3 Hero" className="" />
-      <h1 className="absolute text-center text-7xl font-medium text-white">
+    <section className="relative mx-auto flex max-w-[1680px] flex-col-reverse items-center overflow-hidden md:h-auto md:flex-col md:pt-16">
+      <Image
+        src={MainHero}
+        alt="VDAO Web3 Hero"
+        className="mb-24 translate-x-[40%] scale-[200%] md:mb-0 md:-translate-x-0 md:scale-100"
+      />
+      <h1 className="z-10 text-center text-5xl font-medium text-white md:absolute md:text-7xl">
         Welcome to <br /> VDAO
       </h1>
     </section>

@@ -43,7 +43,7 @@ export function HomeCTAComponent() {
 export function HomePartnersComponent() {
   return (
     <section className="overflow-hidden px-6 text-vdao-dark md:px-8 xl:px-0">
-      <div className="mx-auto flex max-w-[1440px] flex-col md:flex-row">
+      <div className="mx-auto flex max-w-[1280px] flex-col md:flex-row">
         <div className="mt-24 max-w-[1280px] md:mx-auto md:w-1/2 ">
           <h1 className="mb-6 w-full text-left text-5xl font-medium">
             Our Partners
@@ -73,7 +73,7 @@ export function HomeCommunityComponent() {
   return (
     <section className="mt-36 overflow-hidden bg-vdao-dark px-6 text-vdao-light  md:px-0">
       <div className="mx-auto flex max-w-[1440px] flex-col ">
-        <div className="xl:p-O mx-auto mt-24 w-full max-w-[1280px] p-0 md:px-8">
+        <div className="xl:p-O mx-auto mt-24 w-full max-w-[1280px] p-0">
           <h1 className="mb-6 w-full text-left text-5xl font-medium">
             Community
           </h1>
@@ -204,7 +204,7 @@ const ObjectiveSubComponent = ({
     <Image src={icon} alt="VDAO" height={100} />
     <h1 className="text-3xl font-medium">{title}</h1>
     <div className="w-full border-y-[1px] border-vdao-dark" />
-    <span className="text-center font-inter text-base font-normal text-vdao-dark md:text-left md:text-xl">
+    <span className="font-satoshi text-center text-base font-normal text-vdao-dark md:text-left md:text-xl">
       {description}
     </span>
   </div>
@@ -275,10 +275,10 @@ export function HomeWelcomeComponent() {
   return (
     <section className="mx-auto flex max-w-[1440px] flex-col overflow-hidden">
       <div className="mx-auto mt-28 flex flex-col">
-        <h1 className="text-center text-7xl font-medium">
+        <h1 className="text-center text-7xl font-medium text-vdao-dark">
           Re:imagine the future
         </h1>
-        <h4 className="mt-5 text-center font-body text-2xl font-medium">
+        <h4 className="mt-5 text-center font-body text-2xl font-medium text-vdao-dark">
           A dao to restore ecosystems from the soil up.
         </h4>
         <Button type="primary" className="mx-auto mt-10">

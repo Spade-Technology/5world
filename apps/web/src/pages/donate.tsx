@@ -11,7 +11,7 @@ import WhatsInIt from "~/components/pages/donate/whatsInIt";
 const Donate = () => {
   return (
     <>
-      <Page web2>
+      <Page>
         <div className="mx-auto max-w-[1280px]">
           <DonateDescription />
 

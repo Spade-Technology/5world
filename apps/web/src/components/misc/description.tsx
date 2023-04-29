@@ -19,13 +19,13 @@ const Description = (props: Props) => {
         props.invertColors ? "bg-vdao-deep text-white" : ""
       }`}
     >
-      <div
-        className={`${titleClass} md:text-8xl ${
+      <h1
+        className={`${titleClass} font-medium text-vdao-dark md:text-8xl ${
           props.invertColors ? "text-vdao-light" : ""
         }`}
       >
         {props.title}
-      </div>
+      </h1>
       <div className={`${descriptionClass} md:pt-32`}>
         {" "}
         {props.description}{" "}
