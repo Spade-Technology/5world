@@ -1,14 +1,17 @@
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
-import Page from "~/components/layout/page";
-import MemberSuport from "~/components/pages/support/memberSupport";
+import MemberSuport from "~/components/pages/app/support/memberSupport";
 
 const Support = () => {
   return (
     <>
-      <Page>
+      <Header web3 />
+
+      <div className="w-full text-vdao-dark">
         <MemberSuport />
-      </Page>
+      </div>
+
+      <Footer />
     </>
   );
 };
