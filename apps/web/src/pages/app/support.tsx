@@ -1,5 +1,6 @@
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
+import ContentsTable from "~/components/pages/app/support/contentsTable";
 import MemberSuport from "~/components/pages/app/support/memberSupport";
 
 const Support = () => {
@@ -9,6 +10,7 @@ const Support = () => {
 
       <div className="w-full text-vdao-dark">
         <MemberSuport />
+        <ContentsTable />
       </div>
 
       <Footer />
