@@ -1,8 +1,17 @@
 import Image from "next/image";
 import ProfilePic from "public/icons/blog/createdByLogo.svg";
+import { Dispatch, SetStateAction } from "react";
 import PrimaryButton from "~/styles/shared/buttons/primaryButton";
 
-const StewardCards = () => {
+type Props = {
+  setOpenProfile: Dispatch<SetStateAction<boolean>>;
+};
+
+type CardProps = {
+  setOpenProfile: Dispatch<SetStateAction<boolean>>;
+};
+
+const StewardCards = ({ setOpenProfile }: Props) => {
   return (
     <div className="mx-auto w-screen bg-vdao-deep">
       <div className="mx-auto max-w-[1280px] pb-[120px]">
@@ -11,22 +20,25 @@ const StewardCards = () => {
         </div>
 
         <div className="mx-6 mt-5 grid grid-cols-1 gap-5 md:mx-0 md:grid-cols-2">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          <Card setOpenProfile={setOpenProfile} />
+          <Card setOpenProfile={setOpenProfile} />
+          <Card setOpenProfile={setOpenProfile} />
+          <Card setOpenProfile={setOpenProfile} />
+          <Card setOpenProfile={setOpenProfile} />
+          <Card setOpenProfile={setOpenProfile} />
         </div>
       </div>
     </div>
   );
 };
 
-export const Card = () => {
+export const Card = ({ setOpenProfile }: CardProps) => {
   return (
     <div className="rounded-[20px] bg-vdao-dark text-white">
-      <div className="float-right pt-5 pr-5 text-sm font-semibold underline underline-offset-2 md:pt-[30px] md:pr-[30px]">
+      <div
+        className="float-right cursor-pointer pt-5 pr-5 text-sm font-semibold underline underline-offset-2 md:pt-[30px] md:pr-[30px]"
+        onClick={() => setOpenProfile(true)}
+      >
         {" "}
         View Profile{" "}
       </div>

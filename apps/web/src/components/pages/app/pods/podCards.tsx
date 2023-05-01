@@ -9,8 +9,18 @@ import Icon5 from "public/icons/pods/icon5.svg";
 import Icon6 from "public/icons/pods/icon6.svg";
 import Icon7 from "public/icons/pods/icon7.svg";
 import Icon8 from "public/icons/pods/icon8.svg";
+import { Dispatch, SetStateAction } from "react";
+import PodInfoBox from "./popups/infoBox";
 
-const PodCards = () => {
+type PodCardProps = {
+  setOpenRegen: Dispatch<SetStateAction<boolean>>;
+};
+
+type CardProps = {
+  setOpenRegen: Dispatch<SetStateAction<boolean>>;
+};
+
+const PodCards = ({ setOpenRegen }: PodCardProps) => {
   return (
     <div className="mx-auto w-screen bg-vdao-deep">
       <div className="mx-auto max-w-[1280px] pb-[120px]">
@@ -19,19 +29,19 @@ const PodCards = () => {
         </div>
 
         <div className="mx-6 mt-5 grid grid-cols-1 gap-5 md:mx-0 md:grid-cols-2">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          <Card setOpenRegen={setOpenRegen} />
+          <Card setOpenRegen={setOpenRegen} />
+          <Card setOpenRegen={setOpenRegen} />
+          <Card setOpenRegen={setOpenRegen} />
+          <Card setOpenRegen={setOpenRegen} />
+          <Card setOpenRegen={setOpenRegen} />
         </div>
       </div>
     </div>
   );
 };
 
-export const Card = () => {
+export const Card = ({ setOpenRegen }: CardProps) => {
   return (
     <div className="rounded-[20px] bg-vdao-dark py-10 px-5 text-white md:py-[50px] md:px-10">
       <div className="flex flex-col gap-[10px] md:flex-row md:gap-[25px]">
@@ -54,44 +64,14 @@ export const Card = () => {
             <PrimaryButton
               text="View Detail"
               className="mt-5 py-[5px] px-[35px] font-heading text-xl font-medium"
+              onClick={() => setOpenRegen(true)}
             />
           </div>
         </div>
       </div>
 
-      <div className="mt-[25px] flex justify-between rounded-[20px] bg-white px-5 py-8 md:mt-11 md:px-10">
-        <div>
-          <div className="text-[28px] font-semibold text-vdao-light md:text-[32px]">
-            {" "}
-            21{" "}
-          </div>
-          <div className="text-sm font-semibold text-vdao-dark md:text-lg">
-            {" "}
-            Proposals
-          </div>
-        </div>
+      <PodInfoBox invertColors={false} proposals={21} discussions={354} members={7} />
 
-        <div>
-          <div className="text-[28px] font-semibold text-vdao-light md:text-[32px]">
-            {" "}
-            354
-          </div>
-          <div className="text-sm font-semibold text-vdao-dark md:text-lg">
-            {" "}
-            Discussions
-          </div>
-        </div>
-
-        <div>
-          <div className="text-[28px] font-semibold text-vdao-light md:text-[32px]">
-            {" "}
-            7
-          </div>
-          <div className="text-sm font-semibold text-vdao-dark md:text-lg">
-            Members
-          </div>
-        </div>
-      </div>
 
       <div className="flex flex-col gap-[30px] pt-5 md:flex-row md:gap-[60px] md:pt-10">
         <div>
