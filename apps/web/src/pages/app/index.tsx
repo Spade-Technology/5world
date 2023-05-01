@@ -14,7 +14,7 @@ const Home: NextPage = () => {
       <Page>
         <WelcomeComponent />
 
-        <section className="mx-6 grid max-w-[1280px] gap-5 pb-32 lg:grid-cols-3 xl:mx-auto">
+        <section className="mx-6 flex max-w-[1280px] flex-wrap md:gap-5">
           <ProfileHomeComponent />
 
           <NewMembersComponent />

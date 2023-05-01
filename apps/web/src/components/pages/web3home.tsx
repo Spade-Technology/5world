@@ -1,7 +1,7 @@
 import Image from "next/image";
 import MainHero from "/public/illustrations/web3/PNG/VDAO-web3-hero.png";
-
 import ProfilePic from "public/icons/blog/createdByLogo.svg";
+import { membersData } from "./mockData";
 
 export function StatisticsHomeComponent() {
   return (
@@ -11,15 +11,29 @@ export function StatisticsHomeComponent() {
 
 export function NewMembersComponent() {
   return (
-    <section className="rounded-2xl bg-vdao-dark p-8 lg:col-span-1"></section>
+    <section className="rounded-2xl bg-vdao-dark md:px-10 md:pt-12">
+      <div className="flex items-center gap-2.5">
+        <div className="satoshi font-bold text-white md:text-xl">
+          New Members
+        </div>
+        <div className="satoshi text-lg font-normal text-white">
+          {membersData.length}
+        </div>
+      </div>
+      <div className="">
+        {membersData.map(({ img, name, category, date, time }, index) => {
+          return <div>{name}</div>;
+        })}
+      </div>
+    </section>
   );
 }
 
 export function ProfileHomeComponent() {
   return (
-    <section className="flex flex-col rounded-2xl bg-vdao-dark p-5 lg:col-span-2 lg:p-8">
+    <section className="flex flex-col rounded-2xl bg-vdao-dark md:pt-10 md:pl-16 md:pr-8 md:pb-20 lg:w-8/12">
       {/* View Profile Button */}
-      <div className="ml-auto cursor-pointer text-base font-bold text-white underline">
+      <div className="satoshi ml-auto cursor-pointer text-base font-bold text-white underline">
         View Profile
       </div>
 
@@ -32,15 +46,15 @@ export function ProfileHomeComponent() {
             className="h-14 w-14 rounded-full"
           />
           <div className="flex flex-col">
-            <span className="text-2xl font-bold text-vdao-light">
+            <span className="satoshi text-2xl font-bold text-vdao-light">
               Kris Millar
             </span>
-            <span className="text-base">0xd12512....92C</span>
+            <span className="satoshi text-base">0xd12512....92C</span>
           </div>
         </div>
 
         {/* Description */}
-        <span className="w-10/12 text-base">
+        <span className="satoshi w-9/12 text-base">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
           ultrices velit a nulla placerat, vitae accumsan mauris euismod. Nam
           semper dignissim est a sollicitudin. Vestibulum non ipsum tellus.
@@ -48,17 +62,19 @@ export function ProfileHomeComponent() {
         </span>
 
         {/* Guild & Pod */}
-        <div className="mt-12 inline-grid grid-cols-[max-content_auto] gap-5">
-          <span className="text-base font-bold">Guild</span>
-          <span className="text-base font-bold text-vdao-light">
+        <div className="mt-12 inline-grid grid-cols-[max-content_auto] gap-6">
+          <span className="satoshi text-base font-bold">Guild</span>
+          <span className="satoshi text-base font-bold text-vdao-light">
             DAO Operation Guild
           </span>
-          <span className="text-base font-bold">Pod</span>
-          <span className="text-base font-bold text-vdao-light">Regen Pod</span>
+          <span className="satoshi text-base font-bold">Pod</span>
+          <span className="satoshi text-base font-bold text-vdao-light">
+            Regen Pod
+          </span>
         </div>
 
         {/* Statistics */}
-        <div className="mt-10 grid grid-cols-2 gap-10 lg:grid-cols-4">
+        <div className="mt-10 flex justify-between md:mr-10 lg:mr-14">
           {[
             {
               name: "Votes Delegated",
@@ -81,10 +97,12 @@ export function ProfileHomeComponent() {
               className="flex flex-col items-center justify-center"
               key={stat.name}
             >
-              <div className="flex h-32 w-32 items-center justify-center rounded-full border-[3px] border-vdao-light text-3xl font-bold text-white">
+              <div className="satoshi flex h-32 w-32 items-center justify-center rounded-full border-[3px] border-vdao-light text-3xl font-bold text-white">
                 {stat.value}
               </div>
-              <span className="mt-2 text-base font-bold">{stat.name}</span>
+              <span className="satoshi mt-2 text-base text-lg font-bold">
+                {stat.name}
+              </span>
             </div>
           ))}
         </div>

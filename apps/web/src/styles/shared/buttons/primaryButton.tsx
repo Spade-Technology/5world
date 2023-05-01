@@ -6,7 +6,7 @@ type ButtonProps = {
 const PrimaryButton = (props: ButtonProps) => {
   return (
     <div
-      className={`w-fit cursor-pointer rounded-md bg-vdao-light px-9 text-vdao-dark  ${props.className}`}
+      className={`clash w-fit cursor-pointer rounded-md bg-vdao-light px-9 py-1.5 text-xl font-medium text-vdao-dark md:px-7  ${props.className}`}
     >
       {props.text}
     </div>
