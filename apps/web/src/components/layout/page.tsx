@@ -9,7 +9,8 @@ function Page({
   children: React.ReactNode;
   web2?: boolean;
 }) {
-  const bodyClassName = "w-full text-vdao-dark" + (!web2 && " bg-vdao-deep");
+  const bodyClassName =
+    "w-full text-vdao-dark xl:mx-0 md:mx-6 mx-0 " + (!web2 && " bg-vdao-deep");
 
   return (
     <>
