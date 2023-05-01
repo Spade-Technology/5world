@@ -22,6 +22,7 @@ type Props = {
   signatures?: number;
   className?: string;
   web2?: boolean;
+  web3?:boolean
 };
 
 type NavigationElement = {

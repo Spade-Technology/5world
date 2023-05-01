@@ -1,17 +1,20 @@
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
-import Page from "~/components/layout/page";
-import PodCards from "~/components/pages/pods/podCards";
-import PodsProfile from "~/components/pages/pods/podsProfile";
+import PodCards from "~/components/pages/app/pods/podCards";
+import PodsProfile from "~/components/pages/app/pods/podsProfile";
 
 const Pods = () => {
   return (
     <>
-      <Page>
+      <Header web3 />
+
+      <div className="w-full text-vdao-dark">
         <PodsProfile />
 
         <PodCards />
-      </Page>
+      </div>
+
+      <Footer />
     </>
   );
 };

@@ -1,12 +1,20 @@
-import Page from "~/components/layout/page";
-import GrantsRound from "~/components/pages/grants/grantsRound";
+import Footer from "~/components/layout/footer";
+import Header from "~/components/layout/header";
+import GrantCards from "~/components/pages/app/grants/grantCards";
+import GrantsRound from "~/components/pages/app/grants/grantsRound";
 
 const Grants = () => {
   return (
     <>
-      <Page>
+      <Header web3 />
+
+      <div className="w-full text-vdao-dark">
         <GrantsRound />
-      </Page>
+
+        <GrantCards />
+      </div>
+
+      <Footer />
     </>
   );
 };

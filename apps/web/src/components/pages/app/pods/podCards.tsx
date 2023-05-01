@@ -1,7 +1,6 @@
 import Image from "next/image";
 import PrimaryButton from "~/styles/shared/buttons/primaryButton";
 import PodImage from "public/illustrations/pods/podImage.svg";
-import ProfilePic from "public/icons/blog/createdByLogo.svg";
 import Icon1 from "public/icons/pods/icon1.svg";
 import Icon2 from "public/icons/pods/icon2.svg";
 import Icon3 from "public/icons/pods/icon3.svg";
