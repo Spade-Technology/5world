@@ -7,7 +7,7 @@ type Props = {
 const Description = (props: Props) => {
   /** Common Styles for mobile and web */
   const containerClass =
-    "flex justify-items-end gap-8 text-lg px-6 md:px-0 pt-[76px] md:py-16 flex-col font-normal";
+    "flex justify-items-end gap-8 text-lg px-6 md:px-0  md:py-16 flex-col font-normal";
 
   const titleClass = "flex-1 text-5xl";
 
@@ -15,7 +15,7 @@ const Description = (props: Props) => {
 
   return (
     <div
-      className={`${containerClass} mx-auto max-w-[1280px] md:flex-row md:gap-14 ${
+      className={`${containerClass} mx-auto max-w-[1320px] px-0  md:flex-row md:gap-14 md:px-6 ${
         props.invertColors ? "bg-vdao-deep text-white" : ""
       }`}
     >
@@ -26,7 +26,7 @@ const Description = (props: Props) => {
       >
         {props.title}
       </h1>
-      <div className={`${descriptionClass} md:pt-32`}>
+      <div className={`${descriptionClass} md:pt-24`}>
         {" "}
         {props.description}{" "}
       </div>

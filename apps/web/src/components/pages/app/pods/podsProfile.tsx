@@ -1,7 +1,13 @@
+import { Dispatch, SetStateAction } from "react";
 import Description from "~/components/misc/description";
 import HowItWorks from "~/components/misc/howItWorks";
+import PrimaryButton from "~/styles/shared/buttons/primaryButton";
 
-const PodsProfile = () => {
+type Props = {
+  setOpenCreatePod: Dispatch<SetStateAction<boolean>>;
+};
+
+const PodsProfile = ({ setOpenCreatePod }: Props) => {
   return (
     <section className="w-screen bg-vdao-deep">
       <Description
@@ -28,6 +34,23 @@ const PodsProfile = () => {
           </div>
         }
       />
+
+      <div className="flex flex-col md:flex-row ">
+        <div className="flex-1"></div>
+        <div className="flex flex-1 gap-5 pl-6 md:pl-16 flex-col md:flex-row mt-[30px] md:mt-0">
+          <PrimaryButton
+            text="Create Pods"
+            onClick={() => setOpenCreatePod(true)}
+            className="py-[5px] px-[35px] text-xl"
+          />
+          <div
+            className="cursor-pointer w-fit rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white"
+            onClick={() => setOpenCreatePod(true)}
+          >
+            See all Pods{" "}
+          </div>
+        </div>
+      </div>
 
       <HowItWorks
         contents={[
