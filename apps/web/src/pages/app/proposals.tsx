@@ -4,10 +4,12 @@ import Header from "~/components/layout/header";
 import Insights from "~/components/pages/app/proposals/insights";
 import OperationalProposals from "~/components/pages/app/proposals/operationalProposals";
 import CreateNewProposal from "~/components/pages/app/proposals/popups/createProposal";
+import ViewProposal from "~/components/pages/app/proposals/popups/viewProposal";
 import ProposalCards from "~/components/pages/app/proposals/proposalCards";
 
 const Proposals = () => {
   const [openCreateProposal, setOpenCreateProposal] = useState(false);
+  const [viewProposal, setViewProposal] = useState(false);
 
   return (
     <>
@@ -16,7 +18,7 @@ const Proposals = () => {
       <div className="w-full text-vdao-dark">
         <OperationalProposals setOpenCreateProposal={setOpenCreateProposal} />
 
-        <ProposalCards />
+        <ProposalCards setViewProposal={setViewProposal} />
 
         <Insights />
 
@@ -24,6 +26,13 @@ const Proposals = () => {
           <CreateNewProposal
             show={openCreateProposal}
             close={() => setOpenCreateProposal(false)}
+          />
+        )}
+
+        {viewProposal && (
+          <ViewProposal
+            show={viewProposal}
+            close={() => setViewProposal(false)}
           />
         )}
       </div>

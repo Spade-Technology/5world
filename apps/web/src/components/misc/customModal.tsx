@@ -7,6 +7,8 @@ type ModalProps = {
   children: any;
   heading?: string;
   modalMarginTop?: string;
+  padding?: string;
+  removeCloseIcon?: boolean;
 };
 
 const CustomModal = ({
@@ -15,6 +17,8 @@ const CustomModal = ({
   children,
   heading,
   modalMarginTop,
+  padding,
+  removeCloseIcon,
 }: ModalProps) => {
   return (
     <div
@@ -24,23 +28,30 @@ const CustomModal = ({
       //   onClick={() => setClickedOutside(true)}
     >
       <div
-        className={`${
-          modalMarginTop ? modalMarginTop : "my-[100px]"
-        } overflow-auto mx-auto h-auto  max-w-[370px] rounded-[20px] bg-white p-6 md:max-w-[1140px] md:p-[30px] md:pl-[50px]`}
+        className={`${modalMarginTop ? modalMarginTop : "my-[100px]"} ${
+          padding ? padding : "p-6 md:p-[30px] md:pl-[50px]"
+        } mx-auto h-auto max-w-[370px]  overflow-auto rounded-[20px] bg-white  md:max-w-[1140px] `}
         // onClick={() => setClickedOutside(false)}
       >
         <div className="flex justify-between">
-          <div className="pt-5 font-heading text-[26px] md:text-3xl font-medium text-vdao-dark">
-            {heading ? heading : ""}
+          <div>
+            {heading && (
+              <div className="pt-5 font-heading text-[26px] font-medium text-vdao-dark md:text-3xl">
+                {heading}
+              </div>
+            )}
           </div>
-          <Image
-            src={CloseIcon}
-            alt="close"
-            className="float-right cursor-pointer"
-            onClick={() => {
-              close();
-            }}
-          />
+
+          {!removeCloseIcon && (
+            <Image
+              src={CloseIcon}
+              alt="close"
+              className="float-right cursor-pointer"
+              onClick={() => {
+                close();
+              }}
+            />
+          )}
         </div>
 
         {children}

@@ -5,10 +5,10 @@ import EllipseComponent from "~/components/misc/ellipseLine";
 
 type FormProps = {
   setNextForm: Dispatch<SetStateAction<boolean>>;
-  close: any;
+  setShowPreview: Dispatch<SetStateAction<boolean>>;
 };
 
-const FormTwo = ({ setNextForm, close }: FormProps) => {
+const FormTwo = ({ setNextForm, setShowPreview }: FormProps) => {
   return (
     <div className="grid grid-cols-1 gap-10 pt-[30px] pb-[24px] font-body text-lg font-normal text-vdao-dark md:grid-cols-2 md:gap-[106px] md:pt-10">
       <div>
@@ -68,14 +68,19 @@ const FormTwo = ({ setNextForm, close }: FormProps) => {
         <div className="float-right flex gap-5 pt-6 md:pt-48 ">
           <div
             className="cursor-pointer rounded-[5px] border-[1px] border-vdao-dark py-[5px] px-[35px] font-heading text-lg font-medium"
-            onClick={() => setNextForm(false)}
+            onClick={() => {
+              setNextForm(false);
+            }}
           >
             Previous
           </div>
           <PrimaryButton
             text="Confirm"
             className=" py-[5px] px-[35px] font-heading text-lg font-medium"
-            onClick={() => close()}
+            onClick={() => {
+              setNextForm(false);
+              setShowPreview(true);
+            }}
           />
         </div>
       </div>

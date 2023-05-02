@@ -102,9 +102,12 @@ export const Card = () => {
           </div>
 
           <div className="flex gap-[10px]">
-            <WhiteButton text="60" className="py-[5px] text-xl" />
+            <WhiteButton text="60" className="py-[5px] font-heading text-xl" />
 
-            <PrimaryButton text="Vote" className="py-[5px] text-xl" />
+            <PrimaryButton
+              text="Vote"
+              className="py-[5px] font-heading text-xl"
+            />
           </div>
         </div>
       </div>
