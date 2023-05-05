@@ -34,9 +34,10 @@ export function HomeCTAComponent() {
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi turpis
         mi, faucibus vitae elementum id, tristique at lectus.
       </div>
-      <Button type="primary" className="mt-8 scale-125 md:scale-0">
-        Apply Now
-      </Button>
+      <PrimaryButton
+        text=" Apply Now"
+        className=" mx-auto mt-8 mr-auto bg-vdao-light"
+      />
     </section>
   );
 }
