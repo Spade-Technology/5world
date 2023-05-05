@@ -41,6 +41,7 @@ const navigationElementsWeb2: NavigationElement[] = [
       { name: "NFT Collection", link: "/nft" },
       { name: "Discord", link: "#" },
       { name: "Forum", link: "#" },
+      { name: "Manifesto", link: "/manifesto" },
     ],
   },
   { name: "Get Funding", link: "/funding" },

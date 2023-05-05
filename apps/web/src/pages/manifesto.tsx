@@ -549,7 +549,7 @@ export async function getServerSideProps({
     take: 10,
   });
 
-  const [total, list] = await Promise.all([total_p, list_p]);
+  const [total, list] = await Promise?.all([total_p, list_p]);
 
   res.setHeader(
     "Cache-Control",

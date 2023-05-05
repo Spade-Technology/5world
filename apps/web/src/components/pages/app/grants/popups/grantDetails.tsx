@@ -40,7 +40,7 @@ const GrantDetails = ({ show, close }: Props) => {
             <div className="flex gap-[10px] md:pt-5">
               <Image src={TwitterIcon} alt="twitter" />
               <div> @grantexample</div>
-            </div>
+            </div> 
           </div>
 
           <div className="pt-10 text-[22px] font-bold">
