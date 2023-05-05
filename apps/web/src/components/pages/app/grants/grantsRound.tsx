@@ -1,7 +1,13 @@
+import { Dispatch, SetStateAction } from "react";
 import Description from "~/components/misc/description";
 import HowItWorks from "~/components/misc/howItWorks";
+import PrimaryButton from "~/styles/shared/buttons/primaryButton";
 
-const GrantsRound = () => {
+type Props = {
+  setCreateGrant: Dispatch<SetStateAction<boolean>>;
+};
+
+const GrantsRound = ({ setCreateGrant } : Props) => {
   return (
     <section className="w-screen bg-vdao-deep">
       <Description
@@ -29,6 +35,23 @@ const GrantsRound = () => {
           </div>
         }
       />
+
+      <div className="flex flex-col md:flex-row ">
+        <div className="flex-1"></div>
+        <div className="mt-[30px] flex flex-1 flex-col gap-5 pl-6 md:mt-0 md:flex-row md:pl-16">
+          <PrimaryButton
+            text="Create Proposal"
+            onClick={() => setCreateGrant(true)}
+            className="py-[5px] px-[35px] text-xl"
+          />
+          <div
+            className="w-fit  cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white"
+            onClick={() => setCreateGrant(true)}
+          >
+            See All Proposals{" "}
+          </div>
+        </div>
+      </div>
 
       <HowItWorks
         contents={[

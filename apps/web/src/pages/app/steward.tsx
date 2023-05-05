@@ -1,17 +1,30 @@
+import { useState } from "react";
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
-import Page from "~/components/layout/page";
-import StewardCards from "~/components/pages/steward/stewardCards";
-import StewardProfile from "~/components/pages/steward/stewardProfile";
+import ProfilePopup from "~/components/pages/app/steward/profilePopup";
+import StewardCards from "~/components/pages/app/steward/stewardCards";
+import StewardProfile from "~/components/pages/app/steward/stewardProfile";
 
 const Steward = () => {
+  const [openProfile, setOpenProfile] = useState(false);
   return (
     <>
-      <Page>
+      <Header web3 />
+
+      <div className="w-full text-vdao-dark">
         <StewardProfile />
 
-        <StewardCards />
-      </Page>
+        <StewardCards setOpenProfile={setOpenProfile} />
+
+        {openProfile && (
+          <ProfilePopup
+            show={openProfile}
+            close={() => setOpenProfile(false)}
+          />
+        )}
+      </div>
+
+      <Footer />
     </>
   );
 };
