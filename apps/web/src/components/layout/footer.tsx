@@ -31,7 +31,9 @@ const Footer = (props: Props) => {
             className="mb-auto hidden md:block"
           />
           <div>
-            <span className="font-medium text-vdao-dark">Participate</span>
+            <span className="clash text-xl font-medium text-vdao-dark">
+              Participate
+            </span>
             <div className="mt-8 flex flex-col gap-4">
               <Link href="/apply">Apply</Link>
               <Link href="/nft">NFT Collections</Link>
@@ -40,30 +42,52 @@ const Footer = (props: Props) => {
             </div>
           </div>
           <div>
-            <span className="font-medium text-vdao-dark">Community</span>
+            <span className="clash text-xl font-medium text-vdao-dark">
+              Community
+            </span>
             <div className="mt-8 flex flex-col gap-4">
-              <Link href="#">Discord</Link>
-              <Link href="#">Forum</Link>
+              <Link className="inter text-base font-normal" href="#">
+                Discord
+              </Link>
+              <Link className="inter text-base font-normal" href="#">
+                Forum
+              </Link>
             </div>
           </div>
           <div>
-            <span className="font-medium text-vdao-dark">Organisation</span>
+            <span className="clash text-xl font-medium text-vdao-dark">
+              Organisation
+            </span>
             <div className="mt-8 flex flex-col gap-4">
-              <Link href="#">About Us</Link>
-              <Link href="#">Analytics</Link>
-              <Link href="#">Whitepaper</Link>
+              <Link className="inter text-base font-normal" href="#">
+                About Us
+              </Link>
+              <Link className="inter text-base font-normal" href="#">
+                Analytics
+              </Link>
+              <Link className="inter text-base font-normal" href="#">
+                Whitepaper
+              </Link>
             </div>
           </div>
           <div>
-            <span className="font-medium text-vdao-dark">Legal</span>
+            <span className="clash text-xl font-medium text-vdao-dark">
+              Legal
+            </span>
             <div className="mt-8 flex flex-col gap-4">
-              <Link href="#">Terms of Service</Link>
-              <Link href="#">Privacy Policy</Link>
+              <Link className="inter text-base font-normal" href="#">
+                Terms of Service
+              </Link>
+              <Link className="inter text-base font-normal" href="#">
+                Privacy Policy
+              </Link>
             </div>
           </div>
         </div>
         <div className="flex justify-between">
-          <span className="text-vdao-dark">© 2023 5th World</span>
+          <span className="inter text-base font-normal text-vdao-dark">
+            © 2023 5th World
+          </span>
         </div>
       </div>
     </footer>
