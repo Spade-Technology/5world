@@ -14,13 +14,15 @@ const Home: NextPage = () => {
       <Page>
         <WelcomeComponent />
 
-        <section className="mx-6 flex max-w-[1280px] flex-wrap md:gap-5">
-          <ProfileHomeComponent />
+        <div className="mx-auto  flex w-fit">
+          <section className="mx-6 flex flex-wrap justify-between gap-5 lg:max-w-[1280px]">
+            <ProfileHomeComponent />
 
-          <NewMembersComponent />
+            <NewMembersComponent />
 
-          <StatisticsHomeComponent />
-        </section>
+            <StatisticsHomeComponent />
+          </section>
+        </div>
       </Page>
     </>
   );

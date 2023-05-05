@@ -72,8 +72,8 @@ export function HomePartnersComponent() {
 
 export function HomeCommunityComponent() {
   return (
-    <section className="relative mt-36  bg-vdao-dark px-6 text-vdao-light">
-      <div className="mx-auto flex max-w-[1440px] flex-col ">
+    <section className=" mt-36  bg-vdao-dark px-6 text-vdao-light ">
+      <div className="relative mx-auto flex max-w-[1440px] flex-col ">
         <div className="mt-24">
           <h1 className="mb-6 text-4xl font-medium md:ml-9 md:text-5xl lg:ml-36">
             Community
@@ -115,12 +115,12 @@ export function HomeCommunityComponent() {
             </div>
           </div>
         </div>
+        <Image
+          src={CommunityHero}
+          alt="VDAO"
+          className="absolute bottom-0 left-0 md:h-3/6 md:w-6/12 lg:h-5/6"
+        />
       </div>
-      <Image
-        src={CommunityHero}
-        alt="VDAO"
-        className="absolute bottom-0 left-0 lg:h-5/6 md:h-3/6 md:w-6/12"
-      />
     </section>
   );
 }
@@ -269,7 +269,7 @@ export function HomeIntroComponent() {
 
 export function HomeWelcomeComponent() {
   return (
-    <section className="max-w-[1440px]flex-col mx-auto overflow-hidden">
+    <section className="mx-auto max-w-[1440px] flex-col overflow-hidden">
       <div className="mx-auto mt-28">
         <div className="clash mx-auto w-10/12 text-center text-5xl font-medium text-vdao-dark md:w-auto md:text-7xl">
           Re:imagine the future

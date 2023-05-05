@@ -42,35 +42,35 @@ export const membersData = [
 
 export const onlineMembersData = [
   {
-    img: "/illustrations/web3/home/svg/image 9.svg",
+    img: "/illustrations/home/SVG/image 10 (5).svg",
     name: " markEZ",
   },
   {
-    img: "/illustrations/web3/home/svg/513ef3cfd86d5a226fa969aa5d579e54 1.svg",
+    img: "/illustrations/home/SVG/513ef3cfd86d5a226fa969aa5d579e54 1 (5).svg",
     name: "markEZ",
   },
   {
-    img: "/illustrations/web3/home/svg/dc7ec0dbb1dcd8463a09195042bdee44 1 (1).svg",
+    img: "/illustrations/home/SVG/513ef3cfd86d5a226fa969aa5d579e54 1 (6).svg",
     name: "markEZ",
   },
   {
-    img: "/illustrations/web3/home/svg/dc7ec0dbb1dcd8463a09195042bdee44 1.svg",
+    img: "/illustrations/home/SVG/513ef3cfd86d5a226fa969aa5d579e54 1 (7).svg",
     name: "markEZ",
   },
   {
-    img: "/illustrations/web3/home/svg/image 9.svg",
+    img: "/illustrations/home/SVG/513ef3cfd86d5a226fa969aa5d579e54 1 (4).svg",
     name: " markEZ",
   },
   {
-    img: "/illustrations/web3/home/svg/513ef3cfd86d5a226fa969aa5d579e54 1.svg",
+    img: "/illustrations/home/SVG/image 10 (3).svg",
     name: "markEZ",
   },
   {
-    img: "/illustrations/web3/home/svg/dc7ec0dbb1dcd8463a09195042bdee44 1 (1).svg",
+    img: "/illustrations/home/SVG/513ef3cfd86d5a226fa969aa5d579e54 1 (3).svg",
     name: "markEZ",
   },
   {
-    img: "/illustrations/web3/home/svg/dc7ec0dbb1dcd8463a09195042bdee44 1.svg",
+    img: "/illustrations/home/SVG/513ef3cfd86d5a226fa969aa5d579e54 1 (2).svg",
     name: "markEZ",
   },
 ];
