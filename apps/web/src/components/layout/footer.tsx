@@ -14,6 +14,11 @@ type Props = {
 };
 
 const Footer = (props: Props) => {
+  const socialLinks = [
+    { img: twitter, url: "#1" },
+    { img: discourse, url: "#1" },
+    { img: discord, url: "#1" },
+  ];
   return (
     <footer>
       <div className="mx-auto flex h-24 max-w-[1280px] flex-col gap-4 py-16 px-6">
@@ -35,10 +40,24 @@ const Footer = (props: Props) => {
               Participate
             </span>
             <div className="mt-8 flex flex-col gap-4">
-              <Link href="/apply">Apply</Link>
-              <Link href="/nft">NFT Collections</Link>
-              <Link href="/donate">Donate</Link>
-              <Link href="/getfunding">Get Funding</Link>
+              <Link className="inter w-fit text-base font-normal" href="/apply">
+                Apply
+              </Link>
+              <Link className="inter w-fit text-base font-normal" href="/nft">
+                NFT Collections
+              </Link>
+              <Link
+                className="inter w-fit text-base font-normal"
+                href="/donate"
+              >
+                Donate
+              </Link>
+              <Link
+                className="inter w-fit text-base font-normal"
+                href="/getfunding"
+              >
+                Get Funding
+              </Link>
             </div>
           </div>
           <div>
@@ -46,10 +65,10 @@ const Footer = (props: Props) => {
               Community
             </span>
             <div className="mt-8 flex flex-col gap-4">
-              <Link className="inter text-base font-normal" href="#">
+              <Link className="inter w-fit text-base font-normal" href="#">
                 Discord
               </Link>
-              <Link className="inter text-base font-normal" href="#">
+              <Link className="inter w-fit text-base font-normal" href="#">
                 Forum
               </Link>
             </div>
@@ -59,13 +78,13 @@ const Footer = (props: Props) => {
               Organisation
             </span>
             <div className="mt-8 flex flex-col gap-4">
-              <Link className="inter text-base font-normal" href="#">
+              <Link className="inter w-fit text-base font-normal" href="#">
                 About Us
               </Link>
-              <Link className="inter text-base font-normal" href="#">
+              <Link className="inter w-fit text-base font-normal" href="#">
                 Analytics
               </Link>
-              <Link className="inter text-base font-normal" href="#">
+              <Link className="inter w-fit text-base font-normal" href="#">
                 Whitepaper
               </Link>
             </div>
@@ -75,19 +94,28 @@ const Footer = (props: Props) => {
               Legal
             </span>
             <div className="mt-8 flex flex-col gap-4">
-              <Link className="inter text-base font-normal" href="#">
+              <Link className="inter w-fit text-base font-normal" href="#">
                 Terms of Service
               </Link>
-              <Link className="inter text-base font-normal" href="#">
+              <Link className="inter w-fit text-base font-normal" href="#">
                 Privacy Policy
               </Link>
             </div>
           </div>
         </div>
-        <div className="flex justify-between">
+        <div className="items-center gap-24 pb-8 md:flex">
           <span className="inter text-base font-normal text-vdao-dark">
             © 2023 5th World
           </span>
+          <div className="my-4 flex items-center gap-4 md:my-0">
+            {socialLinks.map(({ img, url }, index) => {
+              return (
+                <Link href={url}>
+                  <Image alt="social link" className="w-5" src={img} />
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </div>
     </footer>
