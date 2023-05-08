@@ -122,11 +122,6 @@ export function HomeCommunityComponent() {
             </div>
           </div>
         </div>
-        <Image
-          src={CommunityHero}
-          alt="VDAO"
-          className="absolute bottom-0 left-0 md:h-3/6 md:w-6/12 lg:h-5/6"
-        />
       </div>
     </Section>
   );
@@ -289,7 +284,7 @@ export function HomeWelcomeComponent() {
       <Image
         src={WelcomeHero}
         alt="VDAO"
-        className="md:max-w-100 relative left-[-5%] -z-10 mt-5 scale-[140%]"
+        className="md:max-w-100 relative left-[-5%] -z-10 mt-5 scale-[100%]"
       />
     </Section>
   );
