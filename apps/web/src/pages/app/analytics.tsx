@@ -4,10 +4,6 @@ import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
 import Page from "~/components/layout/page";
 import { Section } from "~/components/layout/section";
-<<<<<<< Updated upstream
-=======
-import { Section } from "~/components/layout/section";
->>>>>>> Stashed changes
 import {
   MembershipComponent,
   ProposalComponent,
