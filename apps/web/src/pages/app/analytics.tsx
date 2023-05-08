@@ -2,19 +2,12 @@
 
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
-import Page from "~/components/layout/page";
 import { Section } from "~/components/layout/section";
 import {
   MembershipComponent,
   ProposalComponent,
   TitleComponent,
 } from "~/components/pages/app/analytics/analytics";
-import {
-  NewMembersComponent,
-  ProfileHomeComponent,
-  StatisticsHomeComponent,
-  WelcomeComponent,
-} from "~/components/pages/web3home";
 
 const Analytics = () => {
   return (
