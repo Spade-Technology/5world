@@ -1,13 +1,16 @@
-import { Dispatch, SetStateAction } from "react";
+import Image from "next/image";
+import { Dispatch, SetStateAction, useState } from "react";
 import Description from "~/components/misc/description";
 import HowItWorks from "~/components/misc/howItWorks";
 import PrimaryButton from "~/styles/shared/buttons/primaryButton";
+import PurpleButton from "~/styles/shared/buttons/purpleButton";
 
 type Props = {
   setOpenCreatePod: Dispatch<SetStateAction<boolean>>;
 };
 
 const PodsProfile = ({ setOpenCreatePod }: Props) => {
+  // const [step, setStep] = useState(4);
   return (
     <section className="w-screen bg-vdao-deep">
       <Description
@@ -37,14 +40,14 @@ const PodsProfile = ({ setOpenCreatePod }: Props) => {
 
       <div className="flex flex-col md:flex-row ">
         <div className="flex-1"></div>
-        <div className="flex flex-1 gap-5 pl-6 md:pl-16 flex-col md:flex-row mt-[30px] md:mt-0">
+        <div className="mt-[30px] flex flex-1 flex-col gap-5 pl-6 md:mt-0 md:flex-row md:pl-16">
           <PrimaryButton
             text="Create Pods"
             onClick={() => setOpenCreatePod(true)}
             className="py-[5px] px-[35px] text-xl"
           />
           <div
-            className="cursor-pointer w-fit rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white"
+            className="w-fit cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white"
             onClick={() => setOpenCreatePod(true)}
           >
             See all Pods{" "}
@@ -52,39 +55,93 @@ const PodsProfile = ({ setOpenCreatePod }: Props) => {
         </div>
       </div>
 
-      <HowItWorks
-        contents={[
-          {
-            heading: ["How it works"],
-            content: (
-              <div>
-                <div>
-                  There are six steward positions (one from each guild and two
-                  from the core DAO community) and each term lasts 180 days
-                  before a new election.
+      <div
+        className={`mx-auto max-w-[1280px] bg-vdao-deep px-6 py-16 text-white md:py-20 md:pt-[140px] md:pb-[70px]`}
+      >
+        <div className={`flex flex-col gap-10 md:flex-row md:gap-[22px] `}>
+          <div className="flex-1">
+            <span className="mr-5 font-heading text-3xl font-medium underline underline-offset-8 md:float-left md:ml-[348px] md:text-4xl">
+              Four Stages of Pods
+            </span>
+          </div>
+          <div className="flex flex-1">
+            {/* left */}
+            <div className="mr-6 flex flex-col">
+              {/* step 1 */}
+              <div className="z-10 h-5 w-5 rounded-full bg-vdao-light md:h-8 md:w-8" />
+
+              {/* step 2 */}
+              <div
+                className={`mx-auto h-56 w-[2px] scale-110 rounded-full bg-white md:h-44 `}
+              />
+
+              <div
+                className={`z-10 h-5 w-5 rounded-full bg-vdao-light md:h-8 md:w-8`}
+              />
+
+              {/* step 3 */}
+              <div
+                className={`mx-auto h-36 w-[2px] scale-110 rounded-full bg-white md:h-32 `}
+              />
+              <div
+                className={`z-10 h-5 w-5 rounded-full bg-vdao-light md:h-8 md:w-8`}
+              />
+
+              {/* step 4 */}
+              <div
+                className={`mx-auto h-40 w-[2px] scale-110 rounded-full bg-white `}
+              />
+              <div
+                className={`z-10 h-5 w-5 rounded-full bg-vdao-light md:h-8 md:w-8`}
+              />
+            </div>
+            {/* right */}
+            <div className="flex flex-col justify-between ">
+              {/* step 1 */}
+              <div className="font-body font-normal">
+                <div className="font-heading text-2xl font-medium md:text-3xl">
+                  1. Informal
                 </div>
-                <br />
-                <div>
-                  The primary role of the DAO Stewards is to support the growth
-                  of the DAO and engage consistently in DAO voting via
-                  delegation.
-                </div>
-                <br />
-                <div>
-                  This page provides details of each DAO steward and tracks
-                  their contributions within the DAO over time.
-                </div>
-                <br />
-                <div>
-                  Members can also use the delegation facilitaty on this page to
-                  enable Stewards to vote on their behalf.
+                <div className="max-w-[380px] pt-5 text-lg md:pt-4">
+                  {" "}
+                  Pod has been formed around a specific focus area but has not
+                  made a formal governance proposal. (Pods can remain
+                  indefinitely in this stage if they choose).{" "}
                 </div>
               </div>
-            ),
-          },
-        ]}
-        className="md:pb-[140px]"
-      />
+              {/* step 2 */}
+              <div className="pt-10 font-body font-normal md:pt-12">
+                <div className="font-heading text-2xl font-medium md:text-3xl">
+                  2. Proposal Stage
+                </div>
+                <div className="max-w-[380px] pt-5 text-lg md:pt-4">
+                  Pod has made a proposal and is in discussions with the wider
+                  community.
+                </div>
+              </div>
+              {/* step 3 */}
+              <div className="pt-10 font-body font-normal md:pt-12">
+                <div className="font-heading text-2xl font-medium md:text-3xl">
+                  3. Active
+                </div>
+                <div className="max-w-[380px] pt-5 text-lg md:pt-4">
+                  Pod proposal has been ratified by governance and Pod is
+                  working to achieve agreed outcomes.
+                </div>
+              </div>
+              {/* step 4 */}
+              <div className="pt-10 font-body font-normal md:pt-12">
+                <div className="font-heading text-2xl font-medium md:text-3xl">
+                  4. Archived
+                </div>
+                <div className="max-w-[380px] pt-5 text-lg md:pt-4">
+                  Pod’s work has concluded.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
