@@ -35,7 +35,7 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
             </div>
           </div>
 
-          <div className="mt-[30px] w-fit rounded-3xl border-[3px] border-vdao-light md:py-[7px] px-5 md:px-[25px] text-lg md:text-xl font-medium">
+          <div className="md:ml-36 mt-[30px] md:mt-[0px] w-fit rounded-3xl border-[3px] border-vdao-light md:py-[7px] px-5 md:px-[25px] text-lg md:text-xl font-medium">
             DAO Operation Guild
           </div>
           </div>

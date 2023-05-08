@@ -1,5 +1,6 @@
 import Image from "next/image";
 import CloseIcon from "public/icons/customModal/closeIcon.svg";
+import { useEffect, useRef } from "react";
 
 type ModalProps = {
   show: boolean;
@@ -20,18 +21,28 @@ const CustomModal = ({
   padding,
   removeCloseIcon,
 }: ModalProps) => {
+  const ref = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const muf = (e: any) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        close();
+      }
+    };
+    document.addEventListener("mousedown", muf);
+  }, [ref]);
+
   return (
     <div
       className={`${
         show ? "block" : "hidden"
-      } fixed top-0 left-0 z-50 mx-auto h-full w-full overflow-auto backdrop-brightness-50`}
-      //   onClick={() => setClickedOutside(true)}
+      } fixed top-0 left-0 z-50 mx-auto h-full w-full overflow-auto backdrop-brightness-50 `}
     >
       <div
         className={`${modalMarginTop ? modalMarginTop : "my-[100px]"} ${
           padding ? padding : "p-6 md:p-[30px] md:pl-[50px]"
         } mx-auto h-auto max-w-[370px]  overflow-auto rounded-[20px] bg-white  md:max-w-[1140px] `}
-        // onClick={() => setClickedOutside(false)}
+        ref={ref}
       >
         <div className="flex justify-between">
           <div>
