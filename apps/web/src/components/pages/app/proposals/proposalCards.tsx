@@ -1,14 +1,20 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import PageNation from "~/components/misc/pageNation";
 import PrimaryButton from "~/styles/shared/buttons/primaryButton";
 import { proposalDetails } from "./proposalDetails";
+import ProfileCard from "~/components/misc/profileCard";
+
+type ProposalProps = {
+  setViewProposal: Dispatch<SetStateAction<boolean>>;
+};
 
 type CardProps = {
   proposal: any;
+  setViewProposal: Dispatch<SetStateAction<boolean>>;
 };
 
-const ProposalCards = () => {
+const ProposalCards = ({ setViewProposal }: ProposalProps) => {
   const [pageCount, setPageCount] = useState(1);
   const [pageNumbers, setPageNumbers] = useState<any>([]);
   const [proposals, setUpdatedProposals] = useState<any>([]);
@@ -61,7 +67,13 @@ const ProposalCards = () => {
 
         <div className="mx-6 mt-[15px]  md:mx-0 ">
           {proposals?.map((proposal: any, idx: number) => {
-            return <Card proposal={proposal} key={idx} />;
+            return (
+              <Card
+                proposal={proposal}
+                key={idx}
+                setViewProposal={setViewProposal}
+              />
+            );
           })}
         </div>
 
@@ -76,7 +88,7 @@ const ProposalCards = () => {
   );
 };
 
-export const Card = ({ proposal }: CardProps) => {
+export const Card = ({ proposal, setViewProposal }: CardProps) => {
   return (
     <div className="mt-[20px] rounded-[20px] bg-white px-5 py-10 font-body text-vdao-dark md:mt-[30px] md:p-[50px]">
       <div className="flex flex-col md:flex-row">
@@ -86,22 +98,11 @@ export const Card = ({ proposal }: CardProps) => {
             {proposal.content}
           </div>
 
-          <div className="flex w-full pt-[20px]">
-            <div>
-              <Image
-                src={proposal.creatorIcon}
-                alt=""
-                className="rounded-full"
-              />
-            </div>
-
-            <div className="pl-[10px] md:pl-[16px]">
-              <div className="font-body text-lg font-semibold">
-                {proposal.creatorName}
-              </div>
-              <div className="font-body text-sm">{proposal.creatorAddress}</div>
-            </div>
-          </div>
+          <ProfileCard
+            Icon={proposal.creatorIcon}
+            Name={proposal.createdName}
+            Address={proposal.creatorAddress}
+          />
 
           <div
             className={`mt-[30px] w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-9 py-[5px] text-lg font-medium text-vdao-light`}
@@ -110,10 +111,13 @@ export const Card = ({ proposal }: CardProps) => {
           </div>
         </div>
         <div className="flex-1">
-          <div className="pt-7 md:pt-9 text-lg font-normal">{proposal.description}</div>
+          <div className="pt-7 text-lg font-normal md:pt-9">
+            {proposal.description}
+          </div>
           <PrimaryButton
             text="View Detail"
             className="mt-[30px] py-[5px] px-9 text-xl font-medium"
+            onClick={() => setViewProposal(true)}
           />
         </div>
       </div>
