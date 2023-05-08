@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { Section } from "~/components/layout/section";
 import Description from "~/components/misc/description";
 import HowItWorks from "~/components/misc/howItWorks";
 import PrimaryButton from "~/styles/shared/buttons/primaryButton";

@@ -6,7 +6,7 @@ import MemberSuport from "~/components/pages/app/support/memberSupport";
 const Support = () => {
   return (
     <>
-      <Header web3 />
+      <Header />
 
       <div className="w-full text-vdao-dark">
         <MemberSuport />

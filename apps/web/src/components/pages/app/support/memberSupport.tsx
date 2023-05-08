@@ -1,3 +1,4 @@
+import { Section } from "~/components/layout/section";
 import Description from "~/components/misc/description";
 
 const MemberSuport = () => {

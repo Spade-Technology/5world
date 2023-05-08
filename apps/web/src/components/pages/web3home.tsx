@@ -143,7 +143,7 @@ export function NewMembersComponent() {
 
       {/* ONLINE MEMBERS */}
       <div>
-        <div className=" mt-10 flex items-center gap-2.5 md:mt-0 lg:mt-10 lg:mt-14">
+        <div className=" mt-10 flex items-center gap-2.5 md:mt-0 lg:mt-10">
           <div className="satoshi text-xl font-bold text-white">Online</div>
           <div className="satoshi text-lg font-normal text-white">
             {onlineMembersData.length}
