@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { Section } from "~/components/layout/section";
 
 const ContentsTable = () => {
   const headingCSS = "text-3xl font-medium font-heading";
 
   return (
-    <section className="mx-auto w-screen bg-vdao-deep py-[60px] px-6 md:px-0  ">
+    <Section className="mx-auto w-screen bg-vdao-deep py-[60px] px-6 md:px-0  ">
       <div className=" mx-auto grid max-w-[1280px] grid-cols-1 md:grid-cols-3 md:gap-[68px]">
         <div className="flex h-fit flex-col gap-5 rounded-[20px] bg-vdao-dark p-10 font-body text-[22px] font-normal text-vdao-light">
           <Link href={"/app/support/#codeOfConduct"}>Code of Conduct</Link>
@@ -276,7 +277,7 @@ const ContentsTable = () => {
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 };
 

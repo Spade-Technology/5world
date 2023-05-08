@@ -8,7 +8,7 @@ import NFTCollections from "~/components/pages/nftCollections/nftCollections";
 const NFT = () => {
   return (
     <>
-      <Page web2>
+      <Page darkweb2>
         <NFTCollections />
 
         <FAQSection FAQS={FAQS} />

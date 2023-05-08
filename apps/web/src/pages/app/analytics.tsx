@@ -3,6 +3,11 @@
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
 import Page from "~/components/layout/page";
+import { Section } from "~/components/layout/section";
+<<<<<<< Updated upstream
+=======
+import { Section } from "~/components/layout/section";
+>>>>>>> Stashed changes
 import {
   MembershipComponent,
   ProposalComponent,
@@ -18,15 +23,15 @@ import {
 const Analytics = () => {
   return (
     <>
-      <Header web3 />
+      <Header />
       <div className="bg-vdao-deep">
-        <div className="mx-auto md:px-6 lg:max-w-[1188px]">
+        <Section className="mx-auto lg:max-w-[1280px]">
           <TitleComponent />
 
           <MembershipComponent />
 
           <ProposalComponent />
-        </div>
+        </Section>
       </div>
       <Footer />
     </>

@@ -23,10 +23,11 @@ import PalmLogo from "public/thirdparty/palm.png";
 import PleasrDaoLogo from "public/thirdparty/pleasrdao.png";
 import PleasrHouseLogo from "public/thirdparty/pleasrHouse.png";
 import PrimaryButton from "~/styles/shared/buttons/primaryButton";
+import { Section } from "../layout/section";
 
 export function HomeCTAComponent() {
   return (
-    <section className="flex flex-col items-center bg-gradient-to-r from-vdao-light to-vdao-dark py-24 px-6 md:px-8 xl:px-0">
+    <Section className="flex flex-col items-center bg-gradient-to-r from-vdao-light to-vdao-dark py-24 px-6 md:px-8 xl:px-0">
       <h1 className="text-center text-5xl font-medium text-white">
         Ready to Join?
       </h1>
@@ -38,13 +39,13 @@ export function HomeCTAComponent() {
         text=" Apply Now"
         className=" mx-auto mt-8 mr-auto bg-vdao-light"
       />
-    </section>
+    </Section>
   );
 }
 
 export function HomePartnersComponent() {
   return (
-    <section className="overflow-hidden px-6 text-vdao-dark md:px-8 xl:px-0">
+    <Section className="overflow-hidden px-6 text-vdao-dark md:px-8 xl:px-0">
       <div className="mx-auto flex max-w-[1280px] flex-col md:flex-row">
         <div className="mt-24 max-w-[1280px] md:mx-auto md:w-1/2 ">
           <h1 className="mb-6 w-full text-left text-5xl font-medium">
@@ -67,15 +68,15 @@ export function HomePartnersComponent() {
           <Image src={PleasrHouseLogo} alt="VDAO" className="w-full" />
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
 
 export function HomeCommunityComponent() {
   return (
-    <section className=" mt-36  bg-vdao-dark px-6 text-vdao-light ">
+    <Section className="mt-10  bg-vdao-dark px-6 py-10 text-vdao-light">
       <div className="relative mx-auto flex max-w-[1440px] flex-col ">
-        <div className="mt-24">
+        <div className="mt-10">
           <h1 className="mb-6 text-4xl font-medium md:ml-9 md:text-5xl lg:ml-36">
             Community
           </h1>
@@ -84,8 +85,13 @@ export function HomeCommunityComponent() {
           </span>
         </div>
         <div className="mt-12 flex flex-col-reverse md:flex-row">
-          <div className="mb-96 grid gap-12 md:ml-[40%] md:mb-48 md:grid-cols-2 md:gap-0 lg:ml-[40%]">
-            <div className="flex  flex-col gap-4 md:w-9/12">
+          <Image
+            src={CommunityHero}
+            alt="VDAO"
+            className="mb-10 !mt-auto hidden h-1/2  w-1/3 scale-110 md:my-0 md:block md:h-full md:scale-100"
+          />
+          <div className="grid w-full grid-flow-col grid-cols-1 grid-rows-4 gap-10 md:grid-cols-2 md:grid-rows-2">
+            <div className="flex max-w-[340px] flex-col gap-4">
               <h1 className="text-2xl font-medium">Apolitical</h1>
               <span className="text-lg font-normal">
                 We welcome members from all walks of life and political beliefs
@@ -99,7 +105,7 @@ export function HomeCommunityComponent() {
                 ecosystems can and will be regenerated.
               </span>
             </div>
-            <div className="mt-10 flex flex-col gap-4 md:w-10/12 lg:w-9/12">
+            <div className="flex flex-col gap-4 md:mt-0 md:w-10/12 lg:w-9/12">
               <h1 className="text-2xl font-medium">Curious</h1>
               <span className="text-lg font-normal">
                 We exist at the bleeding edge of regenerative agriculture
@@ -107,7 +113,7 @@ export function HomeCommunityComponent() {
                 era of modern agriculture.
               </span>
             </div>
-            <div className="mt-10 flex flex-col gap-4 md:w-10/12 lg:w-9/12">
+            <div className="flex flex-col gap-4 md:mt-0 md:w-10/12 lg:w-9/12">
               <h1 className="text-2xl font-medium">Engaged</h1>
               <span className="text-lg font-normal">
                 We contribute to regenerative agriculture conversations,
@@ -122,13 +128,13 @@ export function HomeCommunityComponent() {
           className="absolute bottom-0 left-0 md:h-3/6 md:w-6/12 lg:h-5/6"
         />
       </div>
-    </section>
+    </Section>
   );
 }
 
 export function HomeGetInvolvedComponent() {
   return (
-    <section className="my-36 flex max-w-[1440px] flex-col lg:mx-auto">
+    <Section className="my-36 flex max-w-[1440px] flex-col lg:mx-auto">
       <h1 className="mb-6 ml-6 text-4xl font-medium md:ml-9 md:text-5xl lg:ml-36">
         Get Involved
       </h1>
@@ -177,7 +183,7 @@ export function HomeGetInvolvedComponent() {
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
 
@@ -202,7 +208,7 @@ const ObjectiveSubComponent = ({
 
 export function HomeObjectivesComponent() {
   return (
-    <section className="xl:p-O md:lg-14 mx-auto mt-36 flex max-w-[1440px] flex-col p-0 md:px-16">
+    <Section className="xl:p-O md:lg-14 mx-auto mt-36 flex max-w-[1440px] flex-col p-0 md:px-16">
       <h1 className="w-full text-center text-4xl font-medium md:text-5xl">
         Core Objectives
       </h1>
@@ -228,13 +234,13 @@ export function HomeObjectivesComponent() {
           description="Our art and our vision helps others to experience how the world might look and feel once VDAO’s core mission is achieved."
         />
       </div>
-    </section>
+    </Section>
   );
 }
 
 export function HomeIntroComponent() {
   return (
-    <section className="mx-auto mt-36 grid max-w-[1440px] flex-col-reverse gap-3 md:grid-cols-2 md:px-6">
+    <Section className="mx-auto mt-36 grid max-w-[1440px] flex-col-reverse gap-3 md:grid-cols-2 md:px-6">
       <div className="z-10 flex w-11/12 flex-col px-6">
         <h1 className="text-4xl font-medium md:text-5xl ">Introduction</h1>
         <div className="satoshi mt-9 text-lg text-vdao-dark">
@@ -264,13 +270,13 @@ export function HomeIntroComponent() {
         alt="VDAO"
         className="hidden md:order-first md:block"
       />
-    </section>
+    </Section>
   );
 }
 
 export function HomeWelcomeComponent() {
   return (
-    <section className="mx-auto max-w-[1440px] flex-col overflow-hidden">
+    <Section className="mx-auto flex max-w-[1440px] flex-col overflow-hidden">
       <div className="mx-auto mt-28">
         <div className="clash mx-auto w-10/12 text-center text-5xl font-medium text-vdao-dark md:w-auto md:text-7xl">
           Re:imagine the future
@@ -285,6 +291,6 @@ export function HomeWelcomeComponent() {
         alt="VDAO"
         className="md:max-w-100 relative left-[-5%] -z-10 mt-5 scale-[140%]"
       />
-    </section>
+    </Section>
   );
 }

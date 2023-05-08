@@ -22,7 +22,7 @@ type Props = {
   signatures?: number;
   className?: string;
   web2?: boolean;
-  web3?:boolean
+  dark?: boolean;
 };
 
 type NavigationElement = {
@@ -83,7 +83,9 @@ const Header = (props: Props) => {
   return (
     <header
       className={
-        props.web2 ? "overflow-hidden bg-white" : "overflow-hidden bg-vdao-deep"
+        !props.dark
+          ? "overflow-hidden bg-white"
+          : "overflow-hidden bg-vdao-deep"
       }
     >
       {/* Desktop */}
@@ -94,7 +96,7 @@ const Header = (props: Props) => {
         <div
           className={
             "xl:ml-54 flex justify-between gap-9 " +
-            (props.web2 ? "text-vdao-dark" : "text-white")
+            (!props.dark ? "text-vdao-dark" : "text-white")
           }
         >
           {(props.web2 ? navigationElementsWeb2 : navigationElementsWeb3).map(
@@ -127,14 +129,14 @@ const Header = (props: Props) => {
         </div>
         <div className="hidden gap-7 lg:flex">
           <Image
-            src={props.web2 ? discourse : darkDiscourse}
+            src={!props.dark ? discourse : darkDiscourse}
             alt="VDAO"
             width={30}
             height={30}
             className="hidden md:block"
           />
           <Image
-            src={props.web2 ? discordCircle : darkDiscord}
+            src={!props.dark ? discordCircle : darkDiscord}
             alt="VDAO"
             width={30}
             height={30}
@@ -145,7 +147,7 @@ const Header = (props: Props) => {
         <VDAOConnectButton
           web2={props.web2}
           className={
-            props.web2
+            !props.dark
               ? "border-vdao-dark text-vdao-dark"
               : "border-vdao-light text-vdao-light"
           }
@@ -189,7 +191,7 @@ const Header = (props: Props) => {
       <div
         className={
           "absolute z-50 w-screen -translate-x-full transition-all md:hidden " +
-          (props.web2 ? "bg-white " : "bg-vdao-deep ") +
+          (!props.dark ? "bg-white " : "bg-vdao-deep ") +
           (isMobileMenuOpen && "!translate-x-0 ")
         }
       >
@@ -199,7 +201,7 @@ const Header = (props: Props) => {
               <MobileSubmenu
                 element={element}
                 key={element.name}
-                web2={props.web2}
+                dark={props.dark}
               />
             )
           )}
@@ -223,9 +225,10 @@ const Header = (props: Props) => {
 
 const MobileSubmenu = (props: {
   element: NavigationElement;
-  web2?: boolean;
+
+  dark?: boolean;
 }) => {
-  const { element, web2 } = props;
+  const { element, dark } = props;
 
   const [isChildOpen, setIsChildOpen] = useState(false);
   const router = useRouter();
@@ -241,7 +244,7 @@ const MobileSubmenu = (props: {
           "h3 flex w-full items-center justify-between py-2 text-left text-base font-medium hover:bg-opacity-75 focus:outline-none " +
           (isChildOpen
             ? "text-vdao-light"
-            : web2
+            : !dark
             ? "text-vdao-dark "
             : "text-white ")
         }
@@ -282,7 +285,7 @@ const MobileSubmenu = (props: {
               key={child.name}
               className={
                 "big-text-mobile block py-1 pl-4 text-sm font-medium last:mb-4 hover:bg-opacity-75 " +
-                (web2 ? "text-vdao-dark " : "text-white ")
+                (!dark ? "text-vdao-dark " : "text-white ")
               }
             >
               {child.name}

@@ -2,10 +2,11 @@ import CoreValueBeaverHero from "public/illustrations/about/PNG/VDAO-about-beave
 import VisionPersionImage from "public/illustrations/about/PNG/VDAO-about-person.png";
 
 import Image from "next/image";
+import { Section } from "../layout/section";
 
 export function AboutUsCoreTeamComponent() {
   return (
-    <section className="xl:px-O mx-auto my-36 flex max-w-[1280px] flex-col px-6 md:px-12">
+    <Section className="xl:px-O mx-auto my-36 flex max-w-[1280px] flex-col px-6 md:px-12">
       <div className="flex w-full flex-col md:flex-row">
         <h1 className="mb-6 w-full text-left text-4xl font-medium md:text-5xl">
           Our Core Team
@@ -149,13 +150,13 @@ export function AboutUsCoreTeamComponent() {
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
 
 export function AboutUsVisionMissionComponent() {
   return (
-    <section className="xl:px-O my-36 flex flex-col overflow-hidden  py-24 px-6 text-vdao-dark md:flex-row md:px-12">
+    <Section className="xl:px-O my-36 flex flex-col overflow-hidden  py-24 px-6 text-vdao-dark md:flex-row md:px-12">
       <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-20">
         <div className="flex flex-col md:flex-row">
           <h1 className="mb-6 w-full text-4xl font-medium underline md:text-center md:text-5xl">
@@ -196,13 +197,13 @@ export function AboutUsVisionMissionComponent() {
         alt="VDAO"
         className="mt-auto ml-10 md:h-1/6 md:w-1/6 md:scale-150"
       />
-    </section>
+    </Section>
   );
 }
 
 export function AboutUsCoreValueComponent() {
   return (
-    <section className="xl:px-O my-36 bg-vdao-deep py-24  px-6 text-vdao-light md:px-12 xl:overflow-hidden">
+    <Section className="xl:px-O my-36 bg-vdao-deep py-24  px-6 text-vdao-light md:px-12 xl:overflow-hidden">
       <div className="mx-auto flex max-w-[1440px] flex-col ">
         <div className="mx-auto w-full max-w-[1280px] ">
           <h1 className="mb-6 w-full text-left text-4xl font-medium md:text-5xl">
@@ -255,13 +256,13 @@ export function AboutUsCoreValueComponent() {
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
 
 export function AboutUsComponent() {
   return (
-    <section className="xl:px-O my-16 flex w-full max-w-[1280px] flex-col px-6 md:mx-auto md:px-12 ">
+    <Section className="xl:px-O my-16 flex w-full max-w-[1280px] flex-col px-6 md:mx-auto md:px-12 ">
       <h1 className="mb-6 text-left text-4xl font-medium md:w-1/2 md:text-8xl">
         About Us
       </h1>
@@ -274,6 +275,6 @@ export function AboutUsComponent() {
         agree that regenerating degraded ecosystems is both neccessary and
         worthwhile.
       </div>
-    </section>
+    </Section>
   );
 }

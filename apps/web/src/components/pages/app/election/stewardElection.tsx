@@ -1,9 +1,10 @@
+import { Section } from "~/components/layout/section";
 import Description from "~/components/misc/description";
 import HowItWorks from "~/components/misc/howItWorks";
 
 const StewardElection = () => {
   return (
-    <section className="w-screen bg-vdao-deep">
+    <Section className="w-screen bg-vdao-deep">
       <Description
         invertColors={true}
         title={
@@ -40,7 +41,7 @@ const StewardElection = () => {
         ]}
         className="md:pb-[140px]"
       />
-    </section>
+    </Section>
   );
 };
 

@@ -26,6 +26,7 @@ import { useEffect, useRef, useState } from "react";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useSession } from "next-auth/react";
 import PrimaryButton from "~/styles/shared/buttons/primaryButton";
+import { Section } from "~/components/layout/section";
 
 dayjs.extend(relativeTime);
 

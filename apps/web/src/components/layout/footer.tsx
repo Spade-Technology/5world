@@ -20,8 +20,8 @@ const Footer = (props: Props) => {
     { img: discord, url: "#1" },
   ];
   return (
-    <footer>
-      <div className="mx-auto flex h-24 max-w-[1280px] flex-col gap-4 py-16 px-6">
+    <div>
+      <div className="mx-auto flex h-24 max-w-[1280px] flex-col gap-4 py-16 px-6 md:px-0">
         <Image
           src={logo}
           alt="VDAO"
@@ -118,7 +118,7 @@ const Footer = (props: Props) => {
           </div>
         </div>
       </div>
-    </footer>
+    </div>
   );
 };
 

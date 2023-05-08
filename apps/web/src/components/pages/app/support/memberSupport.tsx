@@ -2,7 +2,7 @@ import Description from "~/components/misc/description";
 
 const MemberSuport = () => {
   return (
-    <section className="w-screen bg-vdao-deep">
+    <Section className="w-screen bg-vdao-deep">
       <Description
         invertColors={true}
         title={
@@ -19,7 +19,7 @@ const MemberSuport = () => {
           </div>
         }
       />
-    </section>
+    </Section>
   );
 };
 
