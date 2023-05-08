@@ -81,7 +81,11 @@ const Header = (props: Props) => {
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   return (
-    <header className={props.web2 ? "bg-white" : "bg-vdao-deep"}>
+    <header
+      className={
+        props.web2 ? "overflow-hidden bg-white" : "overflow-hidden bg-vdao-deep"
+      }
+    >
       {/* Desktop */}
       <div className="z-50 mx-auto hidden h-24 max-w-[1280px] items-center justify-between px-0 md:flex md:px-6 xl:px-0">
         <Link href="/">

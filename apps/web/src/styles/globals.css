@@ -33,6 +33,20 @@ h1 {
   line-height: 20px;
 }
 
+/* font family 
+*/
+.clash {
+  font-family: "Clash Display";
+}
+
+.inter {
+  font-family: "Inter", sans-serif;
+}
+
+.satoshi {
+  font-family: "Satoshi", sans-serif;
+}
+
 /* only spans that aren't in a button */
 span {
   font-family: "Satoshi", sans-serif;
