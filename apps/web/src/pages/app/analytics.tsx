@@ -20,7 +20,7 @@ const Analytics = () => {
     <>
       <Header web3 />
       <div className="bg-vdao-deep">
-        <div className="mx-auto md:px-6 lg:max-w-[1188px]">
+        <div className="mx-auto px-6 lg:max-w-[1188px]">
           <TitleComponent />
 
           <MembershipComponent />
