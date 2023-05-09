@@ -7,10 +7,11 @@ import {
   membersData,
   onlineMembersData,
 } from "./mockData";
+import { Section } from "../layout/section";
 
 export function StatisticsHomeComponent() {
   return (
-    <section className=" mb-28 w-[100%] rounded-2xl bg-vdao-dark py-10 px-5 lg:py-12 lg:pr-16 lg:pl-12">
+    <Section className=" mb-28 w-[100%] rounded-2xl bg-vdao-dark py-10 px-5 lg:py-12 lg:pr-16 lg:pl-12">
       <div className="items-start justify-between md:flex">
         <img
           src="/illustrations/home/SVG/Group 293 (2).svg"
@@ -90,13 +91,13 @@ export function StatisticsHomeComponent() {
           className="mt-14 h-auto w-full md:mt-0 md:w-3/12"
         />
       </div>
-    </section>
+    </Section>
   );
 }
 
 export function NewMembersComponent() {
   return (
-    <section className="w-[100%] justify-between rounded-2xl bg-vdao-dark px-5 py-10 md:flex md:px-10 md:pt-14 md:pb-10 lg:mb-0 lg:block lg:w-[32%]">
+    <Section className="w-[100%] justify-between rounded-2xl bg-vdao-dark px-5 py-10 md:flex md:px-10 md:pt-14 md:pb-10 lg:mb-0 lg:block lg:w-[32%]">
       {/* NEW MEMBERS */}
       <div>
         <div className="flex items-center gap-2.5">
@@ -142,7 +143,7 @@ export function NewMembersComponent() {
 
       {/* ONLINE MEMBERS */}
       <div>
-        <div className=" mt-10 flex items-center gap-2.5 md:mt-0 lg:mt-10 lg:mt-14">
+        <div className=" mt-10 flex items-center gap-2.5 md:mt-0 lg:mt-10">
           <div className="satoshi text-xl font-bold text-white">Online</div>
           <div className="satoshi text-lg font-normal text-white">
             {onlineMembersData.length}
@@ -166,13 +167,13 @@ export function NewMembersComponent() {
           })}
         </article>
       </div>
-    </section>
+    </Section>
   );
 }
 
 export function ProfileHomeComponent() {
   return (
-    <section className="flex w-full flex-col rounded-2xl bg-vdao-dark pr-3.5 pt-5 pl-5 md:pt-10 md:pl-5 md:pr-8 md:pb-20 lg:w-[65%]">
+    <Section className="flex w-full flex-col rounded-2xl bg-vdao-dark pr-3.5 pt-5 pl-5 md:pt-10 md:pl-5 md:pr-8 md:pb-20 lg:w-[65%]">
       {/* View Profile Button */}
       <div className="satoshi ml-auto cursor-pointer text-sm font-bold text-white underline md:text-base">
         View Profile
@@ -250,13 +251,13 @@ export function ProfileHomeComponent() {
           ))}
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
 
 export function WelcomeComponent() {
   return (
-    <section className="relative mx-auto flex max-w-[1680px] flex-col-reverse items-center overflow-hidden md:h-auto md:flex-col md:pt-16">
+    <Section className="relative mx-auto flex max-w-[1680px] flex-col-reverse items-center overflow-hidden md:h-auto md:flex-col md:pt-16">
       <Image
         src={MainHero}
         alt="VDAO Web3 Hero"
@@ -265,6 +266,6 @@ export function WelcomeComponent() {
       <h1 className="z-10 text-center text-5xl font-medium text-white md:absolute md:text-7xl">
         Welcome to <br /> VDAO
       </h1>
-    </section>
+    </Section>
   );
 }

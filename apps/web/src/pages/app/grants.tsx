@@ -11,7 +11,7 @@ const Grants = () => {
   const [viewDetails, setViewDetails] = useState(false);
   return (
     <>
-      <Header web3 />
+      <Header />
 
       <div className="w-full text-vdao-dark">
         <GrantsRound setCreateGrant={setCreateGrant} />

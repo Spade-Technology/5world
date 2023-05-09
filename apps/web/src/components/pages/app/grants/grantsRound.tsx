@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { Section } from "~/components/layout/section";
 import Description from "~/components/misc/description";
 import HowItWorks from "~/components/misc/howItWorks";
 import PrimaryButton from "~/styles/shared/buttons/primaryButton";
@@ -7,9 +8,9 @@ type Props = {
   setCreateGrant: Dispatch<SetStateAction<boolean>>;
 };
 
-const GrantsRound = ({ setCreateGrant } : Props) => {
+const GrantsRound = ({ setCreateGrant }: Props) => {
   return (
-    <section className="w-screen bg-vdao-deep">
+    <Section className="w-screen bg-vdao-deep">
       <Description
         invertColors={true}
         title={
@@ -75,7 +76,7 @@ const GrantsRound = ({ setCreateGrant } : Props) => {
         ]}
         className="md:pb-[140px]"
       />
-    </section>
+    </Section>
   );
 };
 

@@ -26,6 +26,7 @@ import { useEffect, useRef, useState } from "react";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useSession } from "next-auth/react";
 import PrimaryButton from "~/styles/shared/buttons/primaryButton";
+import { Section } from "~/components/layout/section";
 
 dayjs.extend(relativeTime);
 
@@ -105,6 +106,7 @@ function Signing({
 }) {
   const list = signatures.list;
   const [step, setStep] = useState(0);
+  const [sticky, setSticky] = useState(false);
 
   // wagmi get address
   const { address } = useAccount();
@@ -167,6 +169,28 @@ function Signing({
       setStep(0);
     }
   }, [address, status]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", isSticky);
+    return () => {
+      window.removeEventListener("scroll", isSticky);
+    };
+  });
+
+  /* Method that will fix header after a specific scrollable */
+  const isSticky = (e: any) => {
+    const scrollTop = window.scrollY;
+    console.log("scrollTop", scrollTop, window.screen.availWidth);
+
+    if (
+      (window.screen.availWidth <= 390 && scrollTop >= 8888) ||
+      (window.screen.availWidth > 390 && scrollTop >= 5639)
+    ) {
+      setSticky(true);
+    } else {
+      setSticky(false);
+    }
+  };
 
   return (
     <section>
@@ -260,7 +284,11 @@ function Signing({
           <span className="text-3xl">Signed By :</span>
           <span className="text-3xl">{signatures.total} Signatures</span>
         </div>
-        <div className="max-w-96 mt-3 rounded-xl bg-vdao-dark py-5 px-6 ">
+        <div
+          className={`max-w-96 mt-3 rounded-xl bg-vdao-dark py-5 px-6 ${
+            sticky ? "fixed top-[1px]" : ""
+          } `}
+        >
           {list.map((item, i) => (
             <>
               <div
@@ -549,7 +577,7 @@ export async function getServerSideProps({
     take: 10,
   });
 
-  const [total, list] = await Promise.all([total_p, list_p]);
+  const [total, list] = await Promise?.all([total_p, list_p]);
 
   res.setHeader(
     "Cache-Control",

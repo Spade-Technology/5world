@@ -1,12 +1,38 @@
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Section } from "~/components/layout/section";
 
 const ContentsTable = () => {
+  const [sticky, setSticky] = useState(false);
   const headingCSS = "text-3xl font-medium font-heading";
 
+  useEffect(() => {
+    window.addEventListener("scroll", isSticky);
+    return () => {
+      window.removeEventListener("scroll", isSticky);
+    };
+  });
+
+  /* Method that will fix header after a specific scrollable */
+  const isSticky = (e: any) => {
+    const scrollTop = window.scrollY;
+    console.log("scrollTop", scrollTop, window.screen.availWidth);
+
+    if (window.screen.availWidth > 390 && scrollTop >= 400 && scrollTop <= 4200) {
+      setSticky(true);
+    } else {
+      setSticky(false);
+    }
+  };
+
   return (
-    <section className="mx-auto w-screen bg-vdao-deep py-[60px] px-6 md:px-0  ">
+    <Section className="mx-auto w-screen bg-vdao-deep py-[60px] px-6 md:px-0  ">
       <div className=" mx-auto grid max-w-[1280px] grid-cols-1 md:grid-cols-3 md:gap-[68px]">
-        <div className="flex h-fit flex-col gap-5 rounded-[20px] bg-vdao-dark p-10 font-body text-[22px] font-normal text-vdao-light">
+        <div
+          className={`flex h-fit max-w-[319px] flex-col gap-5 rounded-[20px] bg-vdao-dark p-10 font-body text-[22px] font-normal text-vdao-light
+           ${sticky ? "fixed top-5 pr-14" : ""} `}
+          id="tableOfContents"
+        >
           <Link href={"/app/support/#codeOfConduct"}>Code of Conduct</Link>
           <Link href={"/app/support/#goal"}>Our Goal</Link>
           <Link href={"/app/support/#scope"}>Scope</Link>
@@ -16,6 +42,7 @@ const ContentsTable = () => {
           </Link>
           <Link href={"/app/support/#license"}>License and Attribution</Link>
         </div>
+        {sticky && <div></div>}
 
         <div className="col-span-2 max-w-[669px] pt-11 font-body text-[22px] font-normal text-white md:pt-0">
           {/* Code of Conduct */}
@@ -276,7 +303,7 @@ const ContentsTable = () => {
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 };
 

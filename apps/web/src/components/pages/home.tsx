@@ -23,10 +23,11 @@ import PalmLogo from "public/thirdparty/palm.png";
 import PleasrDaoLogo from "public/thirdparty/pleasrdao.png";
 import PleasrHouseLogo from "public/thirdparty/pleasrHouse.png";
 import PrimaryButton from "~/styles/shared/buttons/primaryButton";
+import { Section } from "../layout/section";
 
 export function HomeCTAComponent() {
   return (
-    <section className="flex flex-col items-center bg-gradient-to-r from-vdao-light to-vdao-dark py-24 px-6 md:px-8 xl:px-0">
+    <Section className="flex flex-col items-center bg-gradient-to-r from-vdao-light to-vdao-dark py-24 px-6 md:px-8 xl:px-0">
       <h1 className="text-center text-5xl font-medium text-white">
         Ready to Join?
       </h1>
@@ -38,13 +39,13 @@ export function HomeCTAComponent() {
         text=" Apply Now"
         className=" mx-auto mt-8 mr-auto bg-vdao-light"
       />
-    </section>
+    </Section>
   );
 }
 
 export function HomePartnersComponent() {
   return (
-    <section className="overflow-hidden px-6 text-vdao-dark md:px-8 xl:px-0">
+    <Section className="overflow-hidden px-6 text-vdao-dark md:px-8 xl:px-0">
       <div className="mx-auto flex max-w-[1280px] flex-col md:flex-row">
         <div className="mt-24 max-w-[1280px] md:mx-auto md:w-1/2 ">
           <h1 className="mb-6 w-full text-left text-5xl font-medium">
@@ -67,13 +68,13 @@ export function HomePartnersComponent() {
           <Image src={PleasrHouseLogo} alt="VDAO" className="w-full" />
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
 
 export function HomeCommunityComponent() {
   return (
-    <section className=" mt-36  bg-vdao-dark px-6 text-vdao-light ">
+    <Section className="  mt-10 bg-vdao-dark px-6 text-vdao-light">
       <div className="relative mx-auto flex max-w-[1440px] flex-col ">
         <div className="mt-24">
           <h1 className="mb-6 text-4xl font-medium md:ml-9 md:text-5xl lg:ml-36">
@@ -122,13 +123,13 @@ export function HomeCommunityComponent() {
           className="absolute bottom-0 left-0 md:h-3/6 md:w-6/12 lg:h-5/6"
         />
       </div>
-    </section>
+    </Section>
   );
 }
 
 export function HomeGetInvolvedComponent() {
   return (
-    <section className="my-36 flex max-w-[1440px] flex-col lg:mx-auto">
+    <Section className="my-36 flex max-w-[1440px] flex-col lg:mx-auto">
       <h1 className="mb-6 ml-6 text-4xl font-medium md:ml-9 md:text-5xl lg:ml-36">
         Get Involved
       </h1>
@@ -177,7 +178,7 @@ export function HomeGetInvolvedComponent() {
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
 
@@ -202,11 +203,11 @@ const ObjectiveSubComponent = ({
 
 export function HomeObjectivesComponent() {
   return (
-    <section className="xl:p-O md:lg-14 mx-auto mt-36 flex max-w-[1440px] flex-col p-0 md:px-16">
+    <Section className="xl:p-O md:lg-14 mx-auto mt-36 flex max-w-[1440px] flex-col p-0 md:px-16">
       <h1 className="w-full text-center text-4xl font-medium md:text-5xl">
         Core Objectives
       </h1>
-      <div className="mx-auto mt-16 flex flex-col gap-14 px-16 md:flex-row md:gap-10 md:px-0">
+      <div className="mx-auto mt-16 flex flex-col gap-14 px-16 md:flex-row md:gap-10 md:px-0 lg:px-16">
         <ObjectiveSubComponent
           icon={InnovateIcon}
           title="Innovate"
@@ -228,24 +229,24 @@ export function HomeObjectivesComponent() {
           description="Our art and our vision helps others to experience how the world might look and feel once VDAO’s core mission is achieved."
         />
       </div>
-    </section>
+    </Section>
   );
 }
 
 export function HomeIntroComponent() {
   return (
-    <section className="mx-auto mt-36 grid max-w-[1440px] flex-col-reverse gap-3 md:grid-cols-2 md:px-6">
+    <Section className="mx-auto mt-36 grid max-w-[1440px] flex-col-reverse items-center gap-5 md:grid-cols-2 md:px-6">
       <div className="z-10 flex w-11/12 flex-col px-6">
-        <h1 className="text-4xl font-medium md:text-5xl ">Introduction</h1>
-        <div className="satoshi mt-9 text-lg text-vdao-dark">
+        <h1 className="text-4xl font-medium md:text-[46px] ">Introduction</h1>
+        <div className="satoshi font-nornal mt-9 text-lg leading-[22px] text-vdao-dark">
           VDAO funds regenerative agriculture research and development (R&D)
-          projects worldwide. <br />
-          <br />
+          projects worldwide.
+          <div className="my-3" />
           Regenerative land management uses techniques and practices to restore
           soil, biodiversity, ecosystems, and water quality; techniques used in
           farming for centuries, but recently replaced by chemical, industrial
-          alternatives. <br />
-          <br />
+          alternatives.
+          <div className="my-3" />
           VDAO empowers us to dream of fully regenerated planet. Using
           cutting-edge Web3 tech, it connects artists, land stewards, funders,
           scientists, researchers, and innovators to collaborate for planetary
@@ -264,18 +265,18 @@ export function HomeIntroComponent() {
         alt="VDAO"
         className="hidden md:order-first md:block"
       />
-    </section>
+    </Section>
   );
 }
 
 export function HomeWelcomeComponent() {
   return (
-    <section className="mx-auto max-w-[1440px] flex-col overflow-hidden">
+    <Section className="mx-auto flex max-w-[1440px] flex-col overflow-hidden">
       <div className="mx-auto mt-28">
-        <div className="clash mx-auto w-10/12 text-center text-5xl font-medium text-vdao-dark md:w-auto md:text-7xl">
+        <div className="clash mx-auto w-10/12 text-center text-5xl font-medium text-vdao-dark md:w-auto md:text-[80px]">
           Re:imagine the future
         </div>
-        <h4 className="mt-5 px-6 text-center font-body text-2xl font-medium text-vdao-dark">
+        <h4 className="mt-5 px-6 text-center font-body text-[26px] font-medium text-vdao-dark">
           A dao to restore ecosystems from the soil up.
         </h4>
         <PrimaryButton text="Join Us" className="mx-auto mt-10 " />
@@ -283,8 +284,8 @@ export function HomeWelcomeComponent() {
       <Image
         src={WelcomeHero}
         alt="VDAO"
-        className="md:max-w-100 relative left-[-5%] -z-10 mt-5 scale-[140%]"
+        className="md:max-w-100 relative left-[-5%] -z-10 mt-5 scale-[100%]"
       />
-    </section>
+    </Section>
   );
 }

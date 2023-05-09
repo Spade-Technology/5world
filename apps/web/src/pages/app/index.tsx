@@ -1,6 +1,7 @@
 import { type NextPage } from "next";
 
 import Page from "~/components/layout/page";
+import { Section } from "~/components/layout/section";
 import {
   NewMembersComponent,
   ProfileHomeComponent,
@@ -15,13 +16,13 @@ const Home: NextPage = () => {
         <WelcomeComponent />
 
         <div className="mx-auto  flex w-fit">
-          <section className="mx-6 flex flex-wrap justify-between gap-5 lg:max-w-[1280px]">
+          <Section className="mx-6 flex flex-wrap justify-between gap-5 lg:max-w-[1280px]">
             <ProfileHomeComponent />
 
             <NewMembersComponent />
 
             <StatisticsHomeComponent />
-          </section>
+          </Section>
         </div>
       </Page>
     </>

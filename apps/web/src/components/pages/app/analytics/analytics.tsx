@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import { Section } from "~/components/layout/section";
 
 export function ProposalComponent() {
   const data = [
@@ -86,7 +87,7 @@ export function ProposalComponent() {
             Recent Proposals
           </div>
 
-          <section className="mt-10 flex flex-col gap-2.5">
+          <Section className="mt-10 flex flex-col gap-2.5">
             <div className="grid grid-cols-12 justify-between ">
               <div className="satoshi col-span-7 text-sm font-normal text-white md:col-span-5">
                 {"Proposal"}
@@ -142,7 +143,7 @@ export function ProposalComponent() {
                 );
               }
             )}
-          </section>
+          </Section>
         </article>
       </div>
     </div>
@@ -256,7 +257,7 @@ export function MembershipComponent() {
           <div className="satoshi text-sm font-normal text-white">
             All tokens in treasury accounts
           </div>
-          <section className="mt-10 flex flex-col gap-2.5">
+          <Section className="mt-10 flex flex-col gap-2.5">
             <div className="grid grid-cols-12 justify-between ">
               <div className="satoshi col-span-4 text-sm font-normal text-white md:col-span-3">
                 {"Token"}
@@ -297,7 +298,7 @@ export function MembershipComponent() {
                 );
               }
             )}
-          </section>
+          </Section>
 
           <div className="mt-5  h-[5px] w-4/12 rounded-[10px] bg-[#D9D9D9] md:hidden"></div>
         </article>
