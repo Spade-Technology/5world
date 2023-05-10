@@ -8,19 +8,19 @@ const MailingListComponent = () => {
         className={`mx-auto max-w-[1280px] bg-vdao-lightpurple px-6 py-14 md:flex-row md:py-24`}
       >
         <div className="flex-1">
-          <div className="font-heading text-5xl font-medium">
+          <div className="mx-auto font-heading text-5xl font-medium  md:w-11/12">
             Join Our
             <br /> Mailing List
           </div>
         </div>
 
-        <div className="justify-between md:flex md:pt-8">
-          <div className="pt-8 pr-32 text-2xl font-normal md:w-6/12 md:pt-0">
+        <div className="justify-center md:flex md:pt-8">
+          <div className="satoshi pt-8 text-[26px] font-normal  leading-[30px] md:w-4/12 md:pt-0">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi turpis
             mi.
           </div>
 
-          <div className="flex flex-1 flex-col justify-end pt-8 md:flex-row md:pt-0">
+          <div className="flex flex-col justify-end pt-8 md:ml-[8.3%] md:w-6/12 md:flex-row md:pt-0">
             <input
               placeholder="Enter your email"
               className="h-10 w-full rounded-md pl-5 text-vdao-dark outline-none outline-vdao-dark placeholder:text-vdao-dark placeholder:opacity-50"

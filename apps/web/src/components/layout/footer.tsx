@@ -21,7 +21,7 @@ const Footer = (props: Props) => {
   ];
   return (
     <div>
-      <div className="mx-auto flex h-24 max-w-[1280px] flex-col gap-4 py-16 px-6 md:px-0">
+      <div className="mx-auto flex h-24 max-w-[1280px] flex-col gap-4 py-16 px-6 ">
         <Image
           src={logo}
           alt="VDAO"

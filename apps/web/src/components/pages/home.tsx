@@ -74,9 +74,9 @@ export function HomePartnersComponent() {
 
 export function HomeCommunityComponent() {
   return (
-    <Section className="mt-10  bg-vdao-dark px-6 py-10 text-vdao-light">
+    <Section className="  mt-10 bg-vdao-dark px-6 text-vdao-light">
       <div className="relative mx-auto flex max-w-[1440px] flex-col ">
-        <div className="mt-10">
+        <div className="mt-24">
           <h1 className="mb-6 text-4xl font-medium md:ml-9 md:text-5xl lg:ml-36">
             Community
           </h1>
@@ -85,13 +85,8 @@ export function HomeCommunityComponent() {
           </span>
         </div>
         <div className="mt-12 flex flex-col-reverse md:flex-row">
-          <Image
-            src={CommunityHero}
-            alt="VDAO"
-            className="mb-10 !mt-auto hidden h-1/2  w-1/3 scale-110 md:my-0 md:block md:h-full md:scale-100"
-          />
-          <div className="grid w-full grid-flow-col grid-cols-1 grid-rows-4 gap-10 md:grid-cols-2 md:grid-rows-2">
-            <div className="flex max-w-[340px] flex-col gap-4">
+          <div className="mb-96 grid gap-12 md:ml-[40%] md:mb-48 md:grid-cols-2 md:gap-0 lg:ml-[40%]">
+            <div className="flex  flex-col gap-4 md:w-9/12">
               <h1 className="text-2xl font-medium">Apolitical</h1>
               <span className="text-lg font-normal">
                 We welcome members from all walks of life and political beliefs
@@ -105,7 +100,7 @@ export function HomeCommunityComponent() {
                 ecosystems can and will be regenerated.
               </span>
             </div>
-            <div className="flex flex-col gap-4 md:mt-0 md:w-10/12 lg:w-9/12">
+            <div className="mt-10 flex flex-col gap-4 md:w-10/12 lg:w-9/12">
               <h1 className="text-2xl font-medium">Curious</h1>
               <span className="text-lg font-normal">
                 We exist at the bleeding edge of regenerative agriculture
@@ -113,7 +108,7 @@ export function HomeCommunityComponent() {
                 era of modern agriculture.
               </span>
             </div>
-            <div className="flex flex-col gap-4 md:mt-0 md:w-10/12 lg:w-9/12">
+            <div className="mt-10 flex flex-col gap-4 md:w-10/12 lg:w-9/12">
               <h1 className="text-2xl font-medium">Engaged</h1>
               <span className="text-lg font-normal">
                 We contribute to regenerative agriculture conversations,
@@ -122,6 +117,11 @@ export function HomeCommunityComponent() {
             </div>
           </div>
         </div>
+        <Image
+          src={CommunityHero}
+          alt="VDAO"
+          className="absolute bottom-0 left-0 md:h-3/6 md:w-6/12 lg:h-5/6"
+        />
       </div>
     </Section>
   );
@@ -207,7 +207,7 @@ export function HomeObjectivesComponent() {
       <h1 className="w-full text-center text-4xl font-medium md:text-5xl">
         Core Objectives
       </h1>
-      <div className="mx-auto mt-16 flex flex-col gap-14 px-16 md:flex-row md:gap-10 md:px-0">
+      <div className="mx-auto mt-16 flex flex-col gap-14 px-16 md:flex-row md:gap-10 md:px-0 lg:px-16">
         <ObjectiveSubComponent
           icon={InnovateIcon}
           title="Innovate"
@@ -235,18 +235,18 @@ export function HomeObjectivesComponent() {
 
 export function HomeIntroComponent() {
   return (
-    <Section className="mx-auto mt-36 grid max-w-[1440px] flex-col-reverse gap-3 md:grid-cols-2 md:px-6">
+    <Section className="mx-auto mt-36 grid max-w-[1440px] flex-col-reverse items-center gap-5 md:grid-cols-2 md:px-6">
       <div className="z-10 flex w-11/12 flex-col px-6">
-        <h1 className="text-4xl font-medium md:text-5xl ">Introduction</h1>
-        <div className="satoshi mt-9 text-lg text-vdao-dark">
+        <h1 className="text-4xl font-medium md:text-[46px] ">Introduction</h1>
+        <div className="satoshi font-nornal mt-9 text-lg leading-[22px] text-vdao-dark">
           VDAO funds regenerative agriculture research and development (R&D)
-          projects worldwide. <br />
-          <br />
+          projects worldwide.
+          <div className="my-3" />
           Regenerative land management uses techniques and practices to restore
           soil, biodiversity, ecosystems, and water quality; techniques used in
           farming for centuries, but recently replaced by chemical, industrial
-          alternatives. <br />
-          <br />
+          alternatives.
+          <div className="my-3" />
           VDAO empowers us to dream of fully regenerated planet. Using
           cutting-edge Web3 tech, it connects artists, land stewards, funders,
           scientists, researchers, and innovators to collaborate for planetary
@@ -273,10 +273,10 @@ export function HomeWelcomeComponent() {
   return (
     <Section className="mx-auto flex max-w-[1440px] flex-col overflow-hidden">
       <div className="mx-auto mt-28">
-        <div className="clash mx-auto w-10/12 text-center text-5xl font-medium text-vdao-dark md:w-auto md:text-7xl">
+        <div className="clash mx-auto w-10/12 text-center text-5xl font-medium text-vdao-dark md:w-auto md:text-[80px]">
           Re:imagine the future
         </div>
-        <h4 className="mt-5 px-6 text-center font-body text-2xl font-medium text-vdao-dark">
+        <h4 className="mt-5 px-6 text-center font-body text-[26px] font-medium text-vdao-dark">
           A dao to restore ecosystems from the soil up.
         </h4>
         <PrimaryButton text="Join Us" className="mx-auto mt-10 " />

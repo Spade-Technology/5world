@@ -13,7 +13,7 @@ const Analytics = () => {
   return (
     <>
       <Header />
-      <div className="bg-vdao-deep">
+      <div className="bg-vdao-deep px-6 md:px-0">
         <Section className="mx-auto lg:max-w-[1280px]">
           <TitleComponent />
 
