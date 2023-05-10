@@ -12,7 +12,8 @@
   "devDependencies": {
     "@chainlink/contracts": "^0.6.1",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
-    "hardhat": "^2.13.0"
+    "hardhat": "^2.13.0",
+    "hardhat-abi-exporter": "^2.10.1"
   },
   "dependencies": {
     "@nomicfoundation/hardhat-network-helpers": "^1.0.8",

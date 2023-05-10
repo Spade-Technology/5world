@@ -5,6 +5,7 @@ import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-etherscan';
 import '@nomicfoundation/hardhat-chai-matchers';
 import 'hardhat-gas-reporter';
+import 'hardhat-abi-exporter';
 
 // Load environment variables
 import * as dotenv from 'dotenv';
@@ -20,6 +21,14 @@ interface ExtendedHardhatUserConfig extends HardhatUserConfig {
     currency?: string;
     gasPrice?: number;
     outputFile?: string;
+  };
+  abiExporter?: {
+    path?: string;
+    clear?: boolean;
+    flat?: boolean;
+    only?: string[];
+    spacing?: number;
+    runOnCompile?: boolean;
   };
 }
 
@@ -57,6 +66,14 @@ const config: ExtendedHardhatUserConfig = {
     currency: 'USD',
     gasPrice: 21,
     outputFile: process.env.CI ? 'gas-report.txt' : undefined,
+  },
+
+  // export ABIs to ../web/src/abi/
+  abiExporter: {
+    path: './abi',
+    runOnCompile: true,
+    clear: true,
+    flat: true,
   },
 };
 
