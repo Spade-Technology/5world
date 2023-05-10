@@ -70,7 +70,7 @@ const config: ExtendedHardhatUserConfig = {
 
   // export ABIs to ../web/src/abi/
   abiExporter: {
-    path: './abi',
+    path: '../web/src/abi/',
     runOnCompile: true,
     clear: true,
     flat: true,
