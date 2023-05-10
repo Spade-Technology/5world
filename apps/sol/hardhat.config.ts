@@ -1,8 +1,9 @@
 // Import Hardhat dependencies and plugins
 import { HardhatUserConfig } from 'hardhat/types';
-import { ethers } from 'ethers';
-import '@nomiclabs/hardhat-waffle';
+
+import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-etherscan';
+import '@nomicfoundation/hardhat-chai-matchers';
 import 'hardhat-gas-reporter';
 
 // Load environment variables
@@ -10,6 +11,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 // Extend the HardhatUserConfig interface to include the etherscan, and gasReporter properties
+
 interface ExtendedHardhatUserConfig extends HardhatUserConfig {
   etherscan?: {
     apiKey?: string;
@@ -24,7 +26,7 @@ interface ExtendedHardhatUserConfig extends HardhatUserConfig {
 // Define the Hardhat configuration
 const config: ExtendedHardhatUserConfig = {
   solidity: {
-    version: '0.8.4',
+    version: '0.8.9',
     settings: {
       optimizer: {
         enabled: true,
@@ -40,7 +42,7 @@ const config: ExtendedHardhatUserConfig = {
     },
     ethereum: {
       url: `https://mainnet.infura.io/v3/${process.env.INFURA_KEY}`,
-      accounts: [process.env.ETHEREUM_PRIVATE_KEY as string],
+      accounts: [...((process.env.ETHEREUM_PRIVATE_KEY?.split(',') as string[]) || '')],
       chainId: 1,
     },
   },

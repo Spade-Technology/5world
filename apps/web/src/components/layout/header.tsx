@@ -66,7 +66,7 @@ const navigationElementsWeb3: NavigationElement[] = [
     children: [
       { name: "Operational Proposals", link: "/app/proposals" },
       { name: "Grants Round", link: "/app/grants" },
-      { name: "Steward Election", link: "/app/steward" },
+      { name: "Steward Election", link: "/app/election" },
       { name: "Forum Discussion", link: "#" },
     ],
   },
@@ -188,7 +188,6 @@ const Header = (props: Props) => {
       </div>
 
       {/* Mobile menu */}
-
       <div
         className={
           "absolute z-50 w-screen -translate-x-full transition-all md:hidden " +

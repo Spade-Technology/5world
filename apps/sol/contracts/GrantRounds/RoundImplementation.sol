@@ -21,12 +21,17 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeab
 import "./RoundInterfaces.sol";
 import "hardhat/console.sol";
 
-
 /**
  * @notice Contract deployed per Round which would managed by
  * a group of ROUND_OPERATOR via the RoundFactory
  */
-contract RoundImplementation is RoundEvents, RoundImplementationStorageV1, AccessControlEnumerable, Initializable, ReentrancyGuard {
+contract RoundImplementation is
+    RoundEvents,
+    RoundImplementationStorageV1,
+    AccessControlEnumerable,
+    Initializable,
+    ReentrancyGuard
+{
     // --- Libraries ---
     using Address for address;
     using SafeERC20 for IERC20;
@@ -45,22 +50,19 @@ contract RoundImplementation is RoundEvents, RoundImplementationStorageV1, Acces
     /// @notice round operator role
     bytes32 public constant ROUND_OPERATOR_ROLE = keccak256("ROUND_OPERATOR");
 
-
     // --- Modifier ---
 
     /// @notice modifier to check if round has not ended.
     modifier roundHasNotEnded() {
         // slither-disable-next-line timestamp
-        if(block.number > roundEndBlock)
-            revert RoundEnded();
+        if (block.number > roundEndBlock) revert RoundEnded();
         _;
     }
 
     /// @notice modifier to check if application period has not ended.
     modifier applicationHasNotEnded() {
         // slither-disable-next-line timestamp
-        if(block.number > applicationsEndBlock)
-            revert ApplicationsEnded();
+        if (block.number > applicationsEndBlock) revert ApplicationsEnded();
         _;
     }
 
@@ -118,12 +120,14 @@ contract RoundImplementation is RoundEvents, RoundImplementationStorageV1, Acces
             "initialize: applications start block has already passed"
         );
         require(
-            _initRoundTime.applicationsEndBlock > _initRoundTime.applicationsStartBlock,
+            _initRoundTime.applicationsEndBlock >
+                _initRoundTime.applicationsStartBlock,
             "initialize: application end block should be after application start block"
         );
 
         require(
-            _initRoundTime.roundStartBlock >= _initRoundTime.applicationsEndBlock + 50400, // 1 week Application review period (1 block = 12 sec)
+            _initRoundTime.roundStartBlock >=
+                _initRoundTime.applicationsEndBlock + 50400, // 1 week Application review period (1 block = 12 sec)
             "initialize: application end block should be 1 week before round start block"
         );
         require(
@@ -139,14 +143,21 @@ contract RoundImplementation is RoundEvents, RoundImplementationStorageV1, Acces
         donationSBT = _donationSBT;
         token = _token;
         matchingAmount = _matchingAmount;
-        
+
         roundMetaPtr = _initMetaPtr.roundMetaPtr;
         applicationMetaPtr = _initMetaPtr.applicationMetaPtr;
 
         // Emit events for indexing
-        emit MetaPtrUpdated(_initMetaPtr.roundMetaPtr, _initMetaPtr.applicationMetaPtr);
-        emit RoundTimeUpdated(_initRoundTime.applicationsStartBlock, _initRoundTime.applicationsEndBlock, _initRoundTime.roundStartBlock, _initRoundTime.roundEndBlock);
-
+        emit MetaPtrUpdated(
+            _initMetaPtr.roundMetaPtr,
+            _initMetaPtr.applicationMetaPtr
+        );
+        emit RoundTimeUpdated(
+            _initRoundTime.applicationsStartBlock,
+            _initRoundTime.applicationsEndBlock,
+            _initRoundTime.roundStartBlock,
+            _initRoundTime.roundEndBlock
+        );
 
         // Assigning default admin role
         for (uint256 i = 0; i < _initRoles.adminRoles.length; ++i) {
@@ -161,40 +172,47 @@ contract RoundImplementation is RoundEvents, RoundImplementationStorageV1, Acces
 
     function getTotalVotes(address account_) public view returns (uint) {
         uint256 vDAOVotes;
-        try vDAO.getPriorBalance(account_, roundStartBlock) returns (uint96 votes) {
+        try vDAO.getPriorBalance(account_, roundStartBlock) returns (
+            uint96 votes
+        ) {
             vDAOVotes = uint256(votes);
-        } catch  {
+        } catch {
             vDAOVotes = 0;
         }
-        uint256 sbtVotes = donationSBT != address(0) ? IDonationSBT(donationSBT).balanceOf(account_) * SBT_VOTING_CREDIT : 0; 
+        uint256 sbtVotes = donationSBT != address(0)
+            ? IDonationSBT(donationSBT).balanceOf(account_) * SBT_VOTING_CREDIT
+            : 0;
 
         uint256 totalVotes = vDAOVotes + sbtVotes;
 
         return totalVotes;
     }
 
-      // @notice Update roundMetaPtr, applicationMetaPtr (only by ROUND_OPERATOR_ROLE)
-      /// @param newRoundMetaPtr_ new roundMetaPtr
-      /// @param newApplicationMetaPtr_ new applicationMetaPtr
-      function updateMetaPtr(MetaPtr memory newRoundMetaPtr_, MetaPtr memory newApplicationMetaPtr_) external applicationHasNotEnded onlyRole(ROUND_OPERATOR_ROLE) {
+    // @notice Update roundMetaPtr, applicationMetaPtr (only by ROUND_OPERATOR_ROLE)
+    /// @param newRoundMetaPtr_ new roundMetaPtr
+    /// @param newApplicationMetaPtr_ new applicationMetaPtr
+    function updateMetaPtr(
+        MetaPtr memory newRoundMetaPtr_,
+        MetaPtr memory newApplicationMetaPtr_
+    ) external applicationHasNotEnded onlyRole(ROUND_OPERATOR_ROLE) {
         roundMetaPtr = newRoundMetaPtr_;
         applicationMetaPtr = newApplicationMetaPtr_;
 
         emit MetaPtrUpdated(newRoundMetaPtr_, newApplicationMetaPtr_);
-    
-      }
+    }
 
     /// @notice Update initRoundTime (only by ROUND_OPERATOR_ROLE)
     /// @param newApplicationsStartBlock_ new applicationsStartBlock
     /// @param newApplicationsEndBlock_ new applicationsEndBlock
     /// @param newRoundStartBlock_ new roundStartBlock
     /// @param newRoundEndBlock_ new roundEndBlock
-    function updateRoundTime(uint256 newApplicationsStartBlock_, uint256 newApplicationsEndBlock_, uint256 newRoundStartBlock_, uint256 newRoundEndBlock_ )
-        external
-        roundHasNotEnded
-        onlyRole(ROUND_OPERATOR_ROLE)
-    {
-         // slither-disable-next-line timestamp
+    function updateRoundTime(
+        uint256 newApplicationsStartBlock_,
+        uint256 newApplicationsEndBlock_,
+        uint256 newRoundStartBlock_,
+        uint256 newRoundEndBlock_
+    ) external roundHasNotEnded onlyRole(ROUND_OPERATOR_ROLE) {
+        // slither-disable-next-line timestamp
         require(
             newApplicationsStartBlock_ >= block.number,
             "updateRoundTime: applications start block has already passed"
@@ -213,7 +231,12 @@ contract RoundImplementation is RoundEvents, RoundImplementationStorageV1, Acces
             "updateRoundTime: end block should be after start block"
         );
 
-        emit RoundTimeUpdated(newApplicationsStartBlock_, newApplicationsEndBlock_, newRoundStartBlock_, newRoundEndBlock_);
+        emit RoundTimeUpdated(
+            newApplicationsStartBlock_,
+            newApplicationsEndBlock_,
+            newRoundStartBlock_,
+            newRoundEndBlock_
+        );
 
         applicationsStartBlock = newApplicationsStartBlock_;
         applicationsEndBlock = newApplicationsEndBlock_;
@@ -221,25 +244,26 @@ contract RoundImplementation is RoundEvents, RoundImplementationStorageV1, Acces
         roundEndBlock = newRoundEndBlock_;
     }
 
-
     /// @notice Update matchingAmount (only by ROUND_OPERATOR_ROLE)
     /// @param newMatchingAmount_ new matchingAmount
-    function updateMatchingAmount(uint256 newMatchingAmount_) external applicationHasNotEnded onlyRole(ROUND_OPERATOR_ROLE) {
-        
+    function updateMatchingAmount(
+        uint256 newMatchingAmount_
+    ) external applicationHasNotEnded onlyRole(ROUND_OPERATOR_ROLE) {
         emit MatchingAmountUpdated(matchingAmount, newMatchingAmount_);
 
         matchingAmount = newMatchingAmount_;
-
     }
 
     /// @notice Update blacklist state of an Application (only by ROUND_OPERATOR_ROLE)
     /// @param proposalId_ application id
     /// @param blacklist_ new blacklist state
-    function blacklistProposal(uint256 proposalId_, bool blacklist_) external onlyRole(ROUND_OPERATOR_ROLE) {
-        if(state() != RoundState.ApplicationReview)
-            revert InvalidState();
+    function blacklistProposal(
+        uint256 proposalId_,
+        bool blacklist_
+    ) external onlyRole(ROUND_OPERATOR_ROLE) {
+        if (state() != RoundState.ApplicationReview) revert InvalidState();
 
-        if(isBlacklisted[proposalId_] == blacklist_)
+        if (isBlacklisted[proposalId_] == blacklist_)
             revert BlacklistAlreadySet();
 
         isBlacklisted[proposalId_] = blacklist_;
@@ -247,31 +271,37 @@ contract RoundImplementation is RoundEvents, RoundImplementationStorageV1, Acces
         emit BlacklistUpdated(proposalId_, blacklist_);
     }
 
-
-      /// @notice Update projectsMetaPtr (only by ROUND_OPERATOR_ROLE)
-      /// @param proposalId_ proposal id of project 
-      /// @param newProjectsMetaPtr_ new Project MetaPtr
-      /// @param newFundsWallet_ new wallet to claim funds to
-      function updateProjectsMetaPtr(uint256 proposalId_, MetaPtr memory newProjectsMetaPtr_, address newFundsWallet_) external applicationHasNotEnded  {
+    /// @notice Update projectsMetaPtr (only by ROUND_OPERATOR_ROLE)
+    /// @param proposalId_ proposal id of project
+    /// @param newProjectsMetaPtr_ new Project MetaPtr
+    /// @param newFundsWallet_ new wallet to claim funds to
+    function updateProjectsMetaPtr(
+        uint256 proposalId_,
+        MetaPtr memory newProjectsMetaPtr_,
+        address newFundsWallet_
+    ) external applicationHasNotEnded {
         ProjectMetaPtr storage project = proposals[proposalId_];
-        if (project.owner != msg.sender) 
-            revert NotProjectOwner();
+        if (project.owner != msg.sender) revert NotProjectOwner();
 
         project.protocol = newProjectsMetaPtr_.protocol;
         project.pointer = newProjectsMetaPtr_.pointer;
         project.fundsWallet = newFundsWallet_;
 
-        emit ProjectsMetaPtrUpdated(proposalId_, newProjectsMetaPtr_, newFundsWallet_);
-      }
+        emit ProjectsMetaPtrUpdated(
+            proposalId_,
+            newProjectsMetaPtr_,
+            newFundsWallet_
+        );
+    }
 
     /**
-      * @notice Gets the state of a round
-      * @return Round state
-      */
+     * @notice Gets the state of a round
+     * @return Round state
+     */
     //  TODO: upadte quorum votes
     function state() public view returns (RoundState) {
         // slither-disable-next-line timestamp
-        if (block.number <= applicationsStartBlock ) {
+        if (block.number <= applicationsStartBlock) {
             return RoundState.Pending;
         } else if (block.number <= applicationsEndBlock) {
             return RoundState.ApplicationActive;
@@ -279,7 +309,7 @@ contract RoundImplementation is RoundEvents, RoundImplementationStorageV1, Acces
             return RoundState.ApplicationReview;
         } else if (block.number <= roundEndBlock) {
             return RoundState.Active;
-        } else if (totalQuadraticVotes != 0 ) {
+        } else if (totalQuadraticVotes != 0) {
             return RoundState.FundsAllocated;
         } else {
             return RoundState.Completed;
@@ -289,27 +319,37 @@ contract RoundImplementation is RoundEvents, RoundImplementationStorageV1, Acces
     /// @notice Submit a project application
     /// @param newApplicationMetaPtr_ appliction Ptr
     /// @param wallet_ address to receive matching amount
-    function applyToRound(MetaPtr calldata newApplicationMetaPtr_, address wallet_)
-        external
-    {
-        if(state() != RoundState.ApplicationActive)
-            revert InvalidState();
+    function applyToRound(
+        MetaPtr calldata newApplicationMetaPtr_,
+        address wallet_
+    ) external {
+        if (state() != RoundState.ApplicationActive) revert InvalidState();
 
-        proposalCount ++;
-        proposals[proposalCount] = ProjectMetaPtr(newApplicationMetaPtr_.protocol, newApplicationMetaPtr_.pointer, msg.sender, wallet_, 0, false);
+        proposalCount++;
+        proposals[proposalCount] = ProjectMetaPtr(
+            newApplicationMetaPtr_.protocol,
+            newApplicationMetaPtr_.pointer,
+            msg.sender,
+            wallet_,
+            0,
+            false
+        );
 
-        emit NewProjectApplication(proposalCount, newApplicationMetaPtr_, msg.sender, wallet_);
+        emit NewProjectApplication(
+            proposalCount,
+            newApplicationMetaPtr_,
+            msg.sender,
+            wallet_
+        );
     }
 
     /// @notice Invoked by voter to cast votes
     /// @param encodedVotes_ encoded vote
     function vote(bytes[] memory encodedVotes_) external payable {
-        if(state() != RoundState.Active)
-            revert InvalidState();
+        if (state() != RoundState.Active) revert InvalidState();
 
         Receipt memory receipt = receipts[msg.sender];
-        if(receipt.hasVoted == true)
-            revert AlreadyVoted();
+        if (receipt.hasVoted == true) revert AlreadyVoted();
 
         // Total voting power as of applicationsStartBlock Block
         uint256 totalVotes = getTotalVotes(msg.sender);
@@ -328,11 +368,9 @@ contract RoundImplementation is RoundEvents, RoundImplementationStorageV1, Acces
 
             // console.log("proposal", _proposalID, _isValid(_proposalID));
 
-            if(!_isValid(_proposalID))
-                revert InvalidProposalId();
+            if (!_isValid(_proposalID)) revert InvalidProposalId();
 
-            if(totalVotes < _amount)
-                revert InsufficientVotingPower();
+            if (totalVotes < _amount) revert InsufficientVotingPower();
 
             unchecked {
                 totalVotes = totalVotes - _amount;
@@ -342,72 +380,68 @@ contract RoundImplementation is RoundEvents, RoundImplementationStorageV1, Acces
             uint256 quadraticVotes = Math.sqrt(_amount);
 
             proposal.forVotes = proposal.forVotes + quadraticVotes;
-            
+
             votedProposals[i] = uint8(_proposalID);
             votes[i] = uint96(_amount);
 
             /// @dev emit event for transfer
-            emit VoteCast(
-                _proposalID,
-                _amount,
-                msg.sender
-            );
+            emit VoteCast(_proposalID, _amount, msg.sender);
         }
         receipt.hasVoted = true;
         receipt.proposals = votedProposals;
         receipt.votes = votes;
 
         receipts[msg.sender] = receipt;
-        
     }
 
     /// @notice Invoked by anyone to distribute the matched amount
     function claim(uint256 propsalId_) external nonReentrant {
         // slither-disable-next-line timestamp
-        // require(block.number > roundEndBlock,"distribution: round is still active");  
-        if(state() != RoundState.FundsAllocated) {
+        // require(block.number > roundEndBlock,"distribution: round is still active");
+        if (state() != RoundState.FundsAllocated) {
             allocateFunds();
         }
 
         ProjectMetaPtr memory proposal = proposals[propsalId_];
-        if(proposal.fundsClaimed)
-            revert AlreadyClaimed();
+        if (proposal.fundsClaimed) revert AlreadyClaimed();
 
         uint256 votes = proposal.forVotes ** 2;
         uint256 matchedAmount = (matchingAmount * votes) / totalQuadraticVotes;
-    
+
         if (token == address(0)) {
             /// @dev native token transfer to grant address
-            // slither-disable-next-line reentrancy-events     
-            AddressUpgradeable.sendValue(payable(proposal.fundsWallet), matchedAmount);   
+            // slither-disable-next-line reentrancy-events
+            AddressUpgradeable.sendValue(
+                payable(proposal.fundsWallet),
+                matchedAmount
+            );
         } else {
             /// @dev erc20 transfer to grant address
             // slither-disable-next-line arbitrary-send-erc20,reentrancy-events,
             SafeERC20Upgradeable.safeTransfer(
-            IERC20Upgradeable(token),
-            proposal.fundsWallet,
-            matchedAmount
+                IERC20Upgradeable(token),
+                proposal.fundsWallet,
+                matchedAmount
             );
-
         }
 
-        emit FundsClaimed(propsalId_, matchedAmount);    
-    } 
+        emit FundsClaimed(propsalId_, matchedAmount);
+    }
 
     /// @notice Invoked by anyone to distribute the matched amount
     function distribute() external /*nonReentrant*/ {
-        if(state() != RoundState.FundsAllocated) {
+        if (state() != RoundState.FundsAllocated) {
             allocateFunds();
         }
 
-        for(uint256 i = 1; i <= proposalCount; i++) {
+        for (uint256 i = 1; i <= proposalCount; i++) {
             try this.claim(i) {} catch {}
         }
     }
 
     /// @notice Calculates the total quadratic votes for the current round and updates the state
     function allocateFunds() public {
-        if(state() != RoundState.Completed) {
+        if (state() != RoundState.Completed) {
             revert InvalidState();
         }
 
@@ -417,32 +451,41 @@ contract RoundImplementation is RoundEvents, RoundImplementationStorageV1, Acces
     /// @notice Withdraws unsupported tokens from the contract and sends them to the specified recipient
     /// @param token_ the address of the token to withdraw
     /// @param recepient_ the address to send the withdrawn tokens to
-    function withdrawUnsupportedTokens(address token_, address recepient_) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        if(token_ == token)
-            revert InvalidToken();
-        
-        IERC20(token_).safeTransfer(recepient_, IERC20(token_).balanceOf(address(this)));
+    function withdrawUnsupportedTokens(
+        address token_,
+        address recepient_
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        if (token_ == token) revert InvalidToken();
+
+        IERC20(token_).safeTransfer(
+            recepient_,
+            IERC20(token_).balanceOf(address(this))
+        );
     }
 
-    function _getTotalQuadraticVotes() internal view returns (uint256 totalQuadraticVotes) {
+    function _getTotalQuadraticVotes()
+        internal
+        view
+        returns (uint256 totalQuadraticVotes)
+    {
         totalQuadraticVotes = 0;
 
         for (uint256 i = 1; i <= proposalCount; i++) {
             ProjectMetaPtr memory proposal = proposals[i];
-            totalQuadraticVotes = totalQuadraticVotes + (proposal.forVotes ** 2);
+            totalQuadraticVotes =
+                totalQuadraticVotes +
+                (proposal.forVotes ** 2);
         }
 
         return totalQuadraticVotes;
     }
 
     function _isValid(uint256 proposalId) internal view returns (bool) {
-        if (proposalId <= proposalCount) 
-            return !isBlacklisted[proposalId];
+        if (proposalId <= proposalCount) return !isBlacklisted[proposalId];
 
         return false;
     }
 
     // Function to receive Ether. msg.data must be empty
     receive() external payable {}
-
 }

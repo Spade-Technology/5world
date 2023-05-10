@@ -13,7 +13,7 @@ const Proposals = () => {
 
   return (
     <>
-      <Header web3 />
+      <Header />
 
       <div className="w-full text-vdao-dark">
         <OperationalProposals setOpenCreateProposal={setOpenCreateProposal} />

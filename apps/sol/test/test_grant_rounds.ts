@@ -1,4 +1,4 @@
-import { loadFixture, mine } from '@nomicfoundation/hardhat-network-helpers';
+import { loadFixture, mine, mineUpTo } from '@nomicfoundation/hardhat-network-helpers';
 import { expect } from 'chai';
 import { BytesLike } from 'ethers/lib/utils';
 import { ethers } from 'hardhat';
@@ -8,6 +8,13 @@ describe('Grant Round', function () {
   const ROUND_OPERATOR_ROLE = ethers.utils.keccak256(ethers.utils.toUtf8Bytes('ROUND_OPERATOR'));
 
   const DEFAULT_ADMIN_ROLE = '0x0000000000000000000000000000000000000000000000000000000000000000';
+
+  // some functions require having more than a 100 blocks form the first block ()
+  it('advances the blocks', async function () {
+    // await advanceBlock(100);
+    mineUpTo(100);
+  });
+
   // We define a fixture to reuse the same setup in every test. We use
   // loadFixture to run this setup once, snapshot that state, and reset Hardhat
   // Network to that snapshot in every test.

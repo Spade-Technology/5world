@@ -1,20 +1,17 @@
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
+import Page from "~/components/layout/page";
 import ElectionCards from "~/components/pages/app/election/electionCards";
 import StewardElection from "~/components/pages/app/election/stewardElection";
 
 const Election = () => {
   return (
     <>
-      <Header web3 />
-
-      <div className="w-full text-vdao-dark">
+      <Page>
         <StewardElection />
 
         <ElectionCards />
-      </div>
-
-      <Footer />
+      </Page>
     </>
   );
 };
