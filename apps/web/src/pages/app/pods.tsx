@@ -11,7 +11,7 @@ const Pods = () => {
   const [openRegenDetails, setOpenRegen] = useState(false);
   return (
     <>
-      <Header web3 />
+      <Header />
 
       <div className="w-full text-vdao-dark">
         <PodsProfile setOpenCreatePod={setOpenCreatePod} />
