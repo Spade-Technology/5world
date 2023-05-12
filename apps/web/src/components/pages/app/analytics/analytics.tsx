@@ -1,6 +1,10 @@
 import Image from "next/image";
 import React from "react";
 import { Section } from "~/components/layout/section";
+import dynamic from "next/dynamic";
+import { LinearChart } from "../../mockData";
+
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export function ProposalComponent() {
   const data = [
@@ -238,12 +242,12 @@ export function MembershipComponent() {
               <div className="satoshi text-sm font-normal leading-5 text-white">
                 {percent}
               </div>
-              <Image
-                src={img}
-                alt={title}
-                className="mt-11 w-full"
-                width={"0"}
-                height={"0"}
+              <Chart
+                options={LinearChart.options}
+                series={LinearChart.series}
+                type="line"
+                width={"100%"}
+                height={"333px"}
               />
             </div>
           );
