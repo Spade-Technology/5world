@@ -1,24 +1,17 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
-
+    provider        = "prisma-client-js"
     previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
-    provider = "postgresql"
-    // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("SUPABASE_SERVICE_PSQL_URL")
+    provider          = "postgresql"
+    url               = env("POSTGRES_PRISMA_URL") // uses connection pooling
+    directUrl         = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+    shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
 }
 
 model Signatures {
-    eoa String @id
-
+    eoa       String @id
     signature String @db.Text
     message   String @db.Text
 
@@ -26,21 +19,72 @@ model Signatures {
     updatedAt DateTime @updatedAt
 }
 
+// User model
 model User {
-    id      Int     @id @default(autoincrement())
-    name    String?
-    address String? @unique
+    address String @id @unique
 
+    // Media
+    name String?
+
+    // Steward
+    stewardApplicationDate  DateTime
+    StewardVotesAsCandidate StewardVote[] @relation("CandidateRelation")
+    StewardVotesAsVoter     StewardVote[] @relation("VoterRelation")
+
+    // Pods & Proposals
+    pods      Pod[]      @relation("AdminsRelation")
+    proposals Proposal[]
+
+    // Meta
     JoinedAt  DateTime @default(now())
     UpdatedAt DateTime @default(now()) @updatedAt
-
-    stewardApplicationDate DateTime
+    Pod       Pod[]
+    Pod       Pod[]
 }
 
-model Sterward {
+model StewardVote {
     id Int @id @default(autoincrement())
+
+    // Voter
+    voter        User   @relation("VoterRelation", fields: [voterAddress], references: [address])
+    voterAddress String
+
+    // Candidate
+    candidate        User   @relation("CandidateRelation", fields: [candidateAddress], references: [address])
+    candidateAddress String
 }
 
-model StewardElection {
+// Pod model
+model Pod {
+    id          Int    @id @default(autoincrement())
+    // Media
+    name        String
+    description String
+    picture     String
+
+    // Relations
+    admins      User[]     @relation("AdminsRelation")
+    discussions String[]
+    proposals   Proposal[]
+
+    // Meta
+    createdBy   User   @relation(fields: [createdById], references: [address])
+    createdById String
+    updatedBy   User   @relation(fields: [updatedById], references: [address])
+    updatedById String
+}
+
+// Proposal model
+model Proposal {
     id Int @id @default(autoincrement())
+
+    // Pods
+    pod      Pod    @relation(fields: [podId], references: [id])
+    podId    Int
+    author   User   @relation(fields: [authorId], references: [address])
+    authorId String
+
+    // Meta
+    updatedBy   User   @relation(fields: [updatedById], references: [address])
+    updatedById String
 }
