@@ -54,6 +54,11 @@ const config: ExtendedHardhatUserConfig = {
       accounts: [...((process.env.ETHEREUM_PRIVATE_KEY?.split(',') as string[]) || '')],
       chainId: 1,
     },
+    sepolia: {
+      url: 'https://rpc.sepolia.org',
+      accounts: [...((process.env.ETHEREUM_PRIVATE_KEY?.split(',') as string[]) || '')],
+      chainId: 11155111,
+    },
   },
 
   // Define the etherscan configuration

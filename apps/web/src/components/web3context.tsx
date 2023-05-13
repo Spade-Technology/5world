@@ -4,11 +4,14 @@ import {
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
-import { mainnet } from "wagmi/chains";
+import { mainnet, sepolia } from "wagmi/chains";
 import merge from "lodash.merge";
 import { publicProvider } from "wagmi/providers/public";
 
-const { chains, provider } = configureChains([mainnet], [publicProvider()]);
+const { chains, provider } = configureChains(
+  [process.env.NODE_ENV === "production" ? mainnet : sepolia],
+  [publicProvider()]
+);
 
 const { connectors } = getDefaultWallets({
   appName: "Fifth World",

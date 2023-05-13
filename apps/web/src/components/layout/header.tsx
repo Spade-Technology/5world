@@ -129,13 +129,19 @@ const Header = (props: Props) => {
           )}
         </div>
         <div className="hidden gap-7 lg:flex">
-          <Image
-            src={!props.dark ? discourse : darkDiscourse}
-            alt="VDAO"
-            width={30}
-            height={30}
-            className="hidden md:block"
-          />
+          <Link
+            href="https://vdao.discourse.group"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              src={!props.dark ? discourse : darkDiscourse}
+              alt="VDAO"
+              width={30}
+              height={30}
+              className="hidden md:block"
+            />
+          </Link>
           <Image
             src={!props.dark ? discordCircle : darkDiscord}
             alt="VDAO"
@@ -208,7 +214,13 @@ const Header = (props: Props) => {
         </div>
         <div className="flex flex-col items-center pt-4 pb-3">
           <div className="my-10 flex gap-7">
-            <Image src={discourse} alt="VDAO" width={50} height={50} />
+            <Link
+              href="https://vdao.discourse.group"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image src={discourse} alt="VDAO" width={50} height={50} />
+            </Link>
             <Image src={discordCircle} alt="VDAO" width={50} height={50} />
           </div>
           <div className="flex items-center px-5">
