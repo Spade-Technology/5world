@@ -22,6 +22,9 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     address: string | undefined | null;
     user: {
+      name: string | undefined | null;
+      description: string | undefined | null;
+      picture: string | undefined | null;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -39,8 +42,8 @@ export function getAuthOptions(req: IncomingMessage): NextAuthOptions {
 
           const nextAuthUrl =
             process.env.NEXTAUTH_URL ||
-            (process.env.VERCEL_URL
-              ? `https://${process.env.VERCEL_URL}`
+            (process.env.NEXTAUTH_URL
+              ? `https://${process.env.NEXTAUTH_URL}`
               : null);
           if (!nextAuthUrl) {
             return null;
@@ -56,8 +59,28 @@ export function getAuthOptions(req: IncomingMessage): NextAuthOptions {
           }
 
           await siwe.validate(credentials?.signature || "");
+
+          // Fetch user by address
+          let user = await prisma.user.findUnique({
+            where: { address: siwe.address },
+          });
+
+          // If user doesn't exist, create a new one
+          if (!user) {
+            user = await prisma.user.create({
+              data: {
+                address: siwe.address,
+                name: "New User",
+              },
+            });
+          }
+
+          // Return the user info
           return {
-            id: siwe.address,
+            id: user.address,
+            name: user.name,
+            description: user.description,
+            picture: user.picture,
           };
         } catch (e) {
           return null;
@@ -82,9 +105,15 @@ export function getAuthOptions(req: IncomingMessage): NextAuthOptions {
   return {
     callbacks: {
       async session({ session, token }) {
+        let user = await prisma.user.findUnique({
+          where: { address: token.sub },
+        });
+
         session.address = token.sub;
         session.user = {
-          name: token.sub,
+          name: user?.name,
+          description: user?.description,
+          picture: user?.picture,
         };
         return session;
       },

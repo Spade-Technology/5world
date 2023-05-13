@@ -1,5 +1,7 @@
 import { createTRPCRouter } from "~/server/api/trpc";
 import { manifestoRouter } from "~/server/api/routers/manifesto";
+import { userRouter } from "./routers/user";
+import { podRouter } from "./routers/pod";
 
 /**
  * This is the primary router for your server.
@@ -8,6 +10,9 @@ import { manifestoRouter } from "~/server/api/routers/manifesto";
  */
 export const appRouter = createTRPCRouter({
   manifesto: manifestoRouter,
+  user: userRouter,
+  pod: podRouter,
+  proposal: proposalRouter,
 });
 
 // export type definition of API

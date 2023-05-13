@@ -23,16 +23,19 @@ model User {
     address String @id @unique
 
     // Media
-    name String?
+    name        String? @unique
+    description String?
+    picture     String?
 
     // Steward
-    stewardApplicationDate  DateTime
-    StewardVotesAsCandidate StewardVote[] @relation("CandidateRelation")
-    StewardVotesAsVoter     StewardVote[] @relation("VoterRelation")
+    stewardApplicationDate  DateTime?
+    stewardVotesAsCandidate StewardVote[] @relation("CandidateRelation")
+    stewardVotesAsVoter     StewardVote[] @relation("VoterRelation")
 
     // Pods & Proposals
-    pods      Pod[]      @relation("AdminsRelation")
-    proposals Proposal[]
+    podsAsAdmin  Pod[]      @relation("PodAdminsRelation")
+    podsAsMember Pod[]      @relation("PodMembersRelation")
+    proposals    Proposal[]
 
     // Meta
     JoinedAt  DateTime @default(now())
@@ -43,6 +46,9 @@ model User {
     updatedPods      Pod[]      @relation("UpdatedPodRelation")
     createdProposals Proposal[] @relation("CreatedProposalRelation")
     updatedProposals Proposal[] @relation("UpdatedProposalRelation")
+
+    guild   Guild? @relation("GuildMemberRelation", fields: [guildId], references: [id])
+    guildId Int?
 }
 
 model StewardVote {
@@ -65,7 +71,8 @@ model Pod {
     picture     String
 
     // Relations
-    admins      User[]     @relation("AdminsRelation")
+    admins      User[]     @relation("PodAdminsRelation")
+    members     User[]     @relation("PodMembersRelation")
     discussions String[]
     proposals   Proposal[]
 
@@ -74,6 +81,16 @@ model Pod {
     createdById String
     updatedBy   User   @relation("UpdatedPodRelation", fields: [updatedById], references: [address])
     updatedById String
+}
+
+model Guild {
+    id Int @id @default(autoincrement())
+
+    // Media
+    name String
+
+    // Members
+    User User[] @relation("GuildMemberRelation")
 }
 
 model Proposal {
