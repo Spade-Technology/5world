@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: NONE
 pragma solidity ^0.8.9;
 
-
 contract VDaoToken {
     /// @notice EIP-20 token name for this token
     string public constant name = "V Dao";
@@ -20,20 +19,20 @@ contract VDaoToken {
     /// @notice Address which may change distributor address
     address public timelock;
 
-    /// @notice Address of the Distribution contract 
+    /// @notice Address of the Distribution contract
     address public distributor;
 
     /// @notice bool which signifies tradability of token
     bool public isTradable = false; // Non-tradable in phase1
 
-    mapping (address => bool) internal whitelisted;
+    mapping(address => bool) internal whitelisted;
 
-    mapping (address => mapping (address => uint96)) internal allowances;
+    mapping(address => mapping(address => uint96)) internal allowances;
 
-    mapping (address => uint96) internal balances;
+    mapping(address => uint96) internal balances;
 
     /// @notice A record of each accounts delegate
-    mapping (address => address) public delegates;
+    mapping(address => address) public delegates;
 
     /// @notice A checkpoint for marking number of votes and balance from a given block
     struct Checkpoint {
@@ -43,22 +42,29 @@ contract VDaoToken {
     }
 
     /// @notice A record of votes checkpoints for each account, by index
-    mapping (address => mapping (uint32 => Checkpoint)) public checkpoints;
+    mapping(address => mapping(uint32 => Checkpoint)) public checkpoints;
 
     /// @notice The number of checkpoints for each account
-    mapping (address => uint32) public numCheckpoints;
+    mapping(address => uint32) public numCheckpoints;
 
     /// @notice The EIP-712 typehash for the contract's domain
-    bytes32 public constant DOMAIN_TYPEHASH = keccak256("EIP712Domain(string name,uint256 chainId,address verifyingContract)");
+    bytes32 public constant DOMAIN_TYPEHASH =
+        keccak256(
+            "EIP712Domain(string name,uint256 chainId,address verifyingContract)"
+        );
 
     /// @notice The EIP-712 typehash for the delegation struct used by the contract
-    bytes32 public constant DELEGATION_TYPEHASH = keccak256("Delegation(address delegatee,uint256 nonce,uint256 expiry)");
+    bytes32 public constant DELEGATION_TYPEHASH =
+        keccak256("Delegation(address delegatee,uint256 nonce,uint256 expiry)");
 
     /// @notice The EIP-712 typehash for the permit struct used by the contract
-    bytes32 public constant PERMIT_TYPEHASH = keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
+    bytes32 public constant PERMIT_TYPEHASH =
+        keccak256(
+            "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)"
+        );
 
     /// @notice A record of states for signing / validating signatures
-    mapping (address => uint) public nonces;
+    mapping(address => uint) public nonces;
 
     // @notice An event thats emitted when the timelock address is changed
     event TimelockChanged(address timelock, address newTimelock);
@@ -67,16 +73,28 @@ contract VDaoToken {
     event DistributorChanged(address distributor, address newDistributor);
 
     /// @notice An event thats emitted when an account changes its delegate
-    event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate);
+    event DelegateChanged(
+        address indexed delegator,
+        address indexed fromDelegate,
+        address indexed toDelegate
+    );
 
     /// @notice An event thats emitted when a delegate account's vote balance changes
-    event DelegateVotesChanged(address indexed delegate, uint previousBalance, uint newBalance);
+    event DelegateVotesChanged(
+        address indexed delegate,
+        uint previousBalance,
+        uint newBalance
+    );
 
     /// @notice The standard EIP-20 transfer event
     event Transfer(address indexed from, address indexed to, uint256 amount);
 
     /// @notice The standard EIP-20 approval event
-    event Approval(address indexed owner, address indexed spender, uint256 amount);
+    event Approval(
+        address indexed owner,
+        address indexed spender,
+        uint256 amount
+    );
 
     /// @notice An event that emitted when trading in enabled
     event TradingEnabled(address indexed caller, uint256 timestamp);
@@ -94,10 +112,15 @@ contract VDaoToken {
         whitelisted[account] = true;
 
         emit Transfer(address(0), account, totalSupply);
-        _moveBalance(address(0), address(0), account, account, uint96(totalSupply));
+        _moveBalance(
+            address(0),
+            address(0),
+            account,
+            account,
+            uint96(totalSupply)
+        );
         timelock = timelock_;
         emit TimelockChanged(address(0), timelock_);
-
     }
 
     /**
@@ -105,17 +128,23 @@ contract VDaoToken {
      * @param timelock_ The address of the new timelock
      */
     function setTimelock(address timelock_) external {
-        require(msg.sender == timelock, "V::setTimelock: only the timelock can change the timelock address");
+        require(
+            msg.sender == timelock,
+            "V::setTimelock: only the timelock can change the timelock address"
+        );
         emit TimelockChanged(timelock, timelock_);
         timelock = timelock_;
     }
 
     /**
-     * @notice Change/set TokenDistribution address, needs to be called after VToken contract is deployed 
+     * @notice Change/set TokenDistribution address, needs to be called after VToken contract is deployed
      * @param distributor_ The address of the TokenDistributor contract
      */
     function setDistributor(address distributor_) external {
-        require(msg.sender == timelock, "V::setDistributor: only the timelock can change the Distributor address");
+        require(
+            msg.sender == timelock,
+            "V::setDistributor: only the timelock can change the Distributor address"
+        );
         emit DistributorChanged(distributor, distributor_);
         distributor_ = distributor_;
         whitelisted[distributor_] = true;
@@ -125,7 +154,10 @@ contract VDaoToken {
      * @notice set isTradable to true, to allow trading of V tokens
      */
     function enableTrading() external {
-        require(msg.sender == timelock, "V::enableTrading: only the timelock can enable trading");
+        require(
+            msg.sender == timelock,
+            "V::enableTrading: only the timelock can enable trading"
+        );
         require(!isTradable, "V::enableTrading: Already enabled");
         isTradable = true;
         emit TradingEnabled(msg.sender, block.timestamp);
@@ -137,8 +169,14 @@ contract VDaoToken {
      * @param whitelist_ The bool to update the whitelist status to
      */
     function whitelistAccount(address account_, bool whitelist_) external {
-        require(msg.sender == timelock, "V::whitelistAccount: only the timelock can whitelist account");
-        require(whitelisted[account_] != whitelist_, "V::whitelistAccount: Already whitelisted");
+        require(
+            msg.sender == timelock,
+            "V::whitelistAccount: only the timelock can whitelist account"
+        );
+        require(
+            whitelisted[account_] != whitelist_,
+            "V::whitelistAccount: Already whitelisted"
+        );
         whitelisted[account_] = whitelist_;
 
         emit WhitelistUpdated(account_, whitelist_);
@@ -149,9 +187,15 @@ contract VDaoToken {
      * @param accounts_ The array of addresses of the accounts to be whitelisted
      * @param whitelist_ The bool to update the whitelist status to
      */
-    function whitelistMultiple(address[] calldata accounts_, bool whitelist_) external {
-        require(msg.sender == timelock, "V::whitelistAccount: only the timelock can whitelist account");
-        for( uint i = 0 ; i < accounts_.length ; i++) {
+    function whitelistMultiple(
+        address[] calldata accounts_,
+        bool whitelist_
+    ) external {
+        require(
+            msg.sender == timelock,
+            "V::whitelistAccount: only the timelock can whitelist account"
+        );
+        for (uint i = 0; i < accounts_.length; i++) {
             whitelisted[accounts_[i]] = whitelist_;
             emit WhitelistUpdated(accounts_[i], whitelist_);
         }
@@ -163,7 +207,10 @@ contract VDaoToken {
      * @param spender The address of the account spending the funds
      * @return The number of tokens approved
      */
-    function allowance(address account, address spender) external view returns (uint) {
+    function allowance(
+        address account,
+        address spender
+    ) external view returns (uint) {
         return allowances[account][spender];
     }
 
@@ -199,7 +246,15 @@ contract VDaoToken {
      * @param r Half of the ECDSA signature pair
      * @param s Half of the ECDSA signature pair
      */
-    function permit(address owner, address spender, uint rawAmount, uint deadline, uint8 v, bytes32 r, bytes32 s) external {
+    function permit(
+        address owner,
+        address spender,
+        uint rawAmount,
+        uint deadline,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) external {
         uint96 amount;
         if (rawAmount == type(uint).max) {
             amount = type(uint96).max;
@@ -207,9 +262,27 @@ contract VDaoToken {
             amount = safe96(rawAmount, "V::permit: amount exceeds 96 bits");
         }
 
-        bytes32 domainSeparator = keccak256(abi.encode(DOMAIN_TYPEHASH, keccak256(bytes(name)), getChainId(), address(this)));
-        bytes32 structHash = keccak256(abi.encode(PERMIT_TYPEHASH, owner, spender, rawAmount, nonces[owner]++, deadline));
-        bytes32 digest = keccak256(abi.encodePacked("\x19\x01", domainSeparator, structHash));
+        bytes32 domainSeparator = keccak256(
+            abi.encode(
+                DOMAIN_TYPEHASH,
+                keccak256(bytes(name)),
+                getChainId(),
+                address(this)
+            )
+        );
+        bytes32 structHash = keccak256(
+            abi.encode(
+                PERMIT_TYPEHASH,
+                owner,
+                spender,
+                rawAmount,
+                nonces[owner]++,
+                deadline
+            )
+        );
+        bytes32 digest = keccak256(
+            abi.encodePacked("\x19\x01", domainSeparator, structHash)
+        );
         address signatory = ecrecover(digest, v, r, s);
         require(signatory != address(0), "V::permit: invalid signature");
         require(signatory == owner, "V::permit: unauthorized");
@@ -245,7 +318,10 @@ contract VDaoToken {
      * @return Whether or not the transfer succeeded
      */
     function transfer(address dst, uint rawAmount) external returns (bool) {
-        uint96 amount = safe96(rawAmount, "V::transfer: amount exceeds 96 bits");
+        uint96 amount = safe96(
+            rawAmount,
+            "V::transfer: amount exceeds 96 bits"
+        );
         _transferTokens(msg.sender, dst, amount);
         return true;
     }
@@ -257,13 +333,21 @@ contract VDaoToken {
      * @param rawAmount The number of tokens to transfer
      * @return Whether or not the transfer succeeded
      */
-    function transferFrom(address src, address dst, uint rawAmount) external returns (bool) {
+    function transferFrom(
+        address src,
+        address dst,
+        uint rawAmount
+    ) external returns (bool) {
         address spender = msg.sender;
         uint96 spenderAllowance = allowances[src][spender];
         uint96 amount = safe96(rawAmount, "V::approve: amount exceeds 96 bits");
 
         if (spender != src && spenderAllowance != type(uint96).max) {
-            uint96 newAllowance = sub96(spenderAllowance, amount, "V::transferFrom: transfer amount exceeds spender allowance");
+            uint96 newAllowance = sub96(
+                spenderAllowance,
+                amount,
+                "V::transferFrom: transfer amount exceeds spender allowance"
+            );
             allowances[src][spender] = newAllowance;
 
             emit Approval(src, spender, newAllowance);
@@ -282,8 +366,8 @@ contract VDaoToken {
     }
 
     /**
-     * @notice Delegate votes from `delegator` to `delegatee` 
-     * @param delegator The address to delegate votes from 
+     * @notice Delegate votes from `delegator` to `delegatee`
+     * @param delegator The address to delegate votes from
      * @param delegatee The address to delegate votes to
      */
     function delegateOnDist(address delegator, address delegatee) external {
@@ -300,15 +384,39 @@ contract VDaoToken {
      * @param r Half of the ECDSA signature pair
      * @param s Half of the ECDSA signature pair
      */
-    function delegateBySig(address delegatee, uint nonce, uint expiry, uint8 v, bytes32 r, bytes32 s) external {
+    function delegateBySig(
+        address delegatee,
+        uint nonce,
+        uint expiry,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) external {
         // slither-disable-next-line timestamp
-        bytes32 domainSeparator = keccak256(abi.encode(DOMAIN_TYPEHASH, keccak256(bytes(name)), getChainId(), address(this)));
-        bytes32 structHash = keccak256(abi.encode(DELEGATION_TYPEHASH, delegatee, nonce, expiry));
-        bytes32 digest = keccak256(abi.encodePacked("\x19\x01", domainSeparator, structHash));
+        bytes32 domainSeparator = keccak256(
+            abi.encode(
+                DOMAIN_TYPEHASH,
+                keccak256(bytes(name)),
+                getChainId(),
+                address(this)
+            )
+        );
+        bytes32 structHash = keccak256(
+            abi.encode(DELEGATION_TYPEHASH, delegatee, nonce, expiry)
+        );
+        bytes32 digest = keccak256(
+            abi.encodePacked("\x19\x01", domainSeparator, structHash)
+        );
         address signatory = ecrecover(digest, v, r, s);
         require(signatory != address(0), "V::delegateBySig: invalid signature");
-        require(nonce == nonces[signatory]++, "V::delegateBySig: invalid nonce");
-        require(block.timestamp <= expiry, "V::delegateBySig: signature expired");
+        require(
+            nonce == nonces[signatory]++,
+            "V::delegateBySig: invalid nonce"
+        );
+        require(
+            block.timestamp <= expiry,
+            "V::delegateBySig: signature expired"
+        );
         return _delegate(signatory, delegatee);
     }
 
@@ -319,7 +427,8 @@ contract VDaoToken {
      */
     function getCurrentVotes(address account) external view returns (uint96) {
         uint32 nCheckpoints = numCheckpoints[account];
-        return nCheckpoints > 0 ? checkpoints[account][nCheckpoints - 1].votes : 0;
+        return
+            nCheckpoints > 0 ? checkpoints[account][nCheckpoints - 1].votes : 0;
     }
 
     /**
@@ -329,8 +438,14 @@ contract VDaoToken {
      * @param blockNumber The block number to get the vote balance at
      * @return The number of votes the account had as of the given block
      */
-    function getPriorVotes(address account, uint blockNumber) external view returns (uint96) {
-        require(blockNumber < block.number, "V::getPriorVotes: not yet determined");
+    function getPriorVotes(
+        address account,
+        uint blockNumber
+    ) external view returns (uint96) {
+        require(
+            blockNumber < block.number,
+            "V::getPriorVotes: not yet determined"
+        );
 
         uint32 nCheckpoints = numCheckpoints[account];
         if (nCheckpoints == 0) {
@@ -365,13 +480,19 @@ contract VDaoToken {
 
     /**
      * @notice Determine the prior token balance for an account as of a block number for Qudratic funding (no delegatin)
-     * @dev Block number must be a finalized block or else this function will revert to prevent misinformation.
+     * @dev Block number must be a finalized block or else this function will revert to prevent misinformation. This calculation is done OffChain for Steward Election to save gas (it is Expensive)
      * @param account The address of the account to check
      * @param blockNumber The block number to get the vote balance at
      * @return The number of tokens the account had as of the given block
      */
-    function getPriorBalance(address account, uint blockNumber) external view returns (uint96) {
-        require(blockNumber < block.number, "V::getPriorBalance: not yet determined");
+    function getPriorBalance(
+        address account,
+        uint blockNumber
+    ) external view returns (uint96) {
+        require(
+            blockNumber < block.number,
+            "V::getPriorBalance: not yet determined"
+        );
 
         uint32 nCheckpoints = numCheckpoints[account];
         if (nCheckpoints == 0) {
@@ -405,7 +526,7 @@ contract VDaoToken {
     }
 
     function _delegate(address delegator, address delegatee) internal {
-        address currentDelegate = delegates[delegator]; 
+        address currentDelegate = delegates[delegator];
         uint96 delegatorBalance = balances[delegator];
         delegates[delegator] = delegatee;
 
@@ -417,118 +538,210 @@ contract VDaoToken {
     function _transferTokens(address src, address dst, uint96 amount) internal {
         // require(src != address(0), "V::_transferTokens: cannot transfer from the zero address");
         // require(dst != address(0), "V::_transferTokens: cannot transfer to the zero address");
-        if(!isTradable) {
-            require(whitelisted[src] || whitelisted[dst], "V::_transferTokens: Trading not enabled");
+        if (!isTradable) {
+            require(
+                whitelisted[src] || whitelisted[dst],
+                "V::_transferTokens: Trading not enabled"
+            );
         }
 
-        balances[src] = sub96(balances[src], amount, "V::_transferTokens: transfer amount exceeds balance");
-        balances[dst] = add96(balances[dst], amount, "V::_transferTokens: transfer amount overflows");
+        balances[src] = sub96(
+            balances[src],
+            amount,
+            "V::_transferTokens: transfer amount exceeds balance"
+        );
+        balances[dst] = add96(
+            balances[dst],
+            amount,
+            "V::_transferTokens: transfer amount overflows"
+        );
         emit Transfer(src, dst, amount);
 
         _moveBalance(src, delegates[src], dst, delegates[dst], amount);
     }
 
-    function _moveDelegates(address srcRep, address dstRep, uint96 amount) internal {
+    function _moveDelegates(
+        address srcRep,
+        address dstRep,
+        uint96 amount
+    ) internal {
         if (srcRep != dstRep && amount > 0) {
             if (srcRep != address(0)) {
                 uint32 srcRepNum = numCheckpoints[srcRep];
-                uint96 srcRepOld = srcRepNum > 0 ? checkpoints[srcRep][srcRepNum - 1].votes : 0;
-                uint96 srcRepNew = sub96(srcRepOld, amount, "V::_moveVotes: vote amount underflows");
+                uint96 srcRepOld = srcRepNum > 0
+                    ? checkpoints[srcRep][srcRepNum - 1].votes
+                    : 0;
+                uint96 srcRepNew = sub96(
+                    srcRepOld,
+                    amount,
+                    "V::_moveVotes: vote amount underflows"
+                );
                 _writeCheckpoint(srcRep, srcRepNum, srcRepOld, srcRepNew);
             }
 
             if (dstRep != address(0)) {
                 uint32 dstRepNum = numCheckpoints[dstRep];
-                uint96 dstRepOld = dstRepNum > 0 ? checkpoints[dstRep][dstRepNum - 1].votes : 0;
-                uint96 dstRepNew = add96(dstRepOld, amount, "V::_moveVotes: vote amount overflows");
+                uint96 dstRepOld = dstRepNum > 0
+                    ? checkpoints[dstRep][dstRepNum - 1].votes
+                    : 0;
+                uint96 dstRepNew = add96(
+                    dstRepOld,
+                    amount,
+                    "V::_moveVotes: vote amount overflows"
+                );
                 _writeCheckpoint(dstRep, dstRepNum, dstRepOld, dstRepNew);
             }
         }
     }
 
-    function _writeCheckpoint(address delegatee, uint32 nCheckpoints, uint96 oldVotes, uint96 newVotes) internal {
-      uint32 blockNumber = safe32(block.number, "V::_writeCheckpoint: block number exceeds 32 bits");
+    function _writeCheckpoint(
+        address delegatee,
+        uint32 nCheckpoints,
+        uint96 oldVotes,
+        uint96 newVotes
+    ) internal {
+        uint32 blockNumber = safe32(
+            block.number,
+            "V::_writeCheckpoint: block number exceeds 32 bits"
+        );
 
-      if (nCheckpoints > 0 && checkpoints[delegatee][nCheckpoints - 1].fromBlock == blockNumber) {
-          checkpoints[delegatee][nCheckpoints - 1].votes = newVotes;
-          checkpoints[delegatee][nCheckpoints - 1].balance = balances[delegatee];
-      } else {
-          checkpoints[delegatee][nCheckpoints] = Checkpoint(blockNumber, newVotes, balances[delegatee]);
-          numCheckpoints[delegatee] = nCheckpoints + 1;
-      }
+        if (
+            nCheckpoints > 0 &&
+            checkpoints[delegatee][nCheckpoints - 1].fromBlock == blockNumber
+        ) {
+            checkpoints[delegatee][nCheckpoints - 1].votes = newVotes;
+            checkpoints[delegatee][nCheckpoints - 1].balance = balances[
+                delegatee
+            ];
+        } else {
+            checkpoints[delegatee][nCheckpoints] = Checkpoint(
+                blockNumber,
+                newVotes,
+                balances[delegatee]
+            );
+            numCheckpoints[delegatee] = nCheckpoints + 1;
+        }
 
-      emit DelegateVotesChanged(delegatee, oldVotes, newVotes);
+        emit DelegateVotesChanged(delegatee, oldVotes, newVotes);
     }
 
-    function _moveBalance(address src, address srcRep, address dst, address dstRep, uint96 amount) internal {
+    function _moveBalance(
+        address src,
+        address srcRep,
+        address dst,
+        address dstRep,
+        uint96 amount
+    ) internal {
         if (srcRep != address(0)) {
             uint32 srcRepNum = numCheckpoints[srcRep];
-            uint96 srcRepOld = srcRepNum > 0 ? checkpoints[srcRep][srcRepNum - 1].votes : 0;
-            uint96 srcRepNew = sub96(srcRepOld, amount, "V::_moveVotes: vote amount underflows");
+            uint96 srcRepOld = srcRepNum > 0
+                ? checkpoints[srcRep][srcRepNum - 1].votes
+                : 0;
+            uint96 srcRepNew = sub96(
+                srcRepOld,
+                amount,
+                "V::_moveVotes: vote amount underflows"
+            );
             _writeCheckpoint(srcRep, srcRepNum, srcRepOld, srcRepNew);
             if (src != srcRep) {
                 uint32 srcNum = numCheckpoints[src];
                 _writeBalanceCheckpoint(src, srcNum);
             }
-        }else {
+        } else {
             uint32 srcNum = numCheckpoints[src];
             _writeBalanceCheckpoint(src, srcNum);
         }
 
         if (dstRep != address(0)) {
             uint32 dstRepNum = numCheckpoints[dstRep];
-            uint96 dstRepOld = dstRepNum > 0 ? checkpoints[dstRep][dstRepNum - 1].votes : 0;
-            uint96 dstRepNew = add96(dstRepOld, amount, "V::_moveVotes: vote amount overflows");
+            uint96 dstRepOld = dstRepNum > 0
+                ? checkpoints[dstRep][dstRepNum - 1].votes
+                : 0;
+            uint96 dstRepNew = add96(
+                dstRepOld,
+                amount,
+                "V::_moveVotes: vote amount overflows"
+            );
             _writeCheckpoint(dstRep, dstRepNum, dstRepOld, dstRepNew);
             if (dst != dstRep) {
                 uint32 dstNum = numCheckpoints[dst];
                 _writeBalanceCheckpoint(dst, dstNum);
             }
-        }else {
+        } else {
             uint32 dstNum = numCheckpoints[dst];
             _writeBalanceCheckpoint(dst, dstNum);
         }
-        
     }
 
-    function _writeBalanceCheckpoint(address account, uint32 nCheckpoints) internal {
-      uint32 blockNumber = safe32(block.number, "V::_writeCheckpoint: block number exceeds 32 bits");
+    function _writeBalanceCheckpoint(
+        address account,
+        uint32 nCheckpoints
+    ) internal {
+        uint32 blockNumber = safe32(
+            block.number,
+            "V::_writeCheckpoint: block number exceeds 32 bits"
+        );
 
-      if (nCheckpoints > 0 && checkpoints[account][nCheckpoints - 1].fromBlock == blockNumber) {
-          checkpoints[account][nCheckpoints - 1].balance = balances[account];
-      } else {
-          uint96 oldVotes = nCheckpoints > 0 ? checkpoints[account][nCheckpoints - 1].votes : 0;
-          checkpoints[account][nCheckpoints] = Checkpoint(blockNumber, oldVotes, balances[account]);
-          numCheckpoints[account] = nCheckpoints + 1;
-      }
+        if (
+            nCheckpoints > 0 &&
+            checkpoints[account][nCheckpoints - 1].fromBlock == blockNumber
+        ) {
+            checkpoints[account][nCheckpoints - 1].balance = balances[account];
+        } else {
+            uint96 oldVotes = nCheckpoints > 0
+                ? checkpoints[account][nCheckpoints - 1].votes
+                : 0;
+            checkpoints[account][nCheckpoints] = Checkpoint(
+                blockNumber,
+                oldVotes,
+                balances[account]
+            );
+            numCheckpoints[account] = nCheckpoints + 1;
+        }
 
-    //   emit DelegateVotesChanged(delegatee, oldVotes, newVotes);
+        //   emit DelegateVotesChanged(delegatee, oldVotes, newVotes);
     }
 
-    function safe32(uint n, string memory errorMessage) internal pure returns (uint32) {
-        require(n < 2**32, errorMessage);
+    function safe32(
+        uint n,
+        string memory errorMessage
+    ) internal pure returns (uint32) {
+        require(n < 2 ** 32, errorMessage);
         return uint32(n);
     }
 
-    function safe96(uint n, string memory errorMessage) internal pure returns (uint96) {
-        require(n < 2**96, errorMessage);
+    function safe96(
+        uint n,
+        string memory errorMessage
+    ) internal pure returns (uint96) {
+        require(n < 2 ** 96, errorMessage);
         return uint96(n);
     }
 
-    function add96(uint96 a, uint96 b, string memory errorMessage) internal pure returns (uint96) {
+    function add96(
+        uint96 a,
+        uint96 b,
+        string memory errorMessage
+    ) internal pure returns (uint96) {
         uint96 c = a + b;
         require(c >= a, errorMessage);
         return c;
     }
 
-    function sub96(uint96 a, uint96 b, string memory errorMessage) internal pure returns (uint96) {
+    function sub96(
+        uint96 a,
+        uint96 b,
+        string memory errorMessage
+    ) internal pure returns (uint96) {
         require(b <= a, errorMessage);
         return a - b;
     }
 
     function getChainId() internal view returns (uint) {
         uint256 chainId;
-        assembly { chainId := chainid() }
+        assembly {
+            chainId := chainid()
+        }
         return chainId;
     }
 }
