@@ -86,3 +86,204 @@ export const expenditureData = [
   { title: "Income", amount: "962,213,12", percent: "41.74%" },
   { title: "Expenses", amount: "156,152,53", percent: "16.57%" },
 ];
+
+export const LinearChart: any = {
+  series: [
+    {
+      name: "Desktops",
+      data: [10, 41, 35, 51, 49, 62, 69],
+    },
+    {
+      name: "ggg",
+      data: [0, 41, 35, 51, 0, 62, 69],
+    },
+  ],
+  options: {
+    chart: {
+      type: "line",
+      zoom: {
+        enabled: false,
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: "smooth",
+    },
+    colors: ["#36DFAE", "#FBB0B3"],
+    grid: {
+      show: false,
+    },
+    legend: {
+      show: false,
+    },
+    xaxis: {
+      categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Japan", "Sun"],
+      labels: {
+        style: {
+          colors: "white",
+          fontSize: "14px",
+          fontFamily: "Satoshi",
+        },
+      },
+    },
+    yaxis: {
+      tickAmount: 5,
+      max: 100,
+      min: 0,
+      labels: {
+        style: {
+          colors: "white",
+          fontSize: "14px",
+          fontFamily: "Satoshi",
+        },
+      },
+    },
+  },
+};
+
+export const horizontalBarchart: any = {
+  series: [
+    {
+      data: [
+        { x: "Mon", y: 200, fillColor: "#36DFAE", strokeColor: "#36DFAE" },
+        { x: "Tue", y: 200, fillColor: "#36DFAE", strokeColor: "#36DFAE" },
+        { x: "Wed", y: 130, fillColor: "#36DFAE", strokeColor: "#36DFAE" },
+        { x: "Thu", y: 400, fillColor: "#36DFAE", strokeColor: "#36DFAE" },
+        { x: "Fri", y: 370, fillColor: "#36DFAE", strokeColor: "#36DFAE" },
+        { x: "Sat", y: 300, fillColor: "#36DFAE", strokeColor: "#36DFAE" },
+        { x: "Sun", y: 180, fillColor: "#36DFAE", strokeColor: "#36DFAE" },
+      ],
+    },
+  ],
+  options: {
+    chart: {
+      type: "bar",
+      height: 350,
+    },
+    grid: {
+      show: false,
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 4,
+        backgroundColor: "white",
+        horizontal: true,
+        style: {
+          fillColor: "orange",
+        },
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    xaxis: {
+      categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Japan", "Sun"],
+      tickAmount: 3,
+      max: 400,
+      min: 100,
+      labels: {
+        style: {
+          colors: "white",
+          fontSize: "14px",
+          fontFamily: "Satoshi",
+        },
+      },
+    },
+
+    yaxis: {
+      labels: {
+        style: {
+          colors: "white",
+          fontSize: "14px",
+          fontFamily: "Satoshi",
+        },
+      },
+    },
+  },
+};
+export const verticalBarchart: any = {
+  series: [
+    {
+      name: "Net Profit",
+      data: [44, 55, 57, 56, 61, 58, 63, 0, 0, 0, 60, 66],
+    },
+    {
+      name: "Revenue",
+      data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 0, 0, 0],
+    },
+  ],
+  options: {
+    legend: {
+      show: false,
+    },
+    chart: {
+      type: "bar",
+      height: 350,
+    },
+    grid: {
+      show: false,
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: "55%",
+        endingShape: "rounded",
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ["transparent"],
+    },
+    xaxis: {
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      labels: {
+        style: {
+          colors: "white",
+          fontSize: "14px",
+          fontFamily: "Satoshi",
+        },
+      },
+    },
+    yaxis: {
+      tickAmount: 5,
+      max: 100,
+      min: 0,
+      labels: {
+        style: {
+          colors: "white",
+          fontSize: "14px",
+          fontFamily: "Satoshi",
+        },
+      },
+    },
+    fill: {
+      opacity: 1,
+    },
+    tooltip: {
+      y: {
+        formatter: function () {
+          return "$ " + 40 + " thousands";
+        },
+      },
+    },
+  },
+};
