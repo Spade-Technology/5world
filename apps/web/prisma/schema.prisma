@@ -19,6 +19,11 @@ model Signatures {
     updatedAt DateTime @updatedAt
 }
 
+enum UserRole {
+    MODERATOR
+    MEMBER
+}
+
 model User {
     address String @id @unique
 
@@ -26,6 +31,8 @@ model User {
     name        String? @unique
     description String?
     picture     String?
+
+    role UserRole @default(MEMBER)
 
     // Steward
     stewardApplicationDate  DateTime?
