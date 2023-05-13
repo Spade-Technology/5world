@@ -19,7 +19,6 @@ model Signatures {
     updatedAt DateTime @updatedAt
 }
 
-// User model
 model User {
     address String @id @unique
 
@@ -38,8 +37,12 @@ model User {
     // Meta
     JoinedAt  DateTime @default(now())
     UpdatedAt DateTime @default(now()) @updatedAt
-    Pod       Pod[]
-    Pod       Pod[]
+
+    // Relations
+    createdPods      Pod[]      @relation("CreatedPodRelation")
+    updatedPods      Pod[]      @relation("UpdatedPodRelation")
+    createdProposals Proposal[] @relation("CreatedProposalRelation")
+    updatedProposals Proposal[] @relation("UpdatedProposalRelation")
 }
 
 model StewardVote {
@@ -54,7 +57,6 @@ model StewardVote {
     candidateAddress String
 }
 
-// Pod model
 model Pod {
     id          Int    @id @default(autoincrement())
     // Media
@@ -68,23 +70,24 @@ model Pod {
     proposals   Proposal[]
 
     // Meta
-    createdBy   User   @relation(fields: [createdById], references: [address])
+    createdBy   User   @relation("CreatedPodRelation", fields: [createdById], references: [address])
     createdById String
-    updatedBy   User   @relation(fields: [updatedById], references: [address])
+    updatedBy   User   @relation("UpdatedPodRelation", fields: [updatedById], references: [address])
     updatedById String
 }
 
-// Proposal model
 model Proposal {
     id Int @id @default(autoincrement())
 
-    // Pods
+    // Relations
     pod      Pod    @relation(fields: [podId], references: [id])
     podId    Int
     author   User   @relation(fields: [authorId], references: [address])
     authorId String
 
     // Meta
-    updatedBy   User   @relation(fields: [updatedById], references: [address])
+    createdBy   User   @relation("CreatedProposalRelation", fields: [createdById], references: [address])
+    createdById String
+    updatedBy   User   @relation("UpdatedProposalRelation", fields: [updatedById], references: [address])
     updatedById String
 }
