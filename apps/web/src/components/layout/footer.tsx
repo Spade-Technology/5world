@@ -125,8 +125,8 @@ const Footer = (props: Props) => {
 const FooterManifesto = (props: Props) => {
   return (
     <div className="bg-white px-14 py-10">
-      <div className="mx-auto flex max-w-[1280px] flex-col gap-10">
-        <div className="flex gap-9">
+      <div className="mx-auto flex max-w-[1280px] flex-col gap-6 md:gap-10">
+        <div className="flex flex-col gap-6 text-center md:flex-row md:gap-9 md:text-left">
           <Link href="#">
             <h2>Home</h2>
           </Link>
@@ -137,8 +137,8 @@ const FooterManifesto = (props: Props) => {
             <h2>Twitter</h2>
           </Link>
         </div>
-        <div className="flex flex-col gap-3">
-          <span className="text-base font-medium text-black">
+        <div className="mx-auto flex flex-col-reverse gap-3 md:flex-col">
+          <span className="text-center text-base font-medium text-black md:text-left">
             {props.signatures || 0} Signatures
           </span>
           <Button

@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse, type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 
 import { HeaderManifesto } from "~/components/layout/header";
 
@@ -27,6 +26,9 @@ import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useSession } from "next-auth/react";
 import PrimaryButton from "~/styles/shared/buttons/primaryButton";
 import { Section } from "~/components/layout/section";
+import VDAO_whiteIcon from "public/logo/svg/white.svg";
+import Green_VDAO from "public/logo/svg/green.svg";
+import SubmitIcon from "public/icons/manifesto/submitIcon.svg";
 
 dayjs.extend(relativeTime);
 
@@ -49,13 +51,13 @@ const Home: NextPage<any> = ({ signatures }) => {
         <div className="px-4">
           <SectionOne />
 
-          <Color
+          {/* <Color
             colorFrom={"#00FF19"}
             colorTo={"#0038FF"}
             left={"-550px"}
             size={"400px"}
             opacity={0.7}
-          />
+          /> */}
           <SectionTwo />
 
           <Signing signatures={signatures} ref={ref} />
@@ -183,8 +185,8 @@ function Signing({
     console.log("scrollTop", scrollTop, window.screen.availWidth);
 
     if (
-      (window.screen.availWidth <= 390 && scrollTop >= 8888) ||
-      (window.screen.availWidth > 390 && scrollTop >= 5639)
+      (window.screen.availWidth <= 390 && scrollTop >= 7130) ||
+      (window.screen.availWidth > 390 && scrollTop >= 5880)
     ) {
       setSticky(true);
     } else {
@@ -196,7 +198,7 @@ function Signing({
     <section>
       {contextHolder}
       <div className="mx-auto max-w-[850px]" id="SignModule">
-        <div className="mx-auto my-20 w-[350px] rounded-lg bg-vdao-dark p-4 ">
+        <div className="mx-auto w-[350px] rounded-lg bg-vdao-dark p-4 ">
           <span className="text-lg font-medium">
             Sign the manifesto with 3 simple steps
           </span>
@@ -234,15 +236,15 @@ function Signing({
             {/* right */}
             <div className="flex flex-col justify-between ">
               {/* step 0 */}
-              <VDAOConnectButton className="text-white" />
+              <VDAOConnectButton className="border-vdao-light bg-vdao-light text-sm font-medium text-vdao-dark outline-none" />
               {/* step 1 */}
               <Button
-                className={`!h-10 ${
+                className={`!h-10 w-fit ${
                   step < 1
-                    ? "!bg-[#9B9B9B]"
+                    ? "!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]"
                     : step == 1
-                    ? "!bg-vdao-light"
-                    : "!border-vdao-light"
+                    ? "!text-vdao-light"
+                    : "!border-vdao-light !text-vdao-light"
                 }`}
                 disabled={step != 1}
                 onClick={openConnectModal}
@@ -253,12 +255,12 @@ function Signing({
 
               {/* step 2 */}
               <Button
-                className={`!h-10 ${
+                className={`!h-10 w-fit ${
                   step < 2
-                    ? "!bg-[#9B9B9B]"
-                    : step == 2
-                    ? "!bg-vdao-light"
-                    : "!border-vdao-light"
+                    ? "!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]"
+                    : step == 1
+                    ? "!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]"
+                    : "!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]"
                 }`}
                 disabled={step != 2}
                 type={"primary"}
@@ -269,31 +271,35 @@ function Signing({
             </div>
           </div>
         </div>
-        <Color
+        {/* <Color
           colorFrom={"#00FF19"}
           colorTo={"#0038FF"}
           left={"600px"}
           size={"400px"}
           opacity={0.7}
-        />
+        /> */}
 
-        <h3 className="mt-6 mr-auto text-center font-heading text-5xl font-medium text-vdao-light">
+        <h3 className="mt-24 mr-auto text-center font-heading text-5xl font-medium text-vdao-light md:mt-40">
           Manifesto Signers
         </h3>
         <div className="mt-12 flex justify-between">
-          <span className="text-3xl">Signed By :</span>
-          <span className="text-3xl">{signatures.total} Signatures</span>
+          <span className="font-heading text-3xl font-medium">Signed By :</span>
+          <span className="font-heading text-3xl font-medium">
+            {signatures.total}
+            <div className="font-body text-lg font-normal">Signatures</div>
+          </span>
         </div>
         <div
-          className={`max-w-96 mt-3 rounded-xl bg-vdao-dark py-5 px-6 ${
-            sticky ? "fixed top-[1px]" : ""
-          } `}
+          className={`max-w-96 mt-3 rounded-lg bg-vdao-dark py-5 px-6  
+          ${sticky ? "fixed top-[1px] z-50" : ""}`}
         >
           {list.map((item, i) => (
             <>
               <div
                 key={i}
-                className="mt-4 flex w-full flex-row items-center justify-between"
+                className={`mt-4 flex w-full flex-row items-center justify-between ${
+                  sticky ? "md:gap-[364px]" : ""
+                }`}
               >
                 <div className="flex w-full items-center  gap-3">
                   <div
@@ -319,10 +325,31 @@ function Signing({
             </>
           ))}
         </div>
+
+        <div
+          className={`max-w-96 mt-24 flex flex-col justify-between gap-7 rounded-lg bg-vdao-dark py-5 px-6 text-white md:mt-44 md:flex-row md:gap-0`}
+        >
+          <div className="my-auto font-body text-lg font-medium">
+            Join our mailing list
+            <br />
+            <div className="font-body text-base font-normal opacity-40">
+              Be the 1st one to get all future updates.
+            </div>
+          </div>
+          <div className="flex">
+            <input
+              className="w-80 rounded bg-[#14444A] px-5 py-3 text-[#3BA7B5] outline-none placeholder:text-[#3BA7B5]"
+              placeholder="Enter your email address"
+            />
+            <div className="relative -left-1 w-16 rounded-r bg-vdao-light py-[14px] px-5">
+              <Image src={SubmitIcon} alt="SubmitIcon" className="h-fit" />
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="mx-auto mt-60 mb-48 flex max-w-[1150px] flex-col justify-evenly md:flex-row">
+      <div className="mx-auto my-24 flex max-w-[1150px] flex-col justify-evenly md:mb-48 md:mt-60 md:flex-row">
         <div className="flex w-full flex-col">
-          <h3 className="mr-auto mt-9 max-w-[1153px] text-left font-heading text-2xl font-light leading-none text-vdao-light md:text-[56px] ">
+          <h3 className="mr-auto max-w-[293px] text-left font-heading text-2xl font-light leading-none text-vdao-light md:mt-9 md:max-w-[1153px] md:text-[56px] ">
             <b className="font-medium">Feeling inspired?</b>
             <br />
             Want to get more involved?
@@ -332,14 +359,17 @@ function Signing({
           {/* <Button type="primary" className="mt-10 !h-10 w-40 !rounded-sm bg-vdao-dark">
             Join Now
           </Button> */}
-          <PrimaryButton text="Join Now" className="mt-10 px-8 py-4 text-2xl" />
+          <PrimaryButton
+            text="Join Now"
+            className="mt-10 px-8 py-4 text-sm md:text-2xl"
+          />
         </div>
         <Image
           src={VDAOApply}
           width={500}
           height={500}
           alt="apply"
-          className="pointer-events-none mx-auto w-1/2 scale-150 transform md:w-1/3 md:translate-y-5 md:-translate-x-20"
+          className="pointer-events-none mx-auto mt-16 w-1/2 scale-150 transform md:mt-0 md:w-1/3 md:translate-y-5 md:-translate-x-20"
         />
       </div>
     </section>
@@ -351,12 +381,12 @@ function SectionTwo() {
     // light to dark
 
     <section>
-      <div className="mx-auto mt-32 flex max-w-[850px] flex-col items-center ">
-        <h3 className="mt-6 mr-auto text-left font-heading text-3xl font-medium text-vdao-light">
+      <div className="mx-auto mt-24 flex max-w-[850px] flex-col items-center md:mt-48 ">
+        <h3 className="mr-auto text-left font-heading text-[32px] font-medium text-vdao-light">
           The Metacrisis
         </h3>
         <br />
-        <span>
+        <span className="text-xl">
           Humanity is at the peak of our known history. The economic,
           industrial, agricultural, energy and technological systems that helped
           us evolve have become the very liabilities that now challenge our
@@ -369,7 +399,7 @@ function SectionTwo() {
           “Our societies have devolved into a zero-sum scarcity mindset, with
           band-aid solutions that exacerbate the problems.”
         </h3>
-        <span>
+        <span className="text-xl">
           The signs are everywhere for those with the eyes to see. Financial
           systems are collapsing. The Web 2 model is polarizing society and
           exploiting consumers. Mainstream media has become a propaganda
@@ -384,18 +414,40 @@ function SectionTwo() {
           with it.
         </span>
       </div>
-      <Color
+      {/* <Color
         colorFrom={"#11C6FF"}
         left={"550px"}
         size={"400px"}
         opacity={0.7}
-      />
-      <h3 className="mx-auto my-48 mr-auto max-w-[1153px] text-center font-heading text-[56px] font-medium leading-none text-white">
-        V DAO is a decentralized community of creators, contributors, artists,
-        <br />
-        thinkers and seekers. 
+      /> */}
+      <h3 className="mx-auto my-24 mr-auto max-w-[1153px] text-center font-heading text-2xl font-medium leading-none text-white md:my-48 md:text-[56px]">
+        <div className="flex max-w-[347px] justify-start gap-3 text-left md:max-w-[1153px]">
+          <Image
+            src={VDAO_whiteIcon}
+            alt="whiteIcon"
+            className="max-h-4 max-w-[70px] flex-none mt-1 md:my-auto md:max-h-9 md:max-w-[158px]"
+          />
+          is a decentralized community of
+        </div>
+        <div>
+          creators, contributors, artists,
+          <br /> thinkers and seekers. 
+        </div>
+        {/* <div className="flex gap-3">
+          <Image src={VDAO_whiteIcon} height={38} alt="whiteIcon" /> is a
+          decentralized community of
+        </div>
+        <div>
+          creators, contributors, artists,
+          <br />
+          thinkers and seekers. 
+        </div> */}
       </h3>
-      <div className="mx-auto mt-32 flex max-w-[850px] flex-col items-center ">
+      <div className="mx-auto flex max-w-[850px] flex-col items-center ">
+        <h3 className="mr-auto text-left font-heading text-[32px] font-medium text-vdao-light">
+          VDAO
+        </h3>
+        <br />
         <span>
           Vdao is a place for collaboration, to build regenerative and
           anti-fragile systems to propel humanity out of our existing paradigm
@@ -419,15 +471,41 @@ function SectionTwo() {
           all stakeholders win together.
         </span>
       </div>
-      <h3 className="mx-auto my-48 mr-auto max-w-[1153px] text-center font-heading text-[56px] font-medium leading-none text-white">
+
+      <Image
+        src={Green_VDAO}
+        alt="Green_VDAO"
+        className="mx-auto my-24 max-h-[86px] max-w-[358px] md:my-40 md:max-h-[260px] md:max-w-[1082px]"
+      />
+
+      <div className="mx-auto max-w-[860px] font-body text-xl font-normal text-white ">
+        The VDAO philosophy is based on the principles of freedom, liberty and
+        enlightened self-interest. We believe that we are able to build systems
+        that ensure profits along with impact, without compromising on any of
+        the two.   <br />
+        <br />
+        The V community is built on a simple but essential umbrella principle:
+        “Do the right thing”. Beneath this umbrella are 4 core values that are
+        used in common practice to ensure integrity at all times: Fairness &
+        Caring, Trust & Respect, Generous Listening, and Straight Talk.
+        <br />
+        <br />
+        The V community is apolitical and does not engage in political,
+        religious, and social issues as a rule. No matter your background and
+        personal beliefs, as long as you agree with our mission and community
+        core values, we welcome you into the V community and hope that you will
+        contribute towards building the new world systems. 
+      </div>
+
+      {/* <h3 className="mx-auto my-48 mr-auto max-w-[1153px] text-center font-heading text-[56px] font-medium leading-none text-white">
         The VDAO philosophy is based on
         <br />
         the principles of freedom, liberty
         <br />
         and enlightened self-interest.
-      </h3>
-      <div className="mx-auto mt-32 flex max-w-[850px] flex-col items-center ">
-        <span>
+      </h3> */}
+      <div className="mx-auto my-24 flex max-w-[850px] flex-col items-center font-body md:my-40 ">
+        {/* <span>
           We believe that we are able to build systems that ensure profits along
           with impact, without compromising on any of the two.
           <br />
@@ -448,13 +526,13 @@ function SectionTwo() {
           left={"-550px"}
           size={"400px"}
           opacity={0.7}
-        />
-        <h3 className="mt-40 mr-auto text-left font-heading text-3xl font-medium text-vdao-light">
-          V DAO Objectives
+        /> */}
+        <h3 className="mr-auto text-left font-heading text-3xl font-medium text-vdao-light">
+          VDAO Objectives
         </h3>
         <br />
         <span>
-          V DAO will be built around two main pillars.
+          VDAO will be built around two main pillars.
           <br />
           <br />
           1. Unlocking coordination among creators, contributors and thinkers
@@ -479,15 +557,15 @@ function SectionTwo() {
           </li>
         </span>
         <br />
-        <h4 className="mt-40 mr-auto text-left font-heading text-3xl font-medium text-vdao-light">
+        <h4 className="mt-24 mr-auto text-left font-heading text-3xl font-medium text-vdao-light md:mt-40">
           V DAO Roadmap
         </h4>
-        <h3 className="mr-auto mt-9 max-w-[1153px] text-left font-heading text-[56px] font-light leading-none text-white ">
+        <h3 className="mr-auto mt-9 max-w-[1153px] text-left font-heading text-3xl font-light leading-none text-white md:text-[56px] ">
           We have got to go
           <br />
-          <b className="font-semibold">back to the soil.</b>
+          <b className="font-medium">back to the soil.</b>
         </h3>
-        <span className="mt-20">
+        <span className="mt-11 md:mt-20">
           Agriculture is the foundational layer of our society and we believe,
           as a start, V DAO should be focused on building and scaling
           regenerative and anti-fragile agricultural systems. As the DAO grows,
@@ -499,14 +577,17 @@ function SectionTwo() {
           including the decentralization roadmap, the DAO token governance
           model, as well as the NFT art collaboration model.
         </span>
-        <h4 className="mt-40 mr-auto text-left font-heading text-3xl font-medium text-vdao-light">
+        <h4 className="mt-24 mr-auto text-left font-heading text-3xl font-medium text-vdao-light md:mt-40">
           Time for Action
         </h4>
         <br />
 
-        <span className="mr-auto">
+        <span className="mr-auto font-normal">
           If you agree with this manifesto and want to be part of our community,
-          please <u>sign here.</u>
+          please{" "}
+          <span className="font-semibold underline underline-offset-[6px]">
+            sign here.
+          </span>
         </span>
       </div>
     </section>
@@ -515,23 +596,23 @@ function SectionTwo() {
 
 function SectionOne() {
   return (
-    <section className="mx-auto mt-32 flex max-w-[1280px] flex-col items-center">
+    <section className="mt-9 flex max-w-[1280px] flex-col md:mx-auto md:mt-20">
       <h1 className="text-4xl font-medium text-vdao-light md:text-8xl">
         VDAO Manifesto
       </h1>
-      <h2 className="mt-6 text-3xl font-medium text-white">
+      <h2 className="mt-6 font-heading text-3xl font-medium text-white">
         Restoring Ecosystems From the Soil up.
       </h2>
       <div className="mt-14 flex flex-col-reverse md:flex-row ">
         <Image
           src={VDAOGetInvolved}
           alt="VDAO"
-          width={350}
-          height={350}
+          width={338}
+          height={364}
           className="mx-auto"
         />
         {/* line height 28px */}
-        <div className="my-auto flex flex-col gap-4 font-body text-base font-medium leading-7 text-vdao-light md:w-1/2">
+        <div className="my-auto flex flex-col gap-4 font-body text-xl font-medium leading-7 text-vdao-light md:w-1/2">
           <span className="mb-1 text-white">
             Complete all 4 steps to join the Vcommunity & gain full access to
             future benefits.
@@ -545,15 +626,18 @@ function SectionOne() {
           </div>
           <span className="mb-1 inline-flex gap-3">
             <Image src={Tick} alt="VDAO" width={20} height={20} />
-            Follow us on <u>Twitter</u>
+            Follow us on{" "}
+            <span className="underline underline-offset-4">Twitter</span>
           </span>
           <span className="mb-1 inline-flex gap-3">
             <Image src={Tick} alt="VDAO" width={20} height={20} />
-            Join us on <u>Discord</u>
+            Join us on{" "}
+            <span className="underline underline-offset-4">Discord</span>
           </span>
           <span className="mb-1 inline-flex gap-3">
             <Image src={Tick} alt="VDAO" width={20} height={20} />
-            <u>Sign up</u> to our mailing list
+            <span className="underline underline-offset-[6px]">Sign up</span> to
+            our mailing list
           </span>
         </div>
       </div>
