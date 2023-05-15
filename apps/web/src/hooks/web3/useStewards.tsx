@@ -50,32 +50,32 @@ export function useApplyToBeSteward(): {
   return { applyToBeSteward, mutation }
 }
 
-export function useVote(): {
-  vote: (values: VoteSchema) => Promise<void>
-  mutation: any
-} {
-  const voteSchema = z.object({
-    voterAddress: z.string(),
-    candidateAddress: z.string(),
-    message: z.string(),
-  })
+// export function useVote(): {
+//   vote: (values: VoteSchema) => Promise<void>
+//   mutation: any
+// } {
+//   const voteSchema = z.object({
+//     voterAddress: z.string(),
+//     candidateAddress: z.string(),
+//     message: z.string(),
+//   })
 
-  const { signMessage } = useSignMessage()
-  const mutation = api.steward.vote.useMutation()
+//   const { signMessage } = useSignMessage()
+//   const mutation = api.steward.vote.useMutation()
 
-  const vote = z
-    .function()
-    .args(voteSchema)
-    .parse(async (values: VoteSchema) => {
-      const signature = await signMessage({
-        message: `${values.voterAddress} is voting for ${values.candidateAddress} as a steward.`,
-      })
-      console.log(signature)
-      mutation.mutate({ ...values, signature })
-    })
+//   const vote = z
+//     .function()
+//     .args(voteSchema)
+//     .parse(async (values: VoteSchema) => {
+//       const signature = await signMessage({
+//         message: `${values.voterAddress} is voting for ${values.candidateAddress} as a steward.`,
+//       })
+//       console.log(signature)
+//       mutation.mutate({ ...values, signature })
+//     })
 
-  return { vote, mutation }
-}
+//   return { vote, mutation }
+// }
 
 export function useSteward(address: string, args: StewardArgs = {}) {
   const stewardRead = useStewardRead(address)
