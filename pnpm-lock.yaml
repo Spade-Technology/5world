@@ -136,11 +136,11 @@ importers:
         specifier: ^4.14.0
         version: 4.14.0(prisma@4.14.0)
       '@rainbow-me/rainbowkit':
-        specifier: ^0.12.4
-        version: 0.12.4(@types/react@18.0.29)(ethers@5.5.1)(react-dom@18.2.0)(react@18.2.0)(wagmi@1.0.3)
+        specifier: ^1.0.0
+        version: 1.0.0(@types/react@18.0.29)(react-dom@18.2.0)(react@18.2.0)(viem@0.3.24)(wagmi@1.0.3)
       '@rainbow-me/rainbowkit-siwe-next-auth':
         specifier: ^0.1.8
-        version: 0.1.8(@rainbow-me/rainbowkit@0.12.4)(next-auth@4.20.1)(react@18.2.0)(siwe@1.1.6)
+        version: 0.1.8(@rainbow-me/rainbowkit@1.0.0)(next-auth@4.20.1)(react@18.2.0)(siwe@1.1.6)
       '@tanstack/react-query':
         specifier: ^4.28.0
         version: 4.28.0(react-dom@18.2.0)(react@18.2.0)
@@ -2491,7 +2491,7 @@ packages:
     resolution: {integrity: sha512-PDNlhP/1vyTgmNyiucGqGCdXIp7HIkkvKO50si3y3PcceeHvqtiKPaH1iJdz63jCWMVMbj2MElSxXPOeBvEVIQ==}
     requiresBuild: true
 
-  /@rainbow-me/rainbowkit-siwe-next-auth@0.1.8(@rainbow-me/rainbowkit@0.12.4)(next-auth@4.20.1)(react@18.2.0)(siwe@1.1.6):
+  /@rainbow-me/rainbowkit-siwe-next-auth@0.1.8(@rainbow-me/rainbowkit@1.0.0)(next-auth@4.20.1)(react@18.2.0)(siwe@1.1.6):
     resolution: {integrity: sha512-CkFeaUyRJ4jxo5aNb7aqumho3suQOsPl9bgIAbsvlsyU1O4XjideTDIPc5iMauERuqxopHDmraBCQahDnaYS2A==}
     engines: {node: '>=12.4'}
     peerDependencies:
@@ -2500,30 +2500,30 @@ packages:
       react: '>=17'
       siwe: ^1.1.6
     dependencies:
-      '@rainbow-me/rainbowkit': 0.12.4(@types/react@18.0.29)(ethers@5.5.1)(react-dom@18.2.0)(react@18.2.0)(wagmi@1.0.3)
+      '@rainbow-me/rainbowkit': 1.0.0(@types/react@18.0.29)(react-dom@18.2.0)(react@18.2.0)(viem@0.3.24)(wagmi@1.0.3)
       next-auth: 4.20.1(next@13.2.4)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       siwe: 1.1.6(ethers@5.5.1)
     dev: false
 
-  /@rainbow-me/rainbowkit@0.12.4(@types/react@18.0.29)(ethers@5.5.1)(react-dom@18.2.0)(react@18.2.0)(wagmi@1.0.3):
-    resolution: {integrity: sha512-UgucGkaO9yKWbyErZSfisAsLUS8KSsPtzb6xeTzXIWZz6A6b/5W7so3UpZP673mF7weN6gwhL36S8+EUkvMcfA==}
+  /@rainbow-me/rainbowkit@1.0.0(@types/react@18.0.29)(react-dom@18.2.0)(react@18.2.0)(viem@0.3.24)(wagmi@1.0.3):
+    resolution: {integrity: sha512-XZBa7P1mlmNTuMa0iEw2D9wKKQjjh8iDhWGtvsyQZFBDqorOxc1/5Wy352p6kSC9J7s4P9sG3FwHnTGxJPaHmQ==}
     engines: {node: '>=12.4'}
     peerDependencies:
-      ethers: '>=5.5.1'
       react: '>=17'
       react-dom: '>=17'
-      wagmi: 0.12.x
+      viem: ~0.3.19
+      wagmi: ^1.0.1
     dependencies:
       '@vanilla-extract/css': 1.9.1
       '@vanilla-extract/dynamic': 2.0.2
       '@vanilla-extract/sprinkles': 1.5.0(@vanilla-extract/css@1.9.1)
       clsx: 1.1.1
-      ethers: 5.5.1
       qrcode: 1.5.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-remove-scroll: 2.5.4(@types/react@18.0.29)(react@18.2.0)
+      viem: 0.3.24(typescript@5.0.2)(zod@3.21.4)
       wagmi: 1.0.3(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.2)(viem@0.3.24)(zod@3.21.4)
     transitivePeerDependencies:
       - '@types/react'
