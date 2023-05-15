@@ -294,7 +294,7 @@ export function HomeWelcomeComponent() {
       <Image
         src={WelcomeHero}
         alt="VDAO"
-        className="md:max-w-100 relative left-[-5%] -z-10 mt-5 scale-[100%]"
+        className="md:max-w-100 relative left-[-5%] -z-10 mt-5 scale-[100%] md:-mt-24"
       />
     </Section>
   );

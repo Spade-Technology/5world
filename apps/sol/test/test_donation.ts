@@ -9,8 +9,6 @@ describe('Treasury', function () {
   // Network to that snapshot in every test.
   async function deployFixture() {
     // Get the ContractFactory and Signers here.
-    const Timelock = await ethers.getContractFactory('Timelock');
-
     const VDao = await ethers.getContractFactory('VDaoToken');
     const [owner, addr1, addr2, addr3] = await ethers.getSigners();
 

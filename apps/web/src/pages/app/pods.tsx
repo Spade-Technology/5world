@@ -5,15 +5,14 @@ import CreateNewPod from "~/components/pages/app/pods/popups/createNewPod";
 import PodCards from "~/components/pages/app/pods/podCards";
 import PodsProfile from "~/components/pages/app/pods/podsProfile";
 import RegenPod from "~/components/pages/app/pods/popups/regenPod";
+import Page from "~/components/layout/page";
 
 const Pods = () => {
   const [openCreatePod, setOpenCreatePod] = useState(false);
   const [openRegenDetails, setOpenRegen] = useState(false);
   return (
     <>
-      <Header />
-
-      <div className="w-full text-vdao-dark">
+      <Page>
         <PodsProfile setOpenCreatePod={setOpenCreatePod} />
 
         <PodCards setOpenRegen={setOpenRegen} />
@@ -28,9 +27,7 @@ const Pods = () => {
         {openRegenDetails && (
           <RegenPod show={openRegenDetails} close={() => setOpenRegen(false)} />
         )}
-      </div>
-
-      <Footer />
+      </Page>
     </>
   );
 };
