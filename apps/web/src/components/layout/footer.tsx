@@ -4,9 +4,10 @@ import Link from "next/link";
 import React from "react";
 import logo from "public/logo/png/color.png";
 
-import discord from "public/illustrations/socials/discord.svg";
-import discourse from "public/illustrations/socials/discourse.svg";
 import twitter from "public/illustrations/socials/twitter.svg";
+import discord from "public/illustrations/socials/Vector (8).svg";
+import linkeDln from "public/illustrations/socials/linkedin-black.svg";
+import github from "public/illustrations/socials/Vector (9).svg";
 
 type Props = {
   signatures?: number;
@@ -16,8 +17,9 @@ type Props = {
 const Footer = (props: Props) => {
   const socialLinks = [
     { img: twitter, url: "#1" },
-    { img: discourse, url: "#1" },
     { img: discord, url: "#1" },
+    { img: linkeDln, url: "#1" },
+    { img: github, url: "#1" },
   ];
   return (
     <div>
@@ -111,7 +113,7 @@ const Footer = (props: Props) => {
             {socialLinks.map(({ img, url }, index) => {
               return (
                 <Link href={url}>
-                  <Image alt="social link" className="w-5" src={img} />
+                  <Image alt="social link" className="w-[21px]" src={img} />
                 </Link>
               );
             })}

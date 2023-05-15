@@ -137,7 +137,7 @@ export function StatisticsHomeComponent() {
               />
             )}
           </div>
-          <div className="mt-[53px] w-full md:w-3/12">
+          <div className="mt-[53px] w-full  md:mt-0 md:w-3/12">
             <div className="ml-5 mb-[35px] flex items-center text-white">
               <div className="satoshi text-xl font-bold text-white md:text-[22px]">
                 Weekly Purchases

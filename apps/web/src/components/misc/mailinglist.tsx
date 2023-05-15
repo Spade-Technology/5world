@@ -8,9 +8,8 @@ const MailingListComponent = () => {
         className={`mx-auto max-w-[1280px] bg-vdao-lightpurple px-6 py-14 md:flex-row md:py-24`}
       >
         <div className="flex-1">
-          <div className="mx-auto font-heading text-5xl font-medium  md:w-11/12">
-            Join Our
-            <br /> Mailing List
+          <div className="mx-auto font-heading text-[46px] font-medium  md:w-11/12">
+            Join Our Mailing List
           </div>
         </div>
 
