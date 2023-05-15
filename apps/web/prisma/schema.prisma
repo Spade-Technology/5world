@@ -36,6 +36,7 @@ model User {
 
     // Steward
     stewardApplicationDate  DateTime?
+    stewardApplicationBlock Decimal?      @db.Decimal(65, 0)
     stewardVotesAsCandidate StewardVote[] @relation("CandidateRelation")
     stewardVotesAsVoter     StewardVote[] @relation("VoterRelation")
 
@@ -68,6 +69,13 @@ model StewardVote {
     // Candidate
     candidate        User   @relation("CandidateRelation", fields: [candidateAddress], references: [address])
     candidateAddress String
+
+    // tokenAmount
+    tokenAmount Decimal @db.Decimal(65, 0)
+
+    createdAt DateTime @default(now())
+
+    @@unique([voterAddress, candidateAddress])
 }
 
 model Pod {
