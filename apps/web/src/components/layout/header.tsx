@@ -71,7 +71,7 @@ const navigationElementsWeb3: NavigationElement[] = [
     ],
   },
   { name: "Steward Profile", link: "/app/steward" },
-  { name: "Prods Profile", link: "/app/pods" },
+  { name: "Pods Profile", link: "/app/pods" },
   { name: "Support", link: "/app/support" },
   { name: "Analytics", link: "/app/analytics" },
 ];
