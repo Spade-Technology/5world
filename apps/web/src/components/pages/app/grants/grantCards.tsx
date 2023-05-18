@@ -18,7 +18,7 @@ const GrantCards = ({ setViewDetails }: Props) => {
   return (
     <div className="mx-auto w-screen bg-vdao-deep">
       <div className="mx-auto max-w-[1280px] pb-[120px]">
-        <div className="mx-6 max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]">
+        <div id="currentGrants" className="mx-6 max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]">
           Current Grants
         </div>
 
