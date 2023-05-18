@@ -1,16 +1,13 @@
 import { useState } from 'react'
-import Footer from '~/components/layout/footer'
-import Header from '~/components/layout/header'
-import CreateNewPod from '~/components/pages/app/pods/popups/createNewPod'
+import Page from '~/components/layout/page'
 import PodCards from '~/components/pages/app/pods/podCards'
 import PodsProfile from '~/components/pages/app/pods/podsProfile'
+import CreateNewPod from '~/components/pages/app/pods/popups/createNewPod'
 import RegenPod from '~/components/pages/app/pods/popups/regenPod'
-import Page from '~/components/layout/page'
 
 const Pods = () => {
   const [openCreatePod, setOpenCreatePod] = useState(false)
   const [openRegenDetails, setOpenRegen] = useState(false)
-
 
   return (
     <>

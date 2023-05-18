@@ -1,10 +1,7 @@
-import { z } from "zod";
+import { TRPCError } from '@trpc/server'
+import { z } from 'zod'
 
-import {
-  createTRPCRouter,
-  publicProcedure,
-  protectedProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, publicProcedure, protectedProcedure } from '~/server/api/trpc'
 
 const includeZod = z
   .object({
@@ -13,7 +10,7 @@ const includeZod = z
     discussions: z.boolean().optional(),
     proposals: z.boolean().optional(),
   })
-  .optional();
+  .optional()
 
 export const podRouter = createTRPCRouter({
   getPod: publicProcedure
@@ -21,31 +18,35 @@ export const podRouter = createTRPCRouter({
       z.object({
         id: z.number(),
         include: includeZod,
-      })
+      }),
     )
     .query(async ({ input: { id, include }, ctx: { prisma } }) => {
       const pod = await prisma.pod.findUnique({
         where: { id: id },
         include: include,
-      });
-      if (!pod) throw new Error("Pod not found");
-      return pod;
+      })
+
+      if (!pod) throw new TRPCError({ code: 'NOT_FOUND', message: 'Pod not found' })
+
+      return pod
     }),
 
   getPods: publicProcedure
     .input(
       z.object({
-        ids: z.array(z.number()).max(10, "Too many ids"),
+        ids: z.array(z.number()).max(10, 'Too many ids').optional(),
+        createdBy: z.string().optional(),
         include: includeZod,
-      })
+      }),
     )
-    .query(async ({ input: { ids, include }, ctx: { prisma } }) => {
+    .query(async ({ input: { ids, createdBy, include }, ctx: { prisma } }) => {
       const pods = await prisma.pod.findMany({
-        where: { id: { in: ids } },
+        ...(ids && ids.length > 0 && { where: { id: { in: ids } } }),
+        ...(createdBy && { where: { createdBy: { address: createdBy } } }),
         include: include,
-      });
-      if (!pods || pods.length === 0) throw new Error("Pods not found");
-      return pods;
+      })
+      if (!pods) throw new Error('Pods not found')
+      return pods
     }),
 
   // Add this to the existing podRouter
@@ -56,8 +57,8 @@ export const podRouter = createTRPCRouter({
         description: z.string(),
         members: z.array(z.string()),
         admins: z.array(z.string()),
-        picture: z.string().optional(),
-      })
+        picture: z.string(),
+      }),
     )
     .mutation(
       async ({
@@ -67,25 +68,25 @@ export const podRouter = createTRPCRouter({
           session: { address },
         },
       }) => {
-        if (!address) throw new Error("User not found");
+        if (!address) throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not found' })
 
         // Ensure admins are also members
-        const allMembers = Array.from(new Set([...members, ...admins]));
+        const allMembers = Array.from(new Set([...members, ...admins]))
 
         const newPod = await prisma.pod.create({
           data: {
             name,
             description,
             picture,
-            members: { connect: allMembers.map((address) => ({ address })) },
-            admins: { connect: admins.map((address) => ({ address })) },
+            members: { connect: allMembers.map(address => ({ address })) },
+            admins: { connect: admins.map(address => ({ address })) },
             createdBy: { connect: { address } },
             updatedBy: { connect: { address } },
           },
-        });
+        })
 
-        return newPod;
-      }
+        return newPod
+      },
     ),
 
   editPod: protectedProcedure
@@ -98,7 +99,7 @@ export const podRouter = createTRPCRouter({
         members: z.array(z.string()).optional(),
         admins: z.array(z.string()).optional(),
         include: includeZod,
-      })
+      }),
     )
     .mutation(
       async ({
@@ -108,50 +109,47 @@ export const podRouter = createTRPCRouter({
           session: { address },
         },
       }) => {
-        if (!address) throw new Error("User not found");
+        if (!address) throw new Error('User not found')
 
         // Check if the user is an admin of the pod
         const pod = await prisma.pod.findUnique({
           where: { id: id },
           include: { admins: true },
-        });
+        })
 
-        if (!pod) throw new Error("Pod not found");
+        if (!pod) throw new Error('Pod not found')
 
-        const isAdmin = pod.admins.some((admin) => admin.address === address);
+        const isAdmin = pod.admins.some(admin => admin.address === address)
 
-        if (!isAdmin) throw new Error("Only admins can edit the pod");
+        if (!isAdmin) throw new Error('Only admins can edit the pod')
 
         // Ensure admins are also members
-        const allMembers =
-          members && admins
-            ? Array.from(new Set([...members, ...admins]))
-            : undefined;
+        const allMembers = members && admins ? Array.from(new Set([...members, ...admins])) : undefined
 
         const updateData: any = {
           name: name,
           description: description,
           picture: picture,
           updatedById: address,
-        };
+        }
 
         if (allMembers) {
           updateData.members = {
-            set: allMembers.map((address) => ({ address })),
-          };
+            set: allMembers.map(address => ({ address })),
+          }
         }
 
         if (admins) {
-          updateData.admins = { set: admins.map((address) => ({ address })) };
+          updateData.admins = { set: admins.map(address => ({ address })) }
         }
 
         const updatedPod = await prisma.pod.update({
           where: { id: id },
           data: updateData,
           include: include,
-        });
+        })
 
-        return updatedPod;
-      }
+        return updatedPod
+      },
     ),
-});
+})
