@@ -3,9 +3,9 @@
 
 export const shortenAddress = (address: string) => {
   const shortAddr =
-    address.toString().slice(0, 8) +
+    address.toString().slice(0, 6) +
     "...." +
-    address.toString().slice(address.length - 3, address.length);
+    address.toString().slice(address.length - 4, address.length);
   return shortAddr;
 };
 
