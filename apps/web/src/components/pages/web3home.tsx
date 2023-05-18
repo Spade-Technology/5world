@@ -107,26 +107,15 @@ export function StatisticsHomeComponent() {
                 </div>
               </div>
             </div>
-            <div className='md:hidden'>
-              <Chart
-                options={verticalBarchartMobile.options}
-                series={verticalBarchartMobile.series}
-                type='bar'
-                class
-                width={'100%'}
-                height={'333px'}
-              />
-            </div>
-            <div className='hidden md:block'>
-              <Chart
-                options={verticalBarchartDesktop.options}
-                series={verticalBarchartDesktop.series}
-                type='bar'
-                class
-                width={'100%'}
-                height={'333px'}
-              />
-            </div>
+
+            <Chart
+              options={verticalBarchartDesktop.options}
+              series={verticalBarchartDesktop.series}
+              type='bar'
+              class
+              width={'100%'}
+              height={'333px'}
+            />
           </div>
           <div className='mt-[60px] w-full  md:mt-0 md:w-3/12'>
             <div className='mb-[30px] flex items-center text-white md:mb-[35px]'>
