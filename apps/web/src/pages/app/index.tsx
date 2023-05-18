@@ -36,7 +36,7 @@ const Home: NextPage = () => {
         )}
       </Page>
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
