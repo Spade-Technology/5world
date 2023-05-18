@@ -7,8 +7,9 @@ import {
   latestDonationData,
   membersData,
   onlineMembersData,
-  verticalBarchart,
+  verticalBarchartDesktop,
   LinearChart,
+  verticalBarchartMobile,
 } from '../../mockData'
 import { Section } from '../../../layout/section'
 import dynamic from 'next/dynamic'
@@ -111,8 +112,11 @@ export function StatisticsHomeComponent() {
             </div>
             {typeof window !== 'undefined' && (
               <Chart
-                options={verticalBarchart.options}
-                series={verticalBarchart.series}
+                options={
+                  // mobile window
+                  window.innerWidth < 768 ? verticalBarchartMobile.options : verticalBarchartDesktop.options
+                }
+                series={verticalBarchartDesktop.series}
                 type='bar'
                 class
                 width={'100%'}
@@ -151,7 +155,7 @@ export function NewMembersComponent() {
         <div className=''>
           {membersData.map(({ img, name, category, date, time }, index) => {
             return (
-              <div className='mt-5 flex items-center justify-between md:w-80 lg:w-auto'>
+              <div className='mt-5 flex items-center justify-between md:w-80 lg:w-auto' key={index}>
                 <div className='mr-6 flex items-center'>
                   <img src={img} alt='' className='mr-4 rounded-full md:h-10 md:w-10 lg:mr-2.5' />
                   <div>
