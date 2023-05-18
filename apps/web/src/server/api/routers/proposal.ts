@@ -24,7 +24,7 @@ export const proposalRouter = createTRPCRouter({
     .query(async ({ input: { id, include }, ctx: { prisma } }) => {
       const proposal = await prisma.proposal.findUnique({
         where: { id: id },
-        include: include,
+        "include: include,
       });
       if (!proposal) throw new Error("Proposal not found");
       return proposal;
@@ -64,6 +64,8 @@ export const proposalRouter = createTRPCRouter({
         },
       }) => {
         if (!address) throw new Error("User not found");
+
+        
 
         const newProposal = await prisma.proposal.create({
           data: {

@@ -39,8 +39,9 @@ export const userRouter = createTRPCRouter({
     )
     .query(async ({ input: { addresses, include }, ctx: { prisma } }) => {
       const users = await prisma.user.findMany({
-        where: { address: { in: addresses } },
+        ...(addresses.length > 0 && { where: { address: { in: addresses } } }),
         include: include,
+        take: 50,
       })
       if (!users || users.length === 0) throw new Error('Users not found')
       return users
