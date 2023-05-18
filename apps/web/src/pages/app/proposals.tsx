@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
+import Page from "~/components/layout/page";
 import Insights from "~/components/pages/app/proposals/insights";
 import OperationalProposals from "~/components/pages/app/proposals/operationalProposals";
 import CreateNewProposal from "~/components/pages/app/proposals/popups/createProposal";
@@ -12,8 +13,7 @@ const Proposals = () => {
   const [viewProposal, setViewProposal] = useState(false);
 
   return (
-    <>
-      <Header />
+    <Page>
 
       <div className="w-full text-vdao-dark">
         <OperationalProposals setOpenCreateProposal={setOpenCreateProposal} />
@@ -37,8 +37,8 @@ const Proposals = () => {
         )}
       </div>
 
-      <Footer />
-    </>
+      {/* <Footer /> */}
+    </Page>
   );
 };
 
