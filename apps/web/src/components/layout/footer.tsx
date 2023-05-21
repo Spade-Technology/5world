@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 import logo from 'public/logo/png/color.png'
 
-import twitter from 'public/illustrations/socials/twitter.svg'
+import twitter from 'public/illustrations/socials/Vector (10).svg'
 import discord from 'public/illustrations/socials/Vector (8).svg'
 import linkeDln from 'public/illustrations/socials/linkedin-black.svg'
 import github from 'public/illustrations/socials/Vector (9).svg'
