@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import { Section } from '~/components/layout/section'
 import dynamic from 'next/dynamic'
 import { LinearChart } from '../../mockData'
@@ -118,6 +118,8 @@ export function ProposalComponent() {
 }
 
 export function MembershipComponent() {
+  const [duration, setDuration] = useState('1y')
+
   const data = [
     {
       token: 'Ethereum',
@@ -167,25 +169,27 @@ export function MembershipComponent() {
             title: 'Members Growth',
             period: ['7d', '1m', '6m', '1y'],
             percent: '121.15% Last 1 Year',
-            img: `${'/illustrations/web3/analytics/SVG/Group 448.svg'}`,
           },
           {
             title: 'Treasury Growth',
             period: ['7d', '1m', '6m', '1y'],
             percent: '121.15% Last 1 Year',
-            img: `${'/illustrations/web3/analytics/SVG/Group 448.svg'}`,
           },
-        ].map(({ title, period, percent, img }, index) => {
+        ].map(({ title, period, percent }, index) => {
           return (
-            <div className='mt-5 flex w-full flex-col rounded-2xl bg-vdao-dark px-7 pt-5 pb-10 md:w-[48.5%]'>
+            <div
+              key={index}
+              className='mt-5 flex w-full flex-col rounded-2xl bg-vdao-dark px-7 pt-5 pb-10 md:w-[48.5%]'
+            >
               <div className='flex items-center justify-between'>
                 <div className='satoshi text-lg font-bold leading-[22px] text-white'>{title}</div>
                 <div className='flex gap-5'>
                   {period.map(time => {
                     return (
                       <div
-                        className={`satoshi text-sm font-normal leading-5 ${
-                          time != '1y' ? 'text-white' : 'text-vdao-light'
+                        onClick={() => setDuration(time)}
+                        className={`satoshi cursor-pointer text-sm font-normal leading-5 ${
+                          duration !== time ? 'text-white' : 'text-vdao-light'
                         }`}
                       >
                         {time}

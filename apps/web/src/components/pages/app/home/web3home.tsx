@@ -13,7 +13,8 @@ import {
 } from '../../mockData'
 import { Section } from '../../../layout/section'
 import dynamic from 'next/dynamic'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
+import { FaChevronDown } from 'react-icons/fa'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -22,20 +23,52 @@ type ProfileProps = {
 }
 
 export function StatisticsHomeComponent() {
+  const [period, setPeriod] = useState({ value: 'week', state: true })
   return (
     <Section className=' col-span-12 mb-28 w-[100%] rounded-2xl bg-vdao-dark py-10 px-5 lg:py-12 lg:pr-16 lg:pl-12'>
       <div className='lg:pr-10'>
         <div className='items-start justify-between md:flex'>
           <div className='mt-[53] w-full md:w-7/12'>
-            <div className='mb-[55px] flex items-center justify-between text-white md:ml-6 md:justify-start'>
-              <div className='satoshi text-xl font-bold text-white md:mt-0 md:mr-28 md:text-[22px]'>Treasury</div>
-              <div className=' mr-9 flex items-center'>
-                <div className='mr-2.5 h-[15px] w-[15px] rounded-full bg-vdao-light'></div>
-                <div className='satoshi text-xl font-normal text-white md:mt-0 md:text-sm'>USDC</div>
+            <div className='mb-[55px] flex justify-between text-white md:ml-6 md:items-center'>
+              <div className='satoshi text-xl font-bold text-white md:mt-0 md:text-[22px]'>Treasury</div>
+              <div className='ml-auto mr-[40px] flex flex-col gap-[14px] md:ml-0 md:mr-0 md:flex-row md:items-center md:gap-10'>
+                <div className='flex items-center'>
+                  <div className='mr-2.5 h-2.5 w-2.5 rounded-full bg-vdao-light md:h-[15px] md:w-[15px]'></div>
+                  <div className='satoshi text-sm font-normal text-white md:mt-0'>USDC</div>
+                </div>
+                <div className=' flex items-center'>
+                  <div className='mr-2.5 h-2.5 w-2.5 rounded-full bg-vdao-pink md:h-[15px] md:w-[15px]'></div>
+                  <div className='satoshi text-sm font-normal text-white'>ETH</div>
+                </div>
               </div>
-              <div className=' flex items-center'>
-                <div className='mr-2.5 h-[15px] w-[15px] rounded-full bg-vdao-pink'></div>
-                <div className='satoshi text-xl font-normal text-white md:mt-0 md:text-sm'>ETH</div>
+              <div className='relative flex h-fit cursor-pointer items-center gap-2.5 rounded-[10px] bg-white py-[6px] px-[15px]'>
+                <div
+                  onClick={() => setPeriod({ ...period, state: !period.state })}
+                  className='satoshi  font-bold capitalize  text-vdao-dark md:text-sm'
+                >
+                  {period.value}
+                </div>
+                <FaChevronDown
+                  onClick={() => setPeriod({ ...period, state: !period.state })}
+                  className='text-[15px] text-vdao-light'
+                />
+                <div
+                  className={`absolute  left-0 z-50 w-full overflow-hidden rounded-[10px] bg-white ease-[1s] ${
+                    period.state ? 'top-[110%] block opacity-100' : 'top-[130%] hidden opacity-0'
+                  }`}
+                >
+                  {['week', 'month', 'year'].map((text, index) => {
+                    return (
+                      <div
+                        onClick={() => setPeriod({ value: text, state: false })}
+                        key={index}
+                        className='satoshi py-[6px] px-[15px] text-sm font-bold capitalize  text-vdao-dark ease-in  hover:bg-[rgba(0,0,0,.1)]'
+                      >
+                        {text}
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
             </div>
             <Chart
@@ -71,15 +104,17 @@ export function StatisticsHomeComponent() {
           {expenditureData.map(({ title, amount, percent }, index) => {
             return (
               <div className='rounded-2xl bg-white p-5 md:p-8'>
-                <div className='satoshi text-[22px] font-medium leading-6 text-vdao-dark md:text-2xl lg:leading-5'>
+                <div className='satoshi text-[22px] font-medium leading-6 text-vdao-dark md:text-2xl md:font-bold lg:leading-5'>
                   {' '}
                   {title}
                 </div>
                 <div className='mt-4 flex items-start '>
-                  <div className='satoshi mr-2 text-[26px] font-medium leading-6 text-vdao-dark md:text-3xl lg:mr-2.5 lg:leading-8'>
+                  <div className='satoshi mr-2 text-[26px] font-medium leading-6 text-vdao-dark md:text-3xl md:font-bold lg:mr-2.5 lg:leading-8'>
                     {amount}
                   </div>
-                  <div className='satoshi mr-2 text-xl font-medium leading-5 text-vdao-dark lg:mr-5'>USD</div>
+                  <div className='satoshi mr-2 text-xl font-medium leading-5 text-vdao-dark md:font-bold lg:mr-5'>
+                    USD
+                  </div>
                   <div
                     className={`satoshi flex items-center gap-2 rounded-2xl bg-vdao-light py-1.5 px-2 text-sm font-bold leading-5 text-vdao-dark lg:mr-5 lg:text-xl ${
                       index > 0 && 'bg-vdao-pink'
@@ -178,12 +213,12 @@ export function NewMembersComponent() {
           <div className='satoshi text-lg font-normal text-white'>{onlineMembersData.length}</div>
         </div>
 
-        <article className='mt-8 grid grid-cols-12 gap-5 md:w-80 lg:w-auto'>
+        <article className='mt-8 flex flex-wrap gap-5 md:w-80 lg:w-auto'>
           {onlineMembersData.map(({ name, img }, index) => {
             return (
-              <div className=' col-span-3 overflow-hidden'>
-                <img src={img} alt='' className=' mx-auto h-10 w-10 rounded-full' />
-                <div className='satoshi text-center text-sm font-normal text-white md:text-lg'>{name}</div>
+              <div className=' col-span-3 w-20 overflow-hidden'>
+                <img src={img} alt='' className='mx-auto h-10 w-10 rounded-full' />
+                <div className='satoshi w-20 text-center text-sm font-normal text-white md:text-lg'>{name}</div>
               </div>
             )
           })}
