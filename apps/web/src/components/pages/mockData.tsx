@@ -119,7 +119,7 @@ export const LinearChart: any = {
       show: false,
     },
     xaxis: {
-      categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Japan', 'Sun'],
+      categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       labels: {
         style: {
           colors: 'white',
@@ -179,7 +179,7 @@ export const horizontalBarchart: any = {
       enabled: false,
     },
     xaxis: {
-      categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Japan', 'Sun'],
+      categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       tickAmount: 3,
       max: 400,
       min: 100,
