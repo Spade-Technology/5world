@@ -3,7 +3,7 @@ import FormOne from './formOne'
 import { useState } from 'react'
 import FormTwo from './formTwo'
 import { useAccount } from 'wagmi'
-import { useCreatePod } from '~/hooks/web3/usePod'
+import { useCreatePod, usePodReads } from '~/hooks/web3/usePod'
 
 type CreatePodProps = {
   show: boolean
@@ -18,15 +18,26 @@ const CreateNewPod = ({ show, close }: CreatePodProps) => {
   const [memberAddr, setMemberAddr] = useState('')
   const [error, setError] = useState(false)
 
-  const { address, isConnecting, isDisconnected } = useAccount()
-
   /** Here !, tell TypeScript that even though something looks like it could be null, it can trust you that it's not */
   // const data = useUserRead(address?.toString()!, { podsAsAdmin: true })
-  const { createPod } = useCreatePod()
+
+  const { address } = useAccount()
+  const {
+    createPod,
+    mutation: { isLoading },
+  } = useCreatePod()
+  const { data, refetch, isFetching } = usePodReads({ createdBy: address || '' })
 
   const createPodHanlder = () => {
-    if (managerAddr && memberAddr && podName && description) {
-      createPod({ name: podName, description: description, members: [memberAddr], admins: [managerAddr], picture: '' })
+    if (address) {
+      createPod(
+        { name: podName, description: description, members: [address], admins: [address], picture: '' },
+        {
+          onSuccess(data, variables, context) {
+            refetch()
+          },
+        },
+      )
       close()
     } else {
       setError(true)

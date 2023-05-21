@@ -62,7 +62,7 @@ const FormTwo = ({
       <div className='md:pr-5'>
         <div className='flex justify-between'>
           <div className='text-[22px] font-bold'>Members</div>
-          <div className='my-auto text-sm font-bold underline'>Manage Memberships</div>
+          {/* <div className='my-auto text-sm font-bold underline'>Manage Memberships</div> */}
         </div>
 
         <ProfileCard Icon={Icon1} />
