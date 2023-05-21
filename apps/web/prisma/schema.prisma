@@ -109,11 +109,15 @@ model Guild {
 }
 
 model Proposal {
-    id Int @id @default(autoincrement())
+    id                 Int    @id @default(autoincrement())
+    transactionAddress String @unique
+
+    title       String
+    description String
 
     // Relations
-    pod      Pod    @relation(fields: [podId], references: [id])
-    podId    Int
+    pod      Pod?   @relation(fields: [podId], references: [id])
+    podId    Int?
     author   User   @relation(fields: [authorId], references: [address])
     authorId String
 

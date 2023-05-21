@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { api } from '~/utils/api'
 import { useSignMessage } from 'wagmi'
+import { signMessage } from '@wagmi/core'
 
 /* Steward schema */
 interface StewardArgs {
@@ -50,32 +51,29 @@ export function useApplyToBeSteward(): {
   return { applyToBeSteward, mutation }
 }
 
-// export function useVote(): {
-//   vote: (values: VoteSchema) => Promise<void>
-//   mutation: any
-// } {
-//   const voteSchema = z.object({
-//     voterAddress: z.string(),
-//     candidateAddress: z.string(),
-//     message: z.string(),
-//   })
+export function useVote() {
+  const voteSchema = z.object({
+    voterAddress: z.string(),
+    candidateAddress: z.string(),
+    message: z.string(),
+  })
 
-//   const { signMessage } = useSignMessage()
-//   const mutation = api.steward.vote.useMutation()
+  const mutation = api.steward.vote.useMutation()
 
-//   const vote = z
-//     .function()
-//     .args(voteSchema)
-//     .parse(async (values: VoteSchema) => {
-//       const signature = await signMessage({
-//         message: `${values.voterAddress} is voting for ${values.candidateAddress} as a steward.`,
-//       })
-//       console.log(signature)
-//       mutation.mutate({ ...values, signature })
-//     })
+  const vote = z
+    .function()
+    .args(voteSchema)
+    .parse(async (values: VoteSchema) => {
+      const message = `${values.voterAddress} is voting for ${values.candidateAddress} as a steward.`
+      const signature = await signMessage({
+        message,
+      })
 
-//   return { vote, mutation }
-// }
+      mutation.mutate({ ...values, signature, message })
+    })
+
+  return { vote, mutation }
+}
 
 export function useSteward(address: string, args: StewardArgs = {}) {
   const stewardRead = useStewardRead(address)

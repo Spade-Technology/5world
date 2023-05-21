@@ -45,14 +45,15 @@ export const proposalRouter = createTRPCRouter({
   createProposal: protectedProcedure
     .input(
       z.object({
-        podId: z.number(),
-        authorId: z.string(),
+        podId: z.number().optional(),
+        transactionAddress: z.string(),
+        authorAddress: z.string(),
         include: includeZod,
       }),
     )
     .mutation(
       async ({
-        input: { podId, authorId, include },
+        input: { podId, authorAddress, transactionAddress, include },
         ctx: {
           prisma,
           session: { address },
@@ -62,10 +63,11 @@ export const proposalRouter = createTRPCRouter({
 
         const newProposal = await prisma.proposal.create({
           data: {
-            pod: { connect: { id: podId } },
-            author: { connect: { address: authorId } },
+            ...(podId && { pod: { connect: { id: podId } } }),
+            author: { connect: { address: authorAddress } },
             createdBy: { connect: { address } },
             updatedBy: { connect: { address } },
+            transactionAddress: transactionAddress,
           },
           include: include,
         })

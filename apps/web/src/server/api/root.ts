@@ -4,6 +4,7 @@ import { userRouter } from './routers/user'
 import { podRouter } from './routers/pod'
 import { proposalRouter } from './routers/proposal'
 import { stewardRouter } from './routers/stewards'
+import { etherscanRouter } from './routers/etherscan'
 
 /**
  * This is the primary router for your server.
@@ -16,6 +17,7 @@ export const appRouter = createTRPCRouter({
   pod: podRouter,
   proposal: proposalRouter,
   steward: stewardRouter,
+  etherscan: etherscanRouter,
 })
 
 // export type definition of API

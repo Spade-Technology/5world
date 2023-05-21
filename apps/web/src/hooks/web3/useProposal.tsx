@@ -1,11 +1,18 @@
-import { z } from "zod";
+import { Proposal } from '@prisma/client'
+import { Address, useContractWrite } from 'wagmi'
+import { z } from 'zod'
 
-import { api } from "~/utils/api";
+import { api } from '~/utils/api'
+import { InferArgs, InferReturn } from '~/utils/type'
+
+import VDAOImplementation from '~/abi/VDAOImplementation.json'
+import { currentContracts } from '~/config/contracts'
+import { writeContract } from '@wagmi/core'
 
 /* Proposal schema */
 interface ProposalInclude {
-  pod?: boolean;
-  author?: boolean;
+  pod?: boolean
+  author?: boolean
 }
 
 export function useProposalRead(id: number, include: ProposalInclude = {}) {
@@ -15,10 +22,10 @@ export function useProposalRead(id: number, include: ProposalInclude = {}) {
       pod: z.boolean().optional(),
       author: z.boolean().optional(),
     }),
-  });
-  schema.parse({ id, include });
+  })
+  schema.parse({ id, include })
 
-  return api.proposal.getProposal.useQuery({ id, include });
+  return api.proposal.getProposal.useQuery({ id, include })
 }
 
 export function useProposalReads(ids: number[], include: ProposalInclude = {}) {
@@ -30,56 +37,55 @@ export function useProposalReads(ids: number[], include: ProposalInclude = {}) {
         author: z.boolean().optional(),
       })
       .optional(),
-  });
-  schema.parse({ ids, include });
+  })
+  schema.parse({ ids, include })
 
-  return api.proposal.getProposals.useQuery({ ids, include });
+  return api.proposal.getProposals.useQuery({ ids, include })
 }
 
-export function useProposal(
-  id: number,
-  ids: number[],
-  include: ProposalInclude = {}
-) {
-  const proposalRead = useProposalRead(id, include);
-  const proposalReads = useProposalReads(ids, include);
+export function useProposal(id: number, ids: number[], include: ProposalInclude = {}) {
+  const proposalRead = useProposalRead(id, include)
+  const proposalReads = useProposalReads(ids, include)
 
-  return { proposalRead, proposalReads };
+  return { proposalRead, proposalReads }
 }
 
-export function useCreateProposal(): {
-  createProposal: (values: {
-    podId: number;
-    authorId: string;
-    include?: ProposalInclude;
-  }) => void;
-  mutation: any;
-} {
-  const createProposalSchema = z.object({
-    podId: z.number(),
-    authorId: z.string(),
-    include: z
-      .object({
-        pod: z.boolean().optional(),
-        author: z.boolean().optional(),
-      })
-      .optional(),
-  });
+export function useCreateProposal() {
+  const mutation = api.proposal.createProposal.useMutation()
 
-  const mutation = api.proposal.createProposal.useMutation();
+  const createProposal = async ({
+    calldatas,
+    targets,
+    values,
+    authorAddress,
+    description,
+    title,
+  }: {
+    calldatas: string[]
+    targets: string[]
+    values: bigint[]
+    description: string
+    title: string
+    authorAddress: string
+  }): Promise<{ data: Proposal & {} } & InferReturn<typeof mutation.mutate>> => {
+    const result = await writeContract({
+      address: currentContracts.vDAOImplementation as Address,
+      abi: VDAOImplementation,
+      functionName: 'propose',
+      args: [targets, values, [], calldatas, description],
+    })
 
-  const createProposal = z
-    .function()
-    .args(createProposalSchema)
-    .parse(
-      (values: {
-        podId: number;
-        authorId: string;
-        include?: ProposalInclude;
-      }) => {
-        mutation.mutate(values);
-      }
-    );
+    // just being typesafe, quite painful to look at.
+    const transactionAddress = result.hash as string
+    const new_args: InferArgs<typeof mutation.mutate> = [
+      {
+        authorAddress: authorAddress,
+        transactionAddress,
+      },
+    ]
 
-  return { createProposal, mutation };
+    return mutation.mutate(...new_args) as any
+  }
+
+  return { createProposal, mutation }
 }
