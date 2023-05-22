@@ -86,7 +86,7 @@ const Footer = (props: Props) => {
           <div className='my-4 flex items-center gap-4 md:my-0'>
             {socialLinks.map(({ img, url }, index) => {
               return (
-                <Link href={url}>
+                <Link href={url} key={index}>
                   <Image alt='social link' className='w-[21px]' src={img} />
                 </Link>
               )

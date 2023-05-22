@@ -150,7 +150,7 @@ export function HomeGetInvolvedComponent() {
             },
           ].map(({ title, text, btn }, index) => {
             return (
-              <div className='flex flex-col'>
+              <div className='flex flex-col' key={index}>
                 <div className='mb-[21px] font-heading text-[26px] font-medium text-vdao-dark md:text-3xl'>{title}</div>
                 <div className='w-11/12 font-body text-lg font-normal leading-[22px] text-vdao-dark'>{text}</div>
                 <PrimaryButton text={btn} className=' mt-8 mr-auto' />

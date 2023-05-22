@@ -23,14 +23,9 @@ const getSiweMessageOptions: GetSiweMessageOptions = () => ({
 const MyApp: AppType<{ session: Session | null }> = ({ Component, pageProps: { session, ...pageProps } }) => {
   return (
     <>
-      {/* <Head>
-        <link
-          href="https://fonts.cdnfonts.com/css/clash-display"
-          rel="stylesheet"
-        />
-        <link href="https://fonts.cdnfonts.com/css/satoshi" rel="stylesheet" />
-        <link href="https://fonts.cdnfonts.com/css/inter" rel="stylesheet" />
-      </Head> */}
+      <Head>
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
+      </Head>
 
       <SessionProvider session={session}>
         <RainbowKitSiweNextAuthProvider getSiweMessageOptions={getSiweMessageOptions}>
