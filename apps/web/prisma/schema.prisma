@@ -109,8 +109,8 @@ model Guild {
 }
 
 model Proposal {
-    id                 Int    @id @default(autoincrement())
-    transactionAddress String @unique
+    id              Int    @id
+    transactionHash String @unique
 
     title       String
     description String

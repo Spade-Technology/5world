@@ -9,10 +9,7 @@ import { abiItem } from '~/server/api/routers/etherscan'
 
 const Proposals = () => {
   const { address } = useAccount()
-  const {
-    createProposal,
-    mutation: { isLoading },
-  } = useCreateProposal()
+  const { createProposal, isLoading } = useCreateProposal()
 
   const [contractAddress, setContractAddress] = useState('')
   const [contractAction, setContractAction] = useState({} as abiItem)

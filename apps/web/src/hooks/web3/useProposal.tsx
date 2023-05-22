@@ -9,6 +9,7 @@ import VDAOImplementation from '~/abi/VDAOImplementation.json'
 import { currentContracts } from '~/config/contracts'
 import { writeContract } from '@wagmi/core'
 import { notification } from 'antd'
+import { useState } from 'react'
 /* Proposal schema */
 interface ProposalInclude {
   pod?: boolean
@@ -52,6 +53,7 @@ export function useProposal(id: number, ids: number[], include: ProposalInclude 
 
 export function useCreateProposal() {
   const mutation = api.proposal.createProposal.useMutation()
+  const [isLoading, setIsLoading] = useState(false)
 
   const createProposal = async ({
     calldatas,
@@ -68,12 +70,15 @@ export function useCreateProposal() {
     title: string
     authorAddress: string
   }): Promise<({ data: Proposal & {} } & InferReturn<typeof mutation.mutate>) | void> => {
+    setIsLoading(true)
     // check that calldatas, targets, and values are all the same length
-    if (calldatas.length !== targets.length || targets.length !== values.length)
+    if (calldatas.length !== targets.length || targets.length !== values.length) {
+      setIsLoading(false)
       return notification.error({
         message: 'Error creating proposal',
         description: 'Calldatas, targets, and values must all be the same length',
       })
+    }
 
     let result
     try {
@@ -84,6 +89,7 @@ export function useCreateProposal() {
         args: [targets, values, [''], calldatas, description],
       })
     } catch (e) {
+      setIsLoading(false)
       return notification.error({
         message: 'Error creating proposal',
         description: e?.shortMessage || 'Unknown error',
@@ -91,19 +97,21 @@ export function useCreateProposal() {
     }
 
     // just being typesafe, quite painful to look at.
-    const transactionAddress = result.hash as string
+    const transactionHash = result.hash as string
     const new_args: InferArgs<typeof mutation.mutate> = [
       {
         title,
         description,
 
         authorAddress: authorAddress,
-        transactionAddress,
+        transactionHash,
       },
     ]
+
+    setIsLoading(false)
 
     return mutation.mutate(...new_args) as any
   }
 
-  return { createProposal, mutation }
+  return { createProposal, mutation, isLoading: isLoading || mutation.isLoading }
 }
