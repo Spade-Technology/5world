@@ -25,6 +25,6 @@ let contracts = {
 
 export default contracts
 
-export const currentChain = process.env.NODE_ENV === 'production' ? 'ethereum' : 'sepolia'
+export const currentChain = process.env.VERCEL_ENV === 'production' ? 'ethereum' : 'sepolia'
 export const currentChainId = currentChain === 'ethereum' ? 1 : 11155111
 export const currentContracts = contracts[currentChain]
