@@ -12,16 +12,16 @@ const MailingListComponent = () => {
         </div>
 
         <div className='justify-center md:flex md:pt-[35px]'>
-          <div className='satoshi pt-8 text-[22px] font-medium leading-[26px] md:w-4/12  md:pt-0  md:text-[26px] md:leading-[30px]'>
+          <div className='pt-8 font-body text-[22px] font-medium leading-[26px] md:w-4/12  md:pt-0  md:text-[26px] md:leading-[30px]'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi turpis mi.
           </div>
 
           <div className='flex flex-col justify-end pt-8 md:ml-[8.3%] md:w-6/12 md:flex-row md:pt-0'>
             <input
               placeholder='Enter your email'
-              className='h-10 w-full rounded-md pl-5 text-vdao-dark outline-none outline-vdao-dark placeholder:text-vdao-dark placeholder:opacity-50'
+              className='h-10 w-full rounded-[5px] pl-5 text-vdao-dark outline-none outline-vdao-dark placeholder:text-vdao-dark placeholder:opacity-50'
             />
-            <DarkButton text='Subscribe' className='clash mt-6 md:mt-0 md:ml-5' />
+            <DarkButton text='Subscribe' className='clash mt-[22px] md:mt-0 md:ml-5' />
           </div>
         </div>
       </div>
