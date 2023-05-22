@@ -11,7 +11,7 @@ import { StyleProvider } from '@ant-design/cssinjs'
 import { api } from '~/utils/api'
 
 import Web3Context from '~/components/web3context'
-import { ConfigProvider, theme } from 'antd'
+import { ConfigProvider, notification, theme } from 'antd'
 import { RainbowKitAuthenticationProvider, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import Head from 'next/head'
 // antd css

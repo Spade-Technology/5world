@@ -8,7 +8,7 @@ import { InferArgs, InferReturn } from '~/utils/type'
 import VDAOImplementation from '~/abi/VDAOImplementation.json'
 import { currentContracts } from '~/config/contracts'
 import { writeContract } from '@wagmi/core'
-
+import { notification } from 'antd'
 /* Proposal schema */
 interface ProposalInclude {
   pod?: boolean
@@ -67,18 +67,36 @@ export function useCreateProposal() {
     description: string
     title: string
     authorAddress: string
-  }): Promise<{ data: Proposal & {} } & InferReturn<typeof mutation.mutate>> => {
-    const result = await writeContract({
-      address: currentContracts.vDAOImplementation as Address,
-      abi: VDAOImplementation,
-      functionName: 'propose',
-      args: [targets, values, [], calldatas, description],
-    })
+  }): Promise<({ data: Proposal & {} } & InferReturn<typeof mutation.mutate>) | void> => {
+    // check that calldatas, targets, and values are all the same length
+    if (calldatas.length !== targets.length || targets.length !== values.length)
+      return notification.error({
+        message: 'Error creating proposal',
+        description: 'Calldatas, targets, and values must all be the same length',
+      })
+
+    let result
+    try {
+      result = await writeContract({
+        address: currentContracts.proxiedVDao as Address,
+        abi: VDAOImplementation,
+        functionName: 'propose',
+        args: [targets, values, [''], calldatas, description],
+      })
+    } catch (e) {
+      return notification.error({
+        message: 'Error creating proposal',
+        description: e?.shortMessage || 'Unknown error',
+      })
+    }
 
     // just being typesafe, quite painful to look at.
     const transactionAddress = result.hash as string
     const new_args: InferArgs<typeof mutation.mutate> = [
       {
+        title,
+        description,
+
         authorAddress: authorAddress,
         transactionAddress,
       },

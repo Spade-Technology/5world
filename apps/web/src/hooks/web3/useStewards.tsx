@@ -1,7 +1,10 @@
 import { z } from 'zod'
 import { api } from '~/utils/api'
 import { useSignMessage } from 'wagmi'
-import { signMessage } from '@wagmi/core'
+import { signMessage, writeContract } from '@wagmi/core'
+import Vtoken from '~/abi/VToken.json'
+import { currentContracts } from '~/config/contracts'
+import { Address } from 'viem'
 
 /* Steward schema */
 interface StewardArgs {
@@ -17,6 +20,10 @@ interface ApplyToBeStewardSchema {
 interface VoteSchema {
   voterAddress: string
   candidateAddress: string
+}
+
+interface DelegateSchema {
+  delegatee: string
 }
 
 const stewardArgsSchema = z.object({
@@ -75,11 +82,32 @@ export function useVote() {
   return { vote, mutation }
 }
 
+export function useDelegate() {
+  const delegate = z
+    .function()
+    .args(
+      z.object({
+        delegatee: z.string(),
+      }),
+    )
+    .parse(async (values: DelegateSchema) => {
+      await writeContract({
+        abi: Vtoken,
+        address: currentContracts.vDao as Address,
+        functionName: 'delegate',
+        args: [values.delegatee],
+      })
+    })
+
+  return { delegate }
+}
+
 export function useSteward(address: string, args: StewardArgs = {}) {
   const stewardRead = useStewardRead(address)
-  const stewardsRead = useStewardsRead(args)
+  const delegate = useDelegate()
+  const vote = useVote()
 
-  return { stewardRead, stewardsRead }
+  return { stewardRead, delegate, vote }
 }
 
 export default useSteward

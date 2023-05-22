@@ -65,7 +65,7 @@ const Proposals = () => {
                 const values = [0n]
 
                 // Use these in your createProposal call
-                createProposal({
+                await createProposal({
                   title: 'test',
                   description: 'test',
                   authorAddress: address,

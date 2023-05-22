@@ -51,6 +51,11 @@ async function main() {
     '1000000000000000000000'
   );
   await vDAOProxy.deployed();
+
+  await timelock.setPendingAdmin(vDAOProxy.address);
+
+  const proxiedVDao = await VDAOImplementation.attach(vDAOProxy.address);
+  await proxiedVDao._initiate();
   progressBar.tick();
 
   progressBar.tick({ status: 'Deploying Treasury' });
@@ -146,6 +151,7 @@ async function main() {
     timelock: timelock.address,
     vDao: vDao.address,
     vDAOImplementation: vDAOImplementation.address,
+    proxiedVDao: proxiedVDao.address,
     treasury: treasury.address,
     donationSBT: donationSBT.address,
     roundImplementation: roundImplementation.address,
