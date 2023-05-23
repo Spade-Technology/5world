@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { use, useState } from 'react'
 import { useAccount } from 'wagmi'
 import Page from '~/components/layout/page'
 import PodCards from '~/components/pages/app/pods/podCards'
@@ -10,6 +10,7 @@ import { usePodReads } from '~/hooks/web3/usePod'
 const Pods = () => {
   const [openCreatePod, setOpenCreatePod] = useState(false)
   const [openRegenDetails, setOpenRegen] = useState(false)
+  const [pid, setPid] = useState(0)
   const { address } = useAccount()
 
   const { data, refetch, isFetching } = usePodReads({ createdBy: address || '' })
@@ -19,11 +20,11 @@ const Pods = () => {
       <Page>
         <PodsProfile setOpenCreatePod={setOpenCreatePod} />
 
-        <PodCards setOpenRegen={setOpenRegen} data={data} />
+        <PodCards setOpenRegen={setOpenRegen} data={data} setPid={setPid} />
 
-        {openCreatePod && <CreateNewPod show={openCreatePod} close={() => setOpenCreatePod(false)} />}
+        {openCreatePod && <CreateNewPod show={openCreatePod} close={() => setOpenCreatePod(false)} refetch={refetch}  />}
 
-        {openRegenDetails && <RegenPod show={openRegenDetails} close={() => setOpenRegen(false)} data={data} />}
+        {openRegenDetails && <RegenPod show={openRegenDetails} close={() => setOpenRegen(false)} pid={pid} data={data} />}
       </Page>
     </>
   )
