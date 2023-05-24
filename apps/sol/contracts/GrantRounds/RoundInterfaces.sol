@@ -8,29 +8,52 @@ import "../interfaces/IDonationSBT.sol";
 import "../interfaces/VTokenInterface.sol";
 
 contract RoundEvents {
-
     // --- Events ---
-    
+
     /// @notice Emitted when round time is updated
-    event RoundTimeUpdated(uint256 newApplicationStartBlock, uint256 newApplicationEndBlock, uint256 newRoundStartBlock, uint256 newRoundEndBlock);
+    event RoundTimeUpdated(
+        uint256 newApplicationStartBlock,
+        uint256 newApplicationEndBlock,
+        uint256 newRoundStartBlock,
+        uint256 newRoundEndBlock
+    );
 
     /// @notice Emitted when a matching amount is updated
-    event MatchingAmountUpdated(uint256 oldMatchingAmount, uint256 newMatchingAmount);
+    event MatchingAmountUpdated(
+        uint256 oldMatchingAmount,
+        uint256 newMatchingAmount
+    );
 
     /// @notice Emiited when the blacklist state of a proposal is updated
     event BlacklistUpdated(uint256 indexed proposalId, bool indexed blacklist);
 
     /// @notice Emitted when the  initMetaPtr is updated
-    event MetaPtrUpdated(MetaPtr newRoundMetaPtr, MetaPtr newApplicationMetaPtr);
+    event MetaPtrUpdated(
+        MetaPtr newRoundMetaPtr,
+        MetaPtr newApplicationMetaPtr
+    );
 
     /// @notice Emitted when a project has applied to the round
-    event NewProjectApplication(uint256 indexed proposalId, MetaPtr applicationMetaPtr, address indexed owner, address indexed wallet);
+    event NewProjectApplication(
+        uint256 indexed proposalId,
+        MetaPtr applicationMetaPtr,
+        address indexed owner,
+        address indexed wallet
+    );
 
     /// @notice Emitted when projects metaPtr is updated
-    event ProjectsMetaPtrUpdated(uint256 indexed proposalId, MetaPtr newProjectMetaPtr, address newFundsWallet);
+    event ProjectsMetaPtrUpdated(
+        uint256 indexed proposalId,
+        MetaPtr newProjectMetaPtr,
+        address newFundsWallet
+    );
 
     /// @notice Emitted when a new vote is sent
-    event VoteCast(uint256 indexed proposalId, uint256 votes, address indexed voter);
+    event VoteCast(
+        uint256 indexed proposalId,
+        uint256 votes,
+        address indexed voter
+    );
 
     /// @notice Emitted when the allocated fund is claimed.
     event FundsClaimed(uint256 indexed proposalId, uint256 matchedAmount);
@@ -66,7 +89,6 @@ contract RoundEvents {
 
     /// @notice thrown when can't withdraw input token.
     error InvalidToken();
-
 }
 
 contract RoundProxyStorage {
@@ -80,7 +102,6 @@ contract RoundProxyStorage {
     address public implementation;
 }
 
-
 /**
  * @title Storage for Governor Bravo Delegate
  * @notice For future upgrades, do not change GovernorBravoDelegateStorageV1. Create a new
@@ -88,7 +109,6 @@ contract RoundProxyStorage {
  * GovernorBravoDelegateStorageVX.
  */
 contract RoundImplementationStorageV1 is RoundProxyStorage {
-
     /// @notice block number from when round can accept applications
     uint256 public applicationsStartBlock;
 
@@ -129,11 +149,10 @@ contract RoundImplementationStorageV1 is RoundProxyStorage {
     mapping(uint256 => ProjectMetaPtr) public proposals;
 
     /// @notice blaklist state for each proposals
-    mapping (uint256 => bool) public isBlacklisted;
-
+    mapping(uint256 => bool) public isBlacklisted;
 
     /// @notice Receipts of ballots for the entire set of voters
-    mapping (address => Receipt) receipts;
+    mapping(address => Receipt) receipts;
 
     struct InitRoundTime {
         uint256 applicationsStartBlock; // block number from when round can accept applications
@@ -199,9 +218,4 @@ contract RoundImplementationStorageV1 is RoundProxyStorage {
         // Expired,
         // Executed
     }
-
-   
 }
-
-
-
