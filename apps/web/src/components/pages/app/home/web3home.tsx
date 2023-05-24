@@ -15,6 +15,8 @@ import { Section } from '../../../layout/section'
 import dynamic from 'next/dynamic'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
+import { useUserRead } from '~/hooks/web3/useUser'
+import { useAccount } from 'wagmi'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -229,6 +231,10 @@ export function NewMembersComponent() {
 }
 
 export function ProfileHomeComponent({ setOpenProfile }: ProfileProps) {
+  const { address, isConnecting, isDisconnected } = useAccount()
+  const { data } = useUserRead(address?.toString()!)
+  console.log('User info: ', data)
+
   return (
     <Section className='col-span-12 flex w-full flex-col rounded-2xl bg-vdao-dark pr-3.5 pt-5 pl-5 md:col-span-7 md:pt-10 md:pl-5 md:pr-8 md:pb-20'>
       {/* View Profile Button */}
@@ -244,8 +250,10 @@ export function ProfileHomeComponent({ setOpenProfile }: ProfileProps) {
         <div className='flex gap-3'>
           <Image src={ProfilePic} alt='Profile Picture' className='h-14 w-14 rounded-full' />
           <div className='flex flex-col'>
-            <span className='font-body text-[26px] font-bold leading-8 text-vdao-light'>Kris Millar</span>
-            <span className='font-body text-lg font-normal leading-6 '>0xd12512....92C</span>
+            <span className='satoshi text-2xl font-bold leading-8 text-vdao-light'>
+              {data ? (data?.name?.length! > 15 ? data.name?.slice(0, 15) + '...' : data.name) : 'Kris Millar'}
+            </span>
+            <span className='satoshi text-base font-normal leading-6 '>0xd12512....92C</span>
           </div>
         </div>
 

@@ -8,11 +8,13 @@ import { useCreatePod, usePodReads } from '~/hooks/web3/usePod'
 type CreatePodProps = {
   show: boolean
   close: any
+  refetch: any
 }
 
-const CreateNewPod = ({ show, close }: CreatePodProps) => {
+const CreateNewPod = ({ show, close, refetch }: CreatePodProps) => {
   const [nextFrom, setNextForm] = useState(false)
   const [podName, setPodName] = useState('')
+  const [podImage, setPodImage] = useState({image:"", name:""})
   const [description, setDescription] = useState('')
   const [managerAddr, setManagerAddr] = useState('')
   const [memberAddr, setMemberAddr] = useState('')
@@ -26,12 +28,12 @@ const CreateNewPod = ({ show, close }: CreatePodProps) => {
     createPod,
     mutation: { isLoading },
   } = useCreatePod()
-  const { data, refetch, isFetching } = usePodReads({ createdBy: address || '' })
+
 
   const createPodHanlder = () => {
     if (address) {
       createPod(
-        { name: podName, description: description, members: [address], admins: [address], picture: '' },
+        { name: podName, description: description, members: [address], admins: [address], picture: podImage.image },
         {
           onSuccess(data, variables, context) {
             refetch()
@@ -53,6 +55,8 @@ const CreateNewPod = ({ show, close }: CreatePodProps) => {
           setPodName={setPodName}
           description={description}
           setDescription={setDescription}
+          podImage={podImage}
+          setPodImage={setPodImage}
         />
       ) : (
         <FormTwo

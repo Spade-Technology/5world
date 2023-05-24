@@ -57,7 +57,8 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
 
               <div className='pl-[10px] md:pl-[15px]'>
                 <div className='font-body text-[26px] font-semibold text-vdao-light md:text-[36px]'>
-                  {data?.name! ? data?.name : 'Loading...'}{' '}
+                  {' '}
+                  {data?.name! ? (data?.name?.length > 15 ? data.name?.slice(0, 15) + '...' : data.name) : 'Loading...'}{' '}
                 </div>
                 <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>
                   <div className='font-medium md:text-[22px]'>
