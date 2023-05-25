@@ -1,11 +1,12 @@
 import CustomModal from '~/components/misc/customModal'
 import ProfilePic from 'public/icons/blog/createdByLogo.svg'
-import Image from 'next/image'
+
 import { useState } from 'react'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { useAccount } from 'wagmi'
 import { useUserRead } from '~/hooks/web3/useUser'
 import { shortenAddress } from '~/utils/helpers'
+import Image from 'next/image'
 
 type PopupProps = {
   show: boolean
@@ -36,12 +37,17 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
   ]
 
   /** Here !, tell TypeScript that even though something looks like it could be null, it can trust you that it's not */
-  const { data } = useUserRead({
-    address: address!,
-    include: {
-      guild: true,
+  const { data } = useUserRead(
+    {
+      address: address!,
+      include: {
+        guild: true,
+      },
     },
-  })
+    {
+      enabled: false,
+    },
+  )
 
   return (
     <CustomModal show={show} close={close}>
@@ -50,14 +56,13 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
           <div>
             <div className='flex w-full'>
               <Image
-                src={data?.picture ? data?.picture : ProfilePic}
+                src={data?.picture || ProfilePic}
                 alt=''
                 className='h-[64.2px] w-[60px] rounded-full md:h-[128.4px] md:w-[123.41px]'
               />
 
               <div className='pl-[10px] md:pl-[15px]'>
                 <div className='font-body text-[26px] font-semibold text-vdao-light md:text-[36px]'>
-                  {' '}
                   {data?.name! ? (data?.name?.length > 15 ? data.name?.slice(0, 15) + '...' : data.name) : 'Loading...'}{' '}
                 </div>
                 <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>

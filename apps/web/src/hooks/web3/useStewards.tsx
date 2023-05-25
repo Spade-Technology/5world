@@ -30,7 +30,7 @@ const stewardArgsSchema = z.object({
   search: z.string().optional(),
 })
 
-export function useStewardsRead(args: StewardArgs = {}) {
+export function useStewardReads(args: StewardArgs = {}) {
   const schema = z.object({ args: stewardArgsSchema })
   schema.parse({ args })
 

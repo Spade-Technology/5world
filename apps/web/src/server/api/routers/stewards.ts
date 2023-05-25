@@ -10,30 +10,31 @@ import VDaoToken from '~/abi/VDaoToken.json'
 
 import { TRPCError } from '@trpc/server'
 import contracts from '~/config/contracts'
+import { User } from '@prisma/client'
 
 const VOTE_THRESHOLD = 100
-const PAST_MONTHS = '6 months'
+const PAST_MONTHS = '6 MONTH'
 
 export const stewardRouter = createTRPCRouter({
   getStewards: protectedProcedure
     .input(z.object({ search: z.string().optional() }))
     .query(async ({ input: { search }, ctx: { prisma } }) => {
-      const query = sqltag`
-          SELECT "User".* 
-          FROM "User" 
-          LEFT JOIN "StewardVote" 
-          ON "User".address = "StewardVote".candidateAddress 
-          WHERE ( 
-            "User".address LIKE $1 OR 
-            "User".name LIKE $1 OR 
-            "User".description LIKE $1
-          ) 
-          AND "StewardVote".createdAt >= NOW() - INTERVAL $2 MONTH 
-          GROUP BY "User".address 
-          HAVING COUNT("StewardVote".id) >= $3
-        `
-      const stewards = await prisma.$queryRaw(query, `%${search || ''}%`, PAST_MONTHS, VOTE_THRESHOLD)
-      return stewards
+      const stewards = await prisma.$queryRaw`
+      SELECT "User".* 
+      FROM "User" 
+      LEFT JOIN "StewardVote" 
+      ON "User".address = "StewardVote"."candidateAddress" 
+      WHERE ( 
+        "User".address LIKE ${search} OR 
+        "User".name LIKE ${search} OR 
+        "User".description LIKE ${search}
+      ) 
+      AND "StewardVote"."createdAt" >= (NOW() - INTERVAL '6 MONTH')
+      GROUP BY "User".address 
+      HAVING COUNT("StewardVote"."id") >= ${VOTE_THRESHOLD}
+    `
+
+      return stewards as User[]
     }),
 
   getSteward: protectedProcedure
@@ -41,6 +42,20 @@ export const stewardRouter = createTRPCRouter({
     .query(async ({ input: { address }, ctx: { prisma } }) => {
       const steward = await prisma.user.findUnique({
         where: { address },
+        include: {
+          _count: {
+            select: {
+              createdPods: true,
+              createdProposals: true,
+
+              stewardVotesAsVoter: true,
+              stewardVotesAsCandidate: true,
+
+              podsAsAdmin: true,
+              podsAsMember: true,
+            },
+          },
+        },
       })
       return steward
     }),
