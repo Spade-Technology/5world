@@ -26,7 +26,9 @@ export const userRouter = createTRPCRouter({
         where: { address: address },
         include: include,
       })
+
       if (!user) throw new Error('User not found')
+
       return user
     }),
 

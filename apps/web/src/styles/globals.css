@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 h1 {
-  font-family: "Clash Display", sans-serif;
+  font-family: 'Clash Display', sans-serif;
   font-size: 2.5rem;
   font-weight: 700;
 }
 
 .h3 {
-  font-family: "Clash Display", sans-serif;
+  font-family: 'Clash Display', sans-serif;
   font-style: normal;
   font-weight: 500;
 
@@ -18,7 +18,7 @@ h1 {
 }
 
 .big-text-mobile {
-  font-family: "Satoshi", sans-serif;
+  font-family: 'Satoshi', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 22px;
@@ -26,7 +26,7 @@ h1 {
 }
 
 .small-text {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -36,20 +36,20 @@ h1 {
 /* font family 
 */
 .clash {
-  font-family: "Clash Display";
+  font-family: 'Clash Display';
 }
 
 .inter {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .satoshi {
-  font-family: "Satoshi", sans-serif;
+  font-family: 'Satoshi', sans-serif;
 }
 
 /* only spans that aren't in a button */
 span {
-  font-family: "Satoshi", sans-serif;
+  font-family: 'Satoshi', sans-serif;
   font-size: 1.27rem;
   color: #fff;
 
@@ -57,9 +57,15 @@ span {
   font-weight: 300;
 }
 
+.ant-select span {
+  color: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+}
+
 /* for spans that are children of buttons */
 button span {
-  font-family: "Clash Display", sans-serif;
+  font-family: 'Clash Display', sans-serif;
 
   /* default */
   font-size: 1em;
@@ -70,4 +76,13 @@ button span {
 
 .antd-stop-propagation span {
   color: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+/* GRAPH'S TOOLTIP DESIGN */
+.apexcharts-tooltip {
+  color: green !important;
+  background-color: #06121e !important;
+  font-size: 1488em !important;
 }

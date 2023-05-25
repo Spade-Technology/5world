@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { api } from '~/utils/api'
-import { InferArgs } from '~/utils/type'
+import { InferArgs, InferReturn } from '~/utils/type'
 
 /* Pod schema */
 interface PodInclude {

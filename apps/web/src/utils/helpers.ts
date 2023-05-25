@@ -3,11 +3,9 @@
 
 export const shortenAddress = (address: string) => {
   const shortAddr =
-    address.toString().slice(0, 6) +
-    "...." +
-    address.toString().slice(address.length - 4, address.length);
-  return shortAddr;
-};
+    address.toString().slice(0, 8) + '....' + address.toString().slice(address.length - 3, address.length)
+  return shortAddr
+}
 
 // export const convertToEth = (balance: any, decimals?: number | undefined) => {
 //   if (balance && parseFloat(balance) > 0) {
@@ -34,10 +32,9 @@ export const shortenAddress = (address: string) => {
 // };
 
 export const copyToClipboard = async (text: string) => {
-  typeof window !== "undefined" &&
-    (await window.navigator.clipboard.writeText(text));
-  return;
-};
+  typeof window !== 'undefined' && (await window.navigator.clipboard.writeText(text))
+  return
+}
 
 // export const handleDecimals = (amount: string, decimals?: number) => {
 //   if (amount && parseFloat(amount) > 0 && amount.toString().includes(".")) {
@@ -63,28 +60,28 @@ export const copyToClipboard = async (text: string) => {
 
 export const debounce = (callBackFun: any, timeout: number) => {
   const timer = setTimeout(() => {
-    callBackFun();
-  }, timeout);
+    callBackFun()
+  }, timeout)
 
   return () => {
-    clearTimeout(timer);
-  };
-};
+    clearTimeout(timer)
+  }
+}
 
 export const convertTimeToUnixTimeStamp = (minutes: number) => {
-  const timestamp = Math.round(+new Date() / 1000) + minutes * 60;
-  return timestamp;
-};
+  const timestamp = Math.round(+new Date() / 1000) + minutes * 60
+  return timestamp
+}
 
 export const convertToUnixTimeStampToTime = (unixTimestamp: number) => {
   // const unixTimestamp = 1615363700; // Unix timestamp in seconds
-  const dateObj = new Date(unixTimestamp * 1000); // convert to milliseconds by multiplying with 1000
-  const date = dateObj.toDateString(); // get date in format "Thu Mar 10 2022"
-  const time = dateObj.toLocaleTimeString(); // get time in format "8:08:20 AM"
-  console.log(date + " " + time); // output: "Thu Mar 10 2022 8:08:20 AM"
-  return date + " " + time;
-};
+  const dateObj = new Date(unixTimestamp * 1000) // convert to milliseconds by multiplying with 1000
+  const date = dateObj.toDateString() // get date in format "Thu Mar 10 2022"
+  const time = dateObj.toLocaleTimeString() // get time in format "8:08:20 AM"
+  // console.log(date + " " + time); // output: "Thu Mar 10 2022 8:08:20 AM"
+  return date + ' ' + time
+}
 
 export const getCurrentUnixTimeStamp = () => {
-  return Math.floor(Date.now() / 1000);
-};
+  return Math.floor(Date.now() / 1000)
+}

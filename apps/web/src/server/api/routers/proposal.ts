@@ -1,6 +1,11 @@
 import { z } from 'zod'
 
 import { createTRPCRouter, publicProcedure, protectedProcedure } from '~/server/api/trpc'
+import VDAOImplementation from '~/abi/VDAOImplementation.json'
+import { fetchTransaction, waitForTransaction } from '@wagmi/core'
+import { Address, decodeEventLog } from 'viem'
+import { TRPCError } from '@trpc/server'
+import contracts, { currentContracts } from '~/config/contracts'
 
 const includeZod = z
   .object({
@@ -45,14 +50,17 @@ export const proposalRouter = createTRPCRouter({
   createProposal: protectedProcedure
     .input(
       z.object({
-        podId: z.number(),
-        authorId: z.string(),
+        title: z.string(),
+        description: z.string(),
+        podId: z.number().optional(),
+        transactionHash: z.string(),
+        authorAddress: z.string(),
         include: includeZod,
       }),
     )
     .mutation(
       async ({
-        input: { podId, authorId, include },
+        input: { podId, authorAddress, transactionHash, include, title, description },
         ctx: {
           prisma,
           session: { address },
@@ -60,10 +68,41 @@ export const proposalRouter = createTRPCRouter({
       }) => {
         if (!address) throw new Error('User not found')
 
+        const transaction = await waitForTransaction({ hash: transactionHash as Address })
+        if (!transaction) throw new TRPCError({ code: 'NOT_FOUND', message: 'Transaction not found' })
+
+        const logs = transaction.logs || []
+        if (logs.length === 0 || !logs[0]?.topics) throw new TRPCError({ code: 'NOT_FOUND', message: 'Log not found' })
+
+        const txEvent = decodeEventLog({
+          abi: VDAOImplementation,
+          eventName: 'ProposalCreated',
+          topics: logs[0].topics,
+          data: logs[0].data,
+        })
+
+        if (!txEvent) throw new TRPCError({ code: 'NOT_FOUND', message: 'Event not found' })
+        if ((txEvent.args as any).description !== description)
+          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Description does not match' })
+        if (
+          !Object.values(currentContracts)
+            .map(el => el.toLowerCase())
+            .includes(transaction.to?.toLowerCase() as Address)
+        )
+          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Transaction not sent to VDAO' })
+
+        // all good
         const newProposal = await prisma.proposal.create({
           data: {
-            pod: { connect: { id: podId } },
-            author: { connect: { address: authorId } },
+            id: Number((txEvent.args as any).id),
+            title,
+            description,
+
+            ...(podId && { pod: { connect: { id: podId } } }),
+
+            author: { connect: { address: authorAddress } },
+            transactionHash: transactionHash,
+
             createdBy: { connect: { address } },
             updatedBy: { connect: { address } },
           },

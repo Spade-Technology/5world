@@ -36,8 +36,12 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
   ]
 
   /** Here !, tell TypeScript that even though something looks like it could be null, it can trust you that it's not */
-  const { data } = useUserRead(address?.toString()!)
-  console.log('User info: ', data)
+  const { data } = useUserRead({
+    address: address!,
+    include: {
+      guild: true,
+    },
+  })
 
   return (
     <CustomModal show={show} close={close}>
@@ -75,15 +79,19 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
               </div>
             </div>
 
-            <div className='mt-[30px] w-fit rounded-3xl border-[3px] border-vdao-light px-5 text-lg font-medium md:ml-36 md:mt-[0px] md:py-[7px] md:px-[25px] md:text-xl'>
-              DAO Operation Guild
-            </div>
+            {data?.guild && (
+              <div className='mt-[30px] w-fit rounded-3xl border-[3px] border-vdao-light px-5 text-lg font-medium md:ml-36 md:mt-[0px] md:py-[7px] md:px-[25px] md:text-xl'>
+                {data?.guild?.name}
+              </div>
+            )}
           </div>
 
-          <PrimaryButton
-            text='Delegate'
-            className='float-right mt-[30px] h-fit py-[5px] px-[35px] font-heading text-xl font-medium md:mt-[46px]'
-          />
+          {data?.stewardApplicationBlock && (
+            <PrimaryButton
+              text='Delegate'
+              className='float-right mt-[30px] h-fit py-[5px] px-[35px] font-heading text-xl font-medium md:mt-[46px]'
+            />
+          )}
         </div>
 
         <div className='flex gap-[10px] border-b-[1px] border-b-vdao-dark pb-5 pt-[44px] font-body text-[22px] font-bold'>

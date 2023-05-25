@@ -11,7 +11,7 @@ import { StyleProvider } from '@ant-design/cssinjs'
 import { api } from '~/utils/api'
 
 import Web3Context from '~/components/web3context'
-import { ConfigProvider, theme } from 'antd'
+import { ConfigProvider, notification, theme } from 'antd'
 import { RainbowKitAuthenticationProvider, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import Head from 'next/head'
 // antd css
@@ -24,12 +24,14 @@ const MyApp: AppType<{ session: Session | null }> = ({ Component, pageProps: { s
   return (
     <>
       <Head>
-        <link
+        {/* <link
           href="https://fonts.cdnfonts.com/css/clash-display"
           rel="stylesheet"
         />
         <link href="https://fonts.cdnfonts.com/css/satoshi" rel="stylesheet" />
-        <link href="https://fonts.cdnfonts.com/css/inter" rel="stylesheet" />
+        <link href="https://fonts.cdnfonts.com/css/inter" rel="stylesheet" /> */}
+
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
       </Head>
 
       <SessionProvider session={session}>
