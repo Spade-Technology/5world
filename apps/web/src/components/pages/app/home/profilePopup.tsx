@@ -43,6 +43,7 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
     },
   })
 
+  console.log('userData', data)
   return (
     <CustomModal show={show} close={close}>
       <div className='pl-[10px]'>
@@ -58,11 +59,15 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
               <div className='pl-[10px] md:pl-[15px]'>
                 <div className='font-body text-[26px] font-semibold text-vdao-light md:text-[36px]'>
                   {' '}
-                  {data?.name! ? (data?.name?.length > 15 ? data.name?.slice(0, 15) + '...' : data.name) : 'Loading...'}{' '}
+                  {data?.name!
+                    ? data?.name?.length > 15
+                      ? data.name?.slice(0, 15) + '...'
+                      : data.name
+                    : 'Kris Miller'}{' '}
                 </div>
                 <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>
                   <div className='font-medium md:text-[22px]'>
-                    {data?.address ? shortenAddress(data?.address!) : 'Loading...'}{' '}
+                    {data?.address ? shortenAddress(data?.address!) : '0xd12512....92C'}{' '}
                   </div>
                   <div className='font-bold'>
                     {' '}
@@ -73,17 +78,17 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
                         data.JoinedAt.getDate() +
                         ', ' +
                         data.JoinedAt.getFullYear()
-                      : 'Loading...'}
+                      : 'May 05, 2023'}
                   </div>
                 </div>
               </div>
             </div>
 
-            {data?.guild && (
-              <div className='mt-[30px] w-fit rounded-3xl border-[3px] border-vdao-light px-5 text-lg font-medium md:ml-36 md:mt-[0px] md:py-[7px] md:px-[25px] md:text-xl'>
-                {data?.guild?.name}
-              </div>
-            )}
+            {/* {data?.guild && ( */}
+            <div className='mt-[30px] w-fit rounded-3xl border-[3px] border-vdao-light px-5 text-lg font-medium md:ml-36 md:mt-[0px] md:py-[7px] md:px-[25px] md:text-xl'>
+              {data?.guild?.name ? data?.guild?.name : 'No DAO Operation Guild'}
+            </div>
+            {/* )} */}
           </div>
 
           {data?.stewardApplicationBlock && (
