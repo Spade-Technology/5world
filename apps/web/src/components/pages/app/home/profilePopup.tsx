@@ -7,6 +7,7 @@ import { useAccount } from 'wagmi'
 import { useUserRead } from '~/hooks/web3/useUser'
 import { shortenAddress } from '~/utils/helpers'
 import Image from 'next/image'
+import { monthNames } from '~/utils/date'
 
 type PopupProps = {
   show: boolean
@@ -20,21 +21,6 @@ type StatementProps = {
 const ProfilePopup = ({ show, close }: PopupProps) => {
   const [showActivity, setShowActivity] = useState(false)
   const { address, isConnecting, isDisconnected } = useAccount()
-
-  const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ]
 
   /** Here !, tell TypeScript that even though something looks like it could be null, it can trust you that it's not */
   const { data } = useUserRead(
@@ -67,10 +53,9 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
                 </div>
                 <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>
                   <div className='font-medium md:text-[22px]'>
-                    {data?.address ? shortenAddress(data?.address!) : 'Loading...'}{' '}
+                    {data?.address ? shortenAddress(data?.address!) : 'Loading...'}
                   </div>
                   <div className='font-bold'>
-                    {' '}
                     {data?.JoinedAt
                       ? 'Joined ' +
                         monthNames[data.JoinedAt.getUTCMonth()] +

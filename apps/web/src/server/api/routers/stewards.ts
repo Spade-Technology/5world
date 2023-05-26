@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { sqltag } from '@prisma/client/runtime'
+import { Sql, sqltag } from '@prisma/client/runtime'
 import { Address, fetchBlockNumber, readContract } from '@wagmi/core'
 import { verifyMessage } from 'viem'
 import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc'
@@ -12,27 +12,45 @@ import { TRPCError } from '@trpc/server'
 import contracts from '~/config/contracts'
 import { User } from '@prisma/client'
 
-const VOTE_THRESHOLD = 100
+const VOTE_THRESHOLD = 1
 const PAST_MONTHS = '6 MONTH'
 
 export const stewardRouter = createTRPCRouter({
   getStewards: protectedProcedure
     .input(z.object({ search: z.string().optional() }))
     .query(async ({ input: { search }, ctx: { prisma } }) => {
-      const stewards = await prisma.$queryRaw`
-      SELECT "User".* 
-      FROM "User" 
-      LEFT JOIN "StewardVote" 
-      ON "User".address = "StewardVote"."candidateAddress" 
-      WHERE ( 
-        "User".address LIKE ${search} OR 
-        "User".name LIKE ${search} OR 
-        "User".description LIKE ${search}
-      ) 
-      AND "StewardVote"."createdAt" >= (NOW() - INTERVAL '6 MONTH')
-      GROUP BY "User".address 
-      HAVING COUNT("StewardVote"."id") >= ${VOTE_THRESHOLD}
-    `
+      const searchQuery = search ? `${search}` : ''
+
+      let stewards
+
+      if (search) {
+        stewards = await prisma.$queryRaw`
+          SELECT "User".* 
+          FROM "User" 
+          -- include Guild
+          LEFT JOIN "StewardVote" 
+          ON "User".address = "StewardVote"."candidateAddress" 
+          WHERE ( 
+            "User".address LIKE ${search} OR 
+            "User".name LIKE ${search} OR 
+            "User".description LIKE ${search}
+          ) 
+          AND "StewardVote"."createdAt" >= (NOW() - INTERVAL '${PAST_MONTHS}')
+          GROUP BY "User".address 
+          
+          -- HAVING COUNT("StewardVote"."id") >= ${VOTE_THRESHOLD}
+          `
+      } else {
+        stewards = await prisma.$queryRaw`
+          SELECT "User".* 
+          FROM "User" 
+          LEFT JOIN "StewardVote" 
+          ON "User".address = "StewardVote"."candidateAddress"
+          AND "StewardVote"."createdAt" >= (NOW() - INTERVAL '${PAST_MONTHS}')
+          GROUP BY "User".address 
+          -- HAVING COUNT("StewardVote"."id") >= ${VOTE_THRESHOLD}
+          `
+      }
 
       return stewards as User[]
     }),
@@ -67,18 +85,20 @@ export const stewardRouter = createTRPCRouter({
         session: { user, address },
       },
     }) => {
-      if (!user || !address) throw new TRPCError({ code: 'UNAUTHORIZED' })
+      if (!user || !address) throw new TRPCError({ code: 'UNAUTHORIZED', message: 'user not found' })
 
       const currentBlock = await fetchBlockNumber()
 
-      if (currentBlock) {
-        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR' })
+      if (!currentBlock) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'could not fetch current block' })
       }
 
       user = await prisma.user.update({
         where: { address },
         data: { stewardApplicationDate: new Date(), stewardApplicationBlock: currentBlock.toString() },
       })
+
+      return user
     },
   ),
 

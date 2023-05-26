@@ -5,65 +5,82 @@ import { useState } from 'react'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { useDelegate } from '~/hooks/web3/useStewards'
 
+import { monthNames } from '~/utils/date'
+import { shortenAddress } from '~/utils/helpers'
+import { Guild, User } from '@prisma/client'
+
 type PopupProps = {
-  show: boolean
+  profile: User & { guild?: Guild }
   close: any
 }
 
-const ProfilePopup = ({ show, close }: PopupProps) => {
+const ProfilePopup = ({ profile, close }: PopupProps) => {
   const [showActivity, setShowActivity] = useState(false)
   const { delegate } = useDelegate()
 
   return (
-    <CustomModal show={show} close={close}>
-      <div className='pl-[10px]'>
-        <div className='flex flex-col justify-between md:flex-row'>
-          <div>
-            <div className='flex w-full'>
-              <Image
-                src={ProfilePic}
-                alt=''
-                className='h-[64.2px] w-[60px] rounded-full md:h-[128.4px] md:w-[123.41px]'
-              />
+    <CustomModal show={!!profile} close={close}>
+      {!!profile && (
+        <div className='pl-[10px]'>
+          <div className='flex flex-col justify-between md:flex-row'>
+            <div>
+              <div className='flex w-full'>
+                <Image
+                  src={ProfilePic}
+                  alt=''
+                  className='h-[64.2px] w-[60px] rounded-full md:h-[128.4px] md:w-[123.41px]'
+                />
 
-              <div className='pl-[10px] md:pl-[15px]'>
-                <div className='font-body text-[26px] font-semibold text-vdao-light md:text-[36px]'> Kris Millar </div>
-                <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>
-                  <div className='font-medium md:text-[22px]'>0xd12512....92C</div>
-                  <div className='font-bold'>Joined May 05, 2023</div>
+                <div className='pl-[10px] md:pl-[15px]'>
+                  <div className='font-body text-[26px] font-semibold text-vdao-light md:text-[36px]'>
+                    {profile.name}
+                  </div>
+                  <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>
+                    <div className='font-medium md:text-[22px]'>{shortenAddress(profile?.address!)}</div>
+                    <div className='font-bold'>
+                      {'Joined ' +
+                        monthNames[profile.JoinedAt.getUTCMonth()] +
+                        ' ' +
+                        profile.JoinedAt.getDate() +
+                        ', ' +
+                        profile.JoinedAt.getFullYear()}
+                    </div>
+                  </div>
                 </div>
               </div>
+
+              {profile.guild && (
+                <div className='mt-[30px] w-fit rounded-3xl border-[3px] border-vdao-light px-5 text-lg font-medium md:ml-36 md:mt-[0px] md:py-[7px] md:px-[25px] md:text-xl'>
+                  {profile.guild.name}
+                </div>
+              )}
             </div>
 
-            <div className='mt-[30px] w-fit rounded-3xl border-[3px] border-vdao-light px-5 text-lg font-medium md:ml-36 md:mt-[0px] md:py-[7px] md:px-[25px] md:text-xl'>
-              DAO Operation Guild
+            <PrimaryButton
+              onClick={() => delegate({ delegatee: '0x6a2c4104d767b34e042f0FF9d18FE321c8B78676' })}
+              text='Delegate'
+              className='float-right mt-[30px] h-fit py-[5px] px-[35px] font-heading text-xl font-medium md:mt-[46px]'
+            />
+          </div>
+
+          <div className='flex gap-[10px] border-b-[1px] border-b-vdao-dark pb-5 pt-[44px] font-body text-[22px] font-bold'>
+            <div
+              className={` ${!showActivity && 'text-vdao-light'} cursor-pointer justify-start`}
+              onClick={() => setShowActivity(false)}
+            >
+              Statement
+            </div>
+            <div
+              className={` ${showActivity && 'text-vdao-light'} cursor-pointer justify-start`}
+              onClick={() => setShowActivity(true)}
+            >
+              Activity
             </div>
           </div>
 
-          <PrimaryButton
-            onClick={() => delegate({ delegatee: '0x6a2c4104d767b34e042f0FF9d18FE321c8B78676' })}
-            text='Delegate'
-            className='float-right mt-[30px] h-fit py-[5px] px-[35px] font-heading text-xl font-medium md:mt-[46px]'
-          />
+          {showActivity ? <Activity /> : <Statements />}
         </div>
-
-        <div className='flex gap-[10px] border-b-[1px] border-b-vdao-dark pb-5 pt-[44px] font-body text-[22px] font-bold'>
-          <div
-            className={` ${!showActivity && 'text-vdao-light'} cursor-pointer justify-start`}
-            onClick={() => setShowActivity(false)}
-          >
-            Statement
-          </div>
-          <div
-            className={` ${showActivity && 'text-vdao-light'} cursor-pointer justify-start`}
-            onClick={() => setShowActivity(true)}
-          >
-            Activity
-          </div>
-        </div>
-
-        {showActivity ? <Activity /> : <Statements />}
-      </div>
+      )}
     </CustomModal>
   )
 }

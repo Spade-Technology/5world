@@ -41,15 +41,7 @@ export function useUserRead(
   return api.user.getUser.useQuery(...args) as any
 }
 
-export function useUserReads(addresses: string[], include: UserInclude = {}) {
-  const schema = z.object({
-    addresses: z.array(z.string()),
-    include: userIncludeSchema.optional(),
-  })
-  schema.parse({ addresses, include })
-
-  return api.user.getUsers.useQuery({ addresses, include })
-}
+export const useUserReads = api.user.getUsers.useQuery
 
 export function useEditUser(include: UserInclude = {}): {
   editUser: (values: EditUserSchema, include_override?: UserInclude) => void
