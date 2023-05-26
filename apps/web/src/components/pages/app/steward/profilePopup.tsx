@@ -3,7 +3,9 @@ import ProfilePic from 'public/icons/blog/createdByLogo.svg'
 import Image from 'next/image'
 import { useState } from 'react'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
-import { useDelegate } from '~/hooks/web3/useStewards'
+import { useDelegate, useStewardRead } from '~/hooks/web3/useStewards'
+import { useAccount } from 'wagmi'
+import { monthNames, shortenAddress } from '~/utils/helpers'
 
 type PopupProps = {
   show: boolean
@@ -13,6 +15,10 @@ type PopupProps = {
 const ProfilePopup = ({ show, close }: PopupProps) => {
   const [showActivity, setShowActivity] = useState(false)
   const { delegate } = useDelegate()
+  const { address, isConnecting, isDisconnected } = useAccount()
+
+  /** Here !, tell TypeScript that even though something looks like it could be null, it can trust you that it's not */
+  const { data } = useStewardRead(address!)
 
   return (
     <CustomModal show={show} close={close}>
@@ -21,22 +27,40 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
           <div>
             <div className='flex w-full'>
               <Image
-                src={ProfilePic}
+                src={data?.picture ? data?.picture : ProfilePic}
                 alt=''
                 className='h-[64.2px] w-[60px] rounded-full md:h-[128.4px] md:w-[123.41px]'
               />
 
               <div className='pl-[10px] md:pl-[15px]'>
-                <div className='font-body text-[26px] font-semibold text-vdao-light md:text-[36px]'> Kris Millar </div>
+                <div className='font-body text-[26px] font-semibold text-vdao-light md:text-[36px]'> 
+                {' '}
+                  {data?.name!
+                    ? data?.name?.length > 15
+                      ? data.name?.slice(0, 15) + '...'
+                      : data.name
+                    : 'Kris Miller'}{' '}
+                     </div>
                 <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>
-                  <div className='font-medium md:text-[22px]'>0xd12512....92C</div>
-                  <div className='font-bold'>Joined May 05, 2023</div>
+                  <div className='font-medium md:text-[22px]'>
+                  {data?.address ? shortenAddress(data?.address!) : '0xd12512....92C'}{' '}
+                  </div>
+                  <div className='font-bold'>
+                  {data?.JoinedAt
+                      ? 'Joined ' +
+                        monthNames[data.JoinedAt.getUTCMonth()] +
+                        ' ' +
+                        data.JoinedAt.getDate() +
+                        ', ' +
+                        data.JoinedAt.getFullYear()
+                      : 'May 05, 2023'}
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className='mt-[30px] w-fit rounded-3xl border-[3px] border-vdao-light px-5 text-lg font-medium md:ml-36 md:mt-[0px] md:py-[7px] md:px-[25px] md:text-xl'>
-              DAO Operation Guild
+            {data && data?.guild?.name ? data?.guild?.name : 'No DAO Operation Guild'}
             </div>
           </div>
 

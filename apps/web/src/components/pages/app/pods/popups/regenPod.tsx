@@ -14,15 +14,18 @@ import Image from 'next/image'
 import { usePodRead, usePodReads } from '~/hooks/web3/usePod'
 import { useAccount } from 'wagmi'
 import { Pod } from '@prisma/client'
+import { Dispatch, SetStateAction, useState } from 'react'
+import ManageMembers from './manageMembers'
 
 type RegenPodProps = {
   show: boolean
   close: any
   pid: number
   data: any
+  setShowManageMembers: Dispatch<SetStateAction<boolean>>
 }
 
-const RegenPod = ({ pid, show, close, data }: RegenPodProps) => {
+const RegenPod = ({ pid, show, close, data, setShowManageMembers }: RegenPodProps) => {
   const { address } = useAccount()
 
   // const { data } = usePodRead(0, { admins: true, discussions: true, members: true, proposals: true })
@@ -63,7 +66,15 @@ const RegenPod = ({ pid, show, close, data }: RegenPodProps) => {
         <div className='pr-5'>
           <div className='flex justify-between'>
             <div className='text-[22px] font-bold'>Members</div>
-            <div className='my-auto text-sm font-bold underline'>Manage Memberships</div>
+            <div
+              className='my-auto cursor-pointer text-sm font-bold underline'
+              onClick={() => {
+                close()
+                setShowManageMembers(true)
+              }}
+            >
+              Manage Memberships
+            </div>
           </div>
 
           <ProfileCard Icon={Icon1} />

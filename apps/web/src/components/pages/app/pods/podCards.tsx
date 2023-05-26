@@ -34,6 +34,15 @@ const PodCards = ({ setOpenRegen, data, setPid }: PodCardProps) => {
   /** Here !, tell TypeScript that even though something looks like it could be null, it can trust you that it's not */
   // const { data } = usePodReads([0, 1], { admins: true, discussions: true, members: true, proposals: true })
   // console.log("Pods info: ", data)
+//   const temp = {
+//     id: 1,
+//     name: "string",
+//     description: "string",
+//     picture: PodImage,
+//     discussions: [],
+//     createdById: "string",
+//     updatedById: "string"
+// }
 
   return (
     <div className='mx-auto w-screen bg-vdao-deep'>

@@ -48,7 +48,8 @@ const Pods = () => {
           </Button>
 
           <div>
-            <span>Your Pods {isFetching ? '(Loading...)' : ''}</span>
+            <div>Your Pods {isFetching ? '(Loading...)' : ''}</div>
+
             <br />
 
             {data?.map(pod => (

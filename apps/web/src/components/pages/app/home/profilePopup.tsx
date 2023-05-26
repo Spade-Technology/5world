@@ -5,7 +5,8 @@ import { useState } from 'react'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { useAccount } from 'wagmi'
 import { useUserRead } from '~/hooks/web3/useUser'
-import { shortenAddress } from '~/utils/helpers'
+import { monthNames, shortenAddress } from '~/utils/helpers'
+import { useDelegate } from '~/hooks/web3/useStewards'
 
 type PopupProps = {
   show: boolean
@@ -20,21 +21,6 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
   const [showActivity, setShowActivity] = useState(false)
   const { address, isConnecting, isDisconnected } = useAccount()
 
-  const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ]
-
   /** Here !, tell TypeScript that even though something looks like it could be null, it can trust you that it's not */
   const { data } = useUserRead({
     address: address!,
@@ -42,6 +28,8 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
       guild: true,
     },
   })
+
+  const { delegate } = useDelegate()
 
   console.log('userData', data)
   return (
@@ -95,6 +83,7 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
             <PrimaryButton
               text='Delegate'
               className='float-right mt-[30px] h-fit py-[5px] px-[35px] font-heading text-xl font-medium md:mt-[46px]'
+              onClick={() => delegate({ delegatee: '0x6a2c4104d767b34e042f0FF9d18FE321c8B78676' })}
             />
           )}
         </div>
