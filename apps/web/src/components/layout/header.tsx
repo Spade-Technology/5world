@@ -109,7 +109,9 @@ const Header = (props: Props) => {
               }
               key={element.name}
             >
-              <Link href={element.link}>{element.name}</Link>
+              <Link href={element.link} className='text-body text-[18px] font-medium text-vdao-dark'>
+                {element.name}
+              </Link>
             </Tooltip>
           ))}
         </div>
@@ -134,7 +136,9 @@ const Header = (props: Props) => {
 
         <VDAOConnectButton
           web2={props.web2}
-          className={!props.dark ? 'border-vdao-dark text-vdao-dark' : 'border-vdao-light text-vdao-light'}
+          className={
+            !props.dark ? 'border-vdao-dark text-xl font-medium text-vdao-dark' : 'border-vdao-light text-vdao-light'
+          }
         />
       </div>
 
