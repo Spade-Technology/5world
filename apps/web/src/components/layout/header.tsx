@@ -81,8 +81,6 @@ const Header = (props: Props) => {
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen)
 
-  console.log('props', props)
-
   return (
     <header className={!props.dark ? 'overflow-hidden bg-white' : 'overflow-hidden bg-vdao-deep'}>
       {/* Desktop */}

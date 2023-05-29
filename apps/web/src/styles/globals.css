@@ -57,6 +57,12 @@ span {
   font-weight: 300;
 }
 
+.ant-select span {
+  color: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+}
+
 /* for spans that are children of buttons */
 button span {
   font-family: 'Clash Display', sans-serif;
@@ -70,6 +76,8 @@ button span {
 
 .antd-stop-propagation span {
   color: inherit;
+  font-weight: inherit;
+  font-size: inherit;
 }
 
 /* GRAPH'S TOOLTIP DESIGN */

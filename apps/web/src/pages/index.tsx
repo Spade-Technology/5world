@@ -15,15 +15,6 @@ import {
 import { useUserReads } from '~/hooks/web3/useUser'
 
 const Home: NextPage = () => {
-  // this is not
-  const { data } = useUserReads([], {})
-  console.log(data)
-
-  // this is illegal in react
-  const fnc = async () => {
-    const rtn = useUserReads([], {})
-  }
-
   return (
     <>
       <Page web2>
