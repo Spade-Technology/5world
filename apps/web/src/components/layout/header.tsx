@@ -88,7 +88,7 @@ const Header = (props: Props) => {
         <Link href='/'>
           <Image src={logo} alt='VDAO' height={30} />
         </Link>
-        <div className={'xl:ml-54 flex justify-between gap-9 ' + (!props.dark ? 'text-vdao-dark' : 'text-white')}>
+        <div className={'xl:ml-54 flex justify-between gap-9 ' + (!props.dark ? '!text-vdao-dark' : 'text-white')}>
           {(props.web2 ? navigationElementsWeb2 : navigationElementsWeb3).map(element => (
             <Tooltip
               placement='bottomLeft'
@@ -107,7 +107,10 @@ const Header = (props: Props) => {
               }
               key={element.name}
             >
-              <Link href={element.link} className='text-body text-[18px] font-medium text-vdao-dark'>
+              <Link
+                href={element.link}
+                className={`text-body text-lg font-medium ${props.web2 ? 'text-vdao-dark' : 'text-white'}`}
+              >
                 {element.name}
               </Link>
             </Tooltip>
