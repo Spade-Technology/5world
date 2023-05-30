@@ -10,15 +10,17 @@ import Icon7 from 'public/icons/pods/icon7.svg'
 import Icon8 from 'public/icons/pods/icon8.svg'
 import ProfileCard from '~/components/misc/profileCard'
 import CustomModal from '~/components/misc/customModal'
+import { pod_type } from '~/hooks/web3/usePod'
 
 type ManageMembersProps = {
   show: boolean
+  pod: pod_type | undefined
   managerAddr: string
   setManagerAddr: Dispatch<SetStateAction<string>>
   memberAddr: string
   setMemberAddr: Dispatch<SetStateAction<string>>
   setShowManageMembers: Dispatch<SetStateAction<boolean>>
-  setOpenRegen: Dispatch<SetStateAction<boolean>>
+  setOpenedPod: Dispatch<SetStateAction<pod_type | undefined>>
 }
 
 const ManageMembers = ({
@@ -28,7 +30,8 @@ const ManageMembers = ({
   setManagerAddr,
   setMemberAddr,
   setShowManageMembers,
-  setOpenRegen,
+  setOpenedPod,
+  pod,
 }: ManageMembersProps) => {
   return (
     <CustomModal
@@ -74,7 +77,7 @@ const ManageMembers = ({
             {/* <div className='my-auto text-sm font-bold underline'>Manage Memberships</div> */}
           </div>
 
-          <ProfileCard Icon={Icon1} />
+          <ProfileCard icon={Icon1} />
 
           <div className='flex justify-start gap-[30px] pt-[30px] md:pt-10'>
             <div className='text-[22px] font-bold'>Manager</div>
@@ -82,13 +85,13 @@ const ManageMembers = ({
           </div>
 
           <div className='grid grid-cols-2 pt-5 '>
-            <ProfileCard Icon={Icon2} Name='Lostpoet' />
-            <ProfileCard Icon={Icon3} Name='NinjaSam' />
-            <ProfileCard Icon={Icon4} Name='BearXYZ' />
-            <ProfileCard Icon={Icon5} Name='CyberGod01' />
-            <ProfileCard Icon={Icon6} Name='Lostpoet' />
-            <ProfileCard Icon={Icon7} Name='NinjaSam' />
-            <ProfileCard Icon={Icon8} Name='BearXYZ' />
+            <ProfileCard icon={Icon2} name='Lostpoet' />
+            <ProfileCard icon={Icon3} name='NinjaSam' />
+            <ProfileCard icon={Icon4} name='BearXYZ' />
+            <ProfileCard icon={Icon5} name='CyberGod01' />
+            <ProfileCard icon={Icon6} name='Lostpoet' />
+            <ProfileCard icon={Icon7} name='NinjaSam' />
+            <ProfileCard icon={Icon8} name='BearXYZ' />
           </div>
 
           <div className='float-right flex gap-2 pt-20 pb-[30px] md:gap-5 md:pt-36 '>
@@ -96,7 +99,7 @@ const ManageMembers = ({
               className='cursor-pointer rounded-[5px] border-[1px] border-vdao-dark py-[5px] px-[35px] font-heading text-lg font-medium'
               onClick={() => {
                 setShowManageMembers(false)
-                setOpenRegen(true)
+                setOpenedPod(pod)
               }}
             >
               Previous
@@ -106,7 +109,7 @@ const ManageMembers = ({
               className=' py-[5px] px-[35px] font-heading text-lg font-medium'
               onClick={() => {
                 setShowManageMembers(false)
-                setOpenRegen(true)
+                setOpenedPod(pod)
               }}
             />
           </div>

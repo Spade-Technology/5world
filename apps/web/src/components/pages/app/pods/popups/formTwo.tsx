@@ -65,7 +65,7 @@ const FormTwo = ({
           {/* <div className='my-auto text-sm font-bold underline'>Manage Memberships</div> */}
         </div>
 
-        <ProfileCard Icon={Icon1} />
+        <ProfileCard icon={Icon1} />
 
         <div className='flex justify-start gap-[30px] pt-[30px] md:pt-10'>
           <div className='text-[22px] font-bold'>Manager</div>
@@ -73,13 +73,13 @@ const FormTwo = ({
         </div>
 
         <div className='grid grid-cols-2 pt-5 '>
-          <ProfileCard Icon={Icon2} Name='Lostpoet' />
-          <ProfileCard Icon={Icon3} Name='NinjaSam' />
-          <ProfileCard Icon={Icon4} Name='BearXYZ' />
-          <ProfileCard Icon={Icon5} Name='CyberGod01' />
-          <ProfileCard Icon={Icon6} Name='Lostpoet' />
-          <ProfileCard Icon={Icon7} Name='NinjaSam' />
-          <ProfileCard Icon={Icon8} Name='BearXYZ' />
+          <ProfileCard icon={Icon2} name='Lostpoet' />
+          <ProfileCard icon={Icon3} name='NinjaSam' />
+          <ProfileCard icon={Icon4} name='BearXYZ' />
+          <ProfileCard icon={Icon5} name='CyberGod01' />
+          <ProfileCard icon={Icon6} name='Lostpoet' />
+          <ProfileCard icon={Icon7} name='NinjaSam' />
+          <ProfileCard icon={Icon8} name='BearXYZ' />
         </div>
 
         <div className='float-right flex gap-2 pt-20 pb-[30px] md:gap-5 md:pt-36 '>

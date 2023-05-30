@@ -44,7 +44,8 @@ const Pods = () => {
             setMemberAddr={setMemberAddr}
             setManagerAddr={setManagerAddr}
             setShowManageMembers={setShowManageMembers}
-            setOpenedPod={(b: boolean) => setOpenedPod(undefined)}
+            pod={openedPod}
+            setOpenedPod={setOpenedPod(undefined)}
           />
         )}
       </Page>
