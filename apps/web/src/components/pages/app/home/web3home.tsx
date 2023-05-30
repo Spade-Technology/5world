@@ -29,19 +29,21 @@ type ProfileProps = {
 export function StatisticsHomeComponent() {
   const [period, setPeriod] = useState({ value: 'week', state: false })
   return (
-    <Section className=' col-span-12 mb-28 w-[100%] rounded-2xl bg-vdao-dark py-10 px-5 lg:py-12 lg:pr-16 lg:pl-12'>
-      <div className='lg:pr-10'>
+    <Section className=' col-span-12 mb-28 w-[100%] rounded-2xl bg-vdao-dark py-10 lg:py-12 lg:pr-16 lg:pl-12'>
+      <div className='pr-5 lg:pr-10'>
         <div className='items-start justify-between md:flex'>
           <div className='mt-[53] w-full md:w-7/12'>
-            <div className='mb-[55px] flex justify-between text-white md:ml-6 md:items-center'>
-              <div className='font-body text-xl font-bold text-white md:mt-0 md:text-[22px]'>Treasury</div>
-              <div className='ml-auto mr-[40px] flex flex-col gap-[14px] md:ml-0 md:mr-0 md:flex-row md:items-center md:gap-10'>
+            <div className='mb-[55px] flex items-start justify-between pl-5 text-white md:ml-6 md:items-center md:pl-0'>
+              <div className='leading-0 font-body text-[22px] font-bold text-white'>Treasury</div>
+              <div className=' mx-auto flex flex-col gap-[0px] md:ml-0 md:mr-0 md:flex-row md:items-center md:gap-10'>
                 <div className='flex items-center'>
-                  <div className='mr-2.5 h-2.5 w-2.5 rounded-full bg-vdao-light md:h-[15px] md:w-[15px]'></div>
-                  <div className='font-body text-sm font-normal text-white md:mt-0'>USDC</div>
+                  <div className='mr-2.5 h-[15px] w-[15px] rounded-full bg-vdao-light'></div>
+                  <div className='font-body text-sm font-normal leading-10 text-white md:mt-0 lg:leading-[18.9px]'>
+                    USDC
+                  </div>
                 </div>
                 <div className=' flex items-center'>
-                  <div className='mr-2.5 h-2.5 w-2.5 rounded-full bg-vdao-pink md:h-[15px] md:w-[15px]'></div>
+                  <div className='mr-2.5 h-[15px] w-[15px] rounded-full bg-vdao-pink'></div>
                   <div className='font-body text-sm font-normal text-white'>ETH</div>
                 </div>
               </div>
@@ -83,7 +85,7 @@ export function StatisticsHomeComponent() {
               height={'333px'}
             />
           </div>
-          <div>
+          <div className='pl-5 lg:pl-0'>
             <div className='mt-[60px] font-body text-[22px] font-bold text-white md:mt-0 md:text-2xl'>Latest</div>
             <div className=' mt-[32px] flex w-full flex-col gap-5 md:gap-[43px] lg:mt-[30px] lg:w-72'>
               {' '}
@@ -104,7 +106,7 @@ export function StatisticsHomeComponent() {
           </div>
         </div>
 
-        <article className='mt-12 flex flex-col gap-5 lg:flex-row lg:justify-end lg:gap-10'>
+        <article className='mt-12 flex flex-col gap-5 px-2.5 md:pl-0 lg:flex-row lg:justify-end lg:gap-10'>
           {expenditureData.map(({ title, amount, percent }, index) => {
             return (
               <div className='mx-auto w-fit rounded-2xl bg-white p-5 md:p-8 lg:mx-0'>
@@ -116,19 +118,19 @@ export function StatisticsHomeComponent() {
                   <div className='mr-2 font-body text-[26px] font-medium leading-6 text-vdao-dark md:text-3xl md:font-bold lg:mr-2.5 lg:leading-8'>
                     {amount}
                   </div>
-                  <div className='mr-2 font-body text-xl font-medium leading-5 text-vdao-dark md:font-bold lg:mr-5'>
+                  <div className='mr-2 font-heading text-xl font-medium leading-5 text-vdao-dark md:font-body md:font-bold lg:mr-5'>
                     USD
                   </div>
                   <div
-                    className={`flex items-center gap-2 rounded-2xl bg-vdao-light py-1.5 px-2 font-body text-sm font-bold leading-5 text-vdao-dark lg:mr-5 lg:text-xl ${
+                    className={`flex w-[100px] items-center justify-center rounded-2xl bg-vdao-light py-1.5 font-inter text-sm font-bold leading-5 text-vdao-dark md:px-2 lg:mr-5 lg:font-body lg:text-xl ${
                       index > 0 && 'bg-vdao-pink'
                     }`}
                   >
-                    {percent}
+                    <div className=''>{percent}</div>
                     <img
                       src='/illustrations/home/SVG/Arrow 6.svg'
                       alt=''
-                      className={` ${index > 0 && 'rotate-180'} h-4 w-auto`}
+                      className={` ${index > 0 && 'rotate-180'} ml-1 w-[13px]`}
                     />
                   </div>
                 </div>
@@ -138,16 +140,16 @@ export function StatisticsHomeComponent() {
         </article>
         <div className=' mt-[60px] flex flex-col items-end justify-between md:flex-row'>
           <div className='w-full md:w-7/12'>
-            <div className='mb-[35px] flex justify-between text-white md:ml-5 md:items-center md:justify-start'>
+            <div className='mb-[35px] flex justify-between pl-5 text-white md:ml-5 md:items-center md:justify-start lg:pl-0'>
               <div className='font-body text-xl font-bold text-white md:mt-0 md:mr-28 md:text-[22px]'>New User</div>
               <div className='flex flex-col gap-[14px] md:flex-row'>
                 <div className=' flex items-center'>
                   <div className='mr-2.5 h-[15px] w-[15px] rounded-full bg-vdao-light'></div>
-                  <div className='font-body text-xl font-normal text-white md:mt-0 md:text-sm'>Join Member</div>
+                  <div className='leading-0 font-body text-sm font-normal text-white md:mt-0'>Join Member</div>
                 </div>
                 <div className=' flex items-center'>
                   <div className='mr-2.5 h-[15px] w-[15px] rounded-full bg-[#33A1AA]'></div>
-                  <div className='font-body text-xl font-normal text-white md:mt-0 md:text-sm'>Invested</div>
+                  <div className='leading-0 font-body text-sm font-normal text-white md:mt-0'>Invested</div>
                 </div>
               </div>
             </div>
@@ -162,7 +164,7 @@ export function StatisticsHomeComponent() {
             />
           </div>
           <div className='mt-[60px] w-full  md:mt-0 md:w-3/12'>
-            <div className='mb-[30px] flex items-center text-white md:mb-[35px]'>
+            <div className='mb-[30px] flex items-center pl-5 text-white md:mb-[35px] lg:pl-0'>
               <div className='font-body text-xl font-bold text-white md:text-[22px]'>Weekly Purchases</div>
             </div>
             <Chart
@@ -194,14 +196,14 @@ export function NewMembersComponent() {
             return (
               <div className='mt-5 flex items-center justify-between md:w-80 lg:w-auto' key={name + index}>
                 <div className='mr-6 flex items-center'>
-                  <img src={img} alt='' className='mr-4 rounded-full md:h-10 md:w-10 lg:mr-2.5' />
+                  <img src={img} alt='' className='mr-4 h-10 w-10 rounded-full lg:mr-2.5' />
                   <div>
                     <div className='font-body text-lg font-medium leading-5 text-vdao-light'>{name}</div>
                     <div className='font-body text-sm font-normal leading-5 text-white'>{category}</div>
                   </div>
                 </div>
                 <div className=''>
-                  <div className='flex justify-end font-body text-sm font-medium leading-5 text-[#F8F2FF]'>{date}</div>
+                  <div className='flex justify-end font-body text-sm font-bold leading-5 text-[#F8F2FF]'>{date}</div>
                   <div className='flex justify-end font-body text-sm font-normal leading-5 text-[#F8F2FF]'>{time}</div>
                 </div>
               </div>
@@ -217,12 +219,12 @@ export function NewMembersComponent() {
           <div className='font-body text-lg font-normal text-white'>{onlineMembersData.length}</div>
         </div>
 
-        <article className='mt-8 flex flex-wrap gap-5 md:w-80 lg:w-auto'>
+        <article className='mt-8 flex flex-wrap gap-[30px] md:w-80 md:gap-5 lg:w-auto'>
           {onlineMembersData.map(({ name, img }, index) => {
             return (
-              <div className=' col-span-3 w-20 overflow-hidden'>
+              <div className='w-[50px] overflow-hidden md:w-20 md:w-20'>
                 <img src={img} alt='' className='mx-auto h-10 w-10 rounded-full' />
-                <div className='w-20 text-center font-body text-sm font-normal text-white md:text-lg'>{name}</div>
+                <div className='w-[50px] text-center font-body text-sm font-normal text-white md:w-20'>{name}</div>
               </div>
             )
           })}
@@ -325,7 +327,7 @@ export function ProfileHomeComponent({ setOpenProfile }: ProfileProps) {
                   {stat.value}
                 </Skeleton>
               </div>
-              <span className='mt-2 text-center font-body text-lg font-bold md:text-base'>{stat.name}</span>
+              <span className='mt-2 text-center font-body text-lg font-bold'>{stat.name}</span>
             </div>
           ))}
         </div>
@@ -342,9 +344,9 @@ export function WelcomeComponent() {
         alt='VDAO Web3 Hero'
         className='mb-24 translate-x-[40%] scale-[200%] md:mb-0 md:-translate-x-0 md:scale-100'
       />
-      <h1 className='z-10 text-center text-5xl font-medium text-white md:absolute md:text-7xl'>
-        Welcome to <br /> VDAO
-      </h1>
+      <div className='z-10 w-[342px] text-center font-heading text-[44px] font-medium leading-[48px] text-white md:absolute md:w-[702px] md:text-[80px] md:leading-[95px]'>
+        Welcome to VDAO
+      </div>
     </Section>
   )
 }

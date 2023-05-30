@@ -19,7 +19,7 @@ const MailingListComponent = () => {
           <div className='flex flex-col justify-end pt-8 md:ml-[8.3%] md:w-6/12 md:flex-row md:pt-0'>
             <input
               placeholder='Enter your email'
-              className='h-10 w-full rounded-[5px] pl-5 text-vdao-dark outline-none outline-vdao-dark placeholder:text-vdao-dark placeholder:opacity-50'
+              className='h-10 w-full rounded-[5px] border-[1px] border-vdao-dark pl-5 text-vdao-dark  placeholder:text-vdao-dark placeholder:opacity-50'
             />
             <DarkButton text='Subscribe' className='clash mt-[22px] md:mt-0 md:ml-5' />
           </div>
