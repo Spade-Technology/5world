@@ -5,7 +5,8 @@ import { useState } from 'react'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { useAccount } from 'wagmi'
 import { useUserRead } from '~/hooks/web3/useUser'
-import { shortenAddress } from '~/utils/helpers'
+import { monthNames, shortenAddress } from '~/utils/helpers'
+import { useDelegate } from '~/hooks/web3/useStewards'
 
 type PopupProps = {
   show: boolean
@@ -20,21 +21,6 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
   const [showActivity, setShowActivity] = useState(false)
   const { address, isConnecting, isDisconnected } = useAccount()
 
-  const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ]
-
   /** Here !, tell TypeScript that even though something looks like it could be null, it can trust you that it's not */
   const { data } = useUserRead({
     address: address!,
@@ -43,6 +29,9 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
     },
   })
 
+  const { delegate } = useDelegate()
+
+  console.log('userData', data)
   return (
     <CustomModal show={show} close={close}>
       <div className='pl-[10px]'>
@@ -57,11 +46,16 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
 
               <div className='pl-[10px] md:pl-[15px]'>
                 <div className='font-body text-[26px] font-semibold text-vdao-light md:text-[36px]'>
-                  {data?.name! ? data?.name : 'Loading...'}{' '}
+                  {' '}
+                  {data?.name!
+                    ? data?.name?.length > 15
+                      ? data.name?.slice(0, 15) + '...'
+                      : data.name
+                    : 'Kris Miller'}{' '}
                 </div>
                 <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>
                   <div className='font-medium md:text-[22px]'>
-                    {data?.address ? shortenAddress(data?.address!) : 'Loading...'}{' '}
+                    {data?.address ? shortenAddress(data?.address!) : '0xd12512....92C'}{' '}
                   </div>
                   <div className='font-bold'>
                     {' '}
@@ -72,23 +66,24 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
                         data.JoinedAt.getDate() +
                         ', ' +
                         data.JoinedAt.getFullYear()
-                      : 'Loading...'}
+                      : 'May 05, 2023'}
                   </div>
                 </div>
               </div>
             </div>
 
-            {data?.guild && (
-              <div className='mt-[30px] w-fit rounded-3xl border-[3px] border-vdao-light px-5 text-lg font-medium md:ml-36 md:mt-[0px] md:py-[7px] md:px-[25px] md:text-xl'>
-                {data?.guild?.name}
-              </div>
-            )}
+            {/* {data?.guild && ( */}
+            <div className='mt-[30px] w-fit rounded-3xl border-[3px] border-vdao-light px-5 text-lg font-medium md:ml-36 md:mt-[0px] md:py-[7px] md:px-[25px] md:text-xl'>
+              {data?.guild?.name ? data?.guild?.name : 'No DAO Operation Guild'}
+            </div>
+            {/* )} */}
           </div>
 
           {data?.stewardApplicationBlock && (
             <PrimaryButton
               text='Delegate'
               className='float-right mt-[30px] h-fit py-[5px] px-[35px] font-heading text-xl font-medium md:mt-[46px]'
+              onClick={() => delegate({ delegatee: '0x6a2c4104d767b34e042f0FF9d18FE321c8B78676' })}
             />
           )}
         </div>

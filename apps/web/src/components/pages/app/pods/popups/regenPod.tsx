@@ -14,30 +14,43 @@ import Image from 'next/image'
 import { usePodRead, usePodReads } from '~/hooks/web3/usePod'
 import { useAccount } from 'wagmi'
 import { Pod } from '@prisma/client'
+import { Dispatch, SetStateAction, useState } from 'react'
+import ManageMembers from './manageMembers'
 
 type RegenPodProps = {
   show: boolean
   close: any
-  data: (Pod & {})[] | undefined
+  pid: number
+  data: any
+  setShowManageMembers: Dispatch<SetStateAction<boolean>>
 }
 
-const RegenPod = ({ show, close, data }: RegenPodProps) => {
+const RegenPod = ({ pid, show, close, data, setShowManageMembers }: RegenPodProps) => {
   const { address } = useAccount()
 
   // const { data } = usePodRead(0, { admins: true, discussions: true, members: true, proposals: true })
+  const podData = data && data?.filter((pod: Pod) => pod.id === pid)[0]!
 
-  console.log('Regen Pod info : ', data)
+  console.log('Regen Pod info : ', podData)
   return (
     <CustomModal show={show} close={close} heading='Regen Pod' modalMarginTop='my-[50px]'>
       <div className='grid grid-cols-1 gap-10 py-[30px] font-body text-lg font-normal text-vdao-dark md:grid-cols-2 md:gap-[106px] md:py-10'>
         <div>
           <div className='flex flex-col justify-between gap-5 md:flex-row md:gap-7'>
-            <Image src={PodImage} alt='PodImage' className='my-auto align-top' />
+            <Image
+              src={podData?.picture ? podData.picture : PodImage}
+              height={120}
+              width={120}
+              alt='PodImage'
+              className='my-auto align-top'
+            />
 
             <div className='text-lg font-normal'>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet elementum urna, in volutpat risus.
+              {podData
+                ? podData.description
+                : `Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet elementum urna, in volutpat risus.
               Quisque nec tempus diam, sit amet luctus mi. Quisque auctor tortor ut nunc finibus, et venenatis lacus
-              eleifend. Fusce commodo, ipsum sit amet mollis tincidunt.
+              eleifend. Fusce commodo, ipsum sit amet mollis tincidunt.`}
             </div>
           </div>
           <div className='pt-[27px] md:pt-0'>
@@ -53,7 +66,15 @@ const RegenPod = ({ show, close, data }: RegenPodProps) => {
         <div className='pr-5'>
           <div className='flex justify-between'>
             <div className='text-[22px] font-bold'>Members</div>
-            <div className='my-auto text-sm font-bold underline'>Manage Memberships</div>
+            <div
+              className='my-auto cursor-pointer text-sm font-bold underline'
+              onClick={() => {
+                close()
+                setShowManageMembers(true)
+              }}
+            >
+              Manage Memberships
+            </div>
           </div>
 
           <ProfileCard Icon={Icon1} />
@@ -64,12 +85,13 @@ const RegenPod = ({ show, close, data }: RegenPodProps) => {
           </div>
 
           <div className='grid grid-cols-2 pt-5'>
-            {data?.map((pod, idx) => {
+            {data?.map((pod: Pod, idx: number) => {
               return (
                 <ProfileCard
                   Icon={('data:image/png;base64,' + pod.picture) as any}
                   Name={pod.name}
                   Address={pod.updatedById ? pod.updatedById : pod.createdById}
+                  key={idx}
                 />
               )
             })}

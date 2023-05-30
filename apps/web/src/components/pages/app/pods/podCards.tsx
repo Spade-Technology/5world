@@ -18,20 +18,31 @@ import { Pod } from '@prisma/client'
 type PodCardProps = {
   setOpenRegen: Dispatch<SetStateAction<boolean>>
   data: (Pod & {})[] | undefined
+  setPid: Dispatch<SetStateAction<number>>
 }
 
 type CardProps = {
   setOpenRegen: Dispatch<SetStateAction<boolean>>
   data: (Pod & {})[] | undefined
   pod: Pod
+  setPid: Dispatch<SetStateAction<number>>
 }
 
-const PodCards = ({ setOpenRegen, data }: PodCardProps) => {
+const PodCards = ({ setOpenRegen, data, setPid }: PodCardProps) => {
   const { address, isConnecting, isDisconnected } = useAccount()
 
   /** Here !, tell TypeScript that even though something looks like it could be null, it can trust you that it's not */
   // const { data } = usePodReads([0, 1], { admins: true, discussions: true, members: true, proposals: true })
   // console.log("Pods info: ", data)
+//   const temp = {
+//     id: 1,
+//     name: "string",
+//     description: "string",
+//     picture: PodImage,
+//     discussions: [],
+//     createdById: "string",
+//     updatedById: "string"
+// }
 
   return (
     <div className='mx-auto w-screen bg-vdao-deep'>
@@ -44,21 +55,24 @@ const PodCards = ({ setOpenRegen, data }: PodCardProps) => {
         </div>
 
         <div className='mx-6 mt-5 grid grid-cols-1 gap-5 md:mx-0 md:grid-cols-2'>
-          {data?.map((pod, idx) => {
-            return <Card setOpenRegen={setOpenRegen} data={data} pod={pod} />
-          })}
+          {data && data.length > 0 ? (
+            data?.map((pod, idx) => {
+              return <Card setOpenRegen={setOpenRegen} data={data} pod={pod} setPid={setPid} />
+            })
+          ) : (
+            <div className='text-white'>There are no pods available. Please do create a pod...!!</div>
+          )}
         </div>
       </div>
     </div>
   )
 }
 
-export const Card = ({ setOpenRegen, data, pod }: CardProps) => {
+export const Card = ({ setOpenRegen, data, pod, setPid }: CardProps) => {
   return (
     <div className='rounded-[20px] bg-vdao-dark py-10 px-5 text-white md:py-[50px] md:px-10'>
       <div className='flex flex-col gap-[10px] md:flex-row md:gap-[25px]'>
-        <Image src={PodImage} alt='' height={120} width={120} className='align-top' />
-
+        <Image src={pod.picture ? pod.picture : PodImage} alt='' height={120} width={120} className='align-top' />
         <div>
           <div className='font-heading text-3xl font-medium'> {pod.name}</div>
           <div className='pt-[10px] font-body text-lg font-normal'>
@@ -73,13 +87,21 @@ export const Card = ({ setOpenRegen, data, pod }: CardProps) => {
             <PrimaryButton
               text='View Detail'
               className='mt-5 py-[5px] px-[35px] font-heading text-xl font-medium'
-              onClick={() => setOpenRegen(true)}
+              onClick={() => {
+                setOpenRegen(true)
+                setPid(pod.id)
+              }}
             />
           </div>
         </div>
       </div>
 
-      <PodInfoBox invertColors={false} proposals={21} discussions={354} members={data ? data.length : 0} />
+      <PodInfoBox
+        invertColors={false}
+        proposals={21}
+        discussions={pod && pod.discussions ? pod.discussions.length : 0}
+        members={data ? data.length : 0}
+      />
 
       <div className='flex flex-col gap-[30px] pt-5 md:flex-row md:gap-[60px] md:pt-10'>
         <div>

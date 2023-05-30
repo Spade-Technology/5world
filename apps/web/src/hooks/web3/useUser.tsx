@@ -35,6 +35,7 @@ export function useUserRead(
 ): { data: User & { guild?: { id: number; name: string } } } & InferReturn<typeof api.user.getUser.useQuery> {
   api.user.getUser.useQuery({ address: '', include: { guild: true } })
 
+  console.log('userData returning something', api.user.getUser.useQuery(...args))
   return api.user.getUser.useQuery(...args) as any
 }
 

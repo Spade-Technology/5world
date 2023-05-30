@@ -85,3 +85,18 @@ export const convertToUnixTimeStampToTime = (unixTimestamp: number) => {
 export const getCurrentUnixTimeStamp = () => {
   return Math.floor(Date.now() / 1000)
 }
+
+export const monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
