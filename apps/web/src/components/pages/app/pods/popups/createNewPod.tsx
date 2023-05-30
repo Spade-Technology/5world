@@ -14,7 +14,7 @@ type CreatePodProps = {
 const CreateNewPod = ({ show, close, refetch }: CreatePodProps) => {
   const [nextFrom, setNextForm] = useState(false)
   const [podName, setPodName] = useState('')
-  const [podImage, setPodImage] = useState({image:"", name:""})
+  const [podImage, setPodImage] = useState({ image: '', name: '' })
   const [description, setDescription] = useState('')
   const [managerAddr, setManagerAddr] = useState('')
   const [memberAddr, setMemberAddr] = useState('')
@@ -28,7 +28,6 @@ const CreateNewPod = ({ show, close, refetch }: CreatePodProps) => {
     createPod,
     mutation: { isLoading },
   } = useCreatePod()
-
 
   const createPodHanlder = () => {
     if (address) {

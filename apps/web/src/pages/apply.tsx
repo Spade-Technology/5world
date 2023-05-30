@@ -1,18 +1,18 @@
-import React from "react";
+import React from 'react'
 
-import Footer from "~/components/layout/footer";
-import Header from "~/components/layout/header";
-import MailingListComponent from "~/components/misc/mailinglist";
+import Footer from '~/components/layout/footer'
+import Header from '~/components/layout/header'
+import MailingListComponent from '~/components/misc/mailinglist'
 
-import SectionOne from "~/components/pages/apply/sectionOne";
-import SectionTwo from "~/components/pages/apply/sectionTwo";
-import { FAQS } from "~/components/pages/apply/faqs";
-import Description from "~/components/misc/description";
-import FAQSection from "~/components/misc/FAQSection";
-import ApplyDescription from "~/components/pages/apply/description";
-import Page from "~/components/layout/page";
+import SectionOne from '~/components/pages/apply/sectionOne'
+import SectionTwo from '~/components/pages/apply/sectionTwo'
+import { FAQS } from '~/components/pages/apply/faqs'
+import Description from '~/components/misc/description'
+import FAQSection from '~/components/misc/FAQSection'
+import ApplyDescription from '~/components/pages/apply/description'
+import Page from '~/components/layout/page'
 
-type Props = {};
+type Props = {}
 
 const apply = (props: Props) => {
   return (
@@ -29,7 +29,7 @@ const apply = (props: Props) => {
         <MailingListComponent />
       </Page>
     </>
-  );
-};
+  )
+}
 
-export default apply;
+export default apply

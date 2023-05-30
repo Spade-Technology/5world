@@ -1,11 +1,11 @@
-import Header from "~/components/layout/header";
-import Offers from "~/components/pages/funding/offers";
-import HowToApply from "~/components/pages/funding/howToApply";
-import Footer from "~/components/layout/footer";
-import MailingListComponent from "~/components/misc/mailinglist";
+import Header from '~/components/layout/header'
+import Offers from '~/components/pages/funding/offers'
+import HowToApply from '~/components/pages/funding/howToApply'
+import Footer from '~/components/layout/footer'
+import MailingListComponent from '~/components/misc/mailinglist'
 
-import GetFundingDescription from "~/components/pages/funding/description";
-import Page from "~/components/layout/page";
+import GetFundingDescription from '~/components/pages/funding/description'
+import Page from '~/components/layout/page'
 
 const GetFunding = () => {
   return (
@@ -20,7 +20,7 @@ const GetFunding = () => {
         <MailingListComponent />
       </Page>
     </>
-  );
-};
+  )
+}
 
-export default GetFunding;
+export default GetFunding
