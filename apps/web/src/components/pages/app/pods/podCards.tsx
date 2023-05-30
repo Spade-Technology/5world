@@ -13,37 +13,24 @@ import { Dispatch, SetStateAction } from 'react'
 import PodInfoBox from './popups/infoBox'
 import { useAccount } from 'wagmi'
 import { Pod } from '@prisma/client'
+import { pod_type } from '~/hooks/web3/usePod'
+import { shortenAddress } from '~/utils/helpers'
+import SkeletonNode from 'antd/es/skeleton/Node'
+import { Skeleton } from 'antd'
 // import { usePodReads } from '~/hooks/web3/usePod'
 
 type PodCardProps = {
-  setOpenRegen: Dispatch<SetStateAction<boolean>>
-  data: (Pod & {})[] | undefined
-  setPid: Dispatch<SetStateAction<number>>
+  setOpenedPod: Dispatch<SetStateAction<pod_type | undefined>>
+  data: pod_type[] | undefined
+  isLoading: boolean
 }
 
 type CardProps = {
-  setOpenRegen: Dispatch<SetStateAction<boolean>>
-  data: (Pod & {})[] | undefined
-  pod: Pod
-  setPid: Dispatch<SetStateAction<number>>
+  setOpenedPod: Dispatch<SetStateAction<pod_type | undefined>>
+  pod: pod_type
 }
 
-const PodCards = ({ setOpenRegen, data, setPid }: PodCardProps) => {
-  const { address, isConnecting, isDisconnected } = useAccount()
-
-  /** Here !, tell TypeScript that even though something looks like it could be null, it can trust you that it's not */
-  // const { data } = usePodReads([0, 1], { admins: true, discussions: true, members: true, proposals: true })
-  // console.log("Pods info: ", data)
-//   const temp = {
-//     id: 1,
-//     name: "string",
-//     description: "string",
-//     picture: PodImage,
-//     discussions: [],
-//     createdById: "string",
-//     updatedById: "string"
-// }
-
+const PodCards = ({ setOpenedPod, data, isLoading }: PodCardProps) => {
   return (
     <div className='mx-auto w-screen bg-vdao-deep'>
       <div className='mx-auto max-w-[1280px] pb-[120px]'>
@@ -55,9 +42,30 @@ const PodCards = ({ setOpenRegen, data, setPid }: PodCardProps) => {
         </div>
 
         <div className='mx-6 mt-5 grid grid-cols-1 gap-5 md:mx-0 md:grid-cols-2'>
-          {data && data.length > 0 ? (
+          {isLoading ? (
+            <>
+              <Skeleton.Avatar
+                shape='square'
+                style={{ height: '400px', width: '100%' }}
+                className='col-span-2'
+                active
+              />
+              <Skeleton.Avatar
+                shape='square'
+                style={{ height: '400px', width: '100%' }}
+                className='col-span-2'
+                active
+              />
+              <Skeleton.Avatar
+                shape='square'
+                style={{ height: '400px', width: '100%' }}
+                className='col-span-2'
+                active
+              />
+            </>
+          ) : data && data.length > 0 ? (
             data?.map((pod, idx) => {
-              return <Card setOpenRegen={setOpenRegen} data={data} pod={pod} setPid={setPid} />
+              return <Card setOpenedPod={setOpenedPod} pod={pod} />
             })
           ) : (
             <div className='text-white'>There are no pods available. Please do create a pod...!!</div>
@@ -68,7 +76,7 @@ const PodCards = ({ setOpenRegen, data, setPid }: PodCardProps) => {
   )
 }
 
-export const Card = ({ setOpenRegen, data, pod, setPid }: CardProps) => {
+export const Card = ({ setOpenedPod, pod }: CardProps) => {
   return (
     <div className='rounded-[20px] bg-vdao-dark py-10 px-5 text-white md:py-[50px] md:px-10'>
       <div className='flex flex-col gap-[10px] md:flex-row md:gap-[25px]'>
@@ -76,7 +84,6 @@ export const Card = ({ setOpenRegen, data, pod, setPid }: CardProps) => {
         <div>
           <div className='font-heading text-3xl font-medium'> {pod.name}</div>
           <div className='pt-[10px] font-body text-lg font-normal'>
-            {' '}
             {pod.description
               ? pod.description
               : `
@@ -88,8 +95,7 @@ export const Card = ({ setOpenRegen, data, pod, setPid }: CardProps) => {
               text='View Detail'
               className='mt-5 py-[5px] px-[35px] font-heading text-xl font-medium'
               onClick={() => {
-                setOpenRegen(true)
-                setPid(pod.id)
+                setOpenedPod(pod)
               }}
             />
           </div>
@@ -98,50 +104,58 @@ export const Card = ({ setOpenRegen, data, pod, setPid }: CardProps) => {
 
       <PodInfoBox
         invertColors={false}
-        proposals={21}
+        proposals={0}
         discussions={pod && pod.discussions ? pod.discussions.length : 0}
-        members={data ? data.length : 0}
+        members={pod.members}
       />
 
       <div className='flex flex-col gap-[30px] pt-5 md:flex-row md:gap-[60px] md:pt-10'>
         <div>
           <div className='font-heading text-xl font-medium'> Manager </div>
-          <div className='flex w-full pt-[14px]'>
-            <div>
-              <Image src={Icon1} alt='' className='rounded-full' />
-            </div>
+          {pod?.admins && (
+            <div className='flex w-full pt-[14px]'>
+              <div>
+                {pod.admins[0]?.picture ? (
+                  <Image src={pod.admins[0]?.picture || ''} alt='' className='rounded-full' />
+                ) : (
+                  <div
+                    className='rounded-full'
+                    style={{
+                      background: 'linear-gradient(221.35deg, #36DFAE 0%, #28B6A5 36.46%, #1D555C 100%)',
+                      width: '44px',
+                      height: '44px',
+                    }}
+                  />
+                )}
+              </div>
 
-            <div className='pl-[10px] md:pl-[16px]'>
-              <div className='font-body text-lg font-semibold'>CyberGod01</div>
-              <div className='font-body text-sm'>0xd12512....92C</div>
+              <div className='!w-1/3 pl-[10px] md:pl-[16px]'>
+                <div className='font-body text-lg font-semibold'>{pod.admins[0]?.name}</div>
+                <div className='font-body text-sm'>{shortenAddress(pod.admins[0]?.address || '0x')}</div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className='flex-1'>
           <div className='font-heading text-xl font-medium'> Members </div>
           <div className='grid grid-cols-5 gap-[10px] pt-[15px]'>
-            <div>
-              <Image src={Icon2} alt='' className='rounded-full' />
-            </div>
-            <div>
-              <Image src={Icon3} alt='' className='rounded-full' />
-            </div>
-            <div>
-              <Image src={Icon4} alt='' className='rounded-full' />
-            </div>
-            <div>
-              <Image src={Icon5} alt='' className='rounded-full' />
-            </div>
-            <div>
-              <Image src={Icon6} alt='' className='rounded-full' />
-            </div>
-            <div>
-              <Image src={Icon7} alt='' className='rounded-full' />
-            </div>
-            <div>
-              <Image src={Icon8} alt='' className='rounded-full' />
-            </div>
+            {pod?.members?.map(member => (
+              <div>
+                {member.picture ? (
+                  <Image src={member.picture || ''} alt='' className='rounded-full' />
+                ) : (
+                  <div
+                    className='rounded-full'
+                    style={{
+                      background: 'linear-gradient(221.35deg, #36DFAE 0%, #28B6A5 36.46%, #1D555C 100%)',
+                      width: '44px',
+                      height: '44px',
+                    }}
+                  />
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>

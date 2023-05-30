@@ -5,6 +5,7 @@ import { signMessage, writeContract } from '@wagmi/core'
 import Vtoken from '~/abi/VToken.json'
 import { currentContracts } from '~/config/contracts'
 import { Address } from 'viem'
+import { notification } from 'antd'
 
 /* Steward schema */
 interface StewardArgs {
@@ -30,12 +31,7 @@ const stewardArgsSchema = z.object({
   search: z.string().optional(),
 })
 
-export function useStewardsRead(args: StewardArgs = {}) {
-  const schema = z.object({ args: stewardArgsSchema })
-  schema.parse({ args })
-
-  return api.steward.getStewards.useQuery(args)
-}
+export const useStewardReads = api.steward.getStewards.useQuery
 
 export function useStewardRead(address: string) {
   const schema = z.object({ address: z.string() })
@@ -44,18 +40,27 @@ export function useStewardRead(address: string) {
   return api.steward.getSteward.useQuery({ address })
 }
 
-export function useApplyToBeSteward(): {
-  applyToBeSteward: (values: ApplyToBeStewardSchema) => void
-  mutation: any
-} {
+export function useApplyToBeSteward() {
   const mutation = api.steward.applyToBeSteward.useMutation()
 
   // more logic can be added. using mutate() from the script return values is deprecated.
-  const applyToBeSteward = () => {
-    mutation.mutate()
-  }
+  const applyToBeSteward = () =>
+    mutation.mutateAsync(undefined, {
+      onError: error => {
+        notification.error({
+          message: 'Error',
+          description: error.message,
+        })
+      },
+      onSuccess: () => {
+        notification.success({
+          message: 'Success',
+          description: 'You have successfully applied to be a steward.',
+        })
+      },
+    })
 
-  return { applyToBeSteward, mutation }
+  return { applyToBeSteward, isLoading: mutation.isLoading, mutation }
 }
 
 export function useVote() {

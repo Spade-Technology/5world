@@ -1,4 +1,5 @@
 import { User } from '@prisma/client'
+import { Address } from 'viem'
 import { z } from 'zod'
 
 import { api } from '~/utils/api'
@@ -33,21 +34,14 @@ const userIncludeSchema = z.object({
 export function useUserRead(
   ...args: InferArgs<typeof api.user.getUser.useQuery>
 ): { data: User & { guild?: { id: number; name: string } } } & InferReturn<typeof api.user.getUser.useQuery> {
-  api.user.getUser.useQuery({ address: '', include: { guild: true } })
-
-  console.log('userData returning something', api.user.getUser.useQuery(...args))
+  args[1] = {
+    ...args[1],
+    enabled: !!args[0].address,
+  }
   return api.user.getUser.useQuery(...args) as any
 }
 
-export function useUserReads(addresses: string[], include: UserInclude = {}) {
-  const schema = z.object({
-    addresses: z.array(z.string()),
-    include: userIncludeSchema.optional(),
-  })
-  schema.parse({ addresses, include })
-
-  return api.user.getUsers.useQuery({ addresses, include })
-}
+export const useUserReads = api.user.getUsers.useQuery
 
 export function useEditUser(include: UserInclude = {}): {
   editUser: (values: EditUserSchema, include_override?: UserInclude) => void

@@ -1,23 +1,22 @@
-import { Pod } from '@prisma/client'
+import { User } from '@prisma/client'
 import Image from 'next/image'
 import ProfilePic from 'public/icons/blog/createdByLogo.svg'
 import { Dispatch, SetStateAction } from 'react'
+import { useStewardReads } from '~/hooks/web3/useStewards'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 
 type Props = {
-  setOpenProfile: Dispatch<SetStateAction<boolean>>
-  data: (Pod & {})[] | undefined
-  setSid: Dispatch<SetStateAction<number>>
+  setOpenProfile: Dispatch<SetStateAction<User | undefined>>
 }
 
 type CardProps = {
-  setOpenProfile: Dispatch<SetStateAction<boolean>>
-  data: (Pod & {})[] | undefined
-  pod: Pod
-  setSid: Dispatch<SetStateAction<number>>
+  setOpenProfile: Dispatch<SetStateAction<User | undefined>>
+  user: User
 }
 
-const StewardCards = ({ setOpenProfile, data, setSid }: Props) => {
+const StewardCards = ({ setOpenProfile }: Props) => {
+  const { data: users } = useStewardReads({})
+
   return (
     <div className='mx-auto w-screen bg-vdao-deep'>
       <div className='mx-auto max-w-[1280px] pb-[120px]'>
@@ -26,28 +25,21 @@ const StewardCards = ({ setOpenProfile, data, setSid }: Props) => {
         </div>
 
         <div className='mx-6 mt-5 grid grid-cols-1 gap-5 md:mx-0 md:grid-cols-2'>
-          {data && data.length > 0 ? (
-            data?.map((pod, idx) => {
-              return <Card setOpenProfile={setOpenProfile} data={data} pod={pod} setSid={setSid} />
-            })
-          ) : (
-            <div className='text-white'>There are no current stewards available...!!</div>
-          )}
+          {users && users.map(user => <Card setOpenProfile={setOpenProfile} user={user} />)}
         </div>
       </div>
     </div>
   )
 }
 
-export const Card = ({ setOpenProfile, data, pod, setSid }: CardProps) => {
+export const Card = ({ setOpenProfile, user }: CardProps) => {
   return (
     <div className='rounded-[20px] bg-vdao-dark text-white'>
       <div
         className='float-right cursor-pointer pt-5 pr-5 text-sm font-semibold underline underline-offset-2 md:pt-[30px] md:pr-[30px]'
-        onClick={() => setOpenProfile(true)}
+        onClick={() => setOpenProfile(user)}
       >
-        {' '}
-        View Profile{' '}
+        View Profile
       </div>
 
       <div className='p-5 md:p-10'>
@@ -75,16 +67,14 @@ export const Card = ({ setOpenProfile, data, pod, setSid }: CardProps) => {
           <div>
             <div className='text-[28px] font-semibold text-vdao-light md:text-[32px]'> 241 </div>
             <div className='text-sm font-semibold text-vdao-dark md:text-lg'>
-              {' '}
-              Delegated <br /> Votes{' '}
+              Delegated <br /> Votes
             </div>
           </div>
 
           <div>
             <div className='text-[28px] font-semibold text-vdao-light md:text-[32px]'> 5.1% </div>
             <div className='text-sm font-semibold text-vdao-dark md:text-lg'>
-              {' '}
-              Volting <br /> Weight{' '}
+              Volting <br /> Weight
             </div>
           </div>
 

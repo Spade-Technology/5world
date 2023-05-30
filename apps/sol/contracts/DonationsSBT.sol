@@ -20,9 +20,8 @@ contract VDonations is ERC721, ERC721Enumerable, AccessControl {
     /// @notice Constant role identifier for the MINTER_ROLE.
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-
     /// @notice Counter for generating token ids.
-    Counters.Counter private _tokenIdCounter;
+    Counters.Counter private _toRoundFactorykenIdCounter;
 
     /// @notice Base URI for the donations SBTs.
     string private baseURI;
@@ -33,8 +32,12 @@ contract VDonations is ERC721, ERC721Enumerable, AccessControl {
     /// @notice Tier for different donation SBTs
     uint256[] public donationTier;
 
-    /// @notice Emitted when a Donation is made.   
-    event DonationUpdated(address indexed donator, uint256 oldDonatedAmount, uint256 newDonatedAmount);
+    /// @notice Emitted when a Donation is made.
+    event DonationUpdated(
+        address indexed donator,
+        uint256 oldDonatedAmount,
+        uint256 newDonatedAmount
+    );
 
     /// @notice Emitted when Donation Tiers are updated
     event DonationTierUpdated(uint256[] newDonationTier);
@@ -49,12 +52,17 @@ contract VDonations is ERC721, ERC721Enumerable, AccessControl {
      * @param donationTier_ Array of limit for different donation tier
      * @param baseURI_ Base URI for donation SBTs
      */
-    constructor(address guardian_, address treasury_, uint256[] memory donationTier_, string memory baseURI_) ERC721("V Dao Donation", "V DONATION") {
-        if(donationTier_.length == 0) {
+    constructor(
+        address guardian_,
+        address treasury_,
+        uint256[] memory donationTier_,
+        string memory baseURI_
+    ) ERC721("V Dao Donation", "V DONATION") {
+        if (donationTier_.length == 0) {
             revert InvalidDonatinTiers();
         }
         // Grant admin roles to guardian_ and MINTER_ROLE to treasury_.
-        _grantRole(DEFAULT_ADMIN_ROLE, guardian_); 
+        _grantRole(DEFAULT_ADMIN_ROLE, guardian_);
         _grantRole(MINTER_ROLE, treasury_);
 
         _updateDonationTier(donationTier_);
@@ -72,19 +80,26 @@ contract VDonations is ERC721, ERC721Enumerable, AccessControl {
      * @param tokenId id for a SBT
      * @return Token URI
      */
-    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+    function tokenURI(
+        uint256 tokenId
+    ) public view virtual override returns (string memory) {
         address owner = ownerOf(tokenId);
         uint256 donatedAmount = donated[owner];
 
         uint256 tier = Arrays.findUpperBound(donationTier, donatedAmount);
-        if(donationTier[tier == donationTier.length ? tier - 1 : tier] == donatedAmount) {
+        if (
+            donationTier[tier == donationTier.length ? tier - 1 : tier] ==
+            donatedAmount
+        ) {
             tier++;
         }
 
-        if(tier == 0)
-            return "";
+        if (tier == 0) return "";
 
-        return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, tier.toString())) : "";
+        return
+            bytes(baseURI).length > 0
+                ? string(abi.encodePacked(baseURI, tier.toString()))
+                : "";
     }
 
     /**
@@ -92,18 +107,25 @@ contract VDonations is ERC721, ERC721Enumerable, AccessControl {
      * @param owner address of the SBT owner (PS: a user can own atmost 1 SBT)
      * @return Token URI
      */
-    function tokenURIByAddress(address owner) public view returns (string memory) {
+    function tokenURIByAddress(
+        address owner
+    ) public view returns (string memory) {
         uint256 donatedAmount = donated[owner];
 
         uint256 tier = Arrays.findUpperBound(donationTier, donatedAmount);
-        if(donationTier[tier == donationTier.length ? tier - 1 : tier] == donatedAmount) {
+        if (
+            donationTier[tier == donationTier.length ? tier - 1 : tier] ==
+            donatedAmount
+        ) {
             tier++;
         }
 
-        if(tier == 0)
-            return "";
+        if (tier == 0) return "";
 
-        return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, tier.toString())) : "";
+        return
+            bytes(baseURI).length > 0
+                ? string(abi.encodePacked(baseURI, tier.toString()))
+                : "";
     }
 
     /**
@@ -111,20 +133,21 @@ contract VDonations is ERC721, ERC721Enumerable, AccessControl {
      * @param index the tier of donationTier
      * @return Tier Limit
      */
-    function getTierLimit(uint256 index) view public returns (uint256) {
+    function getTierLimit(uint256 index) public view returns (uint256) {
         return donationTier[index];
     }
 
-    
     /**
      * @notice Update the donation amount (PS: only Treasury can call)
      * @param donator the address of donator
      * @param donation donation amount in US $
      */
-    function updateDonation(address donator, uint256 donation) external onlyRole(MINTER_ROLE) {
-
+    function updateDonation(
+        address donator,
+        uint256 donation
+    ) external onlyRole(MINTER_ROLE) {
         uint256 updatedDonation = donated[donator] + donation;
-        if(balanceOf(donator) == 0 && updatedDonation >= donationTier[0]) {
+        if (balanceOf(donator) == 0 && updatedDonation >= donationTier[0]) {
             safeMint(donator);
         }
 
@@ -136,8 +159,10 @@ contract VDonations is ERC721, ERC721Enumerable, AccessControl {
      * @notice Update the limit for donation Tier
      * @param newDonationTier the array for new donation tiers
      */
-    function updateDonationTier(uint256[] memory newDonationTier) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        if(newDonationTier.length == 0) {
+    function updateDonationTier(
+        uint256[] memory newDonationTier
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        if (newDonationTier.length == 0) {
             revert InvalidDonatinTiers();
         }
         _updateDonationTier(newDonationTier);
@@ -147,11 +172,11 @@ contract VDonations is ERC721, ERC721Enumerable, AccessControl {
      * @notice Update the base URI
      * @param newBaseURI the new base URI
      */
-    function updateBaseURI(string memory newBaseURI) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function updateBaseURI(
+        string memory newBaseURI
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
         _updateBaseURI(newBaseURI);
     }
-
-
 
     //Internal Functions
 
@@ -172,20 +197,22 @@ contract VDonations is ERC721, ERC721Enumerable, AccessControl {
         _safeMint(to, tokenId);
     }
 
-
     // The following functions are overrides required by Solidity.
 
-    function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize)
-        internal
-        override(ERC721, ERC721Enumerable)
-    {
-        if (!hasRole(MINTER_ROLE, msg.sender))
-            revert NonTransferable();
-            
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId,
+        uint256 batchSize
+    ) internal override(ERC721, ERC721Enumerable) {
+        if (!hasRole(MINTER_ROLE, msg.sender)) revert NonTransferable();
+
         super._beforeTokenTransfer(from, to, tokenId, batchSize);
     }
 
-    function supportsInterface(bytes4 interfaceId)
+    function supportsInterface(
+        bytes4 interfaceId
+    )
         public
         view
         override(ERC721, ERC721Enumerable, AccessControl)
