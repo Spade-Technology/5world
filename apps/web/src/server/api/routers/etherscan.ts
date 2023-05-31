@@ -37,9 +37,9 @@ export const etherscanRouter = createTRPCRouter({
       )
 
       if (!response.ok) throw new Error('Failed to fetch ABI')
-
+        
       const json = await response.json()
-
+       
       if (json.status !== '1') throw new Error('Failed to get ABI from Etherscan')
 
       return JSON.parse(json.result) as abiItem[]
