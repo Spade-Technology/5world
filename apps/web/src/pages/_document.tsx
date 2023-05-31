@@ -11,9 +11,6 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <meta charSet='utf-8' />
-          <link href='https://fonts.cdnfonts.com/css/clash-display' rel='stylesheet' />
-          <link href='https://fonts.cdnfonts.com/css/satoshi' rel='stylesheet' />
-          <link href='https://fonts.cdnfonts.com/css/inter' rel='stylesheet' />
         </Head>
         <body>
           <Main />
