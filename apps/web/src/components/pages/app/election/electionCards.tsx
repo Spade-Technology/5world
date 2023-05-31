@@ -28,7 +28,6 @@ export const Card = () => {
   return (
     <div className='rounded-[20px] bg-vdao-dark text-white'>
       <div className='float-right pt-5 pr-5 text-sm font-semibold underline underline-offset-2 md:pt-[30px] md:pr-[30px]'>
-        {' '}
         View Profile{' '}
       </div>
 

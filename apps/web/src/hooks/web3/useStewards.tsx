@@ -68,6 +68,7 @@ export function useVote() {
     voterAddress: z.string(),
     candidateAddress: z.string(),
     message: z.string(),
+    amount: z.number().optional(),
   })
 
   const mutation = api.steward.vote.useMutation()
