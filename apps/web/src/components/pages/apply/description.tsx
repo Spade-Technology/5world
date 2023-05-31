@@ -1,4 +1,4 @@
-import Description from "~/components/misc/description";
+import Description from '~/components/misc/description'
 
 export const ApplyDescription = () => {
   return (
@@ -11,13 +11,12 @@ export const ApplyDescription = () => {
       }
       description={
         <div>
-          The DAO invites members who share our core values and are passionate
-          about restoring our planet. We're looking for contributors with skills
-          and experience in key areas such as:
+          The DAO invites members who share our core values and are passionate about restoring our planet. We're looking
+          for contributors with skills and experience in key areas such as:
         </div>
       }
     />
-  );
-};
+  )
+}
 
-export default ApplyDescription;
+export default ApplyDescription

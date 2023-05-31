@@ -1,4 +1,4 @@
-import Description from "~/components/misc/description";
+import Description from '~/components/misc/description'
 
 export const GetFundingDescription = () => {
   return (
@@ -10,13 +10,12 @@ export const GetFundingDescription = () => {
       }
       description={
         <p>
-          VDAO welcomes all funding proposals that align with its vision and
-          mission of regenerating our planet through systems thinking, research,
-          and innovation.
+          VDAO welcomes all funding proposals that align with its vision and mission of regenerating our planet through
+          systems thinking, research, and innovation.
         </p>
       }
     />
-  );
-};
+  )
+}
 
-export default GetFundingDescription;
+export default GetFundingDescription

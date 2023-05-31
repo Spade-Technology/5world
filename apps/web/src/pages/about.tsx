@@ -1,16 +1,16 @@
-import { type NextPage } from "next";
+import { type NextPage } from 'next'
 
-import Footer from "~/components/layout/footer";
-import Header from "~/components/layout/header";
-import Page from "~/components/layout/page";
-import MailingListComponent from "~/components/misc/mailinglist";
+import Footer from '~/components/layout/footer'
+import Header from '~/components/layout/header'
+import Page from '~/components/layout/page'
+import MailingListComponent from '~/components/misc/mailinglist'
 
 import {
   AboutUsComponent,
   AboutUsCoreTeamComponent,
   AboutUsCoreValueComponent,
   AboutUsVisionMissionComponent,
-} from "~/components/pages/about";
+} from '~/components/pages/about'
 
 const AboutUs: NextPage = () => {
   return (
@@ -27,7 +27,7 @@ const AboutUs: NextPage = () => {
         <MailingListComponent />
       </Page>
     </>
-  );
-};
+  )
+}
 
-export default AboutUs;
+export default AboutUs

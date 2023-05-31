@@ -46,10 +46,10 @@ const Preview = ({ title, description, callDatas, setNextForm, setShowPreview, s
           <div className='text-[22px] font-bold md:text-lg'>Actions</div>
           <div className='mt-[30px] rounded-[10px] border-[1px] border-vdao-dark py-8 px-5 md:mt-5 md:p-[30px]'>
             <div>Calldatas:</div>
-            <div className='text-[#909090]'>{callDatas[0]? shortenAddress(callDatas[0]) : "No calldatas"}</div>
+            <div className='text-[#909090]'>{callDatas[0] ? shortenAddress(callDatas[0]) : 'No calldatas'}</div>
 
             <div className='pt-6'>Target:</div>
-            <div className='text-[#909090]'>{address ? shortenAddress(address) : "No target" }</div>
+            <div className='text-[#909090]'>{address ? shortenAddress(address) : 'No target'}</div>
 
             <div className='pt-6'>Value:</div>
             <div className='text-[#909090]'>0 </div>

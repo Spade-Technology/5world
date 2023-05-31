@@ -31,10 +31,7 @@ export const etherscanRouter = createTRPCRouter({
       const etherscanAPIKey = process.env.ETHERSCAN_API_KEY
       const addr = `https://api.etherscan.io/api?module=contract&action=getabi&address=${contractAddress}&apikey=${etherscanAPIKey}`
 
-      const response = await fetch(
-        // https://api.etherscan.io/api?module=contract&action=getabi&address=0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413&apikey=YourApiKeyToken
-        `https://api.etherscan.io/api?module=contract&action=getabi&address=${contractAddress}&apikey=${etherscanAPIKey}`,
-      )
+      const response = await fetch(addr)
 
       if (!response.ok) throw new Error('Failed to fetch ABI')
         
