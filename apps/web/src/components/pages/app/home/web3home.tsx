@@ -256,7 +256,9 @@ export function ProfileHomeComponent({ setOpenProfile }: ProfileProps) {
           <div className={'flex gap-3 ' + (skeletonActive && 'opacity-0')}>
             <Image src={ProfilePic} alt='Profile Picture' className='h-14 w-14 rounded-full' />
             <div className='flex flex-col'>
-              <span className='satoshi text-2xl font-bold leading-8 text-vdao-light'>{data?.name || 'John Doe'}</span>
+              <span className='satoshi text-2xl font-bold leading-8 text-vdao-light'>
+                {data?.name ? (data?.name.length > 15 ? data?.name?.slice(0, 15) + '...' : data.name) : 'John Doe'}
+              </span>
               <span className='satoshi text-base font-normal leading-6 '>
                 {data?.address
                   ? data?.address?.length! > 15
