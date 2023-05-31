@@ -68,8 +68,8 @@ export function HomePartnersComponent() {
 
 export function HomeCommunityComponent() {
   return (
-    <Section className='relative  mt-10 bg-vdao-dark px-6 text-vdao-light'>
-      <div className=' mx-auto flex max-w-[1440px] flex-col '>
+    <Section className='mt-10 bg-vdao-dark px-6 text-vdao-light'>
+      <div className='relative mx-auto flex max-w-[1440px] flex-col '>
         <div className='mt-24'>
           <div className='mb-4 font-heading text-[32px] font-medium md:mb-6 md:ml-9 md:text-[46px] lg:ml-36'>
             Community
@@ -108,18 +108,12 @@ export function HomeCommunityComponent() {
             </div>
           </div>
         </div>
-
         <Image
           src={CommunityHero}
           alt='VDAO'
-          className='absolute bottom-0 left-[-25px] hidden h-[463px] w-[100%] md:left-0 md:block md:h-3/6 md:w-6/12 lg:h-5/6'
+          className='bg absolute bottom-0 left-[-25px] h-[463px] w-[100%] md:left-0 md:h-3/6 md:w-6/12 lg:h-5/6'
         />
       </div>
-      <img
-        src={'illustrations/web3/PNG/04_community_illo_nobackground_v01 1.png'}
-        alt='VDAO'
-        className='absolute bottom-0 left-0 h-[463px] w-full md:left-0 md:hidden '
-      />
     </Section>
   )
 }
@@ -250,20 +244,20 @@ export function HomeIntroComponent() {
 
 export function HomeWelcomeComponent() {
   return (
-    <Section className='mx-auto flex max-w-[1440px] flex-col overflow-hidden'>
+    <Section className='mx-auto flex max-w-[1440px] flex-col overflow-hidden md:overflow-visible'>
       <div className='mx-auto mt-28'>
         <div className='mx-auto w-10/12 text-center font-heading text-[44px] font-medium leading-[48px] text-vdao-dark md:w-auto md:text-[80px]'>
           Re:imagine the future
         </div>
-        <div className='mx-auto mt-5 w-[80%] px-6 text-center font-body font-body text-[22px] font-medium leading-[26px] text-vdao-dark md:text-[26px]'>
+        <div className='mx-auto mt-5 w-[80%] px-6 text-center font-body text-[22px] font-medium leading-[26px] text-vdao-dark md:text-[26px]'>
           A dao to restore ecosystems from the soil up.
         </div>
-        <PrimaryButton text='Join Us' className='mx-auto mt-10 ' />
+        <PrimaryButton text='Join Us' className='mx-auto mt-10' />
       </div>
       <Image
         src={WelcomeHero}
         alt='VDAO'
-        className='md:max-w-100 relative left-[-5%] -z-10 mt-5 scale-[100%] md:mt-[20px]'
+        className='md:max-w-100 relative right-[5%] -z-10 mt-5 scale-[100%] md:mt-[20px]'
       />
     </Section>
   )
