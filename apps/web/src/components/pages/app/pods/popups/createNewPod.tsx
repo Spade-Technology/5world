@@ -3,15 +3,17 @@ import FormOne from './formOne'
 import { useState } from 'react'
 import FormTwo from './formTwo'
 import { useAccount } from 'wagmi'
-import { useCreatePod, usePodReads } from '~/hooks/web3/usePod'
+import { pod_type, useCreatePod, usePodReads } from '~/hooks/web3/usePod'
+import { notification } from 'antd'
 
 type CreatePodProps = {
   show: boolean
   close: any
   refetch: any
+  data: pod_type[]
 }
 
-const CreateNewPod = ({ show, close, refetch }: CreatePodProps) => {
+const CreateNewPod = ({ show, close, refetch, data }: CreatePodProps) => {
   const [nextFrom, setNextForm] = useState(false)
   const [podName, setPodName] = useState('')
   const [podImage, setPodImage] = useState({ image: '', name: '' })
@@ -35,7 +37,17 @@ const CreateNewPod = ({ show, close, refetch }: CreatePodProps) => {
         { name: podName, description: description, members: [address], admins: [address], picture: podImage.image },
         {
           onSuccess(data, variables, context) {
+            notification.success({
+              message: 'Sucessful',
+              description: 'Created a new pod...!',
+            })
             refetch()
+          },
+          onError() {
+            notification.error({
+              message: 'Failed',
+              description: 'Try again! Failed to create a new pod.',
+            })
           },
         },
       )
@@ -65,6 +77,7 @@ const CreateNewPod = ({ show, close, refetch }: CreatePodProps) => {
           memberAddr={memberAddr}
           setMemberAddr={setMemberAddr}
           createPodHanlder={createPodHanlder}
+          data={data}
         />
       )}
     </CustomModal>

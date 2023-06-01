@@ -5,9 +5,11 @@ import { useState } from 'react'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { useAccount } from 'wagmi'
 import { useUserRead } from '~/hooks/web3/useUser'
-import { monthNames, shortenAddress } from '~/utils/helpers'
+import { shortenAddress, shortenText } from '~/utils/helpers'
 import { useDelegate } from '~/hooks/web3/useStewards'
 import Image from 'next/image'
+import { monthNames } from '~/utils/date'
+import { Null_Address } from '~/utils/config'
 
 type PopupProps = {
   show: boolean
@@ -52,11 +54,11 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
 
               <div className='pl-[10px] md:pl-[15px]'>
                 <div className='font-body text-[26px] font-semibold text-vdao-light md:text-[36px]'>
-                  {data?.name! ? (data?.name?.length > 15 ? data.name?.slice(0, 15) + '...' : data.name) : 'Loading...'}{' '}
+                  {data?.name! ? shortenText(data.name) : 'Loading...'}{' '}
                 </div>
                 <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>
                   <div className='font-medium md:text-[22px]'>
-                    {data?.address ? shortenAddress(data?.address!) : 'Loading...'}
+                    {data?.address ? shortenAddress(data?.address!) : shortenAddress(Null_Address)}
                   </div>
                   <div className='font-bold'>
                     {data?.JoinedAt

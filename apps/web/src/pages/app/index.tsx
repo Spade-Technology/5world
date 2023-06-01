@@ -20,7 +20,7 @@ const Home: NextPage = () => {
         <WelcomeComponent />
 
         <div className='mx-auto  flex w-fit'>
-          <Section className='mx-6 grid grid-cols-12 justify-between gap-5 lg:max-w-[1280px]'>
+          <Section className='mx-6 grid md:grid-cols-12 justify-between gap-5 lg:max-w-[1280px]'>
             <ProfileHomeComponent setOpenProfile={setOpenProfile} />
 
             <NewMembersComponent />

@@ -23,6 +23,8 @@ const Pods = () => {
     include: { members: true, admins: true, proposals: true },
   })
 
+  console.log("pods data: ", data)
+
   return (
     <>
       <Page>
@@ -30,7 +32,7 @@ const Pods = () => {
 
         <PodCards setOpenedPod={setOpenedPod} data={data} isLoading={isLoading} />
 
-        {openCreatePod && <CreateNewPod show={openCreatePod} close={() => setOpenCreatePod(false)} refetch={refetch} />}
+        {openCreatePod && <CreateNewPod show={openCreatePod} close={() => setOpenCreatePod(false)} refetch={refetch} data={data} />}
 
         {!!openedPod && (
           <PodModal close={() => setOpenedPod(undefined)} pod={openedPod} setShowManageMembers={setShowManageMembers} />
@@ -45,6 +47,7 @@ const Pods = () => {
             setManagerAddr={setManagerAddr}
             setShowManageMembers={setShowManageMembers}
             pod={openedPod}
+            // setOpenedPod={setOpenedPod}
             setOpenedPod={() => setOpenedPod(undefined)}
           />
         )}

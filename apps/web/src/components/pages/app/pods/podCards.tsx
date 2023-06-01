@@ -14,7 +14,7 @@ import PodInfoBox from './popups/infoBox'
 import { useAccount } from 'wagmi'
 import { Pod } from '@prisma/client'
 import { pod_type } from '~/hooks/web3/usePod'
-import { shortenAddress } from '~/utils/helpers'
+import { shortenAddress, shortenText } from '~/utils/helpers'
 import SkeletonNode from 'antd/es/skeleton/Node'
 import { Skeleton } from 'antd'
 // import { usePodReads } from '~/hooks/web3/usePod'
@@ -104,9 +104,9 @@ export const Card = ({ setOpenedPod, pod }: CardProps) => {
 
       <PodInfoBox
         invertColors={false}
-        proposals={0}
+        proposals={pod && pod.proposals ? pod.proposals.length : 0}
         discussions={pod && pod.discussions ? pod.discussions.length : 0}
-        members={pod.members}
+        members={pod && pod.members ? pod.members.length : 0}
       />
 
       <div className='flex flex-col gap-[30px] pt-5 md:flex-row md:gap-[60px] md:pt-10 '>
@@ -130,17 +130,22 @@ export const Card = ({ setOpenedPod, pod }: CardProps) => {
               </div>
 
               <div className='!w-1/3 pl-[10px] md:pl-[16px]'>
-                <div className='font-body text-lg font-semibold'>{pod.admins[0]?.name}</div>
+                <div className='font-body text-lg font-semibold'>
+                  {pod.admins[0]?.name
+                    ? shortenText(pod.admins[0]?.name)
+                    : 'Unnamed'}
+                </div>
                 <div className='font-body text-sm'>{shortenAddress(pod.admins[0]?.address || '0x')}</div>
               </div>
             </div>
           )}
         </div>
 
-        <div className='flex-1'>
+        <div>
           <div className='font-heading text-xl font-medium'> Members </div>
-          <div className='grid grid-cols-5 gap-[10px] pt-[15px]'>
-            {pod?.members?.map(member => (
+
+          {pod?.members?.map(member => (
+            <div className='flex w-full pt-[14px]'>
               <div>
                 {member.picture ? (
                   <Image src={member.picture || ''} alt='' className='rounded-full' />
@@ -155,8 +160,16 @@ export const Card = ({ setOpenedPod, pod }: CardProps) => {
                   />
                 )}
               </div>
-            ))}
-          </div>
+              <div className='!w-1/3 pl-[10px] md:pl-[16px]'>
+                <div className='font-body text-lg font-semibold'>
+                  {member.name
+                    ? shortenText(member.name)
+                    : 'Unnamed'}
+                </div>
+                <div className='font-body text-sm'>{shortenAddress(member.address || '0x')}</div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

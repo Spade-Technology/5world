@@ -79,7 +79,7 @@ const FormOne = ({
 
         <div className='pt-[5px]'>Upload a profile image for your pod.</div>
 
-        <div className='flex flex-col gap-5 pt-8 text-center align-middle  md:flex-row md:gap-10 '>
+        <div className='flex flex-col gap-5 pt-8 text-center align-middle  lg:flex-row md:gap-10 '>
           <div className='flex-none'>
             <Image
               src={podImage && podImage.image ? podImage.image : PodImage}
@@ -91,7 +91,7 @@ const FormOne = ({
           </div>
           <div className='md:my-auto'>
             <label className='mx-auto w-fit cursor-pointer rounded-[5px] bg-vdao-pink py-[5px] px-[35px] font-heading text-xl font-medium'>
-              <input type='file' accept='image/png' onChange={onImageChange} className='hidden cursor-pointer pt-5' />
+              <input type='file' accept='image/*' onChange={onImageChange} className='hidden cursor-pointer pt-5' />
               Upload Image
             </label>
 

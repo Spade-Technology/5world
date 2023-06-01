@@ -38,9 +38,9 @@ const PodModal = ({ pod, close, setShowManageMembers }: PodModalProps) => {
           <div className='pt-[27px] md:pt-0'>
             <PodInfoBox
               invertColors={false}
-              proposals={0}
+              proposals={pod && pod.proposals ? pod.proposals.length : 0}
               discussions={pod && pod.discussions ? pod.discussions.length : 0}
-              members={pod?.members}
+              members={pod && pod.members ? pod.members.length : 0}
             />
           </div>
         </div>
