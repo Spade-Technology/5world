@@ -47,7 +47,8 @@ const Pods = () => {
             setManagerAddr={setManagerAddr}
             setShowManageMembers={setShowManageMembers}
             pod={openedPod}
-            setOpenedPod={setOpenedPod}
+            // setOpenedPod={setOpenedPod}
+            setOpenedPod={() => setOpenedPod(undefined)}
           />
         )}
       </Page>
