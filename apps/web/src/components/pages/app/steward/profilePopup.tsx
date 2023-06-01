@@ -5,8 +5,10 @@ import { useState } from 'react'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { useDelegate, useStewardRead } from '~/hooks/web3/useStewards'
 import { useAccount } from 'wagmi'
-import { monthNames, shortenAddress } from '~/utils/helpers'
+import { shortenAddress } from '~/utils/helpers'
 import { Guild, User } from '@prisma/client'
+import { monthNames } from '~/utils/date'
+import { Null_Address } from '~/utils/config'
 
 type PopupProps = {
   profile: User & { guild?: Guild }
@@ -39,7 +41,9 @@ const ProfilePopup = ({ profile, close }: PopupProps) => {
                     {profile.name}
                   </div>
                   <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>
-                    <div className='font-medium md:text-[22px]'>{shortenAddress(profile?.address!)}</div>
+                    <div className='font-medium md:text-[22px]'>
+                      {profile?.address ? shortenAddress(profile?.address!) : shortenAddress(Null_Address)}
+                    </div>
                     <div className='font-bold'>
                       {'Joined ' +
                         monthNames[profile.JoinedAt.getUTCMonth()] +

@@ -4,7 +4,7 @@ type InfoBoxProps = {
   invertColors: boolean
   proposals: number
   discussions: number
-  members: User[] | undefined
+  members: number
 }
 const PodInfoBox = ({ invertColors, proposals, discussions, members }: InfoBoxProps) => {
   return (
@@ -28,7 +28,7 @@ const PodInfoBox = ({ invertColors, proposals, discussions, members }: InfoBoxPr
       </div>
 
       <div>
-        <div className='text-[28px] font-semibold text-vdao-light md:text-[32px]'>{members?.length}</div>
+        <div className='text-[28px] font-semibold text-vdao-light md:text-[32px]'>{members}</div>
         <div className={`${invertColors ? 'text-white' : 'text-vdao-dark'} pt-[10px] text-sm font-semibold md:text-lg`}>
           Members
         </div>
