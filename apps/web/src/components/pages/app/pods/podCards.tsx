@@ -109,7 +109,7 @@ export const Card = ({ setOpenedPod, pod }: CardProps) => {
         members={pod.members}
       />
 
-      <div className='flex flex-col gap-[30px] pt-5 md:flex-row md:gap-[60px] md:pt-10'>
+      <div className='flex flex-col gap-[30px] pt-5 md:flex-row md:gap-[60px] md:pt-10 '>
         <div>
           <div className='font-heading text-xl font-medium'> Manager </div>
           {pod?.admins && (
