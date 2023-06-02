@@ -1,11 +1,11 @@
-import Image from "next/image";
-import groupImage from "public/illustrations/nftCollections/groupImage.svg";
-import PurpleButton from "~/styles/shared/buttons/purpleButton";
+import Image from 'next/image'
+import groupImage from 'public/illustrations/nftCollections/groupImage.svg'
+import PurpleButton from '~/styles/shared/buttons/purpleButton'
 
 type HowItWorksProps = {
-  contents?: any;
-  className?: string;
-};
+  contents?: any
+  className?: string
+}
 
 const HowItWorks = (props: HowItWorksProps) => {
   return (
@@ -14,37 +14,27 @@ const HowItWorks = (props: HowItWorksProps) => {
     >
       {props.contents?.map((contents: any, idx: number) => {
         return (
-          <div
-            className={`flex flex-col gap-10 md:flex-row md:gap-[22px] ${
-              idx == 0 ? "" : "pt-[30px]"
-            }`}
-            key={idx}
-          >
-            <div className="flex-1" key={idx}>
-              <span className="mr-5 font-heading text-4xl font-medium underline underline-offset-8 md:float-left md:ml-[348px]">
+          <div className={`flex flex-col gap-10 md:flex-row md:gap-[22px] ${idx == 0 ? '' : 'pt-[30px]'}`} key={idx}>
+            <div className='flex-1' key={idx}>
+              <span className='mr-5 font-heading text-[32px] font-medium underline underline-offset-8 md:float-left md:ml-[348px] md:text-4xl'>
                 {contents?.heading}
               </span>
             </div>
-            <div className="flex-1">
-              {contents?.image && <Image src={groupImage} alt="group-image" />}
+            <div className='flex-1'>
+              {contents?.image && <Image src={groupImage} alt='group-image' />}
               {contents?.content && (
-                <div className=" font-body text-lg font-normal md:pr-28">
-                  {contents?.content}
-                </div>
+                <div className=' font-body text-lg font-normal leading-[22px] md:pr-28'>{contents?.content}</div>
               )}
 
               {contents?.button && (
-                <PurpleButton
-                  text={contents?.button}
-                  className="mt-[38px] py-[5px] font-heading text-xl font-medium"
-                />
+                <PurpleButton text={contents?.button} className='mt-[38px] py-[5px] font-heading text-xl font-medium' />
               )}
             </div>
           </div>
-        );
+        )
       })}
     </div>
-  );
-};
+  )
+}
 
-export default HowItWorks;
+export default HowItWorks
