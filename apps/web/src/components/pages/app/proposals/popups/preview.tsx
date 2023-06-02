@@ -1,79 +1,80 @@
-import { Dispatch, SetStateAction } from "react";
-import ProfileCard from "~/components/misc/profileCard";
-import PrimaryButton from "~/styles/shared/buttons/primaryButton";
+import { Dispatch, SetStateAction } from 'react'
+import { useAccount } from 'wagmi'
+import ProfileCard from '~/components/misc/profileCard'
+import PrimaryButton from '~/styles/shared/buttons/primaryButton'
+import { shortenAddress } from '~/utils/helpers'
 
 type PreviewProps = {
-  setNextForm: Dispatch<SetStateAction<boolean>>;
-  setShowPreview: Dispatch<SetStateAction<boolean>>;
-  close: any;
-};
+  setNextForm: Dispatch<SetStateAction<boolean>>
+  setShowPreview: Dispatch<SetStateAction<boolean>>
+  submit: any
+  title: string
+  description: string
+  callDatas: string[]
+}
 
-const Preview = ({ setNextForm, setShowPreview, close }: PreviewProps) => {
+const Preview = ({ title, description, callDatas, setNextForm, setShowPreview, submit }: PreviewProps) => {
+  const { address } = useAccount()
   return (
-    <div className="pb-[14px] font-body text-lg font-normal text-vdao-dark md:max-h-[751px] md:pb-6 ">
-      <div className=" w-fit rounded-[20px] bg-vdao-dark py-[7px] px-8 font-heading font-medium text-vdao-light md:px-[38px] md:text-xl">
+    <div className='pb-[14px] font-body text-lg font-normal text-vdao-dark md:max-h-[751px] md:pb-6 '>
+      <div className=' w-fit rounded-[20px] bg-vdao-dark py-[7px] px-8 font-heading font-medium text-vdao-light md:px-[38px] md:text-xl'>
         Preview your proposal
       </div>
 
-      <div className="pt-5 font-heading text-[26px] font-medium md:pt-9 md:text-[30px]">
-        Proposal Title Goes Here
-      </div>
-      <div className="pt-5">
+      <div className='pt-5 font-heading text-[26px] font-medium md:pt-9 md:text-[30px]'>{title}</div>
+      <div className='pt-5'>
         <ProfileCard />
       </div>
 
-      <div className="grid grid-cols-1 gap-10 pt-[30px] md:grid-cols-2 md:gap-[70px] md:pt-10">
+      <div className='grid grid-cols-1 gap-10 pt-[30px] md:grid-cols-2 md:gap-[70px] md:pt-10'>
         <div>
-          <div className="text-[22px] font-bold md:text-lg">Description</div>
-          <div className="pt-4 md:pt-5">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet
-            elementum urna, in volutpat risus. Quisque nec tempus diam, sit amet
-            luctus mi. Quisque auctor tortor ut nunc finibus, et venenatis lacus
+          <div className='text-[22px] font-bold md:text-lg'>Description</div>
+          <div className='pt-4 md:pt-5'>
+            {description}
+            {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet elementum urna, in volutpat risus.
+            Quisque nec tempus diam, sit amet luctus mi. Quisque auctor tortor ut nunc finibus, et venenatis lacus
             eleifend.
             <br />
             <br />
-            Fusce commodo, ipsum sit amet mollis tincidunt, ipsum nibh bibendum
-            arcu, in egestas lectus justo eget massa. Nam quis aliquet erat, in
-            dignissim purus. In viverra orci sit amet ex vestibulum aliquet. Sed
-            luctus aliquet ullamcorper. Praesent non turpis at leo luctus
-            semper. Suspendisse eget dapibus lorem. Vivamus eu arcu et metus
-            congue vulputate ut quis mi. Nam quis dolor non orci luctus iaculis
-            quis at nisi.
+            Fusce commodo, ipsum sit amet mollis tincidunt, ipsum nibh bibendum arcu, in egestas lectus justo eget
+            massa. Nam quis aliquet erat, in dignissim purus. In viverra orci sit amet ex vestibulum aliquet. Sed luctus
+            aliquet ullamcorper. Praesent non turpis at leo luctus semper. Suspendisse eget dapibus lorem. Vivamus eu
+            arcu et metus congue vulputate ut quis mi. Nam quis dolor non orci luctus iaculis quis at nisi. */}
           </div>
         </div>
         <div>
-          <div className="text-[22px] font-bold md:text-lg">Actions</div>
-          <div className="mt-[30px] rounded-[10px] border-[1px] border-vdao-dark py-8 px-5 md:mt-5 md:p-[30px]">
+          <div className='text-[22px] font-bold md:text-lg'>Actions</div>
+          <div className='mt-[30px] rounded-[10px] border-[1px] border-vdao-dark py-8 px-5 md:mt-5 md:p-[30px]'>
             <div>Calldatas:</div>
-            <div className="text-[#909090]">0x0f63e42c</div>
+            <div className='text-[#909090]'>{callDatas[0]? shortenAddress(callDatas[0]) : "No calldatas"}</div>
 
-            <div className="pt-6">Target:</div>
-            <div className="text-[#909090]">Ox8f12id9f2a51e33d30c4181f2978</div>
+            <div className='pt-6'>Target:</div>
+            <div className='text-[#909090]'>{address ? shortenAddress(address) : "No target" }</div>
 
-            <div className="pt-6">Value:</div>
-            <div className="text-[#909090]">0 </div>
+            <div className='pt-6'>Value:</div>
+            <div className='text-[#909090]'>0 </div>
           </div>
 
-          <div className="float-right flex gap-5 pt-5 md:pt-[77px]">
+          <div className='float-right flex gap-5 pt-5 md:pt-[77px]'>
             <div
-              className="cursor-pointer rounded-[5px] border-[1px] border-vdao-dark py-[5px] px-[35px] font-heading text-lg font-medium"
+              className='cursor-pointer rounded-[5px] border-[1px] border-vdao-dark py-[5px] px-[35px] font-heading text-lg font-medium'
               onClick={() => {
-                setNextForm(true);
-                setShowPreview(false);
+                setNextForm(true)
+                setShowPreview(false)
               }}
             >
               Previous
             </div>
             <PrimaryButton
-              text="Submit"
-              className=" py-[5px] px-[35px] font-heading text-lg font-medium"
-              onClick={() => close()}
+              text='Submit'
+              className=' py-[5px] px-[35px] font-heading text-lg font-medium'
+              onClick={() => submit()}
             />
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Preview;
+export default Preview

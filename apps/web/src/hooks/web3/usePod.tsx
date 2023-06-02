@@ -1,3 +1,4 @@
+import { Pod, Proposal, User } from '@prisma/client'
 import { z } from 'zod'
 
 import { api } from '~/utils/api'
@@ -30,6 +31,8 @@ const podIncludeSchema = z.object({
   proposals: z.boolean().optional(),
 })
 
+export type pod_type = Pod & { proposals?: Proposal[]; members?: User[]; admins?: User[] }
+
 export function usePodRead(id: number, include: PodInclude = {}) {
   const schema = z.object({ id: z.number(), include: podIncludeSchema })
   schema.parse({ id, include })
@@ -46,7 +49,12 @@ export function usePodReads({
   include?: PodInclude
   createdBy?: string
 }) {
-  return api.pod.getPods.useQuery({ ids, include, createdBy })
+  const query = api.pod.getPods.useQuery({ ids, include, createdBy })
+
+  return {
+    ...query,
+    data: query.data as pod_type[],
+  }
 }
 
 export function useCreatePod() {

@@ -15,6 +15,10 @@ import { Section } from '../../../layout/section'
 import dynamic from 'next/dynamic'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
+import { useUserRead } from '~/hooks/web3/useUser'
+import { useAccount } from 'wagmi'
+import { Skeleton } from 'antd'
+import { Address } from 'viem'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -190,7 +194,7 @@ export function NewMembersComponent() {
         <div className=''>
           {membersData.map(({ img, name, category, date, time }, index) => {
             return (
-              <div className='mt-5 flex items-center justify-between md:w-80 lg:w-auto'>
+              <div className='mt-5 flex items-center justify-between md:w-80 lg:w-auto' key={name + index}>
                 <div className='mr-6 flex items-center'>
                   <img src={img} alt='' className='mr-4 h-10 w-10 rounded-full lg:mr-2.5' />
                   <div>
@@ -231,6 +235,11 @@ export function NewMembersComponent() {
 }
 
 export function ProfileHomeComponent({ setOpenProfile }: ProfileProps) {
+  const { address, isConnecting, isDisconnected } = useAccount()
+  const { data } = useUserRead({ address: address as Address })
+
+  let skeletonActive = !data
+
   return (
     <Section className='col-span-12 flex w-full flex-col rounded-2xl bg-vdao-dark pr-3.5 pt-5 pl-5 md:col-span-7 md:pt-10 md:pl-5 md:pr-8 md:pb-20'>
       {/* View Profile Button */}
@@ -243,29 +252,49 @@ export function ProfileHomeComponent({ setOpenProfile }: ProfileProps) {
 
       {/* User Info */}
       <div className='flex flex-col md:gap-5 lg:mx-8'>
-        <div className='flex gap-3'>
-          <Image src={ProfilePic} alt='Profile Picture' className='w-[54px] rounded-full' />
-          <div className='flex flex-col'>
-            <div className='font-body text-[26px] font-bold leading-[30px] text-vdao-light'>Kris Millar</div>
-            <div className='font-body text-lg font-normal leading-6 text-white'>0xd12512....92C</div>
+        <Skeleton active={skeletonActive} paragraph={{ rows: 1 }} avatar className='!w-1/2' loading={skeletonActive}>
+          <div className={'flex gap-3 ' + (skeletonActive && 'opacity-0')}>
+            <Image src={ProfilePic} alt='Profile Picture' className='h-14 w-14 rounded-full' />
+            <div className='flex flex-col'>
+              <span className='satoshi text-2xl font-bold leading-8 text-vdao-light'>{data?.name || 'John Doe'}</span>
+              <span className='satoshi text-base font-normal leading-6 '>
+                {data?.address
+                  ? data?.address?.length! > 15
+                    ? data?.address?.slice(0, 15) + '...'
+                    : data?.address
+                  : '0x0000...0000'}
+              </span>
+            </div>
           </div>
-        </div>
+        </Skeleton>
 
         {/* Description */}
-        <div className='mt-5 mr-[41px] font-body text-lg font-normal leading-[22px] text-white md:mr-0 md:w-9/12'>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices velit a nulla placerat, vitae
-          accumsan mauris euismod. Nam semper dignissim est a sollicitudin. Vestibulum non ipsum tellus. Vivamus a eros
-          nec sapien vestibulum.
+        <div className='mt-5 mr-7 font-body text-lg leading-6 md:mr-0 md:w-9/12'>
+          <Skeleton
+            active={skeletonActive}
+            paragraph={{ rows: 1 }}
+            title={false}
+            className='mt-5 mr-7 font-body text-lg leading-6 md:mr-0 md:w-9/12'
+            loading={skeletonActive}
+          >
+            <span>{data?.description}</span>
+          </Skeleton>
         </div>
-
         {/* Guild & Pod */}
-        <div className='mt-12 inline-grid grid-cols-[max-content_auto] gap-5 md:gap-6'>
-          <span className='font-body text-lg font-bold'>Guild</span>
-          <span className='font-body text-lg font-bold text-vdao-light'>DAO Operation Guild</span>
-          <span className='font-body text-lg font-bold'>Pod</span>
-          <span className='font-body text-lg font-bold text-vdao-light'>Regen Pod</span>
-        </div>
-
+        <Skeleton
+          className='mt-12 inline-grid grid-cols-[max-content_auto] gap-5 md:gap-6'
+          active={skeletonActive}
+          title={false}
+          paragraph={{ rows: 2 }}
+          loading={skeletonActive}
+        >
+          <div className='mt-12 inline-grid grid-cols-[max-content_auto] gap-5 md:gap-6'>
+            <span className='font-body text-lg font-bold md:text-base'>Guild</span>
+            <span className='font-body text-lg font-bold text-vdao-light md:text-base'>DAO Operation Guild</span>
+            <span className='font-body text-lg font-bold md:text-base'>Pod</span>
+            <span className='font-body text-lg font-bold text-vdao-light md:text-base'>Regen Pod</span>
+          </div>
+        </Skeleton>
         {/* Statistics */}
         <div className='my-10 grid  grid-cols-2 items-start gap-10 md:grid-cols-4 lg:mb-0 lg:gap-5'>
           {[
@@ -288,7 +317,15 @@ export function ProfileHomeComponent({ setOpenProfile }: ProfileProps) {
           ].map(stat => (
             <div className='flex flex-col items-center justify-center' key={stat.name}>
               <div className='flex h-32 w-32 items-center justify-center rounded-full border-[3px] border-vdao-light font-body text-[32px] font-bold text-white'>
-                {stat.value}
+                <Skeleton
+                  active={skeletonActive}
+                  paragraph={{ rows: 1, width: '100%' }}
+                  title={false}
+                  loading={skeletonActive}
+                  className='!w-1/2'
+                >
+                  {stat.value}
+                </Skeleton>
               </div>
               <span className='mt-2 text-center font-body text-lg font-bold'>{stat.name}</span>
             </div>

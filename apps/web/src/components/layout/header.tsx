@@ -37,11 +37,11 @@ const navigationElementsWeb2: NavigationElement[] = [
     name: 'Participate',
     link: '/apply',
     children: [
+      { name: 'Sign Manifesto', link: '/manifesto' },
       { name: 'Apply', link: '/apply' },
       { name: 'NFT Collection', link: '/nft' },
       { name: 'Discord', link: '#' },
       { name: 'Forum', link: '#' },
-      { name: 'Manifesto', link: '/manifesto' },
     ],
   },
   { name: 'Get Funding', link: '/funding' },
