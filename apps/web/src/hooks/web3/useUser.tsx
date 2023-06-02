@@ -68,9 +68,9 @@ export function useEditUser(include: UserInclude = {}): {
   return { editUser, mutation }
 }
 
-export function useUser(address: string, addresses: string[], include: UserInclude = {}) {
+export function useUser(address: string, addresses: string[], search: string, include: UserInclude = {}) {
   const userRead = useUserRead({ address, include })
-  const userReads = useUserReads(addresses, include)
+  const userReads = useUserReads({ addresses, include, search })
 
   return { userRead, userReads }
 }

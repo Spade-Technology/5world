@@ -1,4 +1,5 @@
 import { User } from '@prisma/client'
+import { Skeleton } from 'antd'
 import Image from 'next/image'
 import ProfilePic from 'public/icons/blog/createdByLogo.svg'
 import { Dispatch, SetStateAction } from 'react'
@@ -18,7 +19,7 @@ type CardProps = {
 }
 
 const StewardCards = ({ setOpenProfile }: Props) => {
-  const { data: users } = useStewardReads({})
+  const { data: users, isLoading } = useStewardReads({})
 
   console.log('stewards data', users)
 
@@ -30,7 +31,30 @@ const StewardCards = ({ setOpenProfile }: Props) => {
         </div>
 
         <div className='mx-6 mt-5 grid grid-cols-1 gap-5 md:mx-0 md:grid-cols-2'>
-          {users && users.map(user => <Card setOpenProfile={setOpenProfile} user={user} />)}
+          {isLoading ? (
+            <>
+              <Skeleton.Avatar
+                shape='square'
+                style={{ height: '400px', width: '100%' }}
+                className='col-span-2'
+                active
+              />
+              <Skeleton.Avatar
+                shape='square'
+                style={{ height: '400px', width: '100%' }}
+                className='col-span-2'
+                active
+              />
+              <Skeleton.Avatar
+                shape='square'
+                style={{ height: '400px', width: '100%' }}
+                className='col-span-2'
+                active
+              />
+            </>
+          ) : (
+            users && users.map(user => <Card setOpenProfile={setOpenProfile} user={user} />)
+          )}
         </div>
       </div>
     </div>
