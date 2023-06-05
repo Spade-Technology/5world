@@ -109,7 +109,7 @@ export function StatisticsHomeComponent() {
         <article className='mt-12 flex flex-col gap-5 px-2.5 md:pl-0 lg:flex-row lg:justify-end lg:gap-10'>
           {expenditureData.map(({ title, amount, percent }, index) => {
             return (
-              <div className='mx-auto w-fit rounded-2xl bg-white p-5 md:p-8 lg:mx-0'>
+              <div className='mx-auto w-fit max-w-[322px] rounded-2xl bg-white p-5 md:p-8 lg:mx-0'>
                 <div className='font-body text-[22px] font-medium leading-6 text-vdao-dark md:text-2xl md:font-bold lg:leading-5'>
                   {' '}
                   {title}
