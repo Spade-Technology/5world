@@ -3,11 +3,12 @@ import closeIcon from 'public/logo/svg/close.svg'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export const VDAOConnectButton = ({ className, web2 }: { className?: string; web2?: boolean }) => {
   const buttonStyle = `rounded-md border-[1px] h-10 px-5 font-heading font-medium ${className ? className : ''}`
 
+  const ref = useRef<HTMLInputElement>(null)
   const [openModal, setOpenModal] = useState(false)
 
   useEffect(() => {
@@ -17,6 +18,15 @@ export const VDAOConnectButton = ({ className, web2 }: { className?: string; web
       document.body.style.overflowY = 'scroll'
     }
   }, [openModal])
+
+  useEffect(() => {
+    const muf = (event: any) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setOpenModal(false)
+      }
+    }
+    document.addEventListener('mousedown', muf)
+  }, [ref])
 
   if (web2)
     return (
@@ -33,11 +43,14 @@ export const VDAOConnectButton = ({ className, web2 }: { className?: string; web
         Connect Wallet
       </button>
       <article
-        className={`fixed top-0 left-0 bottom-0    h-[100vw] w-[100vw]  bg-vdao-dark duration-150 ease-in-out ${
+        className={`fixed top-0 left-0 bottom-0 h-[100vw] w-[100vw]  bg-vdao-dark duration-150 ease-in-out ${
           openModal ? 'visible z-50 opacity-100' : 'invisible opacity-0'
         } `}
       >
-        <section className='mx-auto mt-[60px] h-[387px] w-fit rounded-[20px] bg-vdao-deep pl-10 pr-[60px] pt-[28px]'>
+        <section
+          ref={ref}
+          className='mx-auto mt-[60px] h-[387px] w-fit rounded-[20px] bg-vdao-deep pl-10 pr-[60px] pt-[28px]'
+        >
           <div className='flex justify-between'>
             <Link href='/'>
               <Image src={logo} alt='VDAO' height={30} className='pt-[20px]' />
