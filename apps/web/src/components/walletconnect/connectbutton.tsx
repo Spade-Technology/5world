@@ -13,7 +13,7 @@ export const VDAOConnectButton = ({ className, web2 }: { className?: string; web
 
   useEffect(() => {
     if (openModal) {
-      document.body.style.overflowY = 'hidden'
+      document.body.style.overflowY = 'hiddn'
     } else {
       document.body.style.overflowY = 'scroll'
     }
@@ -40,20 +40,20 @@ export const VDAOConnectButton = ({ className, web2 }: { className?: string; web
   return (
     <>
       <button onClick={() => setOpenModal(true)} type='button' className={buttonStyle}>
-        Connect Wallet
+        Connect Walleth
       </button>
       <article
-        className={`fixed top-0 left-0 bottom-0 h-[100vw] w-[100vw]  bg-vdao-dark duration-150 ease-in-out ${
+        className={`fixed top-0 left-0 bottom-0 h-[100vh] w-[100vw]  bg-vdao-dark duration-150 ease-in-out ${
           openModal ? 'visible z-50 opacity-100' : 'invisible opacity-0'
         } `}
       >
         <section
           ref={ref}
-          className='mx-auto mt-[60px] h-[387px] w-fit rounded-[20px] bg-vdao-deep pl-10 pr-[60px] pt-[28px]'
+          className='h-full w-full bg-vdao-deep pl-[24px] pr-[60px] md:mx-auto md:mt-[60px] md:h-[387px] md:w-fit md:rounded-[20px] md:pl-10 md:pt-[28px]'
         >
-          <div className='flex justify-between'>
+          <div className=' hidden justify-between md:flex'>
             <Link href='/'>
-              <Image src={logo} alt='VDAO' height={30} className='pt-[20px]' />
+              <Image src={logo} alt='VDAO' height={30} className='md:pt-[20px]' />
             </Link>
 
             <Image
@@ -64,12 +64,12 @@ export const VDAOConnectButton = ({ className, web2 }: { className?: string; web
               className='cursor-pointer'
             />
           </div>
-          <div className='flex justify-between gap-10 pt-[60px]'>
+          <div className='flex flex-col justify-between gap-[100px] pt-[60px] md:flex-row md:gap-10'>
             <div className=''>
-              <div className='w-[274px] font-heading text-[46px] font-medium leading-[52px] text-vdao-light'>
+              <div className='w-[274px] font-heading text-[46px] font-medium leading-[56.58px] text-vdao-light md:leading-[52px]'>
                 Sign in with your wallet.
               </div>
-              <div className='w-[310px] pt-5 font-inter text-base font-normal leading-5 text-white'>
+              <div className='w-[359px] pt-5 font-inter text-lg font-normal leading-[22px] text-white md:w-[310px] md:text-base md:leading-5'>
                 Connect with one of our available wallet providers or create a new one.{' '}
               </div>
             </div>
@@ -78,7 +78,7 @@ export const VDAOConnectButton = ({ className, web2 }: { className?: string; web
             <div className='flex flex-col gap-5'>
               {['MetaMask Wallet', 'Coinbase Wallet', 'WalletConnect'].map((btn, index) => {
                 return (
-                  <div className='flex w-[300px] cursor-pointer items-center justify-center rounded-[20px] bg-vdao-light py-[7px] font-heading text-xl font-medium leading-[26px] text-vdao-dark'>
+                  <div className='mx-auto flex w-[300px] cursor-pointer items-center justify-center rounded-[20px] bg-vdao-light py-[7px] font-heading text-xl font-medium leading-[26px] text-vdao-dark md:mx-0'>
                     Sign in with your wallet.
                   </div>
                 )
