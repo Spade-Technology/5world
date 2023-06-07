@@ -27,7 +27,7 @@ const PageNation = ({ pageNumbers, pageCount, setPageCount, web3 }: PageNationPr
           pageNumbers.map((number: number, idx: number) => {
             return (
               <div
-                className={`cursor-pointer pr-4 text-lg ${
+                className={`cursor-pointer pr-4 font-body text-lg font-normal ${
                   pageCount === number ? ' text-vdao-light' : `${web3 ? 'text-white' : ''}`
                 }`}
                 onClick={() => setPageCount(number)}

@@ -4,10 +4,10 @@ export const DonateDescription = () => {
   return (
     <Description
       invertColors={true}
-      title={<div className='pr-[23px] '>Donate</div>}
+      title={<div className='pr-[23px] text-[44px]'>Donate</div>}
       description={
-        <div className='font-body text-[26px] font-medium'>
-          Support VDAO’s mission to <br /> regenerate our planet.
+        <div className='w-[439px] font-body text-[26px] font-medium leading-[30px]'>
+          Support VDAO’s mission to regenerate our planet.
         </div>
       }
     />

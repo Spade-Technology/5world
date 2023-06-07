@@ -14,9 +14,11 @@ const Card = (props: CardProps) => {
       className={`flex flex-col items-start rounded-2xl bg-vdao-dark px-8 py-10 font-medium md:px-10 ${props.className}`}
     >
       <div className='h-0.5 w-full bg-white'></div>
-      <div className='mt-5 flex-1 text-xl text-white md:pr-10 md:text-2xl'>{props.description}</div>
+      <div className='mt-5 flex-1 font-body text-[22px] font-medium leading-[26px] text-white md:pr-10 md:text-[26px] md:leading-[30px]'>
+        {props.description}
+      </div>
       <div className='mt-8 flex-1'>
-        <PrimaryButton text={props.buttonText} className='py-1' />
+        <PrimaryButton text={props.buttonText} className='' />
       </div>
     </div>
   )

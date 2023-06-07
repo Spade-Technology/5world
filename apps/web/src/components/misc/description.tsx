@@ -14,17 +14,17 @@ const Description = (props: Props) => {
 
   return (
     <div
-      className={`${containerClass} mx-auto max-w-[1320px] px-0  md:flex-row md:gap-14 md:px-6 ${
+      className={`${containerClass} mx-auto flex max-w-[1320px] flex-col  justify-center px-0 md:flex-row md:gap-[54px] md:px-6 ${
         props.invertColors ? 'bg-vdao-deep text-white' : ''
       }`}
     >
-      <h1
-        className={`${titleClass} font-medium text-vdao-dark md:text-8xl ${
+      <div
+        className={`${titleClass} font-heading font-medium text-vdao-dark md:text-[80px] ${
           props.invertColors ? 'text-vdao-light' : ''
         }`}
       >
         {props.title}
-      </h1>
+      </div>
       <div className={`${descriptionClass} md:pt-24`}> {props.description} </div>
     </div>
   )
