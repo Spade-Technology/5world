@@ -20,7 +20,7 @@ const DonateNow = (props: Props) => {
     >
       <div className='font-heading text-[26px] font-medium md:text-3xl'>Donate With</div>
 
-      <div className='flex flex-col gap-[70px] pt-[30px] md:flex-row'>
+      <div className='flex flex-col gap-[70px] pt-[30px] lg:flex-row'>
         <div className='flex-1'>
           <form className='flex flex-col border-b-2 border-b-black pb-3 md:flex-row'>
             <div className='my-auto flex flex-1'>

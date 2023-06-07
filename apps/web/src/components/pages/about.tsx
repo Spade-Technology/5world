@@ -14,44 +14,50 @@ export function AboutUsCoreTeamComponent() {
           tristique at lectus.
         </div>
       </div>
-      <div className='w-100 mt-20 flex flex-wrap gap-5 md:w-[1140px]'>
-        {[1, 2, 3, 4].map(item => {
-          return (
-            <div className='mx-auto'>
-              <div className='h-[270px] w-[270px] rounded-[10px] bg-vdao-lightpurple  opacity-70'></div>
-              <div className='mt-5 font-body text-[26px] font-medium leading-[30px] text-vdao-dark '>Full Name</div>
-              <div className='font-body text-[22px] font-normal leading-[26px] text-vdao-dark '>Title</div>
-            </div>
-          )
-        })}
+      <div className='w-100 mt-20 md:px-6 lg:w-[1140px] lg:px-0'>
+        <div className='flex-wrap gap-5 gap-y-10 md:grid md:grid-cols-12'>
+          {[1, 2, 3, 4, 5, 6].map(item => {
+            return (
+              <div className='col-span-10 mx-auto  mx-auto w-[270px] md:col-span-4 md:col-span-3 md:mx-0 md:w-full lg:col-span-3'>
+                <div className='h-[270px] w-full rounded-[10px] bg-vdao-lightpurple opacity-70 '></div>
+                <div className='mt-5 font-body text-[26px] font-medium leading-[30px] text-vdao-dark '>Full Name</div>
+                <div className='font-body text-[22px] font-normal leading-[26px] text-vdao-dark '>Title</div>
+              </div>
+            )
+          })}
+        </div>
       </div>
       <div className='mx-auto mt-20 flex w-full'>
         <h1 className='mb-6 w-full text-left text-[32px] font-medium md:text-[46px]'>Advisors</h1>
       </div>
-      <div className='w-100 flex flex-wrap gap-5 md:w-[1140px]'>
-        {[1, 2, 3, 4].map(item => {
-          return (
-            <div className='mx-auto'>
-              <div className='h-[270px] w-[270px] rounded-[10px] bg-vdao-lightpurple  opacity-70'></div>
-              <div className='mt-5 font-body text-[26px] font-medium leading-[30px] text-vdao-dark '>Full Name</div>
-              <div className='font-body text-[22px] font-normal leading-[26px] text-vdao-dark '>Title</div>
-            </div>
-          )
-        })}
+      <div className='w-100  md:px-6 lg:w-[1140px] lg:px-0'>
+        <div className='flex-wrap gap-5 gap-y-10 md:grid md:grid-cols-12'>
+          {[1, 2, 3, 4, 5, 6].map(item => {
+            return (
+              <div className='col-span-10 mx-auto  mx-auto w-[270px] md:col-span-4 md:col-span-3 md:mx-0 md:w-full lg:col-span-3'>
+                <div className='h-[270px] w-full rounded-[10px] bg-vdao-lightpurple opacity-70 '></div>
+                <div className='mt-5 font-body text-[26px] font-medium leading-[30px] text-vdao-dark '>Full Name</div>
+                <div className='font-body text-[22px] font-normal leading-[26px] text-vdao-dark '>Title</div>
+              </div>
+            )
+          })}
+        </div>
       </div>
       <div className='mx-auto mt-20 flex w-full'>
         <h1 className='mb-6 w-full text-left text-[32px] font-medium'>Guardians</h1>
       </div>
-      <div className='w-100 flex flex-wrap gap-5 md:w-[1140px]'>
-        {[1, 2, 3, 4].map(item => {
-          return (
-            <div className='mx-auto'>
-              <div className='h-[270px] w-[270px] rounded-[10px] bg-vdao-lightpurple  opacity-70'></div>
-              <div className='mt-5 font-body text-[26px] font-medium leading-[30px] text-vdao-dark '>Full Name</div>
-              <div className='font-body text-[22px] font-normal leading-[26px] text-vdao-dark '>Title</div>
-            </div>
-          )
-        })}
+      <div className='w-100  md:px-6 lg:w-[1140px] lg:px-0'>
+        <div className='flex-wrap gap-5 gap-y-10 md:grid md:grid-cols-12'>
+          {[1, 2, 3, 4, 5, 6].map(item => {
+            return (
+              <div className='col-span-10 mx-auto  mx-auto w-[270px] md:col-span-4 md:col-span-3 md:mx-0 md:w-full lg:col-span-3'>
+                <div className='h-[270px] w-full rounded-[10px] bg-vdao-lightpurple opacity-70 '></div>
+                <div className='mt-5 font-body text-[26px] font-medium leading-[30px] text-vdao-dark '>Full Name</div>
+                <div className='font-body text-[22px] font-normal leading-[26px] text-vdao-dark '>Title</div>
+              </div>
+            )
+          })}
+        </div>
       </div>
     </Section>
   )

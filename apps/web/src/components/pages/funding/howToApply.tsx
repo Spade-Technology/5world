@@ -3,7 +3,7 @@ import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 const HowToApply = () => {
   return (
     <div className='bg-vdao-deep '>
-      <div className='mx-auto flex max-w-[1280px] flex-col  justify-between gap-11 px-6 py-16 font-body text-white md:flex-row md:gap-10 md:py-24 md:px-24 '>
+      <div className='mx-auto flex max-w-[1280px] flex-col  justify-between gap-11 px-6 py-16 font-body text-white lg:flex-row lg:gap-10 lg:py-24 lg:px-24 '>
         <div className='flex-1'>
           <div className='font-heading text-[32px] font-medium text-vdao-light md:text-[46px]'>Funding Schedule</div>
           <div className='mt-8 font-heading text-[26px] font-medium md:mt-12 md:text-3xl'>Grants Round 1</div>
@@ -15,7 +15,9 @@ const HowToApply = () => {
             'Grants Awarded: q3 2023',
           ].map((name, index) => {
             return (
-              <div className='pt-3 font-heading text-xl font-medium md:pt-6 md:font-body md:text-[26px]'>{name}</div>
+              <div className='pt-3 font-heading text-xl font-medium leading-[24px] md:pt-6 md:font-body md:text-[26px]'>
+                {name}
+              </div>
             )
           })}
         </div>
