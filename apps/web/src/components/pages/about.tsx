@@ -83,7 +83,7 @@ export function AboutUsCoreTeamComponent() {
 
 export function AboutUsVisionMissionComponent() {
   return (
-    <Section className='xl:px-O my-36 flex max-w-[1440px] flex-col  overflow-hidden py-24 px-6 text-vdao-dark md:flex-row md:px-12'>
+    <Section className='xl:px-O my-36 flex max-w-[1280px] flex-col  overflow-hidden py-24 px-6 text-vdao-dark md:flex-row md:px-12 lg:mx-auto'>
       <div className='mx-auto flex w-full max-w-[1280px] flex-col gap-20'>
         <div className='flex flex-col md:flex-row'>
           <h1 className='mb-6 w-full text-[32px] font-medium underline md:text-center md:text-[36px]'>Vision</h1>
