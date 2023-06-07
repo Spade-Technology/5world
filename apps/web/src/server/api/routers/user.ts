@@ -45,7 +45,7 @@ export const userRouter = createTRPCRouter({
         ...(addresses && addresses.length > 0 && { where: { address: { in: addresses } } }),
         ...(search && { where: { address: { contains: search } } }),
         include: include,
-        take: 50,
+        take: 10,
       })
       if (!users || users.length === 0) throw new Error('Users not found')
       return users
