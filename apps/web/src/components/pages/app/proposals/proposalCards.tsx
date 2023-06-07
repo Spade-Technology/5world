@@ -88,7 +88,7 @@ export const Card = ({ proposal, setViewProposal }: CardProps) => {
           <div className='text-lg font-semibold'>{proposal.postedAt}</div>
           <div className='pt-[10px] text-3xl font-medium'>{proposal.content}</div>
 
-          <ProfileCard Icon={proposal.creatorIcon} Name={proposal.createdName} Address={proposal.creatorAddress} />
+          <ProfileCard icon={proposal.creatorIcon} name={proposal.createdName} Address={proposal.creatorAddress} />
 
           <div
             className={`mt-[30px] w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-9 py-[5px] text-lg font-medium text-vdao-light`}

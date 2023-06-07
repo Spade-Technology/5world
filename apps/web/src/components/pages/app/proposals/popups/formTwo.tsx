@@ -95,11 +95,11 @@ const FormTwo = ({
               <div className='flex justify-start gap-[17px] pt-[10px] md:pt-5' key={idx}>
                 <div className='text-lg font-bold text-vdao-light'>Action name {idx + 1}</div>
                 <div
-                  className='my-auto text-sm font-bold underline cursor-pointer'
+                  className='my-auto cursor-pointer text-sm font-bold underline'
                   onClick={() => {
                     // actions.splice(idx, 1)
-                    const newActions = actions.filter((action, index) => index != idx )
-                    console.log("newActions", newActions, newActions.length)
+                    const newActions = actions.filter((action, index) => index != idx)
+                    console.log('newActions', newActions, newActions.length)
                     setActions(newActions)
                   }}
                 >

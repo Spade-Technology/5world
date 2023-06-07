@@ -1,18 +1,18 @@
-import Footer from "~/components/layout/footer";
-import Header from "~/components/layout/header";
-import Page from "~/components/layout/page";
-import MailingListComponent from "~/components/misc/mailinglist";
+import Footer from '~/components/layout/footer'
+import Header from '~/components/layout/header'
+import Page from '~/components/layout/page'
+import MailingListComponent from '~/components/misc/mailinglist'
 
-import Badges from "~/components/pages/donate/badges";
-import DonateDescription from "~/components/pages/donate/description";
-import DonateNow from "~/components/pages/donate/donateNow";
-import WhatsInIt from "~/components/pages/donate/whatsInIt";
+import Badges from '~/components/pages/donate/badges'
+import DonateDescription from '~/components/pages/donate/description'
+import DonateNow from '~/components/pages/donate/donateNow'
+import WhatsInIt from '~/components/pages/donate/whatsInIt'
 
 const Donate = () => {
   return (
     <>
       <Page>
-        <div className="mx-auto max-w-[1280px]">
+        <div className='mx-auto max-w-[1280px]'>
           <DonateDescription />
 
           <DonateNow />
@@ -25,7 +25,7 @@ const Donate = () => {
         <MailingListComponent />
       </Page>
     </>
-  );
-};
+  )
+}
 
-export default Donate;
+export default Donate

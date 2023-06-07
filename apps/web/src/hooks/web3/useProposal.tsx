@@ -74,6 +74,7 @@ export function useCreateProposal() {
     // check that calldatas, targets, and values are all the same length
     if (calldatas.length !== targets.length || targets.length !== values.length) {
       setIsLoading(false)
+      console.error('calldatas, targets, and values must all be the same length')
       return notification.error({
         message: 'Error creating proposal',
         description: 'Calldatas, targets, and values must all be the same length',
@@ -90,6 +91,7 @@ export function useCreateProposal() {
       })
     } catch (e) {
       setIsLoading(false)
+      console.error(e)
       return notification.error({
         message: 'Error creating proposal',
         description: e?.shortMessage || 'Unknown error',

@@ -32,7 +32,7 @@ const Proposals = () => {
             <Select
               className='antd-stop-propagation w-full'
               options={abi
-                ?.filter(el => el.type == 'function')
+                ?.filter(el => el.type == 'function' && el.stateMutability !== 'view')
                 .map(el => ({ value: JSON.stringify(el), label: el.name }))}
               onChange={v => setContractAction(JSON.parse(v) as abiItem)}
             />

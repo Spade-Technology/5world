@@ -1,74 +1,63 @@
-import { useEffect, useState } from "react";
-import { blogDetails } from "./blogDetails";
-import BlogCard from "./blogCard";
-import PageNation from "~/components/misc/pageNation";
+import { useEffect, useState } from 'react'
+import { blogDetails } from './blogDetails'
+import BlogCard from './blogCard'
+import PageNation from '~/components/misc/pageNation'
 
 const BlogPagination = () => {
-  const [pageCount, setPageCount] = useState(1);
-  const [pageNumbers, setPageNumbers] = useState<any>([]);
-  const [updatedBlogs, setUpdatedBlogs] = useState<any>([]);
+  const [pageCount, setPageCount] = useState(1)
+  const [pageNumbers, setPageNumbers] = useState<any>([])
+  const [updatedBlogs, setUpdatedBlogs] = useState<any>([])
 
-  const itemsPerPage = 3;
+  const itemsPerPage = 3
 
   /** The following two useEffects are for Pagenation functionality. */
   useEffect(() => {
     if (blogDetails.length) {
-      let pageCountArr = [];
-      let count = 0;
+      let pageCountArr = []
+      let count = 0
       for (let i = 0; i < blogDetails.length; i++) {
         if ((i + 1) % itemsPerPage === 0) {
-          count = count + 1;
-          pageCountArr.push(count);
+          count = count + 1
+          pageCountArr.push(count)
         }
       }
 
       if (blogDetails.length % itemsPerPage !== 0) {
-        pageCountArr.push(count + 1);
+        pageCountArr.push(count + 1)
       }
 
-      setPageNumbers(pageCountArr);
+      setPageNumbers(pageCountArr)
     }
-  }, [blogDetails.length]);
+  }, [blogDetails.length])
 
   useEffect(() => {
     if (pageCount) {
-      let updatedBlogsArr = [];
-      const startBlog = itemsPerPage * (pageCount - 1);
+      let updatedBlogsArr = []
+      const startBlog = itemsPerPage * (pageCount - 1)
       const endBlog =
         (pageCount - 1) * itemsPerPage + 3 <= blogDetails.length
           ? (pageCount - 1) * itemsPerPage + 3
-          : blogDetails.length;
+          : blogDetails.length
 
       for (let i = startBlog; i < endBlog; i++) {
-        updatedBlogsArr.push(blogDetails[i]);
+        updatedBlogsArr.push(blogDetails[i])
       }
 
-      setUpdatedBlogs(updatedBlogsArr);
+      setUpdatedBlogs(updatedBlogsArr)
     }
-  }, [pageCount]);
+  }, [pageCount])
 
   return (
     <>
-      <div className="px-6 md:mt-16">
+      <div className='px-6 md:mt-16'>
         {updatedBlogs &&
           updatedBlogs.map((blog: any, idx: number) => {
-            return (
-              <BlogCard
-                blog={blog}
-                key={idx}
-                showBorder={idx + 1 < updatedBlogs.length}
-                id={idx}
-              />
-            );
+            return <BlogCard blog={blog} key={idx} showBorder={idx + 1 < updatedBlogs.length} id={idx} />
           })}
       </div>
-      <PageNation
-        pageNumbers={pageNumbers}
-        pageCount={pageCount}
-        setPageCount={setPageCount}
-      />
+      <PageNation pageNumbers={pageNumbers} pageCount={pageCount} setPageCount={setPageCount} />
     </>
-  );
-};
+  )
+}
 
-export default BlogPagination;
+export default BlogPagination

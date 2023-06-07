@@ -9,6 +9,7 @@ import Icon6 from 'public/icons/pods/icon6.svg'
 import Icon7 from 'public/icons/pods/icon7.svg'
 import Icon8 from 'public/icons/pods/icon8.svg'
 import ProfileCard from '~/components/misc/profileCard'
+import { pod_type } from '~/hooks/web3/usePod'
 
 type FormProps = {
   setNextForm: Dispatch<SetStateAction<boolean>>
@@ -17,6 +18,7 @@ type FormProps = {
   memberAddr: string
   setMemberAddr: Dispatch<SetStateAction<string>>
   createPodHanlder: any
+  data: pod_type[]
 }
 
 const FormTwo = ({
@@ -26,6 +28,7 @@ const FormTwo = ({
   setMemberAddr,
   setNextForm,
   createPodHanlder,
+  data,
 }: FormProps) => {
   return (
     <div className='grid grid-cols-1 gap-11 pt-10 font-body text-lg font-normal text-vdao-dark md:grid-cols-2 md:gap-[106px]'>
@@ -61,25 +64,26 @@ const FormTwo = ({
 
       <div className='md:pr-5'>
         <div className='flex justify-between'>
-          <div className='text-[22px] font-bold'>Members</div>
+          <div className='text-[22px] font-bold'>Manager</div>
           {/* <div className='my-auto text-sm font-bold underline'>Manage Memberships</div> */}
         </div>
 
-        <ProfileCard Icon={Icon1} />
+        <ProfileCard
+          icon={data[0]?.admins[0]?.picture ? data[0]?.admins[0]?.picture : ''}
+          name={data[0]?.admins[0]?.name ? data[0]?.admins[0]?.name : ''}
+          address={data[0]?.admins[0]?.address ? data[0]?.admins[0]?.address : ''}
+        />
 
         <div className='flex justify-start gap-[30px] pt-[30px] md:pt-10'>
-          <div className='text-[22px] font-bold'>Manager</div>
-          <div className='text-lg font-normal'>7 members</div>
+          <div className='text-[22px] font-bold'>Members</div>
+          <div className='text-lg font-normal'>{data[0]?.members ? data[0].members.length : 0}</div>
         </div>
 
         <div className='grid grid-cols-2 pt-5 '>
-          <ProfileCard Icon={Icon2} Name='Lostpoet' />
-          <ProfileCard Icon={Icon3} Name='NinjaSam' />
-          <ProfileCard Icon={Icon4} Name='BearXYZ' />
-          <ProfileCard Icon={Icon5} Name='CyberGod01' />
-          <ProfileCard Icon={Icon6} Name='Lostpoet' />
-          <ProfileCard Icon={Icon7} Name='NinjaSam' />
-          <ProfileCard Icon={Icon8} Name='BearXYZ' />
+          {data[0]?.members &&
+            data[0]?.members.map((member, idx) => {
+              return <ProfileCard icon={member.picture} name={member.name} address={member.address} />
+            })}
         </div>
 
         <div className='float-right flex gap-2 pt-20 pb-[30px] md:gap-5 md:pt-36 '>

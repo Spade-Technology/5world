@@ -1,0 +1,209 @@
+/* Clash Display */
+@font-face {
+  font-family: clash display;
+  font-style: normal;
+  font-weight: 400;
+  src: local('Clash Display'), url(/font/clashdisplay/ClashDisplayRegular.woff) format('woff');
+}
+@font-face {
+  font-family: clash display;
+  font-style: normal;
+  font-weight: 200;
+  src: local('Clash Display'), url(/font/clashdisplay/ClashDisplayExtralight.woff) format('woff');
+}
+@font-face {
+  font-family: clash display;
+  font-style: normal;
+  font-weight: 300;
+  src: local('Clash Display'), url(/font/clashdisplay/ClashDisplayLight.woff) format('woff');
+}
+@font-face {
+  font-family: clash display;
+  font-style: normal;
+  font-weight: 500;
+  src: local('Clash Display'), url(/font/clashdisplay/ClashDisplayMedium.woff) format('woff');
+}
+@font-face {
+  font-family: clash display;
+  font-style: normal;
+  font-weight: 600;
+  src: local('Clash Display'), url(/font/clashdisplay/ClashDisplaySemibold.woff) format('woff');
+}
+@font-face {
+  font-family: clash display;
+  font-style: normal;
+  font-weight: 700;
+  src: local('Clash Display'), url(/font/clashdisplay/ClashDisplayBold.woff) format('woff');
+}
+
+/* Satoshi */
+@font-face {
+  font-family: satoshi;
+  font-style: normal;
+  font-weight: 400;
+  src: local('Satoshi'), url(/font/satoshi/Satoshi-Regular.woff) format('woff');
+}
+@font-face {
+  font-family: satoshi;
+  font-style: italic;
+  font-weight: 400;
+  src: local('Satoshi'), url(/font/satoshi/Satoshi-Italic.woff) format('woff');
+}
+@font-face {
+  font-family: satoshi;
+  font-style: normal;
+  font-weight: 300;
+  src: local('Satoshi'), url(/font/satoshi/Satoshi-Light.woff) format('woff');
+}
+@font-face {
+  font-family: satoshi;
+  font-style: italic;
+  font-weight: 300;
+  src: local('Satoshi'), url(/font/satoshi/Satoshi-LightItalic.woff) format('woff');
+}
+@font-face {
+  font-family: satoshi;
+  font-style: normal;
+  font-weight: 500;
+  src: local('Satoshi'), url(/font/satoshi/Satoshi-Medium.woff) format('woff');
+}
+@font-face {
+  font-family: satoshi;
+  font-style: italic;
+  font-weight: 500;
+  src: local('Satoshi'), url(/font/satoshi/Satoshi-MediumItalic.woff) format('woff');
+}
+@font-face {
+  font-family: satoshi;
+  font-style: normal;
+  font-weight: 700;
+  src: local('Satoshi'), url(/font/satoshi/Satoshi-Bold.woff) format('woff');
+}
+@font-face {
+  font-family: satoshi;
+  font-style: italic;
+  font-weight: 700;
+  src: local('Satoshi'), url(/font/satoshi/Satoshi-BoldItalic.woff) format('woff');
+}
+@font-face {
+  font-family: satoshi;
+  font-style: normal;
+  font-weight: 900;
+  src: local('Satoshi'), url(/font/satoshi/Satoshi-Black.woff) format('woff');
+}
+@font-face {
+  font-family: satoshi;
+  font-style: italic;
+  font-weight: 900;
+  src: local('Satoshi'), url(/font/satoshi/Satoshi-BlackItalic.woff) format('woff');
+}
+
+/* Inter */
+@font-face {
+  font-family: inter;
+  font-style: normal;
+  font-weight: 400;
+  src: local('Inter'), url(/font/inter/Inter-Regular.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: italic;
+  font-weight: 400;
+  src: local('Inter'), url(/font/inter/Inter-Italic.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: normal;
+  font-weight: 100;
+  src: local('Inter'), url(/font/inter/Inter-Thin-BETA.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: italic;
+  font-weight: 100;
+  src: local('Inter'), url(/font/inter/Inter-ThinItalic-BETA.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: normal;
+  font-weight: 200;
+  src: local('Inter'), url(/font/inter/Inter-ExtraLight-BETA.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: italic;
+  font-weight: 200;
+  src: local('Inter'), url(/font/inter/Inter-ExtraLightItalic-BETA.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: normal;
+  font-weight: 300;
+  src: local('Inter'), url(/font/inter/Inter-Light-BETA.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: italic;
+  font-weight: 300;
+  src: local('Inter'), url(/font/inter/Inter-LightItalic-BETA.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: normal;
+  font-weight: 500;
+  src: local('Inter'), url(/font/inter/Inter-Medium.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: italic;
+  font-weight: 500;
+  src: local('Inter'), url(/font/inter/Inter-MediumItalic.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: normal;
+  font-weight: 600;
+  src: local('Inter'), url(/font/inter/Inter-SemiBold.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: italic;
+  font-weight: 600;
+  src: local('Inter'), url(/font/inter/Inter-SemiBoldItalic.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: normal;
+  font-weight: 700;
+  src: local('Inter'), url(/font/inter/Inter-Bold.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: italic;
+  font-weight: 700;
+  src: local('Inter'), url(/font/inter/Inter-BoldItalic.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: normal;
+  font-weight: 800;
+  src: local('Inter'), url(/font/inter/Inter-ExtraBold.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: italic;
+  font-weight: 800;
+  src: local('Inter'), url(/font/inter/Inter-ExtraBoldItalic.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: normal;
+  font-weight: 900;
+  src: local('Inter'), url(/font/inter/Inter-Black.woff) format('woff');
+}
+@font-face {
+  font-family: inter;
+  font-style: italic;
+  font-weight: 900;
+  src: local('Inter'), url(/font/inter/Inter-BlackItalic.woff) format('woff');
+}

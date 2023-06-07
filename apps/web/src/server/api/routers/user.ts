@@ -35,15 +35,17 @@ export const userRouter = createTRPCRouter({
   getUsers: publicProcedure
     .input(
       z.object({
-        addresses: z.array(z.string()).max(10, 'Too many addresses'),
+        search: z.string().optional(),
+        addresses: z.array(z.string()).max(10, 'Too many addresses').optional(),
         include: includeZod,
       }),
     )
-    .query(async ({ input: { addresses, include }, ctx: { prisma } }) => {
+    .query(async ({ input: { addresses, search, include }, ctx: { prisma } }) => {
       const users = await prisma.user.findMany({
-        ...(addresses.length > 0 && { where: { address: { in: addresses } } }),
+        ...(addresses && addresses.length > 0 && { where: { address: { in: addresses } } }),
+        ...(search && { where: { address: { contains: search } } }),
         include: include,
-        take: 50,
+        take: 10,
       })
       if (!users || users.length === 0) throw new Error('Users not found')
       return users

@@ -15,10 +15,12 @@ import { Section } from '../../../layout/section'
 import dynamic from 'next/dynamic'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
-import { useUserRead } from '~/hooks/web3/useUser'
+import { useUserRead, useUserReads } from '~/hooks/web3/useUser'
 import { useAccount } from 'wagmi'
 import { Skeleton } from 'antd'
 import { Address } from 'viem'
+import { shortenAddress, shortenText } from '~/utils/helpers'
+import { Null_Address } from '~/utils/config'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -184,7 +186,7 @@ export function StatisticsHomeComponent() {
 
 export function NewMembersComponent() {
   return (
-    <Section className=' col-span-12 w-full justify-between rounded-2xl bg-vdao-dark px-5 py-10 md:col-span-5 md:flex md:px-10 md:pt-14 md:pb-10 lg:mb-0 lg:block'>
+    <Section className=' col-span-12 w-full justify-between rounded-2xl bg-vdao-dark px-5 py-10 md:flex md:px-10 md:pt-14 md:pb-10 lg:col-span-5 lg:mb-0 lg:block'>
       {/* NEW MEMBERS */}
       <div className='lg:px-10'>
         <div className='flex items-center gap-2.5'>
@@ -236,12 +238,23 @@ export function NewMembersComponent() {
 
 export function ProfileHomeComponent({ setOpenProfile }: ProfileProps) {
   const { address, isConnecting, isDisconnected } = useAccount()
-  const { data } = useUserRead({ address: address as Address })
+  const { data } = useUserRead({
+    address: address as Address,
+    include: {
+      podsAsAdmin: true,
+      podsAsMember: true,
+      proposals: true,
+      guild: true,
+      stewardVotesAsCandidate: true,
+      stewardVotesAsVoter: true,
+    },
+  })
 
+  console.log('user data', data)
   let skeletonActive = !data
 
   return (
-    <Section className='col-span-12 flex w-full flex-col rounded-2xl bg-vdao-dark pr-3.5 pt-5 pl-5 md:col-span-7 md:pt-10 md:pl-5 md:pr-8 md:pb-20'>
+    <Section className='col-span-12 flex w-full flex-col rounded-2xl bg-vdao-dark pr-3.5 pt-5 pl-5 md:pt-10 md:pl-5 md:pr-8 md:pb-20 lg:col-span-7'>
       {/* View Profile Button */}
       <div
         className='ml-auto cursor-pointer font-body text-sm font-bold text-white underline md:text-base lg:pr-10'
@@ -256,13 +269,11 @@ export function ProfileHomeComponent({ setOpenProfile }: ProfileProps) {
           <div className={'flex gap-3 ' + (skeletonActive && 'opacity-0')}>
             <Image src={ProfilePic} alt='Profile Picture' className='h-14 w-14 rounded-full' />
             <div className='flex flex-col'>
-              <span className='satoshi text-2xl font-bold leading-8 text-vdao-light'>{data?.name || 'John Doe'}</span>
+              <span className='satoshi text-2xl font-bold leading-8 text-vdao-light'>
+                {data?.name ? shortenText(data.name) : 'Unknown'}
+              </span>
               <span className='satoshi text-base font-normal leading-6 '>
-                {data?.address
-                  ? data?.address?.length! > 15
-                    ? data?.address?.slice(0, 15) + '...'
-                    : data?.address
-                  : '0x0000...0000'}
+                {data?.address ? shortenAddress(data?.address) : shortenAddress(Null_Address)}
               </span>
             </div>
           </div>
@@ -277,7 +288,7 @@ export function ProfileHomeComponent({ setOpenProfile }: ProfileProps) {
             className='mt-5 mr-7 font-body text-lg leading-6 md:mr-0 md:w-9/12'
             loading={skeletonActive}
           >
-            <span>{data?.description}</span>
+            <span>{data?.description ? data?.description : 'No Description available'}</span>
           </Skeleton>
         </div>
         {/* Guild & Pod */}
@@ -290,9 +301,13 @@ export function ProfileHomeComponent({ setOpenProfile }: ProfileProps) {
         >
           <div className='mt-12 inline-grid grid-cols-[max-content_auto] gap-5 md:gap-6'>
             <span className='font-body text-lg font-bold md:text-base'>Guild</span>
-            <span className='font-body text-lg font-bold text-vdao-light md:text-base'>DAO Operation Guild</span>
+            <span className='font-body text-lg font-bold text-vdao-light md:text-base'>
+              {data?.guildId ? data.guildId : 'No Guild Id'}
+            </span>
             <span className='font-body text-lg font-bold md:text-base'>Pod</span>
-            <span className='font-body text-lg font-bold text-vdao-light md:text-base'>Regen Pod</span>
+            <span className='font-body text-lg font-bold text-vdao-light md:text-base'>
+              {data?.podsAsAdmin[0]?.name ? data?.podsAsAdmin[0]?.name : 'No pod'}
+            </span>
           </div>
         </Skeleton>
         {/* Statistics */}
@@ -300,19 +315,19 @@ export function ProfileHomeComponent({ setOpenProfile }: ProfileProps) {
           {[
             {
               name: 'Votes Delegated',
-              value: '251',
+              value: '0',
             },
             {
               name: 'Proposals Created',
-              value: '31',
+              value: data?.proposals ? data.proposals.length : '0',
             },
             {
               name: 'Praise Score',
-              value: '98',
+              value: '0',
             },
             {
               name: 'Discussions',
-              value: '126',
+              value: '0',
             },
           ].map(stat => (
             <div className='flex flex-col items-center justify-center' key={stat.name}>

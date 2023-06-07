@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import Icon1 from 'public/icons/pods/icon1.svg'
-import { shortenAddress } from '~/utils/helpers'
+import { Null_Address } from '~/utils/config'
+import { shortenAddress, shortenText } from '~/utils/helpers'
 
 type CardProps = {
   icon?: any
@@ -13,6 +13,8 @@ const ProfileCard = ({ icon, name, address }: CardProps) => {
     <div className='flex w-full pt-[14px]'>
       <div>
         {icon ? (
+          <Image src={icon} alt='' className='rounded-full' />
+        ) : (
           <div
             className='rounded-full'
             style={{
@@ -21,14 +23,14 @@ const ProfileCard = ({ icon, name, address }: CardProps) => {
               height: '44px',
             }}
           />
-        ) : (
-          <Image src={icon} alt='' className='rounded-full' />
         )}
       </div>
 
       <div className='pl-[10px] md:pl-[16px]'>
-        <div className='font-body text-lg font-semibold'>{name ? name : 'CyberGod01'}</div>
-        <div className='font-body text-sm'>{address ? shortenAddress(address) : '0xd12512....92C'}</div>
+        <div className='font-body text-lg font-semibold'>
+          {name ? shortenText(name) : 'Unnamed'}
+        </div>
+        <div className='font-body text-sm'>{address ? shortenAddress(address) : shortenAddress(Null_Address)}</div>
       </div>
     </div>
   )
