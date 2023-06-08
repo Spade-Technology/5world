@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Footer from '~/components/layout/footer'
 import Header from '~/components/layout/header'
 import Page from '~/components/layout/page'
+import { EnforceAuth } from '~/components/misc/enforceAuth'
 import GrantCards from '~/components/pages/app/grants/grantCards'
 import GrantsRound from '~/components/pages/app/grants/grantsRound'
 import CreateGrant from '~/components/pages/app/grants/popups/createGrant'
@@ -14,11 +15,13 @@ const Grants = () => {
     <Page>
       <GrantsRound setCreateGrant={setCreateGrant} />
 
-      <GrantCards setViewDetails={setViewDetails} />
+      <EnforceAuth>
+        <GrantCards setViewDetails={setViewDetails} />
 
-      {createGrant && <CreateGrant show={createGrant} close={() => setCreateGrant(false)} />}
+        {createGrant && <CreateGrant show={createGrant} close={() => setCreateGrant(false)} />}
 
-      {viewDetails && <GrantDetails show={viewDetails} close={() => setViewDetails(false)} />}
+        {viewDetails && <GrantDetails show={viewDetails} close={() => setViewDetails(false)} />}
+      </EnforceAuth>
     </Page>
   )
 }

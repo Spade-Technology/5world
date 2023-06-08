@@ -17,7 +17,7 @@ import { shortenAddress } from '~/utils/helpers'
 import { useRouter } from 'next/router'
 
 export const VDAOConnectButton = ({ className, web2 }: { className?: string; web2?: boolean }) => {
-  const buttonStyle = `rounded-md border-[1px] h-10 px-5 font-heading font-medium ${className ? className : ''}`
+  const buttonStyle = `rounded-md border-[1px] h-10 px-5 font-heading font-medium ${className || ''}`
 
   const { address } = useAccount()
   const { data: siwe, status } = useSession()
@@ -49,7 +49,7 @@ export const VDAOConnectButton = ({ className, web2 }: { className?: string; web
 
   return (
     <>
-      <button onClick={handleButtonClick} type='button' className={buttonStyle} disabled={isLoading}>
+      <button onClick={handleButtonClick} type='button' className={buttonStyle} disabled={isLoading && address}>
         {modalState === 'verified' ? (web2 ? 'Open App' : shortenAddress(siwe?.address || '')) : 'Connect Wallet'}
       </button>
 
