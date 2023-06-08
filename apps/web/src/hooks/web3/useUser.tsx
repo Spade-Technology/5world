@@ -31,12 +31,11 @@ const userIncludeSchema = z.object({
   stewardVotesAsVoter: z.boolean().optional(),
 })
 
-export function useUserRead(
-  ...args: InferArgs<typeof api.user.getUser.useQuery>
-): { data: User & { guild?: { id: number; name: string } } } & InferReturn<typeof api.user.getUser.useQuery> {
+export function useUserRead(...args: InferArgs<typeof api.user.getUser.useQuery>): { data: User & { guild?: { id: number; name: string } } } & InferReturn<typeof api.user.getUser.useQuery> {
   args[1] = {
     ...args[1],
     enabled: !!args[0].address,
+    retry: false,
   }
   return api.user.getUser.useQuery(...args) as any
 }

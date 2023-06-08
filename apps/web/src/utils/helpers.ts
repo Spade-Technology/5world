@@ -4,15 +4,18 @@
 import { DatePickRef } from 'antd/es/date-picker/generatePicker/interface'
 import { monthNames } from './date'
 
+// Captures 0x + 4 characters, then the last 4 characters.
+const truncateRegex = /^(0x[a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/
+
 export const shortenAddress = (address: string) => {
-  const shortAddr =
-    address.toString().slice(0, 8) + '....' + address.toString().slice(address.length - 3, address.length)
-  return shortAddr
+  const match = address.match(truncateRegex)
+  if (!match) return address
+  return `${match[1]}…${match[2]}`
 }
 
 export const shortenText = (text: string, len?: number) => {
   const length = len ? len : 13
-  const shortText = text.length > length ? text.slice(0, length) + "..." : text
+  const shortText = text.length > length ? text.slice(0, length) + '...' : text
   return shortText
 }
 
@@ -50,10 +53,7 @@ export const getCurrentUnixTimeStamp = () => {
 }
 
 export const JoinedAtFormat = (date: any) => {
-  const joinedAt =
-     date && date.length > 0 
-      ? 'Joined' + monthNames[date.getUTCMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear()
-      : 'Joined at unavailable'
+  const joinedAt = date && date.length > 0 ? 'Joined' + monthNames[date.getUTCMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear() : 'Joined at unavailable'
 
   return joinedAt
 }

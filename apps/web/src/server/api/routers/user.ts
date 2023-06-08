@@ -1,6 +1,8 @@
+import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 import { createTRPCRouter, publicProcedure, protectedProcedure } from '~/server/api/trpc'
+import { verifySiweMessage } from '~/server/auth'
 
 const includeZod = z
   .object({
@@ -80,4 +82,41 @@ export const userRouter = createTRPCRouter({
         return updatedUser
       },
     ),
+
+  register: publicProcedure
+    .input(
+      z.object({
+        address: z.string(),
+        name: z.string(),
+        description: z.string(),
+        picture: z.string(),
+
+        message: z.string(),
+        signature: z.string(),
+      }),
+    )
+    .mutation(async ({ input: { address, name, description, picture, message, signature }, ctx: { prisma, req } }) => {
+      const siwe = await verifySiweMessage({ message, signature }, req)
+
+      // If the message is invalid, bad request
+      if (!siwe) return new TRPCError({ code: 'BAD_REQUEST', message: 'Invalid message' })
+
+      // Fetch user by address
+      let user = await prisma.user.findUnique({
+        where: { address: siwe.address },
+      })
+
+      // If user already exists, bad request
+      if (user) return new TRPCError({ code: 'BAD_REQUEST', message: 'User already exists' })
+
+      // Create the user
+      user = await prisma.user.create({
+        data: {
+          address: siwe.address,
+          name: name,
+          description: description,
+          picture: picture,
+        },
+      })
+    }),
 })
