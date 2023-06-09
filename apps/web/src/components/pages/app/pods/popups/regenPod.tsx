@@ -62,7 +62,7 @@ const PodModal = ({ pod, close, setShowManageMembers }: PodModalProps) => {
           <div>
             {pod?.admins?.map((user: User, idx: number) => (
               <ProfileCard
-                icon={('data:image/png;base64,' + user.picture) as any}
+                icon={user?.picture ? user.picture : PodImage}
                 name={user.name || 'Unknown'}
                 address={user.address}
                 key={idx}
@@ -78,7 +78,7 @@ const PodModal = ({ pod, close, setShowManageMembers }: PodModalProps) => {
             {pod?.members?.map((user: User, idx: number) => {
               return (
                 <ProfileCard
-                  icon={('data:image/png;base64,' + user.picture) as any}
+                  icon={user?.picture ? user.picture : PodImage}
                   name={user.name || 'Unknown'}
                   address={user.address}
                   key={idx}

@@ -6,10 +6,16 @@ import Page from '~/components/layout/page'
 import { Section } from '~/components/layout/section'
 import LoginPromptComponent, { EnforceAuth } from '~/components/misc/enforceAuth'
 import ProfilePopup from '~/components/pages/app/home/profilePopup'
-import { NewMembersComponent, ProfileHomeComponent, StatisticsHomeComponent, WelcomeComponent } from '~/components/pages/app/home/web3home'
+import {
+  NewMembersComponent,
+  ProfileHomeComponent,
+  StatisticsHomeComponent,
+  WelcomeComponent,
+} from '~/components/pages/app/home/web3home'
 
 const Home: NextPage = () => {
   const [openProfile, setOpenProfile] = useState(false)
+  const [newMembersArr, setNewMembersArr] = useState<any>([])
 
   return (
     <>
@@ -17,11 +23,11 @@ const Home: NextPage = () => {
         <WelcomeComponent />
 
         <EnforceAuth>
-          <div className='mx-auto flex w-fit'>
+          <div className='mx-auto  flex w-fit'>
             <Section className='mx-6 grid justify-between gap-5 md:grid-cols-12 lg:max-w-[1280px]'>
-              <ProfileHomeComponent setOpenProfile={setOpenProfile} />
+              <ProfileHomeComponent setOpenProfile={setOpenProfile} setNewMembersArr={setNewMembersArr} />
 
-              <NewMembersComponent />
+              <NewMembersComponent newMembersArr={newMembersArr} />
 
               <StatisticsHomeComponent />
             </Section>

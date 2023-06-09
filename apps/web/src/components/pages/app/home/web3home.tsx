@@ -1,23 +1,29 @@
 import Image from 'next/image'
 import MainHero from '/public/illustrations/web3/PNG/VDAO-web3-hero.png'
+import StaticProfilePic from 'public/illustrations/home/SVG/image 10 (1).svg'
 import ProfilePic from 'public/icons/blog/createdByLogo.svg'
 import { expenditureData, horizontalBarchart, latestDonationData, membersData, onlineMembersData, verticalBarchartDesktop, LinearChart, verticalBarchartMobile } from '../../mockData'
 import { Section } from '../../../layout/section'
 import dynamic from 'next/dynamic'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
 import { useUserRead, useUserReads } from '~/hooks/web3/useUser'
 import { useAccount } from 'wagmi'
 import { Skeleton } from 'antd'
 import { Address } from 'viem'
-import { shortenAddress, shortenText } from '~/utils/helpers'
+import { JoinedAtFormat, shortenAddress, shortenText } from '~/utils/helpers'
 import { Null_Address } from '~/utils/config'
+import { monthNames } from '~/utils/date'
 import { useSession } from 'next-auth/react'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 type ProfileProps = {
   setOpenProfile: Dispatch<SetStateAction<boolean>>
+  setNewMembersArr: any
+}
+type NewMembersProps = {
+  newMembersArr: any
 }
 
 export function StatisticsHomeComponent() {
@@ -133,29 +139,62 @@ export function StatisticsHomeComponent() {
   )
 }
 
-export function NewMembersComponent() {
+export function NewMembersComponent({ newMembersArr }: NewMembersProps) {
   return (
     <Section className=' col-span-12 w-full justify-between rounded-2xl bg-vdao-dark px-5 py-10 md:flex md:px-10 md:pt-14 md:pb-10 lg:col-span-5 lg:mb-0 lg:block'>
       {/* NEW MEMBERS */}
       <div className='lg:px-10'>
         <div className='flex items-center gap-2.5'>
           <div className='font-body text-[22px] font-bold text-white'>New Members</div>
-          <div className='font-body text-lg font-normal text-white'>{membersData.length}</div>
+          <div className='font-body text-lg font-normal text-white'>{newMembersArr ? newMembersArr.length : 0}</div>
         </div>
         <div className=''>
-          {membersData.map(({ img, name, category, date, time }, index) => {
+          {newMembersArr?.map((member: any, index: number) => {
             return (
-              <div className='mt-5 flex items-center justify-between md:w-80 lg:w-auto' key={name + index}>
+              <div className='mt-5 flex items-center justify-between md:w-80 lg:w-auto' key={index}>
                 <div className='mr-6 flex items-center'>
-                  <img src={img} alt='' className='mr-4 h-10 w-10 rounded-full lg:mr-2.5' />
+                  <Image
+                    src={member.picture ? member.picture : StaticProfilePic}
+                    alt=''
+                    className='mr-4 h-10 w-10 rounded-full lg:mr-2.5'
+                  />
                   <div>
-                    <div className='font-body text-lg font-medium leading-5 text-vdao-light'>{name}</div>
-                    <div className='font-body text-sm font-normal leading-5 text-white'>{category}</div>
+                    <div className='font-body text-lg font-medium leading-5 text-vdao-light'>
+                      {member.name ? shortenText(member.name) : 'Unnamed'}
+                    </div>
+                    <div className='font-body text-sm font-normal leading-5 text-white'>
+                      {member.role ? member.role : 'Guest'}
+                    </div>
                   </div>
                 </div>
                 <div className=''>
-                  <div className='flex justify-end font-body text-sm font-bold leading-5 text-[#F8F2FF]'>{date}</div>
-                  <div className='flex justify-end font-body text-sm font-normal leading-5 text-[#F8F2FF]'>{time}</div>
+                  <div className='flex justify-end font-body text-sm font-bold leading-5 text-[#F8F2FF]'>
+                    {member?.JoinedAt
+                      ? monthNames[member.JoinedAt.getUTCMonth()] +
+                        ' ' +
+                        member.JoinedAt.getDate() +
+                        ', ' +
+                        member.JoinedAt.getFullYear()
+                      : 'Unavailable'}
+                  </div>
+                  <div className='flex justify-end font-body text-sm font-normal leading-5 text-[#F8F2FF]'>
+                    {member?.JoinedAt
+                      ? member.JoinedAt.getHours() > 12
+                        ? member.JoinedAt.getHours() -
+                          12 +
+                          ':' +
+                          member.JoinedAt.getMinutes() +
+                          ':' +
+                          member.JoinedAt.getSeconds() +
+                          ' PM'
+                        : member.JoinedAt.getHours() +
+                          ':' +
+                          member.JoinedAt.getMinutes() +
+                          ':' +
+                          member.JoinedAt.getSeconds() +
+                          ' AM'
+                      : 'at Unavailable'}
+                  </div>
                 </div>
               </div>
             )
@@ -167,7 +206,7 @@ export function NewMembersComponent() {
       <div className='lg:px-10'>
         <div className=' mt-10 flex items-center gap-2.5 md:mt-0 lg:mt-10'>
           <div className='font-body text-[22px] font-bold text-white'>Online</div>
-          <div className='font-body text-lg font-normal text-white'>{onlineMembersData.length}</div>
+          <div className='font-body text-lg font-normal text-white'>{0}</div>
         </div>
 
         <article className='mt-8 flex flex-wrap gap-[30px] md:w-80 md:gap-5 lg:w-auto'>
@@ -185,7 +224,7 @@ export function NewMembersComponent() {
   )
 }
 
-export function ProfileHomeComponent({ setOpenProfile }: ProfileProps) {
+export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: ProfileProps) {
   const { address, isConnecting, isDisconnected } = useAccount()
   const { data } = useUserRead({
     address: address as Address,
@@ -199,9 +238,47 @@ export function ProfileHomeComponent({ setOpenProfile }: ProfileProps) {
     },
   })
 
+  const { data: newData } = useUserReads({})
+  console.log({data})
+  console.log({ newData })
   const { data: siwe } = useSession()
 
+
   let skeletonActive = !data
+
+  const [praiseScore, setPraiseScore] = useState(0)
+  const date = new Date()
+  
+  useEffect(() => {
+    if (newData) {
+      const newDataArr: any = []
+      newData.map(member => {
+        const joinedAt = member.JoinedAt
+        if (
+          joinedAt.getFullYear() === date.getFullYear() &&
+          ((joinedAt.getMonth() + 1 === date.getMonth() && joinedAt.getDate() <= date.getDate()) ||
+            (joinedAt.getMonth() === date.getMonth() - 1 && joinedAt.getDate() >= date.getDate()))
+        ) {
+          newDataArr.push(member)
+        }
+      })
+      setNewMembersArr(newDataArr)
+    } else {
+      setNewMembersArr([])
+    }
+  }, [newData])
+
+  useEffect(() => {
+    if (data) {
+      let score = 0
+      data?.stewardVotesAsCandidate?.map((votes: any) => {
+        score = score + parseFloat(votes.token)
+      })
+      setPraiseScore(score)
+    } else {
+      setPraiseScore(0)
+    }
+  })
 
   return (
     <Section className='col-span-12 flex w-full flex-col rounded-2xl bg-vdao-dark pr-3.5 pt-5 pl-5 md:pt-10 md:pl-5 md:pr-8 md:pb-20 lg:col-span-7'>
@@ -232,7 +309,9 @@ export function ProfileHomeComponent({ setOpenProfile }: ProfileProps) {
         <Skeleton className='mt-12 inline-grid grid-cols-[max-content_auto] gap-5 md:gap-6' active={skeletonActive} title={false} paragraph={{ rows: 2 }} loading={skeletonActive}>
           <div className='mt-12 inline-grid grid-cols-[max-content_auto] gap-5 md:gap-6'>
             <span className='font-body text-lg font-bold md:text-base'>Guild</span>
-            <span className='font-body text-lg font-bold text-vdao-light md:text-base'>{data?.guildId ? data.guildId : 'No Guild Id'}</span>
+            <span className='font-body text-lg font-bold text-vdao-light md:text-base'>
+              {data?.guild?.name ? data.guild.name : 'No Guild '}
+            </span>
             <span className='font-body text-lg font-bold md:text-base'>Pod</span>
             <span className='font-body text-lg font-bold text-vdao-light md:text-base'>{data?.podsAsAdmin[0]?.name ? data?.podsAsAdmin[0]?.name : 'No pod'}</span>
           </div>
@@ -250,12 +329,12 @@ export function ProfileHomeComponent({ setOpenProfile }: ProfileProps) {
             },
             {
               name: 'Praise Score',
-              value: '0',
+              value: praiseScore,
             },
-            {
-              name: 'Discussions',
-              value: '0',
-            },
+            // {
+            //   name: 'Discussions',
+            //   value: '0',
+            // },
           ].map(stat => (
             <div className='flex flex-col items-center justify-center' key={stat.name}>
               <div className='flex h-32 w-32 items-center justify-center rounded-full border-[3px] border-vdao-light font-body text-[32px] font-bold text-white'>

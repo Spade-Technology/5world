@@ -23,14 +23,16 @@ type PodCardProps = {
   setOpenedPod: Dispatch<SetStateAction<pod_type | undefined>>
   data: pod_type[] | undefined
   isLoading: boolean
+  setPid: Dispatch<SetStateAction<number>>
 }
 
 type CardProps = {
   setOpenedPod: Dispatch<SetStateAction<pod_type | undefined>>
   pod: pod_type
+  setPid: Dispatch<SetStateAction<number>>
 }
 
-const PodCards = ({ setOpenedPod, data, isLoading }: PodCardProps) => {
+const PodCards = ({ setPid, setOpenedPod, data, isLoading }: PodCardProps) => {
   return (
     <div className='mx-auto w-screen bg-vdao-deep'>
       <div className='mx-auto max-w-[1280px] pb-[120px]'>
@@ -65,7 +67,7 @@ const PodCards = ({ setOpenedPod, data, isLoading }: PodCardProps) => {
             </>
           ) : data && data.length > 0 ? (
             data?.map((pod, idx) => {
-              return <Card setOpenedPod={setOpenedPod} pod={pod} />
+              return <Card setOpenedPod={setOpenedPod} pod={pod} setPid={setPid} />
             })
           ) : (
             <div className='text-white'>There are no pods available. Please do create a pod...!!</div>
@@ -76,7 +78,7 @@ const PodCards = ({ setOpenedPod, data, isLoading }: PodCardProps) => {
   )
 }
 
-export const Card = ({ setOpenedPod, pod }: CardProps) => {
+export const Card = ({ setOpenedPod, pod, setPid }: CardProps) => {
   return (
     <div className='rounded-[20px] bg-vdao-dark py-10 px-5 text-white md:py-[50px] md:px-10'>
       <div className='flex flex-col gap-[10px] md:flex-row md:gap-[25px]'>
@@ -96,6 +98,7 @@ export const Card = ({ setOpenedPod, pod }: CardProps) => {
               className='mt-5 py-[5px] px-[35px] font-heading text-xl font-medium'
               onClick={() => {
                 setOpenedPod(pod)
+                setPid(pod.id)
               }}
             />
           </div>
@@ -131,9 +134,7 @@ export const Card = ({ setOpenedPod, pod }: CardProps) => {
 
               <div className='!w-1/3 pl-[10px] md:pl-[16px]'>
                 <div className='font-body text-lg font-semibold'>
-                  {pod.admins[0]?.name
-                    ? shortenText(pod.admins[0]?.name)
-                    : 'Unnamed'}
+                  {pod.admins[0]?.name ? shortenText(pod.admins[0]?.name) : 'Unnamed'}
                 </div>
                 <div className='font-body text-sm'>{shortenAddress(pod.admins[0]?.address || '0x')}</div>
               </div>
@@ -162,9 +163,7 @@ export const Card = ({ setOpenedPod, pod }: CardProps) => {
               </div>
               <div className='!w-1/3 pl-[10px] md:pl-[16px]'>
                 <div className='font-body text-lg font-semibold'>
-                  {member.name
-                    ? shortenText(member.name)
-                    : 'Unnamed'}
+                  {member.name ? shortenText(member.name) : 'Unnamed'}
                 </div>
                 <div className='font-body text-sm'>{shortenAddress(member.address || '0x')}</div>
               </div>

@@ -5,7 +5,7 @@ import { useState } from 'react'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { useDelegate, useStewardRead } from '~/hooks/web3/useStewards'
 import { useAccount } from 'wagmi'
-import { shortenAddress } from '~/utils/helpers'
+import { shortenAddress, shortenText } from '~/utils/helpers'
 import { Guild, User } from '@prisma/client'
 import { monthNames } from '~/utils/date'
 import { Null_Address } from '~/utils/config'
@@ -38,19 +38,21 @@ const ProfilePopup = ({ profile, close }: PopupProps) => {
 
                 <div className='pl-[10px] md:pl-[15px]'>
                   <div className='font-body text-[26px] font-semibold text-vdao-light md:text-[36px]'>
-                    {profile.name}
+                    {shortenText(profile?.name ? profile?.name : "Unnamed")}
                   </div>
                   <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>
                     <div className='font-medium md:text-[22px]'>
                       {profile?.address ? shortenAddress(profile?.address!) : shortenAddress(Null_Address)}
                     </div>
                     <div className='font-bold'>
-                      {'Joined ' +
-                        monthNames[profile.JoinedAt.getUTCMonth()] +
-                        ' ' +
-                        profile.JoinedAt.getDate() +
-                        ', ' +
-                        profile.JoinedAt.getFullYear()}
+                      {profile?.JoinedAt
+                        ? 'Joined ' +
+                          monthNames[profile.JoinedAt.getUTCMonth()] +
+                          ' ' +
+                          profile.JoinedAt.getDate() +
+                          ', ' +
+                          profile.JoinedAt.getFullYear()
+                        : 'at Unavailable'}
                     </div>
                   </div>
                 </div>

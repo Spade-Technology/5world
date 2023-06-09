@@ -68,7 +68,7 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
                         data.JoinedAt.getDate() +
                         ', ' +
                         data.JoinedAt.getFullYear()
-                      : 'May 05, 2023'}
+                      : 'at Unavailable'}
                   </div>
                 </div>
               </div>
