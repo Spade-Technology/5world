@@ -114,6 +114,7 @@ model Proposal {
 
     title       String
     description String
+    picture     String @default("")
 
     // Relations
     pod      Pod?   @relation(fields: [podId], references: [id])
@@ -122,8 +123,10 @@ model Proposal {
     authorId String
 
     // Meta
-    createdBy   User   @relation("CreatedProposalRelation", fields: [createdById], references: [address])
+    createdBy   User     @relation("CreatedProposalRelation", fields: [createdById], references: [address])
     createdById String
-    updatedBy   User   @relation("UpdatedProposalRelation", fields: [updatedById], references: [address])
+    updatedBy   User     @relation("UpdatedProposalRelation", fields: [updatedById], references: [address])
     updatedById String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @default(now()) @updatedAt
 }
