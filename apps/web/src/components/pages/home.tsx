@@ -68,8 +68,8 @@ export function HomePartnersComponent() {
 
 export function HomeCommunityComponent() {
   return (
-    <Section className='mt-10 bg-vdao-dark px-6 text-vdao-light'>
-      <div className='relative mx-auto flex max-w-[1440px] flex-col '>
+    <Section className='relative mt-10 bg-vdao-dark px-6 text-vdao-light'>
+      <div className=' mx-auto flex max-w-[1440px] flex-col '>
         <div className='mt-24'>
           <div className='mb-4 font-heading text-[32px] font-medium md:mb-6 md:ml-9 md:text-[46px] lg:ml-36'>
             Community
@@ -108,12 +108,17 @@ export function HomeCommunityComponent() {
             </div>
           </div>
         </div>
-        <Image
-          src={CommunityHero}
-          alt='VDAO'
-          className='bg absolute bottom-0 left-[-25px] h-[463px] w-[100%] md:left-0 md:h-3/6 md:w-6/12 lg:h-5/6'
-        />
       </div>
+      <img
+        src={'/illustrations/home/SVG/illusratoin04.svg'}
+        alt='VDAO'
+        className='hdden absolute bottom-0 left-0 h-[463px] w-full md:left-0 md:block md:h-3/6 md:w-6/12 lg:h-5/6'
+      />
+      <img
+        src={'/illustrations/home/SVG/04_community_illo_nobackground_v01 1.svg'}
+        alt='VDAO'
+        className='absolute bottom-0 left-[-7px] h-[463px] w-[100%] bg-cover md:hidden md:h-3/6 md:w-6/12 lg:h-5/6 '
+      />
     </Section>
   )
 }

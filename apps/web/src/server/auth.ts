@@ -27,44 +27,41 @@ declare module 'next-auth' {
   }
 }
 
+export async function verifySiweMessage(credentials: Record<'message' | 'signature', string> | undefined, req: IncomingMessage) {
+  const siwe = new SiweMessage(JSON.parse(credentials?.message || '{}'))
+
+  // Make sure the domain matches
+  let nextAuthHost = ''
+  const nextAuthUrl = process.env.NEXTAUTH_URL || null
+
+  if (process.env.NODE_ENV === 'development') nextAuthHost = req.headers.host || ''
+  else if (!nextAuthUrl) return null
+  else nextAuthHost = new URL(nextAuthUrl).host
+
+  // Make sure the nonce, domain, and signature are valid
+  if (siwe.domain !== nextAuthHost || siwe.nonce !== (await getCsrfToken({ req })) || !(await siwe.validate(credentials?.signature || ''))) return null
+
+  return siwe
+}
+
 export function getAuthOptions(req: IncomingMessage): NextAuthOptions {
   const providers = [
     CredentialsProvider({
       async authorize(credentials) {
         try {
-          const siwe = new SiweMessage(JSON.parse(credentials?.message || '{}'))
+          // Verify the message
+          const siwe = await verifySiweMessage(credentials, req)
 
-          const nextAuthUrl =
-            process.env.NEXTAUTH_URL || (process.env.NEXTAUTH_URL ? `https://${process.env.NEXTAUTH_URL}` : null)
-          if (!nextAuthUrl) {
-            return null
-          }
-
-          const nextAuthHost = new URL(nextAuthUrl).host
-          if (siwe.domain !== nextAuthHost) {
-            return null
-          }
-
-          if (siwe.nonce !== (await getCsrfToken({ req }))) {
-            return null
-          }
-
-          await siwe.validate(credentials?.signature || '')
+          // If the message is invalid, bad request
+          if (!siwe) return null
 
           // Fetch user by address
           let user = await prisma.user.findUnique({
             where: { address: siwe.address },
           })
 
-          // If user doesn't exist, create a new one
-          if (!user) {
-            user = await prisma.user.create({
-              data: {
-                address: siwe.address,
-                name: siwe.address,
-              },
-            })
-          }
+          // If user doesn't exist, bad request
+          if (!user) return null
 
           // Return the user info
           return {
@@ -123,9 +120,6 @@ export function getAuthOptions(req: IncomingMessage): NextAuthOptions {
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
-export const getServerAuthSession = (ctx: {
-  req: GetServerSidePropsContext['req']
-  res: GetServerSidePropsContext['res']
-}) => {
+export const getServerAuthSession = (ctx: { req: GetServerSidePropsContext['req']; res: GetServerSidePropsContext['res'] }) => {
   return getServerSession(ctx.req, ctx.res, getAuthOptions(ctx.req))
 }

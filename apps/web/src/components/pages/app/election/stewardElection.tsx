@@ -1,4 +1,5 @@
 import { Button } from 'antd'
+import { useSession } from 'next-auth/react'
 import { Section } from '~/components/layout/section'
 import Description from '~/components/misc/description'
 import HowItWorks from '~/components/misc/howItWorks'
@@ -6,7 +7,7 @@ import { useApplyToBeSteward } from '~/hooks/web3/useStewards'
 
 const StewardElection = () => {
   const { applyToBeSteward, isLoading } = useApplyToBeSteward()
-
+  const { data: siwe } = useSession()
   return (
     <Section className='w-screen bg-vdao-deep'>
       <Description
@@ -20,8 +21,7 @@ const StewardElection = () => {
         }
         description={
           <div className='font-body text-[26px] font-medium'>
-            This page displays all the members who have put themselves forward to be Stewards for the next term, along
-            with a link to their Steward Profile page.
+            This page displays all the members who have put themselves forward to be Stewards for the next term, along with a link to their Steward Profile page.
           </div>
         }
       />
@@ -29,8 +29,9 @@ const StewardElection = () => {
       <div className='mx-auto flex w-full max-w-7xl items-end justify-end'>
         <Button
           type='primary'
-          disabled={isLoading}
-          className='bg-vdao-green mt-[50px] mb-[100px] h-[50px] w-[200px] rounded-[25px] border-none text-[16px] font-bold'
+          loading={isLoading}
+          disabled={!siwe}
+          className='mt-[50px] mb-[100px] h-[50px] w-[200px] rounded-[25px] border-none text-[16px] font-bold !text-black disabled:!bg-vdao-light disabled:opacity-80'
           onClick={() => applyToBeSteward()}
         >
           Apply to be a Steward
@@ -43,12 +44,10 @@ const StewardElection = () => {
             heading: ['How it works'],
             content: (
               <div>
-                To support a Steward, connect your wallet, enter the number of votes you wish to give then, and click
-                vote.
+                To support a Steward, connect your wallet, enter the number of votes you wish to give then, and click vote.
                 <br />
                 <br />
-                Steward permissions will be grantaed automatically at the end of the Grands round based on the 6
-                Stewards who got the most votes.
+                Steward permissions will be grantaed automatically at the end of the Grands round based on the 6 Stewards who got the most votes.
               </div>
             ),
           },

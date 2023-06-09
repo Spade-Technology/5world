@@ -13,10 +13,14 @@ const DonateNow = (props: Props) => {
   const [radio, setRadio] = useState('')
 
   return (
-    <div className={'mx-6 rounded-2xl bg-white p-14 font-body text-vdao-dark md:mx-20 ' + props.className}>
-      <div className='font-heading text-3xl font-medium'>Donate With</div>
+    <div
+      className={
+        'mx-6 mt-[49px] rounded-2xl bg-white p-14 font-body text-vdao-dark md:mx-20 md:mt-0 ' + props.className
+      }
+    >
+      <div className='font-heading text-[26px] font-medium md:text-3xl'>Donate With</div>
 
-      <div className='flex flex-col gap-[70px] pt-[30px] md:flex-row'>
+      <div className='flex flex-col gap-[70px] pt-[30px] lg:flex-row'>
         <div className='flex-1'>
           <form className='flex flex-col border-b-2 border-b-black pb-3 md:flex-row'>
             <div className='my-auto flex flex-1'>
@@ -27,12 +31,15 @@ const DonateNow = (props: Props) => {
                 value='Cryptocurrency'
                 name='donate'
               />
-              <label htmlFor='crypto' className='relative -top-1  pl-[15px] font-heading text-lg font-medium'>
+              <label
+                htmlFor='crypto'
+                className='relative -top-1  pl-[15px] font-body font-body text-[22px] font-bold leading-[25px] md:text-lg'
+              >
                 Cryptocurrency
               </label>
             </div>
 
-            <div className='flex flex-1 '>
+            <div className='mt-5 flex flex-1 md:mt-0'>
               <input
                 type='radio'
                 id='credit'
@@ -41,7 +48,10 @@ const DonateNow = (props: Props) => {
                 onChange={evt => setRadio(evt.target.value)}
                 name='donate'
               />
-              <label htmlFor='crypto' className='relative -top-1 pl-[15px] font-heading text-lg font-medium'>
+              <label
+                htmlFor='crypto'
+                className='relative -top-1 pl-[15px] font-body font-body text-[22px] font-bold leading-[25px] md:text-lg'
+              >
                 Credit Card
               </label>
             </div>
@@ -65,8 +75,8 @@ const DonateNow = (props: Props) => {
               <input type='checkbox' className='mt-2 cursor-pointer accent-vdao-light' />
             </div>
             <div>
-              <div className='text-lg font-normal'>Make it anonymous</div>
-              <div className='text-sm font-normal'>
+              <div className='font-satoshi text-lg font-normal'>Make it anonymous</div>
+              <div className='font-satoshi text-sm font-normal'>
                 By checking this, we won’t consider your profile information as a doner for this donation and won’t show
                 it on public pages.{' '}
               </div>
@@ -75,8 +85,8 @@ const DonateNow = (props: Props) => {
         </div>
 
         <div className='flex-1 md:mr-[49px] '>
-          <div className='text-[22px] font-bold '>How to donate</div>
-          <div className='text-lg font-normal text-black'>
+          <div className='font-satoshi text-[22px] font-bold'>How to donate</div>
+          <div className='text-lg font-normal leading-[22px] text-black'>
             You can contribute directly to the DAO treasury in $ETH, $USDC, $USDT and $DAI.
           </div>
 

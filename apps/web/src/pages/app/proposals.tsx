@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Footer from '~/components/layout/footer'
 import Header from '~/components/layout/header'
 import Page from '~/components/layout/page'
+import { EnforceAuth } from '~/components/misc/enforceAuth'
 import Insights from '~/components/pages/app/proposals/insights'
 import OperationalProposals from '~/components/pages/app/proposals/operationalProposals'
 import CreateNewProposal from '~/components/pages/app/proposals/popups/createProposal'
@@ -16,16 +17,15 @@ const Proposals = () => {
     <Page>
       <div className='w-full text-vdao-dark'>
         <OperationalProposals setOpenCreateProposal={setOpenCreateProposal} />
+        <EnforceAuth>
+          <ProposalCards setViewProposal={setViewProposal} />
 
-        <ProposalCards setViewProposal={setViewProposal} />
+          <Insights />
 
-        <Insights />
+          {openCreateProposal && <CreateNewProposal show={openCreateProposal} close={() => setOpenCreateProposal(false)} />}
 
-        {openCreateProposal && (
-          <CreateNewProposal show={openCreateProposal} close={() => setOpenCreateProposal(false)} />
-        )}
-
-        {viewProposal && <ViewProposal show={viewProposal} close={() => setViewProposal(false)} />}
+          {viewProposal && <ViewProposal show={viewProposal} close={() => setViewProposal(false)} />}
+        </EnforceAuth>
       </div>
 
       {/* <Footer /> */}

@@ -9,10 +9,10 @@ const Badges = () => {
       <div className='xl:px-O flex flex-col gap-10 px-0 md:flex-row md:gap-[120px] md:px-12'>
         <div className='flex-1'>
           <Image src={GoldBadge} alt='GoldBadge' className='mx-auto' />
-          <div className='border-b-2 border-b-white pt-4 pb-[20px] text-center font-heading text-3xl font-medium md:pt-[71px]'>
+          <div className='border-b-2 border-b-white pt-4 pb-[20px] text-center font-heading text-[36px] font-medium md:pt-[71px] md:text-3xl'>
             Gold Badge
           </div>
-          <div className='py-5 text-center text-base font-normal md:py-4'>
+          <div className='py-5 text-center font-inter text-base font-normal md:py-4'>
             Donors who contribute more
             <br /> than $150k will receive a gold
             <br /> Proof of Virtue badge (POV) on

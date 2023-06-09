@@ -2,16 +2,7 @@ import Image from 'next/image'
 import MainHero from '/public/illustrations/web3/PNG/VDAO-web3-hero.png'
 import StaticProfilePic from 'public/illustrations/home/SVG/image 10 (1).svg'
 import ProfilePic from 'public/icons/blog/createdByLogo.svg'
-import {
-  expenditureData,
-  horizontalBarchart,
-  latestDonationData,
-  membersData,
-  onlineMembersData,
-  verticalBarchartDesktop,
-  LinearChart,
-  verticalBarchartMobile,
-} from '../../mockData'
+import { expenditureData, horizontalBarchart, latestDonationData, membersData, onlineMembersData, verticalBarchartDesktop, LinearChart, verticalBarchartMobile } from '../../mockData'
 import { Section } from '../../../layout/section'
 import dynamic from 'next/dynamic'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
@@ -23,6 +14,7 @@ import { Address } from 'viem'
 import { JoinedAtFormat, shortenAddress, shortenText } from '~/utils/helpers'
 import { Null_Address } from '~/utils/config'
 import { monthNames } from '~/utils/date'
+import { useSession } from 'next-auth/react'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -46,9 +38,7 @@ export function StatisticsHomeComponent() {
               <div className=' mx-auto flex flex-col gap-[0px] md:ml-0 md:mr-0 md:flex-row md:items-center md:gap-10'>
                 <div className='flex items-center'>
                   <div className='mr-2.5 h-[15px] w-[15px] rounded-full bg-vdao-light'></div>
-                  <div className='font-body text-sm font-normal leading-10 text-white md:mt-0 lg:leading-[18.9px]'>
-                    USDC
-                  </div>
+                  <div className='font-body text-sm font-normal leading-10 text-white md:mt-0 lg:leading-[18.9px]'>USDC</div>
                 </div>
                 <div className=' flex items-center'>
                   <div className='mr-2.5 h-[15px] w-[15px] rounded-full bg-vdao-pink'></div>
@@ -56,21 +46,11 @@ export function StatisticsHomeComponent() {
                 </div>
               </div>
               <div className='relative flex h-fit cursor-pointer items-center gap-2.5 rounded-[10px] bg-white py-[6px] px-[15px]'>
-                <div
-                  onClick={() => setPeriod({ ...period, state: !period.state })}
-                  className='font-body  font-bold capitalize  text-vdao-dark md:text-sm'
-                >
+                <div onClick={() => setPeriod({ ...period, state: !period.state })} className='font-body  font-bold capitalize  text-vdao-dark md:text-sm'>
                   {period.value}
                 </div>
-                <FaChevronDown
-                  onClick={() => setPeriod({ ...period, state: !period.state })}
-                  className='text-[15px] text-vdao-light'
-                />
-                <div
-                  className={`absolute  left-0 z-50 w-full overflow-hidden rounded-[10px] bg-white ease-[1s] ${
-                    period.state ? 'top-[110%] block opacity-100' : 'top-[130%] hidden opacity-0'
-                  }`}
-                >
+                <FaChevronDown onClick={() => setPeriod({ ...period, state: !period.state })} className='text-[15px] text-vdao-light' />
+                <div className={`absolute  left-0 z-50 w-full overflow-hidden rounded-[10px] bg-white ease-[1s] ${period.state ? 'top-[110%] block opacity-100' : 'top-[130%] hidden opacity-0'}`}>
                   {['week', 'month', 'year'].map((text, index) => {
                     return (
                       <div
@@ -85,13 +65,7 @@ export function StatisticsHomeComponent() {
                 </div>
               </div>
             </div>
-            <Chart
-              options={LinearChart.options}
-              series={LinearChart.series}
-              type='line'
-              width={'100%'}
-              height={'333px'}
-            />
+            <Chart options={LinearChart.options} series={LinearChart.series} type='line' width={'100%'} height={'333px'} />
           </div>
           <div className='pl-5 lg:pl-0'>
             <div className='mt-[60px] font-body text-[22px] font-bold text-white md:mt-0 md:text-2xl'>Latest</div>
@@ -117,29 +91,18 @@ export function StatisticsHomeComponent() {
         <article className='mt-12 flex flex-col gap-5 px-2.5 md:pl-0 lg:flex-row lg:justify-end lg:gap-10'>
           {expenditureData.map(({ title, amount, percent }, index) => {
             return (
-              <div className='mx-auto w-fit rounded-2xl bg-white p-5 md:p-8 lg:mx-0'>
-                <div className='font-body text-[22px] font-medium leading-6 text-vdao-dark md:text-2xl md:font-bold lg:leading-5'>
-                  {' '}
-                  {title}
-                </div>
+              <div className='mx-auto w-fit max-w-[322px] rounded-2xl bg-white p-5 md:max-w-fit md:p-8 lg:mx-0'>
+                <div className='font-body text-[22px] font-medium leading-6 text-vdao-dark md:text-2xl md:font-bold lg:leading-5'> {title}</div>
                 <div className='mt-4 flex items-start '>
-                  <div className='mr-2 font-body text-[26px] font-medium leading-6 text-vdao-dark md:text-3xl md:font-bold lg:mr-2.5 lg:leading-8'>
-                    {amount}
-                  </div>
-                  <div className='mr-2 font-heading text-xl font-medium leading-5 text-vdao-dark md:font-body md:font-bold lg:mr-5'>
-                    USD
-                  </div>
+                  <div className='mr-2 font-body text-[26px] font-medium leading-6 text-vdao-dark md:text-3xl md:font-bold lg:mr-2.5 lg:leading-8'>{amount}</div>
+                  <div className='mr-2 font-heading text-xl font-medium leading-5 text-vdao-dark md:font-body md:font-bold lg:mr-5'>USD</div>
                   <div
                     className={`flex w-[100px] items-center justify-center rounded-2xl bg-vdao-light py-1.5 font-inter text-sm font-bold leading-5 text-vdao-dark md:px-2 lg:mr-5 lg:font-body lg:text-xl ${
                       index > 0 && 'bg-vdao-pink'
                     }`}
                   >
                     <div className=''>{percent}</div>
-                    <img
-                      src='/illustrations/home/SVG/Arrow 6.svg'
-                      alt=''
-                      className={` ${index > 0 && 'rotate-180'} ml-1 w-[13px]`}
-                    />
+                    <img src='/illustrations/home/SVG/Arrow 6.svg' alt='' className={` ${index > 0 && 'rotate-180'} ml-1 w-[13px]`} />
                   </div>
                 </div>
               </div>
@@ -162,27 +125,13 @@ export function StatisticsHomeComponent() {
               </div>
             </div>
 
-            <Chart
-              options={verticalBarchartDesktop.options}
-              series={verticalBarchartDesktop.series}
-              type='bar'
-              class
-              width={'100%'}
-              height={'333px'}
-            />
+            <Chart options={verticalBarchartDesktop.options} series={verticalBarchartDesktop.series} type='bar' class width={'100%'} height={'333px'} />
           </div>
           <div className='mt-[60px] w-full  md:mt-0 md:w-3/12'>
             <div className='mb-[30px] flex items-center pl-5 text-white md:mb-[35px] lg:pl-0'>
               <div className='font-body text-xl font-bold text-white md:text-[22px]'>Weekly Purchases</div>
             </div>
-            <Chart
-              options={horizontalBarchart.options}
-              series={horizontalBarchart.series}
-              type='bar'
-              class
-              width={'100%'}
-              height={'353px'}
-            />
+            <Chart options={horizontalBarchart.options} series={horizontalBarchart.series} type='bar' class width={'100%'} height={'353px'} />
           </div>
         </div>
       </div>
@@ -292,6 +241,9 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: Profi
   const { data: newData } = useUserReads({})
   console.log({data})
   console.log({ newData })
+  const { data: siwe } = useSession()
+
+
   let skeletonActive = !data
 
   const [praiseScore, setPraiseScore] = useState(0)
@@ -331,10 +283,7 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: Profi
   return (
     <Section className='col-span-12 flex w-full flex-col rounded-2xl bg-vdao-dark pr-3.5 pt-5 pl-5 md:pt-10 md:pl-5 md:pr-8 md:pb-20 lg:col-span-7'>
       {/* View Profile Button */}
-      <div
-        className='ml-auto cursor-pointer font-body text-sm font-bold text-white underline md:text-base lg:pr-10'
-        onClick={() => setOpenProfile(true)}
-      >
+      <div className='ml-auto cursor-pointer font-body text-sm font-bold text-white underline md:text-base lg:pr-10' onClick={() => setOpenProfile(true)}>
         View Profile
       </div>
 
@@ -344,45 +293,27 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: Profi
           <div className={'flex gap-3 ' + (skeletonActive && 'opacity-0')}>
             <Image src={ProfilePic} alt='Profile Picture' className='h-14 w-14 rounded-full' />
             <div className='flex flex-col'>
-              <span className='satoshi text-2xl font-bold leading-8 text-vdao-light'>
-                {data?.name ? shortenText(data.name) : 'Unknown'}
-              </span>
-              <span className='satoshi text-base font-normal leading-6 '>
-                {data?.address ? shortenAddress(data?.address) : shortenAddress(Null_Address)}
-              </span>
+              <span className='satoshi text-2xl font-bold leading-8 text-vdao-light'>{data?.name ? shortenText(data.name) : 'Unknown'}</span>
+              <span className='satoshi text-base font-normal leading-6 '>{data?.address ? shortenAddress(data?.address) : shortenAddress(Null_Address)}</span>
             </div>
           </div>
         </Skeleton>
 
         {/* Description */}
         <div className='mt-5 mr-7 font-body text-lg leading-6 md:mr-0 md:w-9/12'>
-          <Skeleton
-            active={skeletonActive}
-            paragraph={{ rows: 1 }}
-            title={false}
-            className='mt-5 mr-7 font-body text-lg leading-6 md:mr-0 md:w-9/12'
-            loading={skeletonActive}
-          >
+          <Skeleton active={skeletonActive} paragraph={{ rows: 1 }} title={false} className='mt-5 mr-7 font-body text-lg leading-6 md:mr-0 md:w-9/12' loading={skeletonActive}>
             <span>{data?.description ? data?.description : 'No Description available'}</span>
           </Skeleton>
         </div>
         {/* Guild & Pod */}
-        <Skeleton
-          className='mt-12 inline-grid grid-cols-[max-content_auto] gap-5 md:gap-6'
-          active={skeletonActive}
-          title={false}
-          paragraph={{ rows: 2 }}
-          loading={skeletonActive}
-        >
+        <Skeleton className='mt-12 inline-grid grid-cols-[max-content_auto] gap-5 md:gap-6' active={skeletonActive} title={false} paragraph={{ rows: 2 }} loading={skeletonActive}>
           <div className='mt-12 inline-grid grid-cols-[max-content_auto] gap-5 md:gap-6'>
             <span className='font-body text-lg font-bold md:text-base'>Guild</span>
             <span className='font-body text-lg font-bold text-vdao-light md:text-base'>
               {data?.guild?.name ? data.guild.name : 'No Guild '}
             </span>
             <span className='font-body text-lg font-bold md:text-base'>Pod</span>
-            <span className='font-body text-lg font-bold text-vdao-light md:text-base'>
-              {data?.podsAsAdmin[0]?.name ? data?.podsAsAdmin[0]?.name : 'No pod'}
-            </span>
+            <span className='font-body text-lg font-bold text-vdao-light md:text-base'>{data?.podsAsAdmin[0]?.name ? data?.podsAsAdmin[0]?.name : 'No pod'}</span>
           </div>
         </Skeleton>
         {/* Statistics */}
@@ -407,13 +338,7 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: Profi
           ].map(stat => (
             <div className='flex flex-col items-center justify-center' key={stat.name}>
               <div className='flex h-32 w-32 items-center justify-center rounded-full border-[3px] border-vdao-light font-body text-[32px] font-bold text-white'>
-                <Skeleton
-                  active={skeletonActive}
-                  paragraph={{ rows: 1, width: '100%' }}
-                  title={false}
-                  loading={skeletonActive}
-                  className='!w-1/2'
-                >
+                <Skeleton active={skeletonActive} paragraph={{ rows: 1, width: '100%' }} title={false} loading={skeletonActive} className='!w-1/2'>
                   {stat.value}
                 </Skeleton>
               </div>
@@ -429,14 +354,8 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: Profi
 export function WelcomeComponent() {
   return (
     <Section className='relative mx-auto flex max-w-[1680px] flex-col-reverse items-center overflow-hidden md:h-auto md:flex-col md:pt-16'>
-      <Image
-        src={MainHero}
-        alt='VDAO Web3 Hero'
-        className='mb-24 translate-x-[40%] scale-[200%] md:mb-0 md:-translate-x-0 md:scale-100'
-      />
-      <div className='z-10 w-[342px] text-center font-heading text-[44px] font-medium leading-[48px] text-white md:absolute md:w-[702px] md:text-[80px] md:leading-[95px]'>
-        Welcome to VDAO
-      </div>
+      <Image src={MainHero} alt='VDAO Web3 Hero' className='mb-24 translate-x-[40%] scale-[200%] md:mb-0 md:-translate-x-0 md:scale-100' />
+      <div className='z-10 w-[342px] text-center font-heading text-[44px] font-medium leading-[48px] text-white md:absolute md:w-[702px] md:text-[80px] md:leading-[95px]'>Welcome to VDAO</div>
     </Section>
   )
 }

@@ -1,10 +1,8 @@
 import '~/styles/globals.css'
-import '@rainbow-me/rainbowkit/styles.css'
 
 import { type AppType } from 'next/app'
 import { type Session } from 'next-auth'
 
-import { RainbowKitSiweNextAuthProvider, GetSiweMessageOptions } from '@rainbow-me/rainbowkit-siwe-next-auth'
 import { SessionProvider } from 'next-auth/react'
 import { StyleProvider } from '@ant-design/cssinjs'
 
@@ -12,13 +10,8 @@ import { api } from '~/utils/api'
 
 import Web3Context from '~/components/web3context'
 import { ConfigProvider, notification, theme } from 'antd'
-import { RainbowKitAuthenticationProvider, RainbowKitProvider } from '@rainbow-me/rainbowkit'
-import Head from 'next/head'
-// antd css
 
-const getSiweMessageOptions: GetSiweMessageOptions = () => ({
-  statement: 'Sign in to VDAO',
-})
+import Head from 'next/head'
 
 const MyApp: AppType<{ session: Session | null }> = ({ Component, pageProps: { session, ...pageProps } }) => {
   return (
@@ -27,23 +20,21 @@ const MyApp: AppType<{ session: Session | null }> = ({ Component, pageProps: { s
         <meta name='viewport' content='width=device-width, initial-scale=1' />
       </Head>
 
-      <SessionProvider session={session}>
-        <RainbowKitSiweNextAuthProvider getSiweMessageOptions={getSiweMessageOptions}>
-          <Web3Context>
-            <ConfigProvider
-              theme={{
-                token: {
-                  colorPrimary: '#36DFAE',
-                  fontFamily: 'Clash Display',
-                },
-              }}
-            >
-              <StyleProvider hashPriority='high'>
-                <Component {...pageProps} />
-              </StyleProvider>
-            </ConfigProvider>
-          </Web3Context>
-        </RainbowKitSiweNextAuthProvider>
+      <SessionProvider session={session} refetchInterval={0}>
+        <Web3Context>
+          <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: '#36DFAE',
+                fontFamily: 'Clash Display',
+              },
+            }}
+          >
+            <StyleProvider hashPriority='high'>
+              <Component {...pageProps} />
+            </StyleProvider>
+          </ConfigProvider>
+        </Web3Context>
       </SessionProvider>
     </>
   )

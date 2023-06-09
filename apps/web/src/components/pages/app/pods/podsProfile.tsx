@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Dispatch, SetStateAction, useState } from 'react'
@@ -12,7 +13,8 @@ type Props = {
 }
 
 const PodsProfile = ({ setOpenCreatePod }: Props) => {
-  // const [step, setStep] = useState(4);
+  const { data: siwe } = useSession()
+
   return (
     <Section className='w-screen bg-vdao-deep'>
       <Description
@@ -26,12 +28,12 @@ const PodsProfile = ({ setOpenCreatePod }: Props) => {
         }
         description={
           <div className='font-body text-[26px] font-medium'>
-            As the smallest units of organisation within the DAO, Pods form around specific focus areas to achieve
-            specific outcomes. These are spaces for discussion, collaboration and advancement of specific areas of work.
+            As the smallest units of organisation within the DAO, Pods form around specific focus areas to achieve specific outcomes. These are spaces for discussion, collaboration and advancement of
+            specific areas of work.
             <br />
             <br />
-            They can be described as ‘two pizza teams’ - small autonomous teams that come together with a specific
-            purpose and common objective, or to collaborate more informally. Pod size must not exceed ten members.
+            They can be described as ‘two pizza teams’ - small autonomous teams that come together with a specific purpose and common objective, or to collaborate more informally. Pod size must not
+            exceed ten members.
           </div>
         }
       />
@@ -39,11 +41,7 @@ const PodsProfile = ({ setOpenCreatePod }: Props) => {
       <div className='flex flex-col md:flex-row '>
         <div className='flex-1'></div>
         <div className='mt-[30px] flex flex-1 flex-col gap-5 pl-6 md:mt-0 md:flex-row md:pl-16'>
-          <PrimaryButton
-            text='Create Pods'
-            onClick={() => setOpenCreatePod(true)}
-            className='py-[5px] px-[35px] text-xl'
-          />
+          <PrimaryButton text='Create Pods' onClick={() => siwe && setOpenCreatePod(true)} className='py-[5px] px-[35px] text-xl' />
           <div className='w-fit cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white'>
             <Link href={'/app/pods/#currentPods'}>See all Pods </Link>
           </div>
@@ -53,9 +51,7 @@ const PodsProfile = ({ setOpenCreatePod }: Props) => {
       <div className={`mx-auto max-w-[1280px] bg-vdao-deep px-6 py-16 text-white md:py-20 md:pt-[140px] md:pb-[70px]`}>
         <div className={`flex flex-col gap-10 md:flex-row md:gap-[22px] `}>
           <div className='flex-1'>
-            <span className='mr-5 font-heading text-3xl font-medium underline underline-offset-8 md:float-left md:ml-[348px] md:text-4xl'>
-              Four Stages of Pods
-            </span>
+            <span className='mr-5 font-heading text-3xl font-medium underline underline-offset-8 md:float-left md:ml-[348px] md:text-4xl'>Four Stages of Pods</span>
           </div>
           <div className='flex flex-1'>
             {/* left */}
@@ -83,23 +79,18 @@ const PodsProfile = ({ setOpenCreatePod }: Props) => {
                 <div className='font-heading text-2xl font-medium md:text-3xl'>1. Informal</div>
                 <div className='max-w-[380px] pt-5 text-lg md:pt-4'>
                   {' '}
-                  Pod has been formed around a specific focus area but has not made a formal governance proposal. (Pods
-                  can remain indefinitely in this stage if they choose).{' '}
+                  Pod has been formed around a specific focus area but has not made a formal governance proposal. (Pods can remain indefinitely in this stage if they choose).{' '}
                 </div>
               </div>
               {/* step 2 */}
               <div className='pt-10 font-body font-normal md:pt-12'>
                 <div className='font-heading text-2xl font-medium md:text-3xl'>2. Proposal Stage</div>
-                <div className='max-w-[380px] pt-5 text-lg md:pt-4'>
-                  Pod has made a proposal and is in discussions with the wider community.
-                </div>
+                <div className='max-w-[380px] pt-5 text-lg md:pt-4'>Pod has made a proposal and is in discussions with the wider community.</div>
               </div>
               {/* step 3 */}
               <div className='pt-10 font-body font-normal md:pt-12'>
                 <div className='font-heading text-2xl font-medium md:text-3xl'>3. Active</div>
-                <div className='max-w-[380px] pt-5 text-lg md:pt-4'>
-                  Pod proposal has been ratified by governance and Pod is working to achieve agreed outcomes.
-                </div>
+                <div className='max-w-[380px] pt-5 text-lg md:pt-4'>Pod proposal has been ratified by governance and Pod is working to achieve agreed outcomes.</div>
               </div>
               {/* step 4 */}
               <div className='pt-10 font-body font-normal md:pt-12'>

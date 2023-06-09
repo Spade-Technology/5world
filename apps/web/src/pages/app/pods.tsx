@@ -1,6 +1,8 @@
+import { useSession } from 'next-auth/react'
 import { use, useState } from 'react'
 import { useAccount, useBalance } from 'wagmi'
 import Page from '~/components/layout/page'
+import LoginPromptComponent, { EnforceAuth } from '~/components/misc/enforceAuth'
 import PodCards from '~/components/pages/app/pods/podCards'
 import PodsProfile from '~/components/pages/app/pods/podsProfile'
 import CreateNewPod from '~/components/pages/app/pods/popups/createNewPod'
@@ -22,37 +24,47 @@ const Pods = () => {
     createdBy: address || '',
     include: { members: true, admins: true, proposals: true },
   })
-const { data: balance } = useBalance({})
-  console.log("pods data: ", data)
-  console.log("pods show", openedPod, showManageMembers)
+  const { data: balance } = useBalance({})
+  const { data: siwe } = useSession()
+
+  console.log('pods data: ', data)
+  console.log('pods show', openedPod, showManageMembers)
 
   return (
     <>
       <Page>
         <PodsProfile setOpenCreatePod={setOpenCreatePod} />
 
-        <PodCards setOpenedPod={setOpenedPod} setPid={setPid} data={data} isLoading={isLoading} />
+        <EnforceAuth>
+          <PodCards setOpenedPod={setOpenedPod} setPid={setPid} data={data} isLoading={isLoading} />
 
-        {openCreatePod && <CreateNewPod show={openCreatePod} close={() => setOpenCreatePod(false)} refetch={refetch} data={data} />}
+          {openCreatePod && (
+            <CreateNewPod show={openCreatePod} close={() => setOpenCreatePod(false)} refetch={refetch} data={data} />
+          )}
 
-        {!!openedPod && (
-          <PodModal close={() => setOpenedPod(undefined)} pod={openedPod} setShowManageMembers={setShowManageMembers}  />
-        )}
+          {!!openedPod && (
+            <PodModal
+              close={() => setOpenedPod(undefined)}
+              pod={openedPod}
+              setShowManageMembers={setShowManageMembers}
+            />
+          )}
 
-        {showManageMembers && (
-          <ManageMembers
-            show={showManageMembers}
-            managerAddr={managerAddr}
-            memberAddr={memberAddr}
-            setMemberAddr={setMemberAddr}
-            setManagerAddr={setManagerAddr}
-            setShowManageMembers={setShowManageMembers}
-            pid={pid}
-            setOpenedPod={setOpenedPod}
-            // setOpenedPod={() => setOpenedPod(undefined)}
-            data={data}
-          />
-        )}
+          {showManageMembers && (
+            <ManageMembers
+              show={showManageMembers}
+              managerAddr={managerAddr}
+              memberAddr={memberAddr}
+              setMemberAddr={setMemberAddr}
+              setManagerAddr={setManagerAddr}
+              setShowManageMembers={setShowManageMembers}
+              pid={pid}
+              setOpenedPod={setOpenedPod}
+              // setOpenedPod={() => setOpenedPod(undefined)}
+              data={data}
+            />
+          )}
+        </EnforceAuth>
       </Page>
     </>
   )
