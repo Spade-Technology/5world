@@ -1,15 +1,12 @@
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
-import Icon1 from 'public/icons/pods/icon1.svg'
-import Icon2 from 'public/icons/pods/icon2.svg'
-import Icon3 from 'public/icons/pods/icon3.svg'
-import Icon4 from 'public/icons/pods/icon4.svg'
-import Icon5 from 'public/icons/pods/icon5.svg'
-import Icon6 from 'public/icons/pods/icon6.svg'
-import Icon7 from 'public/icons/pods/icon7.svg'
-import Icon8 from 'public/icons/pods/icon8.svg'
 import ProfileCard from '~/components/misc/profileCard'
 import { pod_type } from '~/hooks/web3/usePod'
+import { useUserReads } from '~/hooks/web3/useUser'
+import { Select } from 'antd'
+import type { SelectProps } from 'antd'
+import { shortenAddress } from '~/utils/helpers'
+import PurpleButton from '~/styles/shared/buttons/purpleButton'
 
 type FormProps = {
   setNextForm: Dispatch<SetStateAction<boolean>>
@@ -30,6 +27,45 @@ const FormTwo = ({
   createPodHanlder,
   data,
 }: FormProps) => {
+  const [mangerDetails, setManagerDetails] = useState('')
+  const { data: managerData } = useUserReads({})
+  const [removeOn, setRemoveOn] = useState(false)
+
+  // const options: SelectProps['options'] = []
+  const [options, setOptions] = useState<any>([])
+  useEffect(() => {
+    // if (managerAddr) {
+    // const { data: managerData } = useUserReads({})
+    console.log('Entered managerData?.length', managerData?.length)
+    if (managerData) {
+      console.log('Entered')
+      for (let i = 0; i < managerData.length; i++) {
+        console.log('Entered managerData[i]?.address', managerData[i]?.address)
+        const option = {
+          // key: i + 1,
+          value: managerData[i]?.address,
+          label: managerData[i]?.name!,
+        }
+
+        setOptions((prev: any) => [...prev, option])
+      }
+
+      // console.log('options', options)
+    } else {
+      console.log('Entered NOT')
+
+      setOptions([])
+    }
+
+    // }
+  }, [managerData?.length])
+
+  console.log({ managerData }, options[0], { options: options[0] })
+
+  const handleChange = (value: any) => {
+    console.log('Entered selected')
+  }
+  console.log('Entered selected >> ', managerAddr)
   return (
     <div className='grid grid-cols-1 gap-11 pt-10 font-body text-lg font-normal text-vdao-dark md:grid-cols-2 md:gap-[106px]'>
       <div>
@@ -37,10 +73,20 @@ const FormTwo = ({
 
         <div className='pt-[5px]'>Add manager address below.</div>
 
-        <input
+        {/* <input
           className='mt-[17px] h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none md:mt-5'
           onChange={evt => setManagerAddr(evt.target.value)}
           value={managerAddr}
+        /> */}
+
+        <Select
+          mode='tags'
+          style={{ width: '100%' }}
+          placeholder='Enter Address'
+          // onChange={handleChange}
+          onChange={value => setManagerAddr(value)}
+          options={options}
+          className='antd-stop-propagation w-full'
         />
 
         <div className='mt-5 w-fit cursor-pointer rounded-[5px] bg-vdao-pink py-[5px] px-[35px] font-heading text-xl font-medium'>
@@ -65,26 +111,56 @@ const FormTwo = ({
       <div className='md:pr-5'>
         <div className='flex justify-between'>
           <div className='text-[22px] font-bold'>Manager</div>
-          {/* <div className='my-auto text-sm font-bold underline'>Manage Memberships</div> */}
         </div>
 
         <ProfileCard
-          icon={data[0]?.admins[0]?.picture ? data[0]?.admins[0]?.picture : ''}
-          name={data[0]?.admins[0]?.name ? data[0]?.admins[0]?.name : ''}
-          address={data[0]?.admins[0]?.address ? data[0]?.admins[0]?.address : ''}
+          icon={data && data[0]?.admins[0]?.picture ? data[0]?.admins[0]?.picture : ''}
+          name={data && data[0]?.admins[0]?.name ? data[0]?.admins[0]?.name : ''}
+          address={data && data[0]?.admins[0]?.address ? data[0]?.admins[0]?.address : ''}
         />
 
         <div className='flex justify-start gap-[30px] pt-[30px] md:pt-10'>
           <div className='text-[22px] font-bold'>Members</div>
-          <div className='text-lg font-normal'>{data[0]?.members ? data[0].members.length : 0}</div>
+          <div className='text-lg font-normal'>{data && data[0]?.members ? data[0].members.length : 0}</div>
+          {!removeOn && (
+            <div className='my-auto text-sm font-bold underline' onClick={() => setRemoveOn(true)}>
+              Remove Members
+            </div>
+          )}
         </div>
 
         <div className='grid grid-cols-2 pt-5 '>
-          {data[0]?.members &&
+          {data &&
+            data[0]?.members &&
             data[0]?.members.map((member, idx) => {
-              return <ProfileCard icon={member.picture} name={member.name} address={member.address} />
+              return (
+                <>
+                  {/* {removeOn && <input type='radio' className='h-10 w-10'  />} */}
+                  <ProfileCard icon={member.picture} name={member.name} address={member.address} edit={removeOn} />
+                </>
+              )
             })}
         </div>
+
+        {removeOn && (
+          <div className='flex justify-start gap-5 pt-6'>
+            <div
+              className={`w-fit cursor-pointer rounded-md bg-vdao-pink py-[5px] px-9 font-heading text-xl font-medium text-vdao-dark`}
+              onClick={() => setRemoveOn(false)}
+            >
+              {' '}
+              Remove{' '}
+            </div>
+
+            <div
+              className={`w-fit cursor-pointer rounded-md border-[1px] border-vdao-pink py-[5px] px-9 font-heading text-xl font-medium text-vdao-dark`}
+              onClick={() => setRemoveOn(false)}
+            >
+              {' '}
+              Cancel{' '}
+            </div>
+          </div>
+        )}
 
         <div className='float-right flex gap-2 pt-20 pb-[30px] md:gap-5 md:pt-36 '>
           <div

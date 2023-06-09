@@ -1,5 +1,5 @@
 import { use, useState } from 'react'
-import { useAccount } from 'wagmi'
+import { useAccount, useBalance } from 'wagmi'
 import Page from '~/components/layout/page'
 import PodCards from '~/components/pages/app/pods/podCards'
 import PodsProfile from '~/components/pages/app/pods/podsProfile'
@@ -22,20 +22,21 @@ const Pods = () => {
     createdBy: address || '',
     include: { members: true, admins: true, proposals: true },
   })
-
+const { data: balance } = useBalance({})
   console.log("pods data: ", data)
+  console.log("pods show", openedPod, showManageMembers)
 
   return (
     <>
       <Page>
         <PodsProfile setOpenCreatePod={setOpenCreatePod} />
 
-        <PodCards setOpenedPod={setOpenedPod} data={data} isLoading={isLoading} />
+        <PodCards setOpenedPod={setOpenedPod} setPid={setPid} data={data} isLoading={isLoading} />
 
         {openCreatePod && <CreateNewPod show={openCreatePod} close={() => setOpenCreatePod(false)} refetch={refetch} data={data} />}
 
         {!!openedPod && (
-          <PodModal close={() => setOpenedPod(undefined)} pod={openedPod} setShowManageMembers={setShowManageMembers} />
+          <PodModal close={() => setOpenedPod(undefined)} pod={openedPod} setShowManageMembers={setShowManageMembers}  />
         )}
 
         {showManageMembers && (
@@ -46,9 +47,10 @@ const Pods = () => {
             setMemberAddr={setMemberAddr}
             setManagerAddr={setManagerAddr}
             setShowManageMembers={setShowManageMembers}
-            pod={openedPod}
-            // setOpenedPod={setOpenedPod}
-            setOpenedPod={() => setOpenedPod(undefined)}
+            pid={pid}
+            setOpenedPod={setOpenedPod}
+            // setOpenedPod={() => setOpenedPod(undefined)}
+            data={data}
           />
         )}
       </Page>

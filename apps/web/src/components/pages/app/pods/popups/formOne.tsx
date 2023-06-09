@@ -35,14 +35,14 @@ const FormOne = ({
   const [preview, setPreview] = useState('')
 
   const nextHandler = () => {
-    if (podName && description && podImage.image) {
+    // if (podName && description && podImage.image) {
       setNextForm(true)
-    } else {
-      setError(true)
-      setTimeout(() => {
-        setError(false)
-      }, 10000)
-    }
+    // } else {
+    //   setError(true)
+    //   setTimeout(() => {
+    //     setError(false)
+    //   }, 10000)
+    // }
   }
 
   const onImageChange = (evt: any) => {

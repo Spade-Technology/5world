@@ -8,15 +8,23 @@ import { Address } from 'viem'
 import { JoinedAtFormat, shortenAddress, shortenText } from '~/utils/helpers'
 import { Null_Address } from '~/utils/config'
 import { monthNames } from '~/utils/date'
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { Skeleton } from 'antd'
+import { useUserReads } from '~/hooks/web3/useUser'
+import { User } from '@prisma/client'
+
+type Props = {
+  setOpenProfile: Dispatch<SetStateAction<User | undefined>>
+}
 
 type CardProps = {
+  setOpenProfile: Dispatch<SetStateAction<User | undefined>>
   data: any
 }
-const ElectionCards = () => {
+
+const ElectionCards = ({ setOpenProfile }: Props) => {
   const { address } = useAccount()
-  const { data, isLoading } = useStewardReads({})
+  const { data, isLoading } = useUserReads({})
 
   return (
     <div className='mx-auto w-screen bg-vdao-deep'>
@@ -48,7 +56,7 @@ const ElectionCards = () => {
               />
             </>
           ) : (
-            data && data.length > 0 && data?.map(steward => <Card data={steward} />)
+            data && data.length > 0 && data?.map(steward => <Card data={steward} setOpenProfile={setOpenProfile} />)
           )}
         </div>
       </div>
@@ -56,12 +64,22 @@ const ElectionCards = () => {
   )
 }
 
-export const Card = ({ data }: CardProps) => {
+export const Card = ({ data, setOpenProfile }: CardProps) => {
+  console.log({ data })
   const [votes, setVotes] = useState('')
   const { vote } = useVote()
+  const { address } = useAccount()
+  const votesHandler = () => {
+    if (votes && address && data.address) {
+      vote({ voterAddress: address, candidateAddress: data.address, amount: parseFloat(votes), message: '' })
+    }
+  }
   return (
     <div className='rounded-[20px] bg-vdao-dark text-white'>
-      <div className='float-right pt-5 pr-5 text-sm font-semibold underline underline-offset-2 md:pt-[30px] md:pr-[30px]'>
+      <div
+        className='float-right cursor-pointer pt-5 pr-5 text-sm font-semibold underline underline-offset-2 md:pt-[30px] md:pr-[30px]'
+        onClick={() => setOpenProfile(data)}
+      >
         View Profile
       </div>
 
@@ -140,7 +158,7 @@ export const Card = ({ data }: CardProps) => {
               onChange={evt => setVotes(evt.target.value)}
             />
 
-            <PrimaryButton text='Vote' className='py-[5px] font-heading text-xl' />
+            <PrimaryButton text='Vote' className='py-[5px] font-heading text-xl' onClick={votesHandler} />
           </div>
         </div>
       </div>

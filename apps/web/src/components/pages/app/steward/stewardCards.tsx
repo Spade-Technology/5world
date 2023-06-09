@@ -2,8 +2,9 @@ import { User } from '@prisma/client'
 import { Skeleton } from 'antd'
 import Image from 'next/image'
 import ProfilePic from 'public/icons/blog/createdByLogo.svg'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useDelegate, useStewardReads } from '~/hooks/web3/useStewards'
+import { useUserReads } from '~/hooks/web3/useUser'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { Null_Address } from '~/utils/config'
 import { monthNames } from '~/utils/date'
@@ -63,6 +64,34 @@ const StewardCards = ({ setOpenProfile }: Props) => {
 
 export const Card = ({ setOpenProfile, user }: CardProps) => {
   const { delegate } = useDelegate()
+
+  const { data: userInfo } = useUserReads({
+    search: user.address,
+    include: {
+      podsAsAdmin: true,
+      podsAsMember: true,
+      proposals: true,
+      guild: true,
+      stewardVotesAsCandidate: true,
+      stewardVotesAsVoter: true,
+    },
+  })
+
+  const [praiseScore, setPraiseScore] = useState(0)
+
+  useEffect(() => {
+    if (userInfo) {
+      let score = 0
+      userInfo[0]?.stewardVotesAsCandidate?.map((votes: any) => {
+        score = score + parseFloat(votes.token)
+      })
+      setPraiseScore(score)
+    } else {
+      setPraiseScore(0)
+    }
+  })
+
+  console.log({ userInfo })
   return (
     <div className='rounded-[20px] bg-vdao-dark text-white'>
       <div
@@ -93,7 +122,7 @@ export const Card = ({ setOpenProfile, user }: CardProps) => {
                     user.JoinedAt.getDate() +
                     ', ' +
                     user.JoinedAt.getFullYear()
-                  : 'May 05, 2023'}
+                  : 'at Unavailable'}
               </div>
             </div>
           </div>
@@ -120,12 +149,12 @@ export const Card = ({ setOpenProfile, user }: CardProps) => {
           <div>
             <div className='text-[28px] font-semibold text-vdao-light md:text-[32px]'> 0% </div>
             <div className='text-sm font-semibold text-vdao-dark md:text-lg'>
-              Volting <br /> Weight
+              Voting <br /> Weight
             </div>
           </div>
 
           <div>
-            <div className='text-[28px] font-semibold text-vdao-light md:text-[32px]'> 0 </div>
+            <div className='text-[28px] font-semibold text-vdao-light md:text-[32px]'> {praiseScore ? praiseScore : 0} </div>
             <div className='text-sm font-semibold text-vdao-dark md:text-lg'>
               {' '}
               Praise <br /> Score{' '}

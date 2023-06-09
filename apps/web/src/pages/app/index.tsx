@@ -13,6 +13,7 @@ import {
 
 const Home: NextPage = () => {
   const [openProfile, setOpenProfile] = useState(false)
+  const [newMembersArr, setNewMembersArr] = useState<any>([])
 
   return (
     <>
@@ -21,9 +22,9 @@ const Home: NextPage = () => {
 
         <div className='mx-auto  flex w-fit'>
           <Section className='mx-6 grid md:grid-cols-12 justify-between gap-5 lg:max-w-[1280px]'>
-            <ProfileHomeComponent setOpenProfile={setOpenProfile} />
+            <ProfileHomeComponent setOpenProfile={setOpenProfile} setNewMembersArr={setNewMembersArr} />
 
-            <NewMembersComponent />
+            <NewMembersComponent newMembersArr={newMembersArr} />
 
             <StatisticsHomeComponent />
           </Section>
