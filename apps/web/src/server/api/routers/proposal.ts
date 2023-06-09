@@ -42,6 +42,7 @@ export const proposalRouter = createTRPCRouter({
       const proposals = await prisma.proposal.findMany({
         ...(ids && { where: { id: { in: ids } } }),
         include: include,
+        take: 10,
       })
       if (!proposals || proposals.length === 0) throw new Error('Proposals not found')
       return proposals
