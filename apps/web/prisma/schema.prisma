@@ -79,11 +79,11 @@ model StewardVote {
 }
 
 model Pod {
-    id          Int    @id @default(autoincrement())
+    id Int @id @default(autoincrement())
+
     // Media
     name        String
     description String
-    picture     String
 
     // Relations
     admins      User[]     @relation("PodAdminsRelation")
@@ -114,7 +114,8 @@ model Proposal {
 
     title       String
     description String
-    picture     String @default("")
+    picture     String   @default("")
+    spells      String[]
 
     // Relations
     pod      Pod?   @relation(fields: [podId], references: [id])

@@ -53,6 +53,8 @@ export const proposalRouter = createTRPCRouter({
       z.object({
         title: z.string(),
         description: z.string(),
+        picture: z.string().optional(),
+        spellAddresses: z.array(z.string()).max(10, 'Too many spells'),
         podId: z.number().optional(),
         transactionHash: z.string(),
         authorAddress: z.string(),
@@ -61,7 +63,7 @@ export const proposalRouter = createTRPCRouter({
     )
     .mutation(
       async ({
-        input: { podId, authorAddress, transactionHash, include, title, description },
+        input: { podId, authorAddress, transactionHash, include, title, description, spellAddresses, picture },
         ctx: {
           prisma,
           session: { address },
@@ -97,6 +99,8 @@ export const proposalRouter = createTRPCRouter({
             id: Number((txEvent.args as any).id),
             title,
             description,
+            picture,
+            spells: spellAddresses,
 
             ...(podId && { pod: { connect: { id: podId } } }),
 
