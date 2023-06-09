@@ -29,20 +29,7 @@ export function useProposalRead(id: number, include: ProposalInclude = {}) {
   return api.proposal.getProposal.useQuery({ id, include })
 }
 
-export function useProposalReads({ ids, include }: { ids?: number[]; include?: ProposalInclude }) {
-  const schema = z.object({
-    ids: z.array(z.number()),
-    include: z
-      .object({
-        pod: z.boolean().optional(),
-        author: z.boolean().optional(),
-      })
-      .optional(),
-  })
-  schema.parse({ ids, include })
-
-  return api.proposal.getProposals.useQuery({ ids, include })
-}
+export const useProposalReads = api.proposal.getProposals.useQuery
 
 export function useProposal(id: number, ids: number[], include: ProposalInclude = {}) {
   const proposalRead = useProposalRead(id, include)
