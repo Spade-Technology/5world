@@ -34,13 +34,13 @@ export const proposalRouter = createTRPCRouter({
   getProposals: publicProcedure
     .input(
       z.object({
-        ids: z.array(z.number()).max(10, 'Too many ids'),
+        ids: z.array(z.number()).max(10, 'Too many ids').optional(),
         include: includeZod,
       }),
     )
     .query(async ({ input: { ids, include }, ctx: { prisma } }) => {
       const proposals = await prisma.proposal.findMany({
-        where: { id: { in: ids } },
+        ...(ids && { where: { id: { in: ids } } }),
         include: include,
       })
       if (!proposals || proposals.length === 0) throw new Error('Proposals not found')
@@ -82,8 +82,7 @@ export const proposalRouter = createTRPCRouter({
         })
 
         if (!txEvent) throw new TRPCError({ code: 'NOT_FOUND', message: 'Event not found' })
-        if ((txEvent.args as any).description !== description)
-          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Description does not match' })
+        if ((txEvent.args as any).description !== description) throw new TRPCError({ code: 'BAD_REQUEST', message: 'Description does not match' })
         if (
           !Object.values(currentContracts)
             .map(el => el.toLowerCase())
