@@ -4,12 +4,12 @@ export const GetFundingDescription = () => {
   return (
     <Description
       title={
-        <div className='w-[432px] font-heading text-[44px] font-medium leading-[95px] text-vdao-dark md:text-[80px]'>
+        <div className='mx-w-[300px] w-full font-heading text-[44px] font-medium leading-[95px] text-vdao-dark md:text-[80px] md:w-[432px]'>
           Get Funding
         </div>
       }
       description={
-        <div className='w-full font-body text-[26px] font-medium leading-[30px] md:w-[557px]'>
+        <div className='w-full font-body text-[26px] font-medium leading-[30px] md:w-full lg:max-w-[557px]'>
           VDAO welcomes all funding proposals that align with its vision and mission of regenerating our planet through
           systems thinking, research, and innovation.
         </div>
