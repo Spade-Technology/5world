@@ -33,7 +33,7 @@ export const useProposalReads = api.proposal.getProposals.useQuery
 
 export function useProposal(id: number, ids: number[], include: ProposalInclude = {}) {
   const proposalRead = useProposalRead(id, include)
-  const proposalReads = useProposalReads(ids, include)
+  const proposalReads = useProposalReads({ ids, include })
 
   return { proposalRead, proposalReads }
 }
