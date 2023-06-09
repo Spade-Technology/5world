@@ -4,6 +4,7 @@ import PageNation from '~/components/misc/pageNation'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { proposalDetails } from './proposalDetails'
 import ProfileCard from '~/components/misc/profileCard'
+import { useProposalRead, useProposalReads } from '~/hooks/web3/useProposal'
 
 type ProposalProps = {
   setViewProposal: Dispatch<SetStateAction<boolean>>
@@ -18,7 +19,9 @@ const ProposalCards = ({ setViewProposal }: ProposalProps) => {
   const [pageCount, setPageCount] = useState(1)
   const [pageNumbers, setPageNumbers] = useState<any>([])
   const [proposals, setUpdatedProposals] = useState<any>([])
+  const { data } = useProposalReads([0, 1, 2, 3, 4], { pod: true, author: true })
 
+  console.log('proposal data', data)
   const itemsPerPage = 3
 
   /** The following two useEffects are for Pagenation functionality. */
