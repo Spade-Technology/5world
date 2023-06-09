@@ -16,15 +16,13 @@ const VOTE_THRESHOLD = 1
 const PAST_MONTHS = '6 MONTH'
 
 export const stewardRouter = createTRPCRouter({
-  getStewards: protectedProcedure
-    .input(z.object({ search: z.string().optional() }))
-    .query(async ({ input: { search }, ctx: { prisma } }) => {
-      const searchQuery = search ? `${search}` : ''
+  getStewards: protectedProcedure.input(z.object({ search: z.string().optional() })).query(async ({ input: { search }, ctx: { prisma } }) => {
+    const searchQuery = search ? `${search}` : ''
 
-      let stewards
+    let stewards
 
-      if (search) {
-        stewards = await prisma.$queryRaw`
+    if (search) {
+      stewards = await prisma.$queryRaw`
           SELECT "User".* 
           FROM "User" 
           -- include Guild
@@ -37,46 +35,44 @@ export const stewardRouter = createTRPCRouter({
           ) 
           AND "StewardVote"."createdAt" >= (NOW() - INTERVAL '${PAST_MONTHS}')
           GROUP BY "User".address 
-          
-          -- HAVING COUNT("StewardVote"."id") >= ${VOTE_THRESHOLD}
+          LIMIT 6
           `
-      } else {
-        stewards = await prisma.$queryRaw`
+    } else {
+      stewards = await prisma.$queryRaw`
           SELECT "User".* 
           FROM "User" 
           LEFT JOIN "StewardVote" 
           ON "User".address = "StewardVote"."candidateAddress"
           AND "StewardVote"."createdAt" >= (NOW() - INTERVAL '${PAST_MONTHS}')
           GROUP BY "User".address 
-          -- HAVING COUNT("StewardVote"."id") >= ${VOTE_THRESHOLD}
+          LIMIT 6
+
           `
-      }
+    }
 
-      return stewards as User[]
-    }),
+    return stewards as User[]
+  }),
 
-  getSteward: protectedProcedure
-    .input(z.object({ address: z.string() }))
-    .query(async ({ input: { address }, ctx: { prisma } }) => {
-      const steward = await prisma.user.findUnique({
-        where: { address },
-        include: {
-          _count: {
-            select: {
-              createdPods: true,
-              createdProposals: true,
+  getSteward: protectedProcedure.input(z.object({ address: z.string() })).query(async ({ input: { address }, ctx: { prisma } }) => {
+    const steward = await prisma.user.findUnique({
+      where: { address },
+      include: {
+        _count: {
+          select: {
+            createdPods: true,
+            createdProposals: true,
 
-              stewardVotesAsVoter: true,
-              stewardVotesAsCandidate: true,
+            stewardVotesAsVoter: true,
+            stewardVotesAsCandidate: true,
 
-              podsAsAdmin: true,
-              podsAsMember: true,
-            },
+            podsAsAdmin: true,
+            podsAsMember: true,
           },
         },
-      })
-      return steward
-    }),
+      },
+    })
+    return steward
+  }),
 
   applyToBeSteward: protectedProcedure.mutation(
     async ({
@@ -116,8 +112,7 @@ export const stewardRouter = createTRPCRouter({
     )
     .mutation(async ({ input: { voterAddress, candidateAddress, signature, message }, ctx: { prisma } }) => {
       // check if the message is valid
-      if (!message.includes(`${voterAddress} is voting for ${candidateAddress} as a steward.`))
-        throw new Error('Invalid message')
+      if (!message.includes(`${voterAddress} is voting for ${candidateAddress} as a steward.`)) throw new Error('Invalid message')
 
       // check if the signature is valid
       try {
@@ -128,11 +123,9 @@ export const stewardRouter = createTRPCRouter({
       }
 
       // get closest block to current time
-      const applyBlock = (await prisma.user.findUnique({ where: { address: candidateAddress } }))
-        ?.stewardApplicationBlock
+      const applyBlock = (await prisma.user.findUnique({ where: { address: candidateAddress } }))?.stewardApplicationBlock
 
-      if (!applyBlock)
-        throw new TRPCError({ code: 'UNAUTHORIZED', message: "the candidate hasn't applied to be a steward" })
+      if (!applyBlock) throw new TRPCError({ code: 'UNAUTHORIZED', message: "the candidate hasn't applied to be a steward" })
 
       const tokenAmountAtApplicationBlock = await readContract({
         address: contracts.sepolia.vDao as Address,

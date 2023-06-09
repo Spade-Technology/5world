@@ -205,7 +205,7 @@ function RegisterWallet({ setOpenModal }: { setOpenModal: Dispatch<SetStateActio
           message: JSON.stringify(message),
           signature,
           name,
-          description: '',
+          description: bio,
           picture: image || '',
         },
         {

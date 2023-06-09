@@ -98,6 +98,8 @@ export const userRouter = createTRPCRouter({
     .mutation(async ({ input: { address, name, description, picture, message, signature }, ctx: { prisma, req } }) => {
       const siwe = await verifySiweMessage({ message, signature }, req)
 
+      if (siwe && siwe.address !== address) return new TRPCError({ code: 'BAD_REQUEST', message: 'Invalid address' })
+
       // If the message is invalid, bad request
       if (!siwe) return new TRPCError({ code: 'BAD_REQUEST', message: 'Invalid message' })
 

@@ -18,9 +18,9 @@ const LoginPromptComponent = () => {
 }
 
 export const EnforceAuth = ({ children }: { children: React.ReactNode }) => {
-  const { data: siwe } = useSession()
+  const { data: siwe, status } = useSession()
 
-  return siwe ? <>{children}</> : <LoginPromptComponent />
+  return status === 'loading' ? <></> : siwe ? <>{children}</> : <LoginPromptComponent />
 }
 
 export default LoginPromptComponent
