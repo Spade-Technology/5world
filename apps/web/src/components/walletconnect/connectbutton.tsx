@@ -21,6 +21,7 @@ type ButtonMessages = {
   verify: string
   register: string
   walletselect: string
+  loading: string
 }
 
 export const VDAOConnectButton = ({
@@ -44,7 +45,7 @@ export const VDAOConnectButton = ({
   const { data: siwe, status } = useSession()
 
   const [openModal, setOpenModal] = useState(false)
-  const [modalState, setModalState] = useState<'walletselect' | 'verify' | 'verified' | 'register'>('walletselect')
+  const [modalState, setModalState] = useState<'walletselect' | 'verify' | 'verified' | 'register' | 'loading'>('walletselect')
   const { data, isLoading } = useUserRead({
     address: address as Address,
   })
@@ -53,14 +54,13 @@ export const VDAOConnectButton = ({
   const [message, setMessage] = useState('')
 
   useEffect(() => {
-    setModalState(address ? (data ? (siwe ? 'verified' : 'verify') : 'register') : 'walletselect')
     if (status === 'authenticated' && siwe?.address !== address) signOut()
-  }, [address, siwe, data, status])
-
-  useEffect(() => {
-    setIsDisabled((isLoading && address) || !!disabled)
-    setMessage(isLoading && address ? 'Loading...' : siwe?.address && !web2 ? shortenAddress(siwe.address) : messages[modalState])
-  }, [isLoading, address, siwe, disabled])
+    else {
+      setModalState(isLoading ? 'loading' : address ? (data ? (siwe ? 'verified' : 'verify') : 'register') : 'walletselect')
+      setIsDisabled((isLoading && address) || !!disabled)
+      setMessage(siwe?.address && !web2 ? shortenAddress(siwe.address) : messages[modalState])
+    }
+  }, [address, siwe, data, status, disabled])
 
   const handleButtonClick =
     onClickOverride ||
@@ -74,6 +74,7 @@ export const VDAOConnectButton = ({
     verify: 'Verify',
     register: 'Register',
     walletselect: 'Connect Wallet',
+    loading: 'Loading...',
     ...messageOverrides,
   }
 
