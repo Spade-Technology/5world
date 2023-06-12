@@ -67,12 +67,12 @@ export function HomeCommunityComponent() {
   return (
     <Section className='relative mt-10 bg-vdao-dark px-6 text-vdao-light '>
       <div className='relative mx-auto flex max-w-[1440px] flex-col md:pb-48 '>
-        <div className='mt-24'>
+        <div className='z-10 mt-24'>
           <div className='mb-4 font-heading text-[32px] font-medium md:mb-6 md:ml-9 md:text-[46px] lg:ml-[94px]'>Community</div>
           <div className='md:font-satoshi font-heading text-[22px] font-medium text-white md:ml-9 md:text-[26px] lg:ml-[94px]'>The VDAO Community is:</div>
         </div>
         <div className='mt-12 flex flex-col-reverse md:flex-row'>
-          <div className='mb-[463px] grid gap-12 md:ml-[40%] md:mb-0 md:grid-cols-2 md:gap-0 lg:ml-[40%]'>
+          <div className='z-10 mb-[463px] grid gap-12 md:ml-[40%] md:mb-0 md:grid-cols-2 md:gap-0 lg:ml-[40%]'>
             <div className='flex  flex-col gap-4 md:w-9/12'>
               <div className='font-body text-[26px] font-medium md:font-heading md:text-3xl'>Apolitical</div>
               <div className='font-body text-lg font-normal leading-[22px] text-white'>
@@ -91,12 +91,12 @@ export function HomeCommunityComponent() {
             </div>
             <div className='flex flex-col gap-4 md:mt-10 md:w-10/12 lg:w-9/12'>
               <div className='font-body text-[26px] font-medium md:font-heading md:text-3xl'>Engaged</div>
-              <div className='font-body text-lg font-normal leading-[22px] text-white'>We contribute to regenerative agriculture conversations, developing a vibrant learning culture.</div>
+              <div className=' font-body text-lg font-normal leading-[22px] text-white'>We contribute to regenerative agriculture conversations, developing a vibrant learning culture.</div>
             </div>
           </div>
         </div>
+        <div className=' absolute bottom-0 left-0 hidden h-3/6 w-6/12 bg-[url(/illustrations/home/SVG/illusratoin04.svg)] bg-cover bg-bottom bg-no-repeat md:block lg:h-5/6' />
       </div>
-      <div className=' absolute bottom-0 left-0 z-50 hidden h-3/6 w-6/12 bg-[url(/illustrations/home/SVG/illusratoin04.svg)] bg-cover bg-bottom bg-no-repeat md:block lg:h-5/6' />
       <div className='sm:bg-fit absolute bottom-0 left-0 h-[463px] w-full bg-[url(/illustrations/home/SVG/04_community_illo_nobackground_v011.svg)] bg-cover bg-bottom bg-no-repeat md:hidden' />
     </Section>
   )
