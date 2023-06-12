@@ -19,7 +19,7 @@ const CreateNewPod = ({ show, close, refetch, data }: CreatePodProps) => {
   const [podImage, setPodImage] = useState({ image: '', name: '' })
   const [description, setDescription] = useState('')
   const [managerAddr, setManagerAddr] = useState('')
-  const [memberAddr, setMemberAddr] = useState('')
+  const [memberAddr, setMemberAddr] = useState<string[]>([])
   const [error, setError] = useState(false)
 
   /** Here !, tell TypeScript that even though something looks like it could be null, it can trust you that it's not */

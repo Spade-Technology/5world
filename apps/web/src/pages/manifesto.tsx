@@ -28,6 +28,7 @@ import { Section } from '~/components/layout/section'
 import VDAO_whiteIcon from 'public/logo/svg/white.svg'
 import Green_VDAO from 'public/logo/svg/green.svg'
 import SubmitIcon from 'public/icons/manifesto/submitIcon.svg'
+import { useConnect } from 'wagmi'
 
 dayjs.extend(relativeTime)
 
@@ -103,7 +104,7 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
   // wagmi get address
   const { address } = useAccount()
   const { mutateAsync } = api.manifesto.sign.useMutation()
-  const { openConnectModal } = useConnectModal()
+  const { data: openConnectModal } = useConnect()
 
   const [notificationApi, contextHolder] = notification.useNotification()
   const { status } = useSession()

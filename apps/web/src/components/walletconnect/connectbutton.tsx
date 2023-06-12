@@ -13,7 +13,7 @@ import { SiweMessage } from 'siwe'
 import { useUserRead } from '~/hooks/web3/useUser'
 import { Address } from 'viem'
 import { FaInfo } from 'react-icons/fa'
-import { shortenAddress } from '~/utils/helpers'
+import { shortenAddress, shortenText } from '~/utils/helpers'
 import { useRouter } from 'next/router'
 
 export const VDAOConnectButton = ({ className, web2 }: { className?: string; web2?: boolean }) => {
@@ -55,7 +55,7 @@ export const VDAOConnectButton = ({ className, web2 }: { className?: string; web
 
       <div className={`fixed top-0 left-0 bottom-0 flex h-[100vh] w-[100vw] items-center justify-center transition-all ease-in-out ${openModal ? 'visible z-50 opacity-100' : 'invisible opacity-0'}`}>
         <div
-          className={`absolute -z-10 h-[100vh] w-[100vw] bg-vdao-dark bg-opacity-60 backdrop-blur-lg backdrop-opacity-0 transition-all ${openModal && 'backdrop-opacity-100'}`}
+          className={`absolute -z-10 h-[100vh] w-[100vw] bg-black bg-opacity-60 backdrop-blur-sm backdrop-opacity-0 transition-all ${openModal && 'backdrop-opacity-100'}`}
           onClick={() => {
             setOpenModal(false)
           }}
@@ -321,7 +321,7 @@ function DisplayWallet({ setOpenModal }: { setOpenModal: Dispatch<SetStateAction
         <div className='relative mx-auto h-24 w-24'>
           <Image src={siwe?.user.picture || PodImage} alt='PodImage' className='mx-auto' sizes='square' fill />
         </div>
-        <span className='text-xl text-white'>{siwe?.user.name}</span>
+        <span className='text-xl text-white'>{shortenText(siwe?.user.name!,20)}</span>
         <span className='text-xl text-white'>{shortenAddress(siwe?.address || '')}</span>
 
         <div className='flex gap-4'>

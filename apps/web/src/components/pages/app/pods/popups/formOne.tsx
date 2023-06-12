@@ -22,15 +22,7 @@ type FormProps = {
   >
 }
 
-const FormOne = ({
-  podName,
-  description,
-  podImage,
-  setPodImage,
-  setNextForm,
-  setPodName,
-  setDescription,
-}: FormProps) => {
+const FormOne = ({ podName, description, podImage, setPodImage, setNextForm, setPodName, setDescription }: FormProps) => {
   const [error, setError] = useState(false)
   const [preview, setPreview] = useState('')
 
@@ -79,15 +71,9 @@ const FormOne = ({
 
         <div className='pt-[5px]'>Upload a profile image for your pod.</div>
 
-        <div className='flex flex-col gap-5 pt-8 text-center align-middle  lg:flex-row md:gap-10 '>
+        <div className='flex flex-col gap-5 pt-8 text-center align-middle  md:gap-10 lg:flex-row '>
           <div className='flex-none'>
-            <Image
-              src={podImage && podImage.image ? podImage.image : PodImage}
-              height={180}
-              width={180}
-              alt='PodImage'
-              className='mx-auto'
-            />
+            <Image src={podImage && podImage.image ? podImage.image : PodImage} height={180} width={180} alt='PodImage' className='mx-auto' />
           </div>
           <div className='md:my-auto'>
             <label className='mx-auto w-fit cursor-pointer rounded-[5px] bg-vdao-pink py-[5px] px-[35px] font-heading text-xl font-medium'>
@@ -135,11 +121,7 @@ const FormOne = ({
         />
 
         <div className='pt-[20px] md:pt-[90px]'>
-          <PrimaryButton
-            text='Next'
-            className='float-right py-[5px] px-[35px] text-lg font-medium'
-            onClick={nextHandler}
-          />
+          <PrimaryButton text='Next' className='float-right py-[5px] px-[35px] text-lg font-medium' onClick={nextHandler} />
         </div>
       </div>
     </div>
