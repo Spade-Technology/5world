@@ -11,7 +11,7 @@ import github from 'public/illustrations/socials/Vector (9).svg'
 
 type Props = {
   signatures?: number
-  ref?: any
+  signModuleRef?: React.RefObject<HTMLDivElement>
 }
 
 const Footer = (props: Props) => {
@@ -115,14 +115,7 @@ const FooterManifesto = (props: Props) => {
         </div>
         <div className='flex flex-col gap-3'>
           <span className='text-base font-medium text-black'>{props.signatures || 0} Signatures</span>
-          <Button
-            type='primary'
-            className='!h-10 w-44 !bg-vdao-dark'
-            onClick={() => {
-              const element = document.getElementById('SignModule')
-              element?.scrollIntoView({ block: 'end', behavior: 'smooth' })
-            }}
-          >
+          <Button type='primary' className='!h-10 w-44 !bg-vdao-dark' onClick={() => props.signModuleRef?.current?.scrollIntoView({ block: 'end', behavior: 'smooth' })}>
             Sign Manifesto
           </Button>
         </div>

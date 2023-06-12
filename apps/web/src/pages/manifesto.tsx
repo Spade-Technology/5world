@@ -23,7 +23,7 @@ import { useSession } from 'next-auth/react'
 import SubmitIcon from 'public/icons/manifesto/submitIcon.svg'
 import COLOR_VDAO_LARGE from 'public/logo/png/color_large.png'
 import VDAO_whiteIcon from 'public/logo/svg/white.svg'
-import { useEffect, useRef, useState } from 'react'
+import { RefObject, useEffect, useRef, useState } from 'react'
 import { prisma } from '~/server/db'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { api } from '~/utils/api'
@@ -32,7 +32,7 @@ import { sqltag } from '@prisma/client/runtime'
 dayjs.extend(relativeTime)
 
 const Home: NextPage<any> = ({ signatures }) => {
-  const ref = useRef(null)
+  const signModuleRef = useRef<HTMLDivElement>(null)
 
   return (
     <>
@@ -56,9 +56,9 @@ const Home: NextPage<any> = ({ signatures }) => {
           /> */}
           <SectionTwo />
 
-          <Signing signatures={signatures} />
+          <Signing signatures={signatures} signModuleRef={signModuleRef} />
         </div>
-        <FooterManifesto signatures={signatures.total} ref={ref} />
+        <FooterManifesto signatures={signatures.total} signModuleRef={signModuleRef} />
       </main>
     </>
   )
@@ -74,28 +74,7 @@ type colorProps = {
   opacity?: number
 }
 
-function Color({ colorFrom, colorTo, left, size, opacity }: colorProps) {
-  // take 0 horizontal space, but create a circle gradient with the color passed in
-  return (
-    <div className='relative overflow-hidden md:overflow-visible'>
-      <div className=' absolute left-1/2 -translate-x-1/2'>
-        <div
-          className={`relative rounded-full`}
-          style={{
-            width: size,
-            height: size,
-            transform: `translateX(${left})`,
-            backgroundImage: `radial-gradient(circle, ${colorFrom} 0%,  ${colorTo || 'transparent'} 100%)`,
-            filter: `blur(999px)`,
-            opacity: opacity,
-          }}
-        ></div>
-      </div>
-    </div>
-  )
-}
-
-function Signing({ signatures }: { signatures: { total: number; list: any[] } }) {
+function Signing({ signatures, signModuleRef }: { signatures: { total: number; list: any[] }; signModuleRef: RefObject<HTMLDivElement> }) {
   const list = signatures.list
   const [step, setStep] = useState(0)
   const [sticky, setSticky] = useState(false)
@@ -178,7 +157,7 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
   return (
     <section>
       {contextHolder}
-      <div className='mx-auto max-w-[850px]' id='SignModule'>
+      <div className='mx-auto max-w-[850px]' id='SignModule' ref={signModuleRef}>
         <div className='mx-auto w-[350px] rounded-lg bg-vdao-dark p-4 '>
           <span className='text-lg font-medium'>Sign the manifesto with 3 simple steps</span>
           <div className='ml-1 mt-4 flex'>
