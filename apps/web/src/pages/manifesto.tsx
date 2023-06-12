@@ -144,9 +144,7 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
 
   const signManifesto = () => {
     signMessage({
-      message: `I agree to the terms of the Manifesto of the VDAO Project.\n\n\n\nDate of signing: ${new Date().toISOString()} Signing Nounce: ${
-        (Math.random() * 1000000).toFixed(0) + 1
-      }`,
+      message: `I agree to the terms of the Manifesto of the VDAO Project.\n\n\n\nDate of signing: ${new Date().toISOString()} Signing Nounce: ${(Math.random() * 1000000).toFixed(0) + 1}`,
     })
   }
 
@@ -171,10 +169,7 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
   const isSticky = (e: any) => {
     const scrollTop = window.scrollY
 
-    if (
-      (window.screen.availWidth <= 390 && scrollTop >= 7130) ||
-      (window.screen.availWidth > 390 && scrollTop >= 5880)
-    ) {
+    if ((window.screen.availWidth <= 390 && scrollTop >= 7130) || (window.screen.availWidth > 390 && scrollTop >= 5880)) {
       setSticky(true)
     } else {
       setSticky(false)
@@ -194,16 +189,12 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
               <div className='z-10 h-5 w-5 rounded-full bg-vdao-light' />
 
               {/* step 1 */}
-              <div
-                className={`mx-auto h-14 w-[2px] scale-110 rounded-full bg-vdao-light ${step < 1 ? 'opacity-0' : ''}`}
-              />
+              <div className={`mx-auto h-14 w-[2px] scale-110 rounded-full bg-vdao-light ${step < 1 ? 'opacity-0' : ''}`} />
 
               <div className={`z-10 h-5 w-5 rounded-full ${step >= 1 ? 'bg-[#36DFAE]' : 'bg-[#9B9B9B]'}`} />
 
               {/* step 2 */}
-              <div
-                className={`mx-auto h-14 w-[2px] scale-110 rounded-full bg-vdao-light ${step < 2 ? 'opacity-0' : ''}`}
-              />
+              <div className={`mx-auto h-14 w-[2px] scale-110 rounded-full bg-vdao-light ${step < 2 ? 'opacity-0' : ''}`} />
               <div className={`z-10 h-5 w-5 rounded-full ${step >= 2 ? 'bg-[#36DFAE]' : 'bg-[#9B9B9B]'}`} />
             </div>
             {/* right */}
@@ -212,13 +203,7 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
               <VDAOConnectButton className='border-vdao-light bg-vdao-light text-sm font-medium text-vdao-dark outline-none' />
               {/* step 1 */}
               <Button
-                className={`!h-10 w-fit ${
-                  step < 1
-                    ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]'
-                    : step == 1
-                    ? '!text-vdao-light'
-                    : '!border-vdao-light !text-vdao-light'
-                }`}
+                className={`!h-10 w-fit ${step < 1 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : step == 1 ? '!text-vdao-light' : '!border-vdao-light !text-vdao-light'}`}
                 disabled={step != 1}
                 onClick={openConnectModal}
                 type={'primary'}
@@ -229,11 +214,7 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
               {/* step 2 */}
               <Button
                 className={`!h-10 w-fit ${
-                  step < 2
-                    ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]'
-                    : step == 1
-                    ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]'
-                    : '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]'
+                  step < 2 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : step == 1 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]'
                 }`}
                 disabled={step != 2}
                 type={'primary'}
@@ -252,9 +233,7 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
           opacity={0.7}
         /> */}
 
-        <h3 className='mt-24 mr-auto text-center font-heading text-5xl font-medium text-vdao-light md:mt-40'>
-          Manifesto Signers
-        </h3>
+        <h3 className='mt-24 mr-auto text-center font-heading text-5xl font-medium text-vdao-light md:mt-40'>Manifesto Signers</h3>
         <div className='mt-12 flex justify-between'>
           <span className='font-heading text-3xl font-medium'>Signed By :</span>
           <span className='font-heading text-3xl font-medium'>
@@ -268,10 +247,7 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
         >
           {list.map((item, i) => (
             <>
-              <div
-                key={i}
-                className={`mt-4 flex w-full flex-row items-center justify-between ${sticky ? 'md:gap-[364px]' : ''}`}
-              >
+              <div key={i} className={`mt-4 flex w-full flex-row items-center justify-between ${sticky ? 'md:gap-[364px]' : ''}`}>
                 <div className='flex w-full items-center  gap-3'>
                   <div
                     className='rounded-full'
@@ -281,9 +257,7 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
                       height: '44px',
                     }}
                   />
-                  <span className=' w-48 overflow-hidden overflow-ellipsis text-[14px] md:w-full'>
-                    {item?.name || item?.eoa}
-                  </span>
+                  <span className=' w-48 overflow-hidden overflow-ellipsis text-[14px] md:w-full'>{item?.name || item?.eoa}</span>
                 </div>
                 <span className='w-full text-right text-[14px]'>{dayjs(item.updatedAt).fromNow()}</span>
               </div>
@@ -292,19 +266,14 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
           ))}
         </div>
 
-        <div
-          className={`max-w-96 mt-24 flex flex-col justify-between gap-7 rounded-lg bg-vdao-dark py-5 px-6 text-white md:mt-44 md:flex-row md:gap-0`}
-        >
+        <div className={`max-w-96 mt-24 flex flex-col justify-between gap-7 rounded-lg bg-vdao-dark py-5 px-6 text-white md:mt-44 md:flex-row md:gap-0`}>
           <div className='my-auto font-body text-lg font-medium'>
             Join our mailing list
             <br />
             <div className='font-body text-base font-normal opacity-40'>Be the 1st one to get all future updates.</div>
           </div>
           <div className='flex'>
-            <input
-              className='w-80 rounded bg-[#14444A] px-5 py-3 text-[#3BA7B5] outline-none placeholder:text-[#3BA7B5]'
-              placeholder='Enter your email address'
-            />
+            <input className='w-80 rounded bg-[#14444A] px-5 py-3 text-[#3BA7B5] outline-none placeholder:text-[#3BA7B5]' placeholder='Enter your email address' />
             <div className='relative -left-1 w-16 rounded-r bg-vdao-light py-[14px] px-5'>
               <Image src={SubmitIcon} alt='SubmitIcon' className='h-fit' />
             </div>
@@ -325,13 +294,7 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
           </Button> */}
           <PrimaryButton text='Join Now' className='mt-10 px-8 py-4 text-sm md:text-2xl' />
         </div>
-        <Image
-          src={VDAOApply}
-          width={500}
-          height={500}
-          alt='apply'
-          className='pointer-events-none mx-auto mt-16 w-1/2 scale-150 transform md:mt-0 md:w-1/3 md:translate-y-5 md:-translate-x-20'
-        />
+        <Image src={VDAOApply} width={500} height={500} alt='apply' className='pointer-events-none mx-auto mt-16 w-1/2 scale-150 transform md:mt-0 md:w-1/3 md:translate-y-5 md:-translate-x-20' />
       </div>
     </section>
   )
@@ -346,26 +309,20 @@ function SectionTwo() {
         <h3 className='mr-auto text-left font-heading text-[32px] font-medium text-vdao-light'>The Metacrisis</h3>
         <br />
         <span className='text-xl'>
-          Humanity is at the peak of our known history. The economic, industrial, agricultural, energy and technological
-          systems that helped us evolve have become the very liabilities that now challenge our survival. These systems
-          were designed with growth and profitability as the top priority, which has led to negative externalities
-          impacting our health, well-being and to single points of failure across the various centralized systems we
-          rely on. 
+          Humanity is at the peak of our known history. The economic, industrial, agricultural, energy and technological systems that helped us evolve have become the very liabilities that now
+          challenge our survival. These systems were designed with growth and profitability as the top priority, which has led to negative externalities impacting our health, well-being and to single
+          points of failure across the various centralized systems we rely on. 
         </span>
         <h3 className='mx-auto mt-24 mb-20 mr-auto max-w-[570px] text-left font-heading text-[32px] font-medium leading-9 text-vdao-light'>
-          “Our societies have devolved into a zero-sum scarcity mindset, with band-aid solutions that exacerbate the
-          problems.”
+          “Our societies have devolved into a zero-sum scarcity mindset, with band-aid solutions that exacerbate the problems.”
         </h3>
         <span className='text-xl'>
-          The signs are everywhere for those with the eyes to see. Financial systems are collapsing. The Web 2 model is
-          polarizing society and exploiting consumers. Mainstream media has become a propaganda machine. Manufacturing
-          systems and supply chains are increasingly fragile. Energy systems rely heavily on oil and minerals, both of
-          which are running out. Agricultural and food systems are energy intensive, while nutrient density diminishes
-          and we degrade our soil.
+          The signs are everywhere for those with the eyes to see. Financial systems are collapsing. The Web 2 model is polarizing society and exploiting consumers. Mainstream media has become a
+          propaganda machine. Manufacturing systems and supply chains are increasingly fragile. Energy systems rely heavily on oil and minerals, both of which are running out. Agricultural and food
+          systems are energy intensive, while nutrient density diminishes and we degrade our soil.
           <br />
-          <br /> The writing is on the wall, and the pattern is clear. If you haven’t seen it yet, we hope this is a
-          wake-up call. We, human beings, are part of a much bigger ecosystem, but we have fallen out of harmony with
-          it.
+          <br /> The writing is on the wall, and the pattern is clear. If you haven’t seen it yet, we hope this is a wake-up call. We, human beings, are part of a much bigger ecosystem, but we have
+          fallen out of harmony with it.
         </span>
       </div>
       {/* <Color
@@ -376,11 +333,7 @@ function SectionTwo() {
       /> */}
       <h3 className='mx-auto my-24 mr-auto max-w-[1153px] text-center font-heading text-2xl font-medium leading-none text-white md:my-48 md:text-[56px]'>
         <div className='flex max-w-[347px] justify-start gap-3 text-left md:max-w-[1153px]'>
-          <Image
-            src={VDAO_whiteIcon}
-            alt='whiteIcon'
-            className='mt-1 max-h-4 max-w-[70px] flex-none md:my-auto md:max-h-9 md:max-w-[158px]'
-          />
+          <Image src={VDAO_whiteIcon} alt='whiteIcon' className='mt-1 max-h-4 max-w-[70px] flex-none md:my-auto md:max-h-9 md:max-w-[158px]' />
           is a decentralized community of
         </div>
         <div>
@@ -401,43 +354,32 @@ function SectionTwo() {
         <h3 className='mr-auto text-left font-heading text-[32px] font-medium text-vdao-light'>VDAO</h3>
         <br />
         <span>
-          Vdao is a place for collaboration, to build regenerative and anti-fragile systems to propel humanity out of
-          our existing paradigm into a new world - the 5th World.  “V” stands for ‘5’ and that humanity is on the
-          ‘Verge’ of transitioning into the 5th World. The
+          Vdao is a place for collaboration, to build regenerative and anti-fragile systems to propel humanity out of our existing paradigm into a new world - the 5th World.  “V” stands for ‘5’ and
+          that humanity is on the ‘Verge’ of transitioning into the 5th World. The
           <br />
           <br />
-          ‘V’ also symbolizes a formation of birds benefiting from shared leadership. Each bird takes turns at the
-          front, pushing through the resistance of the air and drafting for the benefit of the others, until another
-          teammate moves forward to lead the flock, relieving the teammate that now falls back and rejoins the group.
-          This is the essence of the 5th World and V DAO leadership.
+          ‘V’ also symbolizes a formation of birds benefiting from shared leadership. Each bird takes turns at the front, pushing through the resistance of the air and drafting for the benefit of the
+          others, until another teammate moves forward to lead the flock, relieving the teammate that now falls back and rejoins the group. This is the essence of the 5th World and V DAO leadership.
           <br />
           <br />
-          We believe that the only way to address the challenges that are facing us is to go back to the first
-          principles of system design and leverage regenerative, anti-fragile and decentralized primitives to build the
-          5th World systems, with a focus on generating positive externalities and adopting an abundance mindset of
-          enlightened self-interest where all stakeholders win together.
+          We believe that the only way to address the challenges that are facing us is to go back to the first principles of system design and leverage regenerative, anti-fragile and decentralized
+          primitives to build the 5th World systems, with a focus on generating positive externalities and adopting an abundance mindset of enlightened self-interest where all stakeholders win
+          together.
         </span>
       </div>
 
-      <Image
-        src={Green_VDAO}
-        alt='Green_VDAO'
-        className='mx-auto my-24 max-h-[86px] max-w-[358px] md:my-40 md:max-h-[260px] md:max-w-[1082px]'
-      />
+      <Image src={Green_VDAO} alt='Green_VDAO' className='mx-auto my-24 max-h-[86px] max-w-[358px] md:my-40 md:max-h-[260px] md:max-w-[1082px]' />
 
       <div className='mx-auto max-w-[860px] font-body text-xl font-normal text-white '>
-        The VDAO philosophy is based on the principles of freedom, liberty and enlightened self-interest. We believe
-        that we are able to build systems that ensure profits along with impact, without compromising on any of the
-        two.   <br />
+        The VDAO philosophy is based on the principles of freedom, liberty and enlightened self-interest. We believe that we are able to build systems that ensure profits along with impact, without
+        compromising on any of the two.   <br />
         <br />
-        The V community is built on a simple but essential umbrella principle: “Do the right thing”. Beneath this
-        umbrella are 4 core values that are used in common practice to ensure integrity at all times: Fairness & Caring,
-        Trust & Respect, Generous Listening, and Straight Talk.
+        The V community is built on a simple but essential umbrella principle: “Do the right thing”. Beneath this umbrella are 4 core values that are used in common practice to ensure integrity at all
+        times: Fairness & Caring, Trust & Respect, Generous Listening, and Straight Talk.
         <br />
         <br />
-        The V community is apolitical and does not engage in political, religious, and social issues as a rule. No
-        matter your background and personal beliefs, as long as you agree with our mission and community core values, we
-        welcome you into the V community and hope that you will contribute towards building the new world systems. 
+        The V community is apolitical and does not engage in political, religious, and social issues as a rule. No matter your background and personal beliefs, as long as you agree with our mission
+        and community core values, we welcome you into the V community and hope that you will contribute towards building the new world systems. 
       </div>
 
       {/* <h3 className="mx-auto my-48 mr-auto max-w-[1153px] text-center font-heading text-[56px] font-medium leading-none text-white">
@@ -476,43 +418,34 @@ function SectionTwo() {
           VDAO will be built around two main pillars.
           <br />
           <br />
-          1. Unlocking coordination among creators, contributors and thinkers focused on building and scaling new
-          regenerative and anti-fragile systems. This includes
+          1. Unlocking coordination among creators, contributors and thinkers focused on building and scaling new regenerative and anti-fragile systems. This includes
           <br />
           <li className='ml-8'>Funding and supporting regenerative and anti-fragile projects worldwide</li>
           <li className='ml-8'>Providing a space for ideation and discussions</li>
-          2. Unlocking our collective imagination on what a regenerative and anti-fragile world would look like. This
-          includes
+          2. Unlocking our collective imagination on what a regenerative and anti-fragile world would look like. This includes
           <br />
           <li className='ml-8'>Creating NFT art showcasing a regenerative and anti-fragile future</li>
           <li className='ml-8'>Organizing immersive exhibitions and building metaverse experiences</li>
         </span>
         <br />
-        <h4 className='mt-24 mr-auto text-left font-heading text-3xl font-medium text-vdao-light md:mt-40'>
-          V DAO Roadmap
-        </h4>
+        <h4 className='mt-24 mr-auto text-left font-heading text-3xl font-medium text-vdao-light md:mt-40'>V DAO Roadmap</h4>
         <h3 className='mr-auto mt-9 max-w-[1153px] text-left font-heading text-3xl font-light leading-none text-white md:text-[56px] '>
           We have got to go
           <br />
           <b className='font-medium'>back to the soil.</b>
         </h3>
         <span className='mt-11 md:mt-20'>
-          Agriculture is the foundational layer of our society and we believe, as a start, V DAO should be focused on
-          building and scaling regenerative and anti-fragile agricultural systems. As the DAO grows, the community will
-          vote on expanding the scope to include other verticals such as energy, finance and others.
+          Agriculture is the foundational layer of our society and we believe, as a start, V DAO should be focused on building and scaling regenerative and anti-fragile agricultural systems. As the
+          DAO grows, the community will vote on expanding the scope to include other verticals such as energy, finance and others.
           <br />
-          <br /> Our goal is to create space for an authentic self-organizing community to emerge. The community will
-          develop the whitepaper including the decentralization roadmap, the DAO token governance model, as well as the
-          NFT art collaboration model.
+          <br /> Our goal is to create space for an authentic self-organizing community to emerge. The community will develop the whitepaper including the decentralization roadmap, the DAO token
+          governance model, as well as the NFT art collaboration model.
         </span>
-        <h4 className='mt-24 mr-auto text-left font-heading text-3xl font-medium text-vdao-light md:mt-40'>
-          Time for Action
-        </h4>
+        <h4 className='mt-24 mr-auto text-left font-heading text-3xl font-medium text-vdao-light md:mt-40'>Time for Action</h4>
         <br />
 
         <span className='mr-auto font-normal'>
-          If you agree with this manifesto and want to be part of our community, please{' '}
-          <span className='font-semibold underline underline-offset-[6px]'>sign here.</span>
+          If you agree with this manifesto and want to be part of our community, please <span className='font-semibold underline underline-offset-[6px]'>sign here.</span>
         </span>
       </div>
     </section>
@@ -528,9 +461,7 @@ function SectionOne() {
         <Image src={VDAOGetInvolved} alt='VDAO' width={338} height={364} className='mx-auto' />
         {/* line height 28px */}
         <div className='my-auto flex flex-col gap-4 font-body text-xl font-medium leading-7 text-vdao-light md:w-1/2'>
-          <span className='mb-1 text-white'>
-            Complete all 4 steps to join the Vcommunity & gain full access to future benefits.
-          </span>
+          <span className='mb-1 text-white'>Complete all 4 steps to join the Vcommunity & gain full access to future benefits.</span>
           <div className='mb-1 flex gap-3 md:w-2/3'>
             <Image src={Tick} alt='VDAO' width={20} height={20} />
             <span>

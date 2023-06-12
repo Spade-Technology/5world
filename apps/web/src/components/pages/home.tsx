@@ -28,12 +28,11 @@ import { Section } from '../layout/section'
 export function HomeCTAComponent() {
   return (
     <Section className='flex flex-col items-center bg-gradient-to-r from-vdao-light to-vdao-dark px-6 py-[64px] md:py-[100px] md:px-8 xl:px-0'>
-      <div className='text-center font-heading text-[36px] font-medium text-white md:text-[46px]'>Ready to Join?</div>
+      <div className='text-center font-heading font-medium text-[[94px]px] text-white md:text-[46px]'>Ready to Join?</div>
       <div className='mt-5 w-full max-w-3xl text-center font-body font-body text-[22px] leading-[26px] text-white md:mt-[25px] md:text-[26px] md:leading-[30px]'>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi turpis mi, faucibus vitae elementum id, tristique
-        at lectus.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi turpis mi, faucibus vitae elementum id, tristique at lectus.
       </div>
-      <PrimaryButton text=' Apply Now' className=' mx-auto mt-[36px] mr-auto bg-vdao-light md:mt-[62px]' />
+      <PrimaryButton text=' Apply Now' className=' mx-auto mt-[[94px]px] mr-auto bg-vdao-light md:mt-[62px]' />
     </Section>
   )
 }
@@ -43,9 +42,7 @@ export function HomePartnersComponent() {
     <Section className='overflow-hidden px-6 text-vdao-dark md:px-8 xl:px-0'>
       <div className='mx-auto flex max-w-[1280px] flex-col md:flex-row'>
         <div className='mt-24 max-w-[1280px] md:mx-auto md:w-1/2 '>
-          <div className='mb-6 w-full text-left font-heading text-[32px] font-medium text-vdao-dark md:text-[46px]'>
-            Our Partners
-          </div>
+          <div className='mb-6 w-full text-left font-heading text-[32px] font-medium text-vdao-dark md:text-[46px]'>Our Partners</div>
           <div className='leading[26px] max-w-sm font-body text-[22px] font-medium text-vdao-dark md:text-[26px] md:leading-[30px]'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi turpis mi.
           </div>
@@ -68,72 +65,50 @@ export function HomePartnersComponent() {
 
 export function HomeCommunityComponent() {
   return (
-    <Section className='relative mt-10 bg-vdao-dark px-6 text-vdao-light'>
-      <div className=' mx-auto flex max-w-[1440px] flex-col '>
+    <Section className='relative mt-10 bg-vdao-dark px-6 text-vdao-light '>
+      <div className='relative mx-auto flex max-w-[1440px] flex-col md:pb-48 '>
         <div className='mt-24'>
-          <div className='mb-4 font-heading text-[32px] font-medium md:mb-6 md:ml-9 md:text-[46px] lg:ml-36'>
-            Community
-          </div>
-          <div className='md:font-satoshi font-heading text-[22px] font-medium text-white md:ml-9 md:text-[26px] lg:ml-36'>
-            The VDAO Community is:
-          </div>
+          <div className='mb-4 font-heading text-[32px] font-medium md:mb-6 md:ml-9 md:text-[46px] lg:ml-[94px]'>Community</div>
+          <div className='md:font-satoshi font-heading text-[22px] font-medium text-white md:ml-9 md:text-[26px] lg:ml-[94px]'>The VDAO Community is:</div>
         </div>
         <div className='mt-12 flex flex-col-reverse md:flex-row'>
-          <div className='mb-[463px] grid gap-12 md:ml-[40%] md:mb-48 md:grid-cols-2 md:gap-0 lg:ml-[40%]'>
+          <div className='mb-[463px] grid gap-12 md:ml-[40%] md:mb-0 md:grid-cols-2 md:gap-0 lg:ml-[40%]'>
             <div className='flex  flex-col gap-4 md:w-9/12'>
               <div className='font-body text-[26px] font-medium md:font-heading md:text-3xl'>Apolitical</div>
               <div className='font-body text-lg font-normal leading-[22px] text-white'>
-                We welcome members from all walks of life and political beliefs if they are aligned with the DAO’s core
-                values and mission.
+                We welcome members from all walks of life and political beliefs if they are aligned with the DAO’s core values and mission.
               </div>
             </div>
             <div className='flex flex-col gap-4 md:w-10/12 lg:w-9/12'>
               <div className='font-body text-[26px] font-medium md:font-heading md:text-3xl'>Positive</div>
-              <div className='font-body text-lg font-normal leading-[22px] text-white'>
-                We believe that with focus and collective effort, the world's ecosystems can and will be regenerated.
-              </div>
+              <div className='font-body text-lg font-normal leading-[22px] text-white'>We believe that with focus and collective effort, the world's ecosystems can and will be regenerated.</div>
             </div>
             <div className='flex flex-col gap-4 md:mt-10 md:w-10/12 lg:w-9/12'>
               <div className='font-body text-[26px] font-medium md:font-heading md:text-3xl'>Curious</div>
               <div className='font-body text-lg font-normal leading-[22px] text-white'>
-                We exist at the bleeding edge of regenerative agriculture innovation, creating global networks that can
-                bring about a new era of modern agriculture.
+                We exist at the bleeding edge of regenerative agriculture innovation, creating global networks that can bring about a new era of modern agriculture.
               </div>
             </div>
             <div className='flex flex-col gap-4 md:mt-10 md:w-10/12 lg:w-9/12'>
               <div className='font-body text-[26px] font-medium md:font-heading md:text-3xl'>Engaged</div>
-              <div className='font-body text-lg font-normal leading-[22px] text-white'>
-                We contribute to regenerative agriculture conversations, developing a vibrant learning culture.
-              </div>
+              <div className='font-body text-lg font-normal leading-[22px] text-white'>We contribute to regenerative agriculture conversations, developing a vibrant learning culture.</div>
             </div>
           </div>
         </div>
       </div>
-      <img
-        src={'/illustrations/home/SVG/illusratoin04.svg'}
-        alt='VDAO'
-        className='hdden absolute bottom-0 left-0 h-[463px] w-full md:left-0 md:block md:h-3/6 md:w-6/12 lg:h-5/6'
-      />
-      <img
-        src={'/illustrations/home/SVG/04_community_illo_nobackground_v01 1.svg'}
-        alt='VDAO'
-        className='absolute bottom-0 left-[-7px] h-[463px] w-[100%] bg-cover md:hidden md:h-3/6 md:w-6/12 lg:h-5/6 '
-      />
+      <div className=' absolute bottom-0 left-0 z-50 hidden h-3/6 w-6/12 bg-[url(/illustrations/home/SVG/illusratoin04.svg)] bg-cover bg-bottom bg-no-repeat md:block lg:h-5/6' />
+      <div className='sm:bg-fit absolute bottom-0 left-0 h-[463px] w-full bg-[url(/illustrations/home/SVG/04_community_illo_nobackground_v011.svg)] bg-cover bg-bottom bg-no-repeat md:hidden' />
     </Section>
   )
 }
 
 export function HomeGetInvolvedComponent() {
   return (
-    <Section className='my-36 flex max-w-[1440px] flex-col lg:mx-auto'>
-      <div className='mb-[21px] ml-6 font-heading text-[32px] font-medium md:ml-9 md:text-[46px] lg:ml-36'>
-        Get Involved
-      </div>
+    <Section className='my-[94px] flex max-w-[1440px] flex-col lg:mx-auto'>
+      <div className='mb-[21px] ml-6 font-heading text-[32px] font-medium md:ml-9 md:text-[46px] lg:ml-[94px]'>Get Involved</div>
       <div className='flex flex-col md:flex-row md:items-start md:gap-9'>
         <div className='w-full md:w-1/2 '>
-          <div className='ml-6 w-[253px] font-body text-[22px] font-medium leading-[26px] text-vdao-dark md:ml-9 md:w-auto md:text-[26px] lg:ml-36'>
-            Support VDAOs mission in 3 ways:
-          </div>
+          <div className='ml-6 w-[253px] font-body text-[22px] font-medium leading-[26px] text-vdao-dark md:ml-9 md:w-auto md:text-[26px] lg:ml-[94px]'>Support VDAOs mission in 3 ways:</div>
           <Image src={VDAOGetInvolved} alt='VDAO' className='mt-12 mb-10 w-full md:mt-20 md:mb-0' />
         </div>
         <div className='flex flex-col gap-16 px-6 md:w-1/2 md:px-0 md:pr-5 lg:w-1/3'>
@@ -168,31 +143,19 @@ export function HomeGetInvolvedComponent() {
   )
 }
 
-const ObjectiveSubComponent = ({
-  icon,
-  title,
-  description,
-}: {
-  icon: StaticImageData
-  title: string
-  description: string
-}) => (
+const ObjectiveSubComponent = ({ icon, title, description }: { icon: StaticImageData; title: string; description: string }) => (
   <div className='flex w-full w-10/12 flex-col items-center gap-5 md:items-start'>
     <Image src={icon} alt='VDAO' height={100} />
     <div className='font-heading text-3xl font-medium'>{title}</div>
     <div className='w-full border-y-[1px] border-vdao-dark' />
-    <div className='text-center font-inter text-base font-normal leading-5 text-vdao-dark md:text-left md:font-body md:text-lg'>
-      {description}
-    </div>
+    <div className='text-center font-inter text-base font-normal leading-5 text-vdao-dark md:text-left md:font-body md:text-lg'>{description}</div>
   </div>
 )
 
 export function HomeObjectivesComponent() {
   return (
-    <Section className='xl:p-O md:lg-14 mx-auto mt-36 flex max-w-[1440px] flex-col p-0 md:px-16'>
-      <div className='ml-6 w-full font-heading text-[32px] font-medium md:text-center md:text-[46px]'>
-        Core Objectives
-      </div>
+    <Section className='xl:p-O md:lg-14 mx-auto mt-[94px] flex max-w-[1440px] flex-col p-0 md:px-16'>
+      <div className='ml-6 w-full font-heading text-[32px] font-medium md:text-center md:text-[46px]'>Core Objectives</div>
       <div className='mx-auto mt-16 flex flex-col gap-14 px-16 md:flex-row md:gap-10 md:px-0 lg:px-16'>
         <ObjectiveSubComponent
           icon={InnovateIcon}
@@ -221,27 +184,20 @@ export function HomeObjectivesComponent() {
 
 export function HomeIntroComponent() {
   return (
-    <Section className='mx-auto mt-36 grid max-w-[1440px] flex-col-reverse items-center gap-5 md:grid-cols-2 md:px-6'>
+    <Section className='mx-auto mt-[94px] grid max-w-[1440px] flex-col-reverse items-center gap-5 md:grid-cols-2 md:px-6'>
       <div className='z-10 flex w-11/12 flex-col px-6'>
         <div className='font-heading text-[32px] font-medium text-vdao-dark md:text-[46px] '>Introduction</div>
         <div className='mt-[21px] font-body text-lg font-normal leading-[22px] text-vdao-dark md:mt-9'>
           VDAO funds regenerative agriculture research and development (R&D) projects worldwide.
           <div className='my-5' />
-          Regenerative land management uses techniques and practices to restore soil, biodiversity, ecosystems, and
-          water quality; techniques used in farming for centuries, but recently replaced by chemical, industrial
-          alternatives.
+          Regenerative land management uses techniques and practices to restore soil, biodiversity, ecosystems, and water quality; techniques used in farming for centuries, but recently replaced by
+          chemical, industrial alternatives.
           <div className='my-5' />
-          VDAO empowers us to dream of fully regenerated planet. Using cutting-edge Web3 tech, it connects artists, land
-          stewards, funders, scientists, researchers, and innovators to collaborate for planetary regeneration.
+          VDAO empowers us to dream of fully regenerated planet. Using cutting-edge Web3 tech, it connects artists, land stewards, funders, scientists, researchers, and innovators to collaborate for
+          planetary regeneration.
         </div>
       </div>
-      <Image
-        width={'0'}
-        height={'0'}
-        src={'illustrations/home/SVG/illustraion02 (2).svg'}
-        alt='VDAO'
-        className='w-full  md:order-first md:hidden'
-      />
+      <Image width={'0'} height={'0'} src={'illustrations/home/SVG/illustraion02 (2).svg'} alt='VDAO' className='w-full  md:order-first md:hidden' />
       <Image src={IntroHero} alt='VDAO' className='hidden md:order-first md:block' />
     </Section>
   )
@@ -251,19 +207,11 @@ export function HomeWelcomeComponent() {
   return (
     <Section className='mx-auto flex max-w-[1440px] flex-col overflow-hidden md:overflow-visible'>
       <div className='mx-auto mt-28'>
-        <div className='mx-auto w-10/12 text-center font-heading text-[44px] font-medium leading-[48px] text-vdao-dark md:w-auto md:text-[80px]'>
-          Re:imagine the future
-        </div>
-        <div className='mx-auto mt-5 w-[80%] px-6 text-center font-body text-[22px] font-medium leading-[26px] text-vdao-dark md:text-[26px]'>
-          A dao to restore ecosystems from the soil up.
-        </div>
+        <div className='mx-auto w-10/12 text-center font-heading text-[44px] font-medium leading-[48px] text-vdao-dark md:w-auto md:text-[80px]'>Re:imagine the future</div>
+        <div className='mx-auto mt-5 w-[80%] px-6 text-center font-body text-[22px] font-medium leading-[26px] text-vdao-dark md:text-[26px]'>A dao to restore ecosystems from the soil up.</div>
         <PrimaryButton text='Join Us' className='mx-auto mt-10' />
       </div>
-      <Image
-        src={WelcomeHero}
-        alt='VDAO'
-        className='md:max-w-100 relative right-[5%] -z-10 mt-5 scale-[100%] md:mt-[20px]'
-      />
+      <Image src={WelcomeHero} alt='VDAO' className='md:max-w-100 relative right-[5%] -z-10 mt-5 scale-[100%] md:mt-[20px]' />
     </Section>
   )
 }

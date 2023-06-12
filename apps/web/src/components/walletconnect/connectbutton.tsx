@@ -17,7 +17,7 @@ import { shortenAddress } from '~/utils/helpers'
 import { useRouter } from 'next/router'
 
 export const VDAOConnectButton = ({ className, web2 }: { className?: string; web2?: boolean }) => {
-  const buttonStyle = `rounded-md border-[1px] h-10 px-5 font-heading font-medium ${className || ''}`
+  const buttonStyle = `rounded-md border-[1px] h-10 px-5 font-heading text-xl font-medium ${className || ''}`
 
   const { address } = useAccount()
   const { data: siwe, status } = useSession()
@@ -28,11 +28,6 @@ export const VDAOConnectButton = ({ className, web2 }: { className?: string; web
     address: address as Address,
   })
   const router = useRouter()
-
-  useEffect(() => {
-    if (openModal) document.body.style.overflowY = 'hidden'
-    else document.body.style.overflowY = 'scroll'
-  }, [openModal])
 
   useEffect(() => {
     setModalState(address ? (data ? (siwe ? 'verified' : 'verify') : 'register') : 'walletselect')
@@ -53,9 +48,13 @@ export const VDAOConnectButton = ({ className, web2 }: { className?: string; web
         {modalState === 'verified' ? (web2 ? 'Open App' : shortenAddress(siwe?.address || '')) : 'Connect Wallet'}
       </button>
 
-      <div className={`fixed top-0 left-0 bottom-0 flex h-[100vh] w-[100vw] items-center justify-center transition-all ease-in-out ${openModal ? 'visible z-50 opacity-100' : 'invisible opacity-0'}`}>
+      <div
+        className={` fixed top-[-160px] left-0 bottom-0 flex h-[100vh] w-[100vw] items-center justify-center transition-all ease-in-out md:top-0 ${
+          openModal ? 'visible z-50 opacity-100' : 'invisible opacity-0'
+        }`}
+      >
         <div
-          className={`absolute -z-10 h-[100vh] w-[100vw] bg-vdao-dark bg-opacity-60 backdrop-blur-lg backdrop-opacity-0 transition-all ${openModal && 'backdrop-opacity-100'}`}
+          className={`absolute -z-10 h-full w-full bg-vdao-dark bg-opacity-60 backdrop-blur-lg backdrop-opacity-0 transition-all ${openModal && 'backdrop-opacity-100'}`}
           onClick={() => {
             setOpenModal(false)
           }}
@@ -73,8 +72,11 @@ function WalletSelect({ setOpenModal }: { setOpenModal: Dispatch<SetStateAction<
   const { connect, connectors } = useConnect()
 
   return (
-    <div className='h-full w-full bg-vdao-deep pl-[24px] pr-[60px] md:h-[387px] md:w-fit md:rounded-[20px] md:pl-10 md:pt-[28px]'>
-      <div className=' hidden justify-between md:flex'>
+    <div
+      style={{ backgroundColor: '#06121E' }}
+      className='md:w-contain h-full w-full bg-[url(/illustrations/connectWallet/SVG/VDAO-connect-wallet-mobile.svg)] bg-contain bg-center bg-no-repeat pl-[24px] pr-[60px] md:mt-[28px] md:h-[387px] md:w-fit md:rounded-[20px] md:bg-[url(/illustrations/connectWallet/SVG/VDAO-connect-bg.svg)] md:pl-10'
+    >
+      <div className='  flex justify-between pt-[35px]'>
         <Link href='/'>
           <Image src={logo} alt='VDAO' height={30} className='md:pt-[20px]' />
         </Link>
@@ -102,7 +104,7 @@ function WalletSelect({ setOpenModal }: { setOpenModal: Dispatch<SetStateAction<
                 onClick={() => connect({ connector: btn.connector })}
                 className='mx-auto flex w-[300px] cursor-pointer items-center justify-center rounded-[20px] bg-vdao-light py-[7px] font-heading text-xl font-medium leading-[26px] text-vdao-dark md:mx-0'
               >
-                Sign in with {btn.label}
+                {btn.label}
               </div>
             )
           })}
