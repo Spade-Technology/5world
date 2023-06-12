@@ -12,7 +12,7 @@ import { api } from '~/utils/api'
 import { SiweMessage } from 'siwe'
 import { useUserRead } from '~/hooks/web3/useUser'
 import { Address } from 'viem'
-import { FaInfo } from 'react-icons/fa'
+import { BsFillInfoCircleFill } from 'react-icons/bs'
 import { shortenAddress, shortenText } from '~/utils/helpers'
 import { useRouter } from 'next/router'
 
@@ -49,6 +49,8 @@ export const VDAOConnectButton = ({
     address: address as Address,
   })
   const router = useRouter()
+  const [isDisabled, setIsDisabled] = useState(false)
+  const [message, setMessage] = useState('')
 
   useEffect(() => {
     if (openModal) document.body.style.overflowY = 'hidden'
@@ -57,11 +59,13 @@ export const VDAOConnectButton = ({
 
   useEffect(() => {
     setModalState(address ? (data ? (siwe ? 'verified' : 'verify') : 'register') : 'walletselect')
-  }, [address, siwe, data])
+    if (status === 'authenticated' && siwe?.address !== address) signOut()
+  }, [address, siwe, data, status])
 
   useEffect(() => {
-    if (status === 'authenticated' && siwe?.address !== address) signOut()
-  }, [status, siwe, address])
+    setIsDisabled((isLoading && address) || !!disabled)
+    setMessage(isLoading && address ? 'Loading...' : siwe?.address && !web2 ? shortenAddress(siwe.address) : messages[modalState])
+  }, [isLoading, address, siwe, disabled])
 
   const handleButtonClick =
     onClickOverride ||
@@ -80,8 +84,8 @@ export const VDAOConnectButton = ({
 
   return (
     <>
-      <button onClick={handleButtonClick} type='button' className={buttonStyle} disabled={(isLoading && address) || disabled}>
-        {isLoading && address ? 'Loading...' : siwe?.address && !web2 ? shortenAddress(siwe.address) : messages[modalState]}
+      <button onClick={handleButtonClick} type='button' className={buttonStyle} disabled={isDisabled}>
+        {message}
       </button>
 
       <div className={`fixed top-0 left-0 bottom-0 flex h-[100vh] w-[100vw] items-center justify-center transition-all ease-in-out ${openModal ? 'visible z-50 opacity-100' : 'invisible opacity-0'}`}>
@@ -92,7 +96,7 @@ export const VDAOConnectButton = ({
           }}
         />
         {modalState === 'walletselect' && <WalletSelect setOpenModal={setOpenModal} />}
-        {modalState === 'verify' && <VerifyWallet setOpenModal={setOpenModal} />}
+        {modalState === 'verify' && <VerifyWallet setOpenModal={setOpenModal} web2={!!web2} />}
         {modalState === 'register' && <RegisterWallet setOpenModal={setOpenModal} />}
         {modalState === 'verified' && <DisplayWallet setOpenModal={setOpenModal} />}
       </div>
@@ -143,13 +147,15 @@ function WalletSelect({ setOpenModal }: { setOpenModal: Dispatch<SetStateAction<
   )
 }
 
-function VerifyWallet({ setOpenModal }: { setOpenModal: Dispatch<SetStateAction<boolean>> }) {
+function VerifyWallet({ setOpenModal, web2 }: { setOpenModal: Dispatch<SetStateAction<boolean>>; web2: boolean }) {
   const { chain } = useNetwork()
   const { address, isConnected } = useAccount()
   const { signMessageAsync } = useSignMessage()
+  const [loading, setLoading] = useState(false)
 
   const verify = async () => {
     try {
+      setLoading(true)
       const callbackUrl = '/protected'
       const message = new SiweMessage({
         domain: window.location.host,
@@ -169,9 +175,10 @@ function VerifyWallet({ setOpenModal }: { setOpenModal: Dispatch<SetStateAction<
         redirect: false,
         callbackUrl,
       })
-
-      // setOpenModal(false)
+      setLoading(false)
+      web2 && setOpenModal(false)
     } catch (error) {
+      setLoading(false)
       notification.error({
         message: 'Error',
         description: 'Something went wrong. Please try again.',
@@ -194,7 +201,7 @@ function VerifyWallet({ setOpenModal }: { setOpenModal: Dispatch<SetStateAction<
           <div className='w-[359px] font-inter text-lg font-normal leading-[22px] text-white md:w-[310px] md:text-base md:leading-5'>
             VDAO needs to verify your wallet address. This is not a transaction and won't cost any gas fees.
           </div>
-          <Button type='primary' className='!h-9 !text-xl !text-black' onClick={verify}>
+          <Button type='primary' className='!h-9 !text-xl !text-black' onClick={verify} loading={loading}>
             Verify Wallet
           </Button>
         </div>
@@ -326,7 +333,7 @@ function RegisterWallet({ setOpenModal }: { setOpenModal: Dispatch<SetStateActio
           <div className='flex gap-2'>
             <span>Next steps: Apply to join a guild to be a member of the DAO</span>
             <Tooltip title='Apply to join a guild to be a member of the DAO' className='my-auto text-white'>
-              <FaInfo />
+              <BsFillInfoCircleFill />
             </Tooltip>
           </div>
         </div>
