@@ -28,6 +28,7 @@ import { Section } from '~/components/layout/section'
 import VDAO_whiteIcon from 'public/logo/svg/white.svg'
 import Green_VDAO from 'public/logo/svg/green.svg'
 import SubmitIcon from 'public/icons/manifesto/submitIcon.svg'
+import { useConnect } from 'wagmi'
 
 dayjs.extend(relativeTime)
 
@@ -56,7 +57,7 @@ const Home: NextPage<any> = ({ signatures }) => {
           /> */}
           <SectionTwo />
 
-          <Signing signatures={signatures} ref={ref} />
+          <Signing signatures={signatures} />
         </div>
         <FooterManifesto signatures={signatures.total} ref={ref} />
       </main>
@@ -103,7 +104,6 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
   // wagmi get address
   const { address } = useAccount()
   const { mutateAsync } = api.manifesto.sign.useMutation()
-  const { openConnectModal } = useConnectModal()
 
   const [notificationApi, contextHolder] = notification.useNotification()
   const { status } = useSession()
@@ -200,28 +200,28 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
             {/* right */}
             <div className='flex flex-col justify-between '>
               {/* step 0 */}
-              <VDAOConnectButton className='border-vdao-light bg-vdao-light text-sm font-medium text-vdao-dark outline-none' />
+              <VDAOConnectButton
+                className='border-vdao-light bg-vdao-light text-sm font-medium text-vdao-dark outline-none'
+                messageOverrides={{ verify: 'Wallet Connected', verified: 'Wallet Connected' }}
+                web2
+                onClickOverride={() => {}}
+              />
               {/* step 1 */}
-              <Button
-                className={`!h-10 w-fit ${step < 1 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : step == 1 ? '!text-vdao-light' : '!border-vdao-light !text-vdao-light'}`}
+              <VDAOConnectButton
+                className={`!h-10 w-fit text-sm font-medium ${step < 1 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : step == 1 ? '!text-vdao-light' : '!border-vdao-light !text-vdao-light'}`}
                 disabled={step != 1}
-                onClick={openConnectModal}
-                type={'primary'}
-              >
-                Sign in With Ethereum
-              </Button>
-
+                onClickOverride={() => {}}
+                messageOverrides={{ verified: 'Wallet Verified' }}
+                web2
+              />
               {/* step 2 */}
-              <Button
-                className={`!h-10 w-fit ${
-                  step < 2 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : step == 1 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]'
-                }`}
+              <VDAOConnectButton
+                className={`!h-10 w-fit text-sm font-medium ${step < 2 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : '!border-vdao-light !text-vdao-light'}`}
                 disabled={step != 2}
-                type={'primary'}
-                onClick={signManifesto}
-              >
-                Sign Manifesto
-              </Button>
+                onClickOverride={signManifesto}
+                messageOverrides={{ verified: 'Sign Manifesto', verify: 'Sign Manifesto', register: 'Sign Manifesto', walletselect: 'Sign Manifesto' }}
+                web2
+              />
             </div>
           </div>
         </div>

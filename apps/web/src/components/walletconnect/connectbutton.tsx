@@ -13,10 +13,29 @@ import { SiweMessage } from 'siwe'
 import { useUserRead } from '~/hooks/web3/useUser'
 import { Address } from 'viem'
 import { FaInfo } from 'react-icons/fa'
-import { shortenAddress } from '~/utils/helpers'
+import { shortenAddress, shortenText } from '~/utils/helpers'
 import { useRouter } from 'next/router'
 
-export const VDAOConnectButton = ({ className, web2 }: { className?: string; web2?: boolean }) => {
+type ButtonMessages = {
+  verified: string
+  verify: string
+  register: string
+  walletselect: string
+}
+
+export const VDAOConnectButton = ({
+  className,
+  web2,
+  disabled,
+  messageOverrides,
+  onClickOverride,
+}: {
+  className?: string
+  web2?: boolean
+  disabled?: boolean
+  messageOverrides?: Partial<ButtonMessages>
+  onClickOverride?: () => void
+}) => {
   const buttonStyle = `rounded-md border-[1px] h-10 px-5 font-heading text-xl font-medium ${className || ''}`
 
   const { address } = useAccount()
@@ -37,15 +56,25 @@ export const VDAOConnectButton = ({ className, web2 }: { className?: string; web
     if (status === 'authenticated' && siwe?.address !== address) signOut()
   }, [status, siwe, address])
 
-  const handleButtonClick = async () => {
-    if (modalState === 'verified' && web2) return router.push('/app')
-    setOpenModal(true)
+  const handleButtonClick =
+    onClickOverride ||
+    (async () => {
+      if (modalState === 'verified' && web2) return router.push('/app')
+      setOpenModal(true)
+    })
+
+  const messages: ButtonMessages = {
+    verified: 'Open App',
+    verify: 'Verify',
+    register: 'Register',
+    walletselect: 'Connect Wallet',
+    ...messageOverrides,
   }
 
   return (
     <>
-      <button onClick={handleButtonClick} type='button' className={buttonStyle} disabled={isLoading && address}>
-        {modalState === 'verified' ? (web2 ? 'Open App' : shortenAddress(siwe?.address || '')) : 'Connect Wallet'}
+      <button onClick={handleButtonClick} type='button' className={buttonStyle} disabled={(isLoading && address) || disabled}>
+        {isLoading && address ? 'Loading...' : siwe?.address && !web2 ? shortenAddress(siwe.address) : messages[modalState]}
       </button>
 
       <div
@@ -323,7 +352,7 @@ function DisplayWallet({ setOpenModal }: { setOpenModal: Dispatch<SetStateAction
         <div className='relative mx-auto h-24 w-24'>
           <Image src={siwe?.user.picture || PodImage} alt='PodImage' className='mx-auto' sizes='square' fill />
         </div>
-        <span className='text-xl text-white'>{siwe?.user.name}</span>
+        <span className='text-xl text-white'>{shortenText(siwe?.user.name!, 20)}</span>
         <span className='text-xl text-white'>{shortenAddress(siwe?.address || '')}</span>
 
         <div className='flex gap-4'>

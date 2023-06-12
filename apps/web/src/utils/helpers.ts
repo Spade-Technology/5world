@@ -15,7 +15,7 @@ export const shortenAddress = (address: string) => {
 
 export const shortenText = (text: string, len?: number) => {
   const length = len ? len : 13
-  const shortText = text.length > length ? text.slice(0, length) + '...' : text
+  const shortText = text?.length > length ? text.slice(0, length) + '...' : text
   return shortText
 }
 
