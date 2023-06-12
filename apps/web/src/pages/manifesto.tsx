@@ -22,12 +22,12 @@ import { useSignMessage } from 'wagmi'
 import { useSession } from 'next-auth/react'
 import SubmitIcon from 'public/icons/manifesto/submitIcon.svg'
 import COLOR_VDAO_LARGE from 'public/logo/png/color_large.png'
-import Green_VDAO from 'public/logo/svg/green.svg'
 import VDAO_whiteIcon from 'public/logo/svg/white.svg'
 import { useEffect, useRef, useState } from 'react'
 import { prisma } from '~/server/db'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { api } from '~/utils/api'
+import { sqltag } from '@prisma/client/runtime'
 
 dayjs.extend(relativeTime)
 
@@ -203,13 +203,13 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
                 className='border-vdao-light bg-vdao-light text-sm font-medium text-vdao-dark outline-none'
                 messageOverrides={{ verify: 'Wallet Connected', verified: 'Wallet Connected' }}
                 web2
-                onClickOverride={() => {}}
+                redirectDisabled
               />
               {/* step 1 */}
               <VDAOConnectButton
                 className={`!h-10 w-fit text-sm font-medium ${step < 1 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : step == 1 ? '!text-vdao-light' : '!border-vdao-light !text-vdao-light'}`}
                 disabled={step != 1}
-                onClickOverride={() => {}}
+                redirectDisabled
                 messageOverrides={{ verified: 'Wallet Verified' }}
                 web2
               />
@@ -457,28 +457,36 @@ function SectionOne() {
 }
 
 export async function getServerSideProps({ req, res }: { req: NextApiRequest; res: NextApiResponse }) {
-  const total_p = prisma.signatures.count()
-  const list_p = prisma.signatures.findMany({
-    orderBy: {
-      createdAt: 'desc',
-    },
-    // last 10 signatures
-    take: 10,
-  })
+  const data: any[] = await prisma.$queryRaw(sqltag`
+      SELECT 
+        (SELECT COUNT(*) FROM "Signatures") as total,
+        t."eoa", 
+        t."signature", 
+        t."createdAt"
+      FROM (
+        SELECT "eoa", "signature", "createdAt"
+        FROM "Signatures"
+        ORDER BY "createdAt" DESC
+        LIMIT 10
+      ) as t
+    `)
 
-  const [total, list] = await Promise?.all([total_p, list_p])
+  if (!data) return { notFound: true }
+
+  // Constructing the result object
+  const list = data.map(item => ({
+    eoa: item.eoa,
+    signature: item.signature,
+    createdAt: item.createdAt.toString(),
+  }))
 
   res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=86400')
 
   return {
     props: {
       signatures: {
-        total,
-        list: list.map(item => ({
-          eoa: item.eoa,
-          signature: item.signature,
-          updatedAt: item.createdAt.toString(),
-        })),
+        total: Number(data[0]?.total),
+        list,
       },
     },
   }

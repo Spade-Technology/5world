@@ -29,11 +29,13 @@ export const VDAOConnectButton = ({
   disabled,
   messageOverrides,
   onClickOverride,
+  redirectDisabled,
 }: {
   className?: string
   web2?: boolean
   disabled?: boolean
   messageOverrides?: Partial<ButtonMessages>
+  redirectDisabled?: boolean
   onClickOverride?: () => void
 }) => {
   const buttonStyle = `rounded-md border-[1px] h-10 px-5 font-heading font-medium ${className || ''}`
@@ -64,7 +66,7 @@ export const VDAOConnectButton = ({
   const handleButtonClick =
     onClickOverride ||
     (async () => {
-      if (modalState === 'verified' && web2) return router.push('/app')
+      if (modalState === 'verified' && web2 && !redirectDisabled) return router.push('/app')
       setOpenModal(true)
     })
 
@@ -350,7 +352,7 @@ function DisplayWallet({ setOpenModal }: { setOpenModal: Dispatch<SetStateAction
         <div className='relative mx-auto h-24 w-24'>
           <Image src={siwe?.user.picture || PodImage} alt='PodImage' className='mx-auto' sizes='square' fill />
         </div>
-        <span className='text-xl text-white'>{shortenText(siwe?.user.name!,20)}</span>
+        <span className='text-xl text-white'>{shortenText(siwe?.user.name!, 20)}</span>
         <span className='text-xl text-white'>{shortenAddress(siwe?.address || '')}</span>
 
         <div className='flex gap-4'>
