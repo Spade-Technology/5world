@@ -4,31 +4,30 @@ import Head from 'next/head'
 import { HeaderManifesto } from '~/components/layout/header'
 
 // VDAO-get-involved.png
+import VDAOApply from 'public/illustrations/apply/PNG/VDAO-apply.png'
 import VDAOGetInvolved from 'public/illustrations/home/PNG/VDAO-get-involved.png'
 import VDAOTweetManifesto from 'public/illustrations/home/PNG/tweet-manifesto.png'
-import VDAOApply from 'public/illustrations/apply/PNG/VDAO-apply.png'
 
-import Tick from 'public/icons/home/tick.svg'
-import Image from 'next/image'
 import { Button, Divider, notification } from 'antd'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import Image from 'next/image'
+import Tick from 'public/icons/home/tick.svg'
+import { useAccount } from 'wagmi'
 import { FooterManifesto } from '~/components/layout/footer'
 import { VDAOConnectButton } from '~/components/walletconnect/connectbutton'
-import { useAccount } from 'wagmi'
 
 import { useSignMessage } from 'wagmi'
 
-import { api } from '~/utils/api'
-import { prisma } from '~/server/db'
-import { useEffect, useRef, useState } from 'react'
 import { useSession } from 'next-auth/react'
-import PrimaryButton from '~/styles/shared/buttons/primaryButton'
-import { Section } from '~/components/layout/section'
-import VDAO_whiteIcon from 'public/logo/svg/white.svg'
-import Green_VDAO from 'public/logo/svg/green.svg'
 import SubmitIcon from 'public/icons/manifesto/submitIcon.svg'
-import { useConnect } from 'wagmi'
+import COLOR_VDAO_LARGE from 'public/logo/png/color_large.png'
+import Green_VDAO from 'public/logo/svg/green.svg'
+import VDAO_whiteIcon from 'public/logo/svg/white.svg'
+import { useEffect, useRef, useState } from 'react'
+import { prisma } from '~/server/db'
+import PrimaryButton from '~/styles/shared/buttons/primaryButton'
+import { api } from '~/utils/api'
 
 dayjs.extend(relativeTime)
 
@@ -368,7 +367,7 @@ function SectionTwo() {
         </span>
       </div>
 
-      <Image src={Green_VDAO} alt='Green_VDAO' className='mx-auto my-24 max-h-[86px] max-w-[358px] md:my-40 md:max-h-[260px] md:max-w-[1082px]' />
+      <Image src={COLOR_VDAO_LARGE} alt='Green_VDAO' className='mx-auto my-24 max-h-[86px] max-w-[358px] md:my-40 md:max-h-[260px] md:max-w-[1082px]' />
 
       <div className='mx-auto max-w-[860px] font-body text-xl font-normal text-white '>
         The VDAO philosophy is based on the principles of freedom, liberty and enlightened self-interest. We believe that we are able to build systems that ensure profits along with impact, without
@@ -382,36 +381,7 @@ function SectionTwo() {
         and community core values, we welcome you into the V community and hope that you will contribute towards building the new world systems. 
       </div>
 
-      {/* <h3 className="mx-auto my-48 mr-auto max-w-[1153px] text-center font-heading text-[56px] font-medium leading-none text-white">
-        The VDAO philosophy is based on
-        <br />
-        the principles of freedom, liberty
-        <br />
-        and enlightened self-interest.
-      </h3> */}
       <div className='mx-auto my-24 flex max-w-[850px] flex-col items-center font-body md:my-40 '>
-        {/* <span>
-          We believe that we are able to build systems that ensure profits along
-          with impact, without compromising on any of the two.
-          <br />
-          <br /> The V community is built on a simple but essential umbrella
-          principle: “Do the right thing”. Beneath this umbrella are 4 core
-          values that are used in common practice to ensure integrity at all
-          times: Fairness & Caring, Trust & Respect, Generous Listening, and
-          Straight Talk.
-          <br />
-          <br /> The V community is apolitical and does not engage in political,
-          religious, and social issues as a rule. No matter your background and
-          personal beliefs, as long as you agree with our mission and community
-          core values, we welcome you into the V community and hope that you
-          will contribute towards building the new world systems.
-        </span>
-        <Color
-          colorFrom={"#00FFA5"}
-          left={"-550px"}
-          size={"400px"}
-          opacity={0.7}
-        /> */}
         <h3 className='mr-auto text-left font-heading text-3xl font-medium text-vdao-light'>VDAO Objectives</h3>
         <br />
         <span>
