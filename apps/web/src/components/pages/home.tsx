@@ -2,6 +2,7 @@ import { Button } from 'antd'
 
 import Image, { StaticImageData } from 'next/image'
 
+import CommunityHeroMobile from 'public/illustrations/home/PNG/VDAO-home-community.svg'
 import CommunityHero from 'public/illustrations/home/PNG/VDAO-home-community.png'
 import WelcomeHero from 'public/illustrations/home/PNG/VDAO-home-hero.png'
 import IntroHero from 'public/illustrations/home/PNG/VDAO-home-intro.png'
@@ -28,11 +29,11 @@ import { Section } from '../layout/section'
 export function HomeCTAComponent() {
   return (
     <Section className='flex flex-col items-center bg-gradient-to-r from-vdao-light to-vdao-dark px-6 py-[64px] md:py-[100px] md:px-8 xl:px-0'>
-      <div className='text-center font-heading font-medium text-[[94px]px] text-white md:text-[46px]'>Ready to Join?</div>
+      <div className='text-center font-heading text-[36px] font-medium text-white md:text-[46px]'>Ready to Join?</div>
       <div className='mt-5 w-full max-w-3xl text-center font-body font-body text-[22px] leading-[26px] text-white md:mt-[25px] md:text-[26px] md:leading-[30px]'>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi turpis mi, faucibus vitae elementum id, tristique at lectus.
       </div>
-      <PrimaryButton text=' Apply Now' className=' mx-auto mt-[[94px]px] mr-auto bg-vdao-light md:mt-[62px]' />
+      <PrimaryButton text=' Apply Now' className=' mx-auto mt-[36px] mr-auto bg-vdao-light md:mt-[62px]' />
     </Section>
   )
 }
