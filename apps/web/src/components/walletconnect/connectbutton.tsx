@@ -54,13 +54,15 @@ export const VDAOConnectButton = ({
   const [message, setMessage] = useState('')
 
   useEffect(() => {
-    if (status === 'authenticated' && siwe?.address !== address) signOut()
+    if (status === 'authenticated' && siwe?.address !== address && !isLoading) signOut()
     else {
-      setModalState(isLoading ? 'loading' : address ? (data ? (siwe ? 'verified' : 'verify') : 'register') : 'walletselect')
       setIsDisabled((isLoading && address) || !!disabled)
-      setMessage(siwe?.address && !web2 ? shortenAddress(siwe.address) : messages[modalState])
+
+      const new_state: 'walletselect' | 'verify' | 'verified' | 'register' | 'loading' = isLoading ? 'loading' : address ? (data ? (siwe ? 'verified' : 'verify') : 'register') : 'walletselect'
+      setModalState(new_state)
+      setMessage(siwe?.address && !web2 ? shortenAddress(siwe.address) : messages[new_state])
     }
-  }, [address, siwe, data, status, disabled])
+  }, [address, siwe, data, status, disabled, isLoading])
 
   const handleButtonClick =
     onClickOverride ||
