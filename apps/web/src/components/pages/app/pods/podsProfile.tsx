@@ -1,6 +1,8 @@
 import { useSession } from 'next-auth/react'
+import { redirect } from 'next/dist/server/api-utils'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { Section } from '~/components/layout/section'
 import Description from '~/components/misc/description'
@@ -14,6 +16,7 @@ type Props = {
 
 const PodsProfile = ({ setOpenCreatePod }: Props) => {
   const { data: siwe } = useSession()
+  const router = useRouter()
 
   return (
     <Section className='w-screen bg-vdao-deep'>
@@ -41,9 +44,9 @@ const PodsProfile = ({ setOpenCreatePod }: Props) => {
       <div className='flex flex-col md:flex-row '>
         <div className='flex-1'></div>
         <div className='mt-[30px] flex flex-1 flex-col gap-5 pl-6 md:mt-0 md:flex-row md:pl-16'>
-          <PrimaryButton text='Create Pods' onClick={() => siwe && setOpenCreatePod(true)} className='py-[5px] px-[35px] text-xl' />
+          <PrimaryButton text='Create Pods' onClick={() => (siwe ? setOpenCreatePod(true) : router.push('/app/pods/#restrictedContent'))} className='py-[5px] px-[35px] text-xl' />
           <div className='w-fit cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white'>
-            <Link href={'/app/pods/#currentPods'}>See all Pods </Link>
+            <Link href={siwe ? '/app/pods/#currentPods' : '/app/pods/#restrictedContent'}>See all Pods </Link>
           </div>
         </div>
       </div>
