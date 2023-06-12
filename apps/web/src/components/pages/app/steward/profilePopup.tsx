@@ -30,59 +30,36 @@ const ProfilePopup = ({ profile, close }: PopupProps) => {
           <div className='flex flex-col justify-between md:flex-row'>
             <div>
               <div className='flex w-full'>
-                <Image
-                  src={ProfilePic}
-                  alt=''
-                  className='h-[64.2px] w-[60px] rounded-full md:h-[128.4px] md:w-[123.41px]'
-                />
+                <Image src={ProfilePic} alt='' className='h-[64.2px] w-[60px] rounded-full md:h-[128.4px] md:w-[123.41px]' />
 
                 <div className='pl-[10px] md:pl-[15px]'>
-                  <div className='font-body text-[26px] font-semibold text-vdao-light md:text-[36px]'>
-                    {shortenText(profile?.name ? profile?.name : "Unnamed")}
-                  </div>
+                  <div className='font-body text-[26px] font-semibold text-vdao-light md:text-[36px]'>{shortenText(profile?.name ? profile?.name : 'Unnamed')}</div>
                   <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>
-                    <div className='font-medium md:text-[22px]'>
-                      {profile?.address ? shortenAddress(profile?.address!) : shortenAddress(Null_Address)}
-                    </div>
+                    <div className='font-medium md:text-[22px]'>{profile?.address ? shortenAddress(profile?.address!) : shortenAddress(Null_Address)}</div>
                     <div className='font-bold'>
-                      {profile?.JoinedAt
-                        ? 'Joined ' +
-                          monthNames[profile.JoinedAt.getUTCMonth()] +
-                          ' ' +
-                          profile.JoinedAt.getDate() +
-                          ', ' +
-                          profile.JoinedAt.getFullYear()
-                        : 'at Unavailable'}
+                      {profile?.JoinedAt ? 'Joined ' + monthNames[profile.JoinedAt.getUTCMonth()] + ' ' + profile.JoinedAt.getDate() + ', ' + profile.JoinedAt.getFullYear() : 'at Unavailable'}
                     </div>
                   </div>
                 </div>
               </div>
 
               {profile.guild && (
-                <div className='mt-[30px] w-fit rounded-3xl border-[3px] border-vdao-light px-5 text-lg font-medium md:ml-36 md:mt-[0px] md:py-[7px] md:px-[25px] md:text-xl'>
-                  {profile.guild.name}
-                </div>
+                <div className='mt-[30px] w-fit rounded-3xl border-[3px] border-vdao-light px-5 text-lg font-medium md:ml-36 md:mt-[0px] md:py-[7px] md:px-[25px] md:text-xl'>{profile.guild.name}</div>
               )}
             </div>
 
             <PrimaryButton
-              onClick={() => delegate({ delegatee: '0x6a2c4104d767b34e042f0FF9d18FE321c8B78676' })}
+              onClick={() => delegate({ delegatee: profile.address })}
               text='Delegate'
               className='float-right mt-[30px] h-fit py-[5px] px-[35px] font-heading text-xl font-medium md:mt-[46px]'
             />
           </div>
 
           <div className='flex gap-[10px] border-b-[1px] border-b-vdao-dark pb-5 pt-[44px] font-body text-[22px] font-bold'>
-            <div
-              className={` ${!showActivity && 'text-vdao-light'} cursor-pointer justify-start`}
-              onClick={() => setShowActivity(false)}
-            >
+            <div className={` ${!showActivity && 'text-vdao-light'} cursor-pointer justify-start`} onClick={() => setShowActivity(false)}>
               Statement
             </div>
-            <div
-              className={` ${showActivity && 'text-vdao-light'} cursor-pointer justify-start`}
-              onClick={() => setShowActivity(true)}
-            >
+            <div className={` ${showActivity && 'text-vdao-light'} cursor-pointer justify-start`} onClick={() => setShowActivity(true)}>
               Activity
             </div>
           </div>
@@ -97,15 +74,12 @@ const ProfilePopup = ({ profile, close }: PopupProps) => {
 const Statements = () => {
   return (
     <div className='max-w-[771px] pt-5 font-body text-lg font-normal md:pt-[30px]'>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet elementum urna, in volutpat risus. Quisque
-      nec tempus diam, sit amet luctus mi. Quisque auctor tortor ut nunc finibus, et venenatis lacus eleifend. Fusce
-      commodo, ipsum sit amet mollis tincidunt, ipsum nibh bibendum arcu, in egestas lectus justo eget massa. Nam quis
-      aliquet erat, in dignissim purus.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet elementum urna, in volutpat risus. Quisque nec tempus diam, sit amet luctus mi. Quisque auctor tortor ut nunc finibus, et
+      venenatis lacus eleifend. Fusce commodo, ipsum sit amet mollis tincidunt, ipsum nibh bibendum arcu, in egestas lectus justo eget massa. Nam quis aliquet erat, in dignissim purus.
       <br />
       <br />
-      In viverra orci sit amet ex vestibulum aliquet. Sed luctus aliquet ullamcorper. Praesent non turpis at leo luctus
-      semper. Suspendisse eget dapibus lorem. Vivamus eu arcu et metus congue vulputate ut quis mi. Nam quis dolor non
-      orci luctus iaculis quis at nisi.
+      In viverra orci sit amet ex vestibulum aliquet. Sed luctus aliquet ullamcorper. Praesent non turpis at leo luctus semper. Suspendisse eget dapibus lorem. Vivamus eu arcu et metus congue
+      vulputate ut quis mi. Nam quis dolor non orci luctus iaculis quis at nisi.
     </div>
   )
 }
