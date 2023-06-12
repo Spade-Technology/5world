@@ -58,7 +58,8 @@ export const VDAOConnectButton = ({
     else {
       setIsDisabled((isLoading && address) || !!disabled)
 
-      const new_state: 'walletselect' | 'verify' | 'verified' | 'register' | 'loading' = isLoading ? 'loading' : address ? (data ? (siwe ? 'verified' : 'verify') : 'register') : 'walletselect'
+      const new_state: 'walletselect' | 'verify' | 'verified' | 'register' | 'loading' =
+        isLoading && address ? 'loading' : address ? (data ? (siwe ? 'verified' : 'verify') : 'register') : 'walletselect'
       setModalState(new_state)
       setMessage(siwe?.address && !web2 ? shortenAddress(siwe.address) : messages[new_state])
     }
@@ -86,11 +87,7 @@ export const VDAOConnectButton = ({
         {message}
       </button>
 
-      <div
-        className={` fixed top-[-160px] left-0 bottom-0 flex h-[100vh] w-[100vw] items-center justify-center transition-all ease-in-out md:top-0 ${
-          openModal ? 'visible z-50 opacity-100' : 'invisible opacity-0'
-        }`}
-      >
+      <div className={` fixed left-0 bottom-0 top-0 flex h-screen w-screen items-center justify-center transition-all ease-in-out ${openModal ? 'visible z-50 opacity-100' : 'invisible opacity-0'}`}>
         <div
           className={`absolute -z-10 h-full w-full bg-vdao-dark bg-opacity-60 backdrop-blur-lg backdrop-opacity-0 transition-all ${openModal && 'backdrop-opacity-100'}`}
           onClick={() => {
@@ -192,18 +189,18 @@ function VerifyWallet({ setOpenModal, web2 }: { setOpenModal: Dispatch<SetStateA
   }
 
   return (
-    <div className='h-full w-full bg-vdao-deep pl-[24px] pr-[60px] md:h-[387px] md:w-fit md:rounded-[20px] md:pl-10 md:pt-[28px]'>
-      <div className=' hidden justify-between md:flex'>
+    <div className='w-full bg-vdao-deep pl-[24px] pr-[60px] max-md:py-10 md:h-[387px] md:w-fit md:rounded-[20px] md:pl-10 md:pt-[28px]'>
+      <div className='hidden justify-between md:flex'>
         <Link href='/'>
           <Image src={logo} alt='VDAO' height={30} className='md:pt-[20px]' />
         </Link>
 
         <Image src={closeIcon} onClick={() => setOpenModal(false)} alt='VDAO' height={24} className='cursor-pointer' />
       </div>
-      <div className='flex flex-col justify-between gap-[100px] pt-[60px] md:flex-row md:gap-10'>
+      <div className='flex flex-col justify-between gap-[100px] md:flex-row md:gap-10 md:pt-[60px]'>
         <div className='flex flex-col gap-5'>
-          <div className='w-[274px] font-heading text-[46px] font-medium leading-[56.58px] text-vdao-light md:leading-[52px]'>Verify</div>
-          <div className='w-[359px] font-inter text-lg font-normal leading-[22px] text-white md:w-[310px] md:text-base md:leading-5'>
+          <div className='w-[274px] font-heading text-[46px] font-medium leading-[56.58px] text-vdao-light max-md:text-left md:leading-[52px]'>Verify</div>
+          <div className='w-[359px] font-inter text-lg font-normal leading-[22px] text-white max-md:text-left md:w-[310px] md:text-base md:leading-5'>
             VDAO needs to verify your wallet address. This is not a transaction and won't cost any gas fees.
           </div>
           <Button type='primary' className='!h-9 !text-xl !text-black' onClick={verify} loading={loading}>
@@ -318,7 +315,7 @@ function RegisterWallet({ setOpenModal }: { setOpenModal: Dispatch<SetStateActio
   )
 
   return (
-    <div className='h-full w-full bg-vdao-deep pl-[24px] pr-[60px] md:h-auto md:w-fit md:rounded-[20px] md:pl-10 md:pt-[28px]'>
+    <div className='md:h-ayto w-full bg-vdao-deep pl-[24px] pr-[60px] md:w-fit md:rounded-[20px] md:pl-10 md:pt-[28px]'>
       <div className=' hidden justify-between md:flex'>
         <Link href='/'>
           <Image src={logo} alt='VDAO' height={30} className='md:pt-[20px]' />
