@@ -1,4 +1,4 @@
-import { Button } from 'antd'
+import { Button, Skeleton } from 'antd'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -12,6 +12,7 @@ import github from 'public/illustrations/socials/Vector (9).svg'
 type Props = {
   signatures?: number
   signModuleRef?: React.RefObject<HTMLDivElement>
+  loading?: boolean
 }
 
 const Footer = (props: Props) => {
@@ -114,7 +115,12 @@ const FooterManifesto = (props: Props) => {
           </Link>
         </div>
         <div className='flex flex-col gap-3'>
-          <span className='text-base font-medium text-black'>{props.signatures || 0} Signatures</span>
+          <span className='items flex items-start justify-start gap-3 text-base font-medium text-black'>
+            <Skeleton active={props.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={props.loading} className='my-auto !w-5'>
+              {props.signatures || 0}
+            </Skeleton>
+            Signatures
+          </span>
           <Button type='primary' className='!h-10 w-44 !bg-vdao-dark' onClick={() => props.signModuleRef?.current?.scrollIntoView({ block: 'end', behavior: 'smooth' })}>
             Sign Manifesto
           </Button>

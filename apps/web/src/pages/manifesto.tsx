@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse, type NextPage } from 'next'
+import { type NextPage } from 'next'
 import Head from 'next/head'
 
 import { HeaderManifesto } from '~/components/layout/header'
@@ -8,7 +8,7 @@ import VDAOApply from 'public/illustrations/apply/PNG/VDAO-apply.png'
 import VDAOGetInvolved from 'public/illustrations/home/PNG/VDAO-get-involved.png'
 import VDAOTweetManifesto from 'public/illustrations/home/PNG/tweet-manifesto.png'
 
-import { Button, Divider, notification } from 'antd'
+import { Button, Divider, Skeleton, Spin, notification } from 'antd'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import Image from 'next/image'
@@ -24,15 +24,26 @@ import SubmitIcon from 'public/icons/manifesto/submitIcon.svg'
 import COLOR_VDAO_LARGE from 'public/logo/png/color_large.png'
 import VDAO_whiteIcon from 'public/logo/svg/white.svg'
 import { RefObject, useEffect, useRef, useState } from 'react'
-import { prisma } from '~/server/db'
+
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { api } from '~/utils/api'
-import { sqltag } from '@prisma/client/runtime'
 
 dayjs.extend(relativeTime)
 
-const Home: NextPage<any> = ({ signatures }) => {
+const Home: NextPage<any> = () => {
   const signModuleRef = useRef<HTMLDivElement>(null)
+  const [signatures, setSignatures] = useState({ total: 0, list: [], loading: true })
+
+  useEffect(() => {
+    fetchSignatures()
+  }, [])
+
+  const fetchSignatures = async () => {
+    const res = await fetch('/api/manifesto/api')
+    const data = await res.json()
+    setSignatures({ ...data, loading: false })
+    return res
+  }
 
   return (
     <>
@@ -43,22 +54,14 @@ const Home: NextPage<any> = ({ signatures }) => {
       </Head>
 
       <main className='bg-vdao-deep'>
-        <HeaderManifesto signatures={signatures.total} />
+        <HeaderManifesto signatures={signatures.total} loading={signatures.loading} />
         <div className='px-4'>
           <SectionOne />
-
-          {/* <Color
-            colorFrom={"#00FF19"}
-            colorTo={"#0038FF"}
-            left={"-550px"}
-            size={"400px"}
-            opacity={0.7}
-          /> */}
           <SectionTwo />
 
-          <Signing signatures={signatures} signModuleRef={signModuleRef} />
+          <Signing signatures={signatures} signModuleRef={signModuleRef} fetchSignatures={fetchSignatures} />
         </div>
-        <FooterManifesto signatures={signatures.total} signModuleRef={signModuleRef} />
+        <FooterManifesto signatures={signatures.total} signModuleRef={signModuleRef} loading={signatures.loading} />
       </main>
     </>
   )
@@ -66,15 +69,15 @@ const Home: NextPage<any> = ({ signatures }) => {
 
 export default Home
 
-type colorProps = {
-  colorFrom: string
-  colorTo?: string
-  left: string
-  size?: string
-  opacity?: number
-}
-
-function Signing({ signatures, signModuleRef }: { signatures: { total: number; list: any[] }; signModuleRef: RefObject<HTMLDivElement> }) {
+function Signing({
+  signatures,
+  signModuleRef,
+  fetchSignatures,
+}: {
+  signatures: { total: number; list: any[]; loading: boolean }
+  signModuleRef: RefObject<HTMLDivElement>
+  fetchSignatures: () => void
+}) {
   const list = signatures.list
   const [step, setStep] = useState(0)
   const [sticky, setSticky] = useState(false)
@@ -95,6 +98,7 @@ function Signing({ signatures, signModuleRef }: { signatures: { total: number; l
         signature: data,
         message: variables.message.toString(),
       }).then(res => {
+        fetchSignatures()
         notificationApi.success({
           message: <span>Signed Manifesto</span>,
           description: (
@@ -203,19 +207,14 @@ function Signing({ signatures, signModuleRef }: { signatures: { total: number; l
             </div>
           </div>
         </div>
-        {/* <Color
-          colorFrom={"#00FF19"}
-          colorTo={"#0038FF"}
-          left={"600px"}
-          size={"400px"}
-          opacity={0.7}
-        /> */}
 
         <h3 className='mt-24 mr-auto text-center font-heading text-5xl font-medium text-vdao-light md:mt-40'>Manifesto Signers</h3>
         <div className='mt-12 flex justify-between'>
           <span className='font-heading text-3xl font-medium'>Signed By :</span>
           <span className='font-heading text-3xl font-medium'>
-            {signatures.total}
+            <Skeleton active={signatures.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={signatures.loading} className='my-auto !w-5'>
+              {signatures.total || 0}
+            </Skeleton>
             <div className='font-body text-lg font-normal'>Signatures</div>
           </span>
         </div>
@@ -223,6 +222,7 @@ function Signing({ signatures, signModuleRef }: { signatures: { total: number; l
           className={`max-w-96 mt-3 rounded-lg bg-vdao-dark py-5 px-6  
           ${sticky ? 'fixed top-[1px] z-50' : ''}`}
         >
+          {signatures.loading && <Spin className='w-full' />}
           {list.map((item, i) => (
             <>
               <div key={i} className={`mt-4 flex w-full flex-row items-center justify-between ${sticky ? 'md:gap-[364px]' : ''}`}>
@@ -433,40 +433,4 @@ function SectionOne() {
       </div>
     </section>
   )
-}
-
-export async function getServerSideProps({ req, res }: { req: NextApiRequest; res: NextApiResponse }) {
-  const data: any[] = await prisma.$queryRaw(sqltag`
-      SELECT 
-        (SELECT COUNT(*) FROM "Signatures") as total,
-        t."eoa", 
-        t."signature", 
-        t."createdAt"
-      FROM (
-        SELECT "eoa", "signature", "createdAt"
-        FROM "Signatures"
-        ORDER BY "createdAt" DESC
-        LIMIT 10
-      ) as t
-    `)
-
-  if (!data) return { notFound: true }
-
-  // Constructing the result object
-  const list = data.map(item => ({
-    eoa: item.eoa,
-    signature: item.signature,
-    createdAt: item.createdAt.toString(),
-  }))
-
-  res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=86400')
-
-  return {
-    props: {
-      signatures: {
-        total: Number(data[0]?.total),
-        list,
-      },
-    },
-  }
 }
