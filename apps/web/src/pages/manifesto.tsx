@@ -162,7 +162,7 @@ function Signing({
     <section>
       {contextHolder}
       <div className='mx-auto max-w-[850px]' id='SignModule' ref={signModuleRef}>
-        <div className='mx-auto w-[350px] rounded-lg bg-vdao-dark p-4 '>
+        <div className='mx-auto max-w-[350px] rounded-lg bg-vdao-dark p-4 '>
           <span className='text-lg font-medium'>Sign the manifesto with 3 simple steps</span>
           <div className='ml-1 mt-4 flex'>
             {/* left */}
@@ -235,7 +235,7 @@ function Signing({
                       height: '44px',
                     }}
                   />
-                  <span className=' w-48 overflow-hidden overflow-ellipsis text-[14px] md:w-full'>{item?.name || item?.eoa}</span>
+                  <span className='w-48 overflow-hidden overflow-ellipsis text-[14px] md:w-full'>{item?.name || item?.eoa}</span>
                 </div>
                 <span className='w-full text-right text-[14px]'>{dayjs(item.updatedAt).fromNow()}</span>
               </div>
@@ -251,7 +251,7 @@ function Signing({
             <div className='font-body text-base font-normal opacity-40'>Be the 1st one to get all future updates.</div>
           </div>
           <div className='flex'>
-            <input className='w-80 rounded bg-[#14444A] px-5 py-3 text-[#3BA7B5] outline-none placeholder:text-[#3BA7B5]' placeholder='Enter your email address' />
+            <input className='w-full rounded bg-[#14444A] px-5 py-3 text-[#3BA7B5] outline-none placeholder:text-[#3BA7B5]' placeholder='Enter your email address' />
             <div className='relative -left-1 w-16 rounded-r bg-vdao-light py-[14px] px-5'>
               <Image src={SubmitIcon} alt='SubmitIcon' className='h-fit' />
             </div>
@@ -346,7 +346,7 @@ function SectionTwo() {
         </span>
       </div>
 
-      <Image src={COLOR_VDAO_LARGE} alt='Green_VDAO' className='mx-auto my-24 max-h-[86px] max-w-[358px] md:my-40 md:max-h-[260px] md:max-w-[1082px]' />
+      <Image src={COLOR_VDAO_LARGE} alt='Green_VDAO' className='mx-auto my-24 max-h-[86px] sm:max-w-[358px] md:my-40 md:max-h-[260px] md:max-w-[1082px]' />
 
       <div className='mx-auto max-w-[860px] font-body text-xl font-normal text-white '>
         The VDAO philosophy is based on the principles of freedom, liberty and enlightened self-interest. We believe that we are able to build systems that ensure profits along with impact, without

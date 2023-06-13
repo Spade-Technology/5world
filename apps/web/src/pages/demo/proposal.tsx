@@ -14,7 +14,8 @@ const Proposals = () => {
   const [contractAddress, setContractAddress] = useState('')
   const [contractAction, setContractAction] = useState({} as abiItem)
   const [args, setArgs] = useState({} as any)
-  const { data: abi } = useEtherscan({ contractAddress })
+
+  const { data: abi } = useEtherscan({ contractAddress }, { retry: 0 })
 
   return (
     <>
@@ -23,17 +24,11 @@ const Proposals = () => {
           <span> IF YOU'RE NOT LOGGED IN YOU ARE GOING TO GET UNAUTHORIZED</span>
           0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852 is USDTWETH CONTRACT FOR DEMO
           <div className='flex gap-7'>
-            <Input
-              placeholder='contract address'
-              value={contractAddress}
-              onChange={v => setContractAddress(v.target.value)}
-            />
+            <Input placeholder='contract address' value={contractAddress} onChange={v => setContractAddress(v.target.value)} />
 
             <Select
               className='antd-stop-propagation w-full'
-              options={abi
-                ?.filter(el => el.type == 'function' && el.stateMutability !== 'view')
-                .map(el => ({ value: JSON.stringify(el), label: el.name }))}
+              options={abi?.filter(el => el.type == 'function' && el.stateMutability !== 'view').map(el => ({ value: JSON.stringify(el), label: el.name }))}
               onChange={v => setContractAction(JSON.parse(v) as abiItem)}
             />
           </div>

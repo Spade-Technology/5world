@@ -28,7 +28,7 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
   const [contractAddress, setContractAddress] = useState('')
   const [contractAction, setContractAction] = useState({} as abiItem)
   const [args, setArgs] = useState({} as any)
-  const { data: abi } = useEtherscan({ contractAddress })
+  const { data: abi } = useEtherscan({ contractAddress }, { retry: 0 })
 
   const submit = async () => {
     if (address) {
@@ -49,38 +49,13 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
   }
 
   return (
-    <CustomModal
-      show={show}
-      close={close}
-      heading={` ${showPreview ? '' : 'Create New Proposal'}`}
-      modalMarginTop='my-[40px]'
-    >
+    <CustomModal show={show} close={close} heading={` ${showPreview ? '' : 'Create New Proposal'}`} modalMarginTop='my-[40px]'>
       {!nextFrom && !showPreview ? (
-        <FormOne
-          setNextForm={setNextForm}
-          title={title}
-          setTitle={setTitle}
-          description={description}
-          setDescription={setDescription}
-        />
+        <FormOne setNextForm={setNextForm} title={title} setTitle={setTitle} description={description} setDescription={setDescription} />
       ) : nextFrom ? (
-        <FormTwo
-          setNextForm={setNextForm}
-          setShowPreview={setShowPreview}
-          actions={actions}
-          setActions={setActions}
-          contractMethod={contractMethod}
-          setContractMethod={setContractMethod}
-        />
+        <FormTwo setNextForm={setNextForm} setShowPreview={setShowPreview} actions={actions} setActions={setActions} contractMethod={contractMethod} setContractMethod={setContractMethod} />
       ) : (
-        <Preview
-          setNextForm={setNextForm}
-          setShowPreview={setShowPreview}
-          title={title}
-          description={description}
-          callDatas={actions}
-          submit={submit}
-        />
+        <Preview setNextForm={setNextForm} setShowPreview={setShowPreview} title={title} description={description} callDatas={actions} submit={submit} />
       )}{' '}
     </CustomModal>
   )
