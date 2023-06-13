@@ -222,14 +222,14 @@ const HeaderManifesto = (props: Props) => {
         <Image src={discord} alt='VDAO' width={30} height={30} className='hidden md:block' />
         <Divider type='vertical' className='hidden !h-full bg-[#848484] md:block' />
         <div className='flex flex-col-reverse gap-4 px-4 text-center md:flex-row md:gap-8'>
-          <span className='my-auto flex gap-3 text-lg font-medium text-white'>
+          <span className='my-auto flex gap-3 text-lg font-medium text-white max-md:mx-auto'>
             <Skeleton active={props.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={props.loading} className='my-auto !w-1/2'>
               {props.signatures || 0}
             </Skeleton>{' '}
             Signatures
           </span>
 
-          <VDAOConnectButton className='border-vdao-light text-vdao-light' />
+          <VDAOConnectButton className='border-vdao-light !text-xs text-vdao-light' />
         </div>
       </div>
     </div>

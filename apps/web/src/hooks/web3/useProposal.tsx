@@ -81,7 +81,7 @@ export function useCreateProposal() {
       console.error(e)
       return notification.error({
         message: 'Error creating proposal',
-        description: e?.shortMessage || 'Unknown error',
+        description: (e as any)?.shortMessage || 'Unknown error',
       })
     }
 
@@ -91,6 +91,10 @@ export function useCreateProposal() {
       {
         title,
         description,
+
+        spells: targets,
+        spellValues: values,
+        spellCalldatas: calldatas,
 
         authorAddress: authorAddress,
         transactionHash,
