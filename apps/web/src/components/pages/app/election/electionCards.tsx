@@ -12,6 +12,8 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { Skeleton } from 'antd'
 import { useUserReads } from '~/hooks/web3/useUser'
 import { User } from '@prisma/client'
+import InfoIcon from "public/icons/stewards/infoIcon.svg"
+
 
 type Props = {
   setOpenProfile: Dispatch<SetStateAction<User | undefined>>
@@ -111,6 +113,7 @@ export const Card = ({ data, setOpenProfile }: CardProps) => {
               Praise <br /> Score
             </div>
           </div>
+          <Image src={InfoIcon} alt='InfoIcon' />
         </div>
 
         <div className='flex flex-col justify-between pt-[30px] md:flex-row md:pt-10'>
