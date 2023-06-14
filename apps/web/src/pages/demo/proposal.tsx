@@ -16,7 +16,7 @@ const Proposals = () => {
   const [args, setArgs] = useState({} as any)
 
   const { data: abi } = useEtherscan({ contractAddress }, { retry: 0 })
-  console.log({contractAction})
+  console.log({ contractAction })
   return (
     <>
       <Page>
