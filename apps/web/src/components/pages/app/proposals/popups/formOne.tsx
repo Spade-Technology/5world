@@ -48,7 +48,7 @@ const FormOne = ({ title, setTitle, description, setDescription, setNextForm }: 
         />
 
         <div className='pt-[30px] text-[22px] font-bold md:pt-10'>Description</div>
-        <div className='pt-[5px]'>Your pod description goes here.</div>
+        <div className='pt-[5px]'>Your proposal description goes here.</div>
         <textarea
           className={` mt-[15px] h-[143px] w-full max-w-[510px] truncate break-words rounded-[10px] border-[1px] p-5 outline-none placeholder:text-opacity-80 md:mt-5 md:p-[30px]
           ${error && !description ? 'border-red-600 placeholder:text-red-400 ' : ' border-vdao-dark'}`}

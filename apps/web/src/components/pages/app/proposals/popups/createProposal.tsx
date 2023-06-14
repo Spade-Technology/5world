@@ -1,12 +1,13 @@
 import CustomModal from '~/components/misc/customModal'
 import FormOne from './formOne'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import FormTwo from './formTwo'
 import Preview from './preview'
 import { useAccount } from 'wagmi'
 import { useCreateProposal } from '~/hooks/web3/useProposal'
 import { useEtherscan } from '~/hooks/web3/useEtherscan'
 import { abiItem } from '~/server/api/routers/etherscan'
+import { encodeAbiParameters } from 'viem'
 
 type CreateProposalProps = {
   show: boolean
@@ -19,7 +20,7 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
 
-  const [actions, setActions] = useState<string[]>([])
+  const [actions, setActions] = useState<abiItem[]>([])
   const [contractMethod, setContractMethod] = useState('')
 
   const { address } = useAccount()
@@ -28,24 +29,58 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
   const [contractAddress, setContractAddress] = useState('')
   const [contractAction, setContractAction] = useState({} as abiItem)
   const [args, setArgs] = useState({} as any)
-  const { data: abi } = useEtherscan({ contractAddress }, { retry: 0 })
+
+  const [callData, setCallData] = useState<string>('')
+
+  const handlePreviews = () => {
+    if (address && contractAddress && contractAction && showPreview) {
+      // Encode arguments using ethers.js or a similar library
+      const inputs = contractAction?.inputs
+      const types = inputs?.map(input => ({
+        name: input.name,
+        type: input.type,
+      }))
+
+      const callData = types && encodeAbiParameters(types, Object.values(args))
+
+      // Construct calldatas, targets, values
+      setCallData(callData)
+    }
+  }
+
+  useEffect(() => {
+    handlePreviews()
+  }, [address, contractAddress, contractAction, showPreview])
 
   const submit = async () => {
-    if (address) {
-      // const calldatas = [callData]
+    if (address && contractAddress && contractAction) {
+      // Encode arguments using ethers.js or a similar library
+      const inputs = contractAction.inputs
+      const types = inputs.map(input => ({
+        name: input.name,
+        type: input.type,
+      }))
+
+      const callData = encodeAbiParameters(types, Object.values(args))
+
+      // Construct calldatas, targets, values
+      const calldatas = [callData]
       const targets = [contractAddress]
       const values = [0n]
 
-      await createProposal({
-        title: 'test',
-        description: 'test',
-        authorAddress: address ? address : '',
-        calldatas: actions,
-        targets: actions,
-        values: [],
-      })
-      close()
+      // Use these in your createProposal call
+        await createProposal({
+          title: 'test',
+          description: 'test',
+          authorAddress: address,
+          calldatas,
+          targets,
+          values,
+        }
+        )
     }
+
+    close()
   }
 
   return (
@@ -53,9 +88,22 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
       {!nextFrom && !showPreview ? (
         <FormOne setNextForm={setNextForm} title={title} setTitle={setTitle} description={description} setDescription={setDescription} />
       ) : nextFrom ? (
-        <FormTwo setNextForm={setNextForm} setShowPreview={setShowPreview} actions={actions} setActions={setActions} contractMethod={contractMethod} setContractMethod={setContractMethod} />
+        <FormTwo
+          setContractAction={setContractAction}
+          setNextForm={setNextForm}
+          setShowPreview={setShowPreview}
+          actions={actions}
+          setActions={setActions}
+          contractMethod={contractMethod}
+          setContractMethod={setContractMethod}
+          setArgs={setArgs}
+          args={args}
+          contractAddress={contractAddress}
+          setContractAddress={setContractAddress}
+          contractAction={contractAction}
+        />
       ) : (
-        <Preview setNextForm={setNextForm} setShowPreview={setShowPreview} title={title} description={description} callDatas={actions} submit={submit} />
+        <Preview values={args} targets = {contractAddress}  setNextForm={setNextForm} setShowPreview={setShowPreview} title={title} description={description} callData={callData} submit={submit} />
       )}{' '}
     </CustomModal>
   )
