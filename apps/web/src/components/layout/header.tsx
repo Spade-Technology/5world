@@ -83,7 +83,7 @@ const Header = (props: Props) => {
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen)
 
   return (
-    <header className={!props.dark ? 'overflow-hidden bg-white' : 'overflow-hidden bg-vdao-deep'}>
+    <header className={!props.dark ? 'overflow-hidden bg-white' : 'w-full overflow-hidden bg-vdao-deep'}>
       {/* Desktop */}
       <div className='z-50 mx-auto hidden h-24 max-w-[1280px] items-center justify-between px-0 md:flex md:px-6 xl:px-0'>
         <Link href='/'>
@@ -125,11 +125,16 @@ const Header = (props: Props) => {
       </div>
 
       {/* Mobile */}
-      <div className='flex w-screen items-center justify-between py-16 px-4 md:hidden'>
+      <div className={`flex w-full items-center justify-between py-16 px-4 md:hidden ${!props.dark ? 'bg-white ' : 'bg-vdao-deep '} ${isMobileMenuOpen ? 'fixed top-0 left-0 z-50' : ''}`}>
         <Link href='/'>
           <Image src={logo} alt='VDAO' height={30} />
         </Link>
-        <button onClick={toggleMobileMenu} className='rounded-md px-2 text-vdao-dark transition-all focus:outline-none focus:ring-2 focus:ring-vdao-dark focus:ring-offset-2'>
+        <button
+          onClick={toggleMobileMenu}
+          className={`text-white-dark rounded-md px-2 transition-all focus:outline-none focus:ring-2 focus:ring-vdao-dark focus:ring-offset-2 ${
+            !props.dark ? '' : '!text-vdao-light focus:ring-vdao-light '
+          }`}
+        >
           <span className='sr-only'>Open menu</span>
           <svg className='h-8 w-8' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor' aria-hidden='true'>
             <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d={isMobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
@@ -138,7 +143,13 @@ const Header = (props: Props) => {
       </div>
 
       {/* Mobile menu */}
-      <div className={'absolute z-50 w-screen -translate-x-full transition-all md:hidden ' + (!props.dark ? 'bg-white ' : 'bg-vdao-deep ') + (isMobileMenuOpen && '!translate-x-0 ')}>
+      <div
+        className={
+          'hide-scrollbar overfow-x-hidden fixed left-0 z-50 mt-[150px] h-[calc(100vh-150px)] w-full -translate-x-full  overflow-y-auto transition-all md:hidden ' +
+          (!props.dark ? 'bg-white ' : 'bg-vdao-deep ') +
+          (isMobileMenuOpen && '!translate-x-0 ')
+        }
+      >
         <div className='antd-stop-propagation space-y-1 px-6 pt-2 pb-3'>
           {(props.web2 ? navigationElementsWeb2 : navigationElementsWeb3).map(element => (
             <MobileSubmenu element={element} key={element.name} dark={props.dark} />

@@ -107,3 +107,7 @@ button span {
   border-radius: 10px;
   background-color: #1d555c;
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
