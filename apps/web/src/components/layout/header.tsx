@@ -83,7 +83,7 @@ const Header = (props: Props) => {
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen)
 
   return (
-    <header className={!props.dark ? 'overflow-hidden bg-white' : 'overflow-hidden bg-vdao-deep'}>
+    <header className={!props.dark ? 'overflow-hidden bg-white' : 'w-full overflow-hidden bg-vdao-deep'}>
       {/* Desktop */}
       <div className='z-50 mx-auto hidden h-24 max-w-[1280px] items-center justify-between px-0 md:flex md:px-6 xl:px-0'>
         <Link href='/'>
@@ -125,11 +125,16 @@ const Header = (props: Props) => {
       </div>
 
       {/* Mobile */}
-      <div className='flex w-screen items-center justify-between py-16 px-4 md:hidden'>
+      <div className={`flex w-full items-center justify-between py-16 px-4 md:hidden ${!props.dark ? 'bg-white ' : 'bg-vdao-deep '} ${isMobileMenuOpen ? 'fixed top-0 left-0 z-50' : ''}`}>
         <Link href='/'>
           <Image src={logo} alt='VDAO' height={30} />
         </Link>
-        <button onClick={toggleMobileMenu} className='rounded-md px-2 text-vdao-dark transition-all focus:outline-none focus:ring-2 focus:ring-vdao-dark focus:ring-offset-2'>
+        <button
+          onClick={toggleMobileMenu}
+          className={`text-white-dark rounded-md px-2 transition-all focus:outline-none focus:ring-2 focus:ring-vdao-dark focus:ring-offset-2 ${
+            !props.dark ? '' : '!text-vdao-light focus:ring-vdao-light '
+          }`}
+        >
           <span className='sr-only'>Open menu</span>
           <svg className='h-8 w-8' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor' aria-hidden='true'>
             <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d={isMobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
@@ -138,7 +143,13 @@ const Header = (props: Props) => {
       </div>
 
       {/* Mobile menu */}
-      <div className={'absolute z-50 w-screen -translate-x-full transition-all md:hidden ' + (!props.dark ? 'bg-white ' : 'bg-vdao-deep ') + (isMobileMenuOpen && '!translate-x-0 ')}>
+      <div
+        className={
+          'hide-scrollbar overfow-x-hidden fixed left-0 z-50 mt-[150px] h-[calc(100vh-150px)] w-full -translate-x-full  overflow-y-auto transition-all md:hidden ' +
+          (!props.dark ? 'bg-white ' : 'bg-vdao-deep ') +
+          (isMobileMenuOpen && '!translate-x-0 ')
+        }
+      >
         <div className='antd-stop-propagation space-y-1 px-6 pt-2 pb-3'>
           {(props.web2 ? navigationElementsWeb2 : navigationElementsWeb3).map(element => (
             <MobileSubmenu element={element} key={element.name} dark={props.dark} />
@@ -147,12 +158,12 @@ const Header = (props: Props) => {
         <div className='flex flex-col items-center pt-4 pb-3'>
           <div className='my-10 flex gap-7'>
             <Link href='https://vdao.discourse.group' target='_blank' rel='noopener noreferrer'>
-              <Image src={discourse} alt='VDAO' width={50} height={50} />
+              <Image src={!props.dark ? discourse : darkDiscourse} alt='VDAO' width={50} height={50} />
             </Link>
-            <Image src={discordCircle} alt='VDAO' width={50} height={50} />
+            <Image src={!props.dark ? discordCircle : darkDiscord} alt='VDAO' width={50} height={50} />
           </div>
           <div className='flex items-center px-5'>
-            <VDAOConnectButton className='border-vdao-dark text-vdao-dark' web2={props.web2} />
+            <VDAOConnectButton className={`${!props.dark ? 'border-vdao-dark text-vdao-dark ' : 'border-white text-white '} `} web2={props.web2} />
           </div>
         </div>
       </div>
@@ -216,9 +227,9 @@ const MobileSubmenu = (props: {
 const HeaderManifesto = (props: Props) => {
   return (
     <div className='mx-auto flex w-11/12 items-center justify-between bg-vdao-deep px-[11px] py-11 md:px-0 lg:max-w-[1140px]'>
-      <Image src={logo} alt='VDAO' className='my-auto h-[17px] w-[76px] md:h-[30px]  md:w-[130px]' />
+      <Image src={logo} alt='VDAO' className='my-auto h-[17.74px] w-[76px] md:h-[30px]  md:w-[130px]' />
       <div className='flex items-center gap-[56px]'>
-        <section className='flex items-center justify-between gap-[35px]'>
+        <section className='md:flex items-center justify-between gap-[35px] hidden'>
           {navigationElementsWeb2.map(
             (element, index) =>
               index > 0 && (

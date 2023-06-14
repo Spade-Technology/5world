@@ -67,7 +67,7 @@ export function ProposalComponent() {
           { title: 'Proposal Creators', amount: '12' },
           { title: 'Lifetime Voters', amount: '351' },
           { title: 'Voter Acceptance Rate', amount: '95.6%' },
-        ].map(({ title, amount }, index) => {
+        ].map(({ title, amount }) => {
           return (
             <div className='flex w-full flex-col gap-5 rounded-2xl bg-vdao-dark px-[30px] py-5 pt-5 md:w-[23%] md:px-7 md:pb-10'>
               <div className='satoshi text-lg font-medium leading-5 text-white'>{title}</div>
