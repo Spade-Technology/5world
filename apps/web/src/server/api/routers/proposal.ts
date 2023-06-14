@@ -54,16 +54,19 @@ export const proposalRouter = createTRPCRouter({
         title: z.string(),
         description: z.string(),
         picture: z.string().optional(),
-        spellAddresses: z.array(z.string()).max(10, 'Too many spells'),
         podId: z.number().optional(),
         transactionHash: z.string(),
         authorAddress: z.string(),
         include: includeZod,
+
+        spells: z.array(z.string()).max(10, 'Too many spells'),
+        spellValues: z.array(z.bigint()).max(10, 'Too many spell values'),
+        spellCalldatas: z.array(z.string()).max(10, 'Too many spell calldatas'),
       }),
     )
     .mutation(
       async ({
-        input: { podId, authorAddress, transactionHash, include, title, description, spellAddresses, picture },
+        input: { podId, authorAddress, transactionHash, include, title, description, picture, spells, spellValues, spellCalldatas },
         ctx: {
           prisma,
           session: { address },
@@ -100,7 +103,10 @@ export const proposalRouter = createTRPCRouter({
             title,
             description,
             picture,
-            spells: spellAddresses,
+
+            spells,
+            spellValues,
+            spellCalldatas,
 
             ...(podId && { pod: { connect: { id: podId } } }),
 

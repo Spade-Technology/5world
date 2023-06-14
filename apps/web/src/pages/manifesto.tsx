@@ -1,39 +1,50 @@
-import { NextApiRequest, NextApiResponse, type NextPage } from 'next'
+import { type NextPage } from 'next'
 import Head from 'next/head'
 
 import { HeaderManifesto } from '~/components/layout/header'
 
 // VDAO-get-involved.png
+import VDAOApply from 'public/illustrations/apply/PNG/VDAO-apply.png'
 import VDAOGetInvolved from 'public/illustrations/home/PNG/VDAO-get-involved.png'
 import VDAOTweetManifesto from 'public/illustrations/home/PNG/tweet-manifesto.png'
-import VDAOApply from 'public/illustrations/apply/PNG/VDAO-apply.png'
 
-import Tick from 'public/icons/home/tick.svg'
-import Image from 'next/image'
-import { Button, Divider, notification } from 'antd'
+import { Button, Divider, Skeleton, Spin, notification } from 'antd'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import Image from 'next/image'
+import Tick from 'public/icons/home/tick.svg'
+import { useAccount } from 'wagmi'
 import { FooterManifesto } from '~/components/layout/footer'
 import { VDAOConnectButton } from '~/components/walletconnect/connectbutton'
-import { useAccount } from 'wagmi'
 
 import { useSignMessage } from 'wagmi'
 
-import { api } from '~/utils/api'
-import { prisma } from '~/server/db'
-import { useEffect, useRef, useState } from 'react'
 import { useSession } from 'next-auth/react'
-import PrimaryButton from '~/styles/shared/buttons/primaryButton'
-import { Section } from '~/components/layout/section'
+import COLOR_VDAO_LARGE from 'public/logo/png/color_large.png'
 import VDAO_whiteIcon from 'public/logo/svg/white.svg'
 import Green_VDAO from 'public/logo/svg/VDAO-twitter-background-black 1.svg'
 import SubmitIcon from 'public/icons/manifesto/submitIcon.svg'
-import { useConnect } from 'wagmi'
+import { RefObject, useEffect, useRef, useState } from 'react'
+
+import PrimaryButton from '~/styles/shared/buttons/primaryButton'
+import { api } from '~/utils/api'
 
 dayjs.extend(relativeTime)
 
-const Home: NextPage<any> = ({ signatures }) => {
-  const ref = useRef(null)
+const Home: NextPage<any> = () => {
+  const signModuleRef = useRef<HTMLDivElement>(null)
+  const [signatures, setSignatures] = useState({ total: 0, list: [], loading: true })
+
+  useEffect(() => {
+    fetchSignatures()
+  }, [])
+
+  const fetchSignatures = async () => {
+    const res = await fetch('/api/manifesto/api')
+    const data = await res.json()
+    setSignatures({ ...data, loading: false })
+    return res
+  }
 
   return (
     <>
@@ -44,22 +55,14 @@ const Home: NextPage<any> = ({ signatures }) => {
       </Head>
 
       <main className='bg-vdao-deep'>
-        <HeaderManifesto signatures={signatures.total} />
+        <HeaderManifesto signatures={signatures.total} loading={signatures.loading} />
         <div className='px-4'>
           <SectionOne />
-
-          {/* <Color
-            colorFrom={"#00FF19"}
-            colorTo={"#0038FF"}
-            left={"-550px"}
-            size={"400px"}
-            opacity={0.7}
-          /> */}
           <SectionTwo />
 
-          <Signing signatures={signatures} />
+          <Signing signatures={signatures} signModuleRef={signModuleRef} fetchSignatures={fetchSignatures} />
         </div>
-        <FooterManifesto signatures={signatures.total} ref={ref} />
+        <FooterManifesto signatures={signatures.total} signModuleRef={signModuleRef} loading={signatures.loading} />
       </main>
     </>
   )
@@ -67,36 +70,15 @@ const Home: NextPage<any> = ({ signatures }) => {
 
 export default Home
 
-type colorProps = {
-  colorFrom: string
-  colorTo?: string
-  left: string
-  size?: string
-  opacity?: number
-}
-
-function Color({ colorFrom, colorTo, left, size, opacity }: colorProps) {
-  // take 0 horizontal space, but create a circle gradient with the color passed in
-  return (
-    <div className='relative overflow-hidden md:overflow-visible'>
-      <div className=' absolute left-1/2 -translate-x-1/2'>
-        <div
-          className={`relative rounded-full`}
-          style={{
-            width: size,
-            height: size,
-            transform: `translateX(${left})`,
-            backgroundImage: `radial-gradient(circle, ${colorFrom} 0%,  ${colorTo || 'transparent'} 100%)`,
-            filter: `blur(999px)`,
-            opacity: opacity,
-          }}
-        ></div>
-      </div>
-    </div>
-  )
-}
-
-function Signing({ signatures }: { signatures: { total: number; list: any[] } }) {
+function Signing({
+  signatures,
+  signModuleRef,
+  fetchSignatures,
+}: {
+  signatures: { total: number; list: any[]; loading: boolean }
+  signModuleRef: RefObject<HTMLDivElement>
+  fetchSignatures: () => void
+}) {
   const list = signatures.list
   const [step, setStep] = useState(0)
   const [sticky, setSticky] = useState(false)
@@ -117,6 +99,7 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
         signature: data,
         message: variables.message.toString(),
       }).then(res => {
+        fetchSignatures()
         notificationApi.success({
           message: <span>Signed Manifesto</span>,
           description: (
@@ -179,8 +162,8 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
   return (
     <section>
       {contextHolder}
-      <div className='mx-auto max-w-[850px]' id='SignModule'>
-        <div className='mx-auto w-[350px] rounded-lg bg-vdao-dark p-4 '>
+      <div className='mx-auto max-w-[850px]' id='SignModule' ref={signModuleRef}>
+        <div className='mx-auto max-w-[350px] rounded-lg bg-vdao-dark p-4 '>
           <span className='text-lg font-medium'>Sign the manifesto with 3 simple steps</span>
           <div className='ml-1 mt-4 flex'>
             {/* left */}
@@ -204,7 +187,7 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
                 className='border-vdao-light bg-vdao-light font-roboto text-sm font-medium text-vdao-dark outline-none'
                 messageOverrides={{ verify: 'Wallet Connected', verified: 'Wallet Connected' }}
                 web2
-                onClickOverride={() => {}}
+                redirectDisabled
               />
               {/* step 1 */}
               <VDAOConnectButton
@@ -212,7 +195,7 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
                   step < 1 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : step == 1 ? '!text-vdao-light' : '!border-vdao-light !text-vdao-light'
                 }`}
                 disabled={step != 1}
-                onClickOverride={() => {}}
+                redirectDisabled
                 messageOverrides={{ verified: 'Wallet Verified' }}
                 web2
               />
@@ -234,11 +217,14 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
         <div className='mt-[32px] flex items-center justify-between'>
           <div className='font-heading text-[32px] font-medium text-white md:text-xl md:font-normal '>Signed By :</div>
           <span className='font-heading text-3xl font-medium leading-[36px] md:text-xl '>
-            {signatures.total}
+            <Skeleton active={signatures.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={signatures.loading} className='my-auto !w-5'>
+              {signatures.total || 0}
+            </Skeleton>
             <div className='font-body text-sm font-normal'>Signatures</div>
           </span>
         </div>
         <div className={`mt-3 max-w-[860px] rounded-lg bg-vdao-dark py-5 px-6`}>
+          {signatures.loading && <Spin className='w-full' />}
           {list.map((item, i) => (
             <>
               <div key={i} className={`mt-4 flex w-full flex-row items-center justify-between ${sticky ? '' : ''}`}>
@@ -268,7 +254,7 @@ function Signing({ signatures }: { signatures: { total: number; list: any[] } })
             <div className='font-body text-base font-normal opacity-70'>Be the 1st one to get all future updates.</div>
           </div>
           <div className='flex'>
-            <input className='w-80 rounded bg-[#14444A] px-5 py-3 font-body text-base font-normal text-[#3BA7B5] outline-none placeholder:text-[#3BA7B5]' placeholder='Enter your email address ' />
+            <input className='w-full rounded bg-[#14444A] px-5 py-3 font-body text-base font-normal text-[#3BA7B5] outline-none placeholder:text-[#3BA7B5]' placeholder='Enter your email address ' />
             <div className='relative -left-1 w-16 rounded-r bg-vdao-light py-[14px] px-5'>
               <Image src={SubmitIcon} alt='SubmitIcon' className='h-fit' />
             </div>
@@ -459,32 +445,4 @@ function SectionOne() {
       </div>
     </section>
   )
-}
-
-export async function getServerSideProps({ req, res }: { req: NextApiRequest; res: NextApiResponse }) {
-  const total_p = prisma.signatures.count()
-  const list_p = prisma.signatures.findMany({
-    orderBy: {
-      createdAt: 'desc',
-    },
-    // last 10 signatures
-    take: 10,
-  })
-
-  const [total, list] = await Promise?.all([total_p, list_p])
-
-  res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=86400')
-
-  return {
-    props: {
-      signatures: {
-        total,
-        list: list.map(item => ({
-          eoa: item.eoa,
-          signature: item.signature,
-          updatedAt: item.createdAt.toString(),
-        })),
-      },
-    },
-  }
 }

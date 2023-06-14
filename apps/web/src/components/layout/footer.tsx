@@ -1,4 +1,4 @@
-import { Button } from 'antd'
+import { Button, Skeleton } from 'antd'
 import PrimaryButton from '../../styles/shared/buttons/primaryButton'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -12,7 +12,8 @@ import github from 'public/illustrations/socials/Vector (9).svg'
 
 type Props = {
   signatures?: number
-  ref?: any
+  signModuleRef?: React.RefObject<HTMLDivElement>
+  loading?: boolean
 }
 
 const Footer = (props: Props) => {
@@ -101,31 +102,29 @@ const Footer = (props: Props) => {
 
 const FooterManifesto = (props: Props) => {
   return (
-    <div className='bg-white md:bg-[#000912] px-14 py-5 md:py-10'>
+    <div className='bg-white px-14 py-5 md:bg-[#000912] md:py-10'>
       <div className='mx-auto flex max-w-[208px] flex-col gap-10'>
-        <div className='flex gap-[24px] md:gap-[36px] flex-col md:flex-row'>
+        <div className='flex flex-col gap-[24px] md:flex-row md:gap-[36px]'>
           <Link href='#'>
-            <h2 className='text-[13px] font-heading font-medium text-vdao-dark md:text-white text-center'>Home</h2>
+            <h2 className='text-center font-heading text-[13px] font-medium text-vdao-dark md:text-white'>Home</h2>
           </Link>
           <Link href='#'>
-            <h2 className='text-[13px] font-heading font-medium text-vdao-dark md:text-white text-center'>Discord</h2>
+            <h2 className='text-center font-heading text-[13px] font-medium text-vdao-dark md:text-white'>Discord</h2>
           </Link>
           <Link href='#'>
-            <h2 className='text-[13px] font-heading font-medium text-vdao-dark md:text-white text-center'>Twitter</h2>
+            <h2 className='text-center font-heading text-[13px] font-medium text-vdao-dark md:text-white'>Twitter</h2>
           </Link>
         </div>
         <div className='flex flex-col gap-3'>
-          <span className='text-center font-body text-base font-medium  text-vdao-dark md:text-white'>{props.signatures || 0} Signatures</span>
-
-          <div
-            onClick={() => {
-              const element = document.getElementById('SignModule')
-              element?.scrollIntoView({ block: 'end', behavior: 'smooth' })
-            }}
-            className='w-fit mx-auto cursor-pointer rounded-md bg-vdao-dark md:bg-vdao-light px-9 py-1.5 font-heading text-sm font-medium text-white md:text-vdao-dark md:py-[13px] md:px-[30px] '
-          >
+          <span className='items flex items-start justify-center gap-3 text-base font-medium md:text-white text-vdao-dark'>
+            <Skeleton active={props.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={props.loading} className='my-auto !w-5 mr-1'>
+              {props.signatures || 0}
+            </Skeleton>
+             Signatures
+          </span>
+          <Button type='primary' className='!h-10 w-44 !bg-vdao-dark mx-auto' onClick={() => props.signModuleRef?.current?.scrollIntoView({ block: 'end', behavior: 'smooth' })}>
             Sign Manifesto
-          </div>
+          </Button>
         </div>
       </div>
     </div>

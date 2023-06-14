@@ -12,7 +12,7 @@ import darkDiscourse from 'public/illustrations/socials/darkDiscourse.svg'
 import darkDiscord from 'public/illustrations/socials/darkDiscord.svg'
 
 import twitter from 'public/illustrations/socials/twitter.svg'
-import { Collapse, Divider, Tooltip } from 'antd'
+import { Collapse, Divider, Skeleton, Tooltip } from 'antd'
 import { VDAOConnectButton } from '../walletconnect/connectbutton'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -23,6 +23,7 @@ type Props = {
   className?: string
   web2?: boolean
   dark?: boolean
+  loading?: boolean
 }
 
 type NavigationElement = {
@@ -107,10 +108,7 @@ const Header = (props: Props) => {
               }
               key={element.name}
             >
-              <Link
-                href={element.link}
-                className={`text-body text-lg font-medium ${props.web2 ? 'text-vdao-dark' : 'text-white'}`}
-              >
+              <Link href={element.link} className={`text-body text-lg font-medium ${props.web2 ? 'text-vdao-dark' : 'text-white'}`}>
                 {element.name}
               </Link>
             </Tooltip>
@@ -118,29 +116,12 @@ const Header = (props: Props) => {
         </div>
         <div className='hidden gap-7 lg:flex'>
           <Link href='https://vdao.discourse.group' target='_blank' rel='noopener noreferrer'>
-            <Image
-              src={!props.dark ? discourse : darkDiscourse}
-              alt='VDAO'
-              width={30}
-              height={30}
-              className='hidden md:block'
-            />
+            <Image src={!props.dark ? discourse : darkDiscourse} alt='VDAO' width={30} height={30} className='hidden md:block' />
           </Link>
-          <Image
-            src={!props.dark ? discordCircle : darkDiscord}
-            alt='VDAO'
-            width={30}
-            height={30}
-            className='hidden md:block'
-          />
+          <Image src={!props.dark ? discordCircle : darkDiscord} alt='VDAO' width={30} height={30} className='hidden md:block' />
         </div>
 
-        <VDAOConnectButton
-          web2={props.web2}
-          className={
-            !props.dark ? 'border-vdao-dark text-xl font-medium text-vdao-dark' : 'border-vdao-light text-vdao-light'
-          }
-        />
+        <VDAOConnectButton web2={props.web2} className={!props.dark ? 'border-vdao-dark text-xl font-medium text-vdao-dark' : 'border-vdao-light text-vdao-light'} />
       </div>
 
       {/* Mobile */}
@@ -148,37 +129,16 @@ const Header = (props: Props) => {
         <Link href='/'>
           <Image src={logo} alt='VDAO' height={30} />
         </Link>
-        <button
-          onClick={toggleMobileMenu}
-          className='rounded-md px-2 text-vdao-dark transition-all focus:outline-none focus:ring-2 focus:ring-vdao-dark focus:ring-offset-2'
-        >
+        <button onClick={toggleMobileMenu} className='rounded-md px-2 text-vdao-dark transition-all focus:outline-none focus:ring-2 focus:ring-vdao-dark focus:ring-offset-2'>
           <span className='sr-only'>Open menu</span>
-          <svg
-            className='h-8 w-8'
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 24 24'
-            stroke='currentColor'
-            aria-hidden='true'
-          >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d={isMobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
-            />
+          <svg className='h-8 w-8' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor' aria-hidden='true'>
+            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d={isMobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
           </svg>
         </button>
       </div>
 
       {/* Mobile menu */}
-      <div
-        className={
-          'absolute z-50 w-screen -translate-x-full transition-all md:hidden ' +
-          (!props.dark ? 'bg-white ' : 'bg-vdao-deep ') +
-          (isMobileMenuOpen && '!translate-x-0 ')
-        }
-      >
+      <div className={'absolute z-50 w-screen -translate-x-full transition-all md:hidden ' + (!props.dark ? 'bg-white ' : 'bg-vdao-deep ') + (isMobileMenuOpen && '!translate-x-0 ')}>
         <div className='antd-stop-propagation space-y-1 px-6 pt-2 pb-3'>
           {(props.web2 ? navigationElementsWeb2 : navigationElementsWeb3).map(element => (
             <MobileSubmenu element={element} key={element.name} dark={props.dark} />
@@ -244,14 +204,7 @@ const MobileSubmenu = (props: {
       >
         {hasChildren &&
           element?.children?.map(child => (
-            <Link
-              href={child.link}
-              key={child.name}
-              className={
-                'big-text-mobile block py-1 pl-4 text-sm font-medium last:mb-4 hover:bg-opacity-75 ' +
-                (!dark ? 'text-vdao-dark ' : 'text-white ')
-              }
-            >
+            <Link href={child.link} key={child.name} className={'big-text-mobile block py-1 pl-4 text-sm font-medium last:mb-4 hover:bg-opacity-75 ' + (!dark ? 'text-vdao-dark ' : 'text-white ')}>
               {child.name}
             </Link>
           ))}
@@ -269,7 +222,12 @@ const HeaderManifesto = (props: Props) => {
         <Image src={discord} alt='VDAO' width={30} height={30} className='hidden md:block' />
         <Divider type='vertical' className='hidden !h-full bg-[#848484] md:block' />
         <div className='flex flex-col-reverse gap-4 px-4 text-center md:flex-row md:gap-8'>
-          <span className='my-auto text-lg font-medium text-white'>{props.signatures || 0} Signatures</span>
+          <span className='my-auto flex gap-3 text-lg font-medium text-white max-md:mx-auto'>
+            <Skeleton active={props.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={props.loading} className='my-auto !w-1/2'>
+              {props.signatures || 0}
+            </Skeleton>{' '}
+            Signatures
+          </span>
 
           <VDAOConnectButton className='border-vdao-light text-vdao-light text-sm' />
         </div>

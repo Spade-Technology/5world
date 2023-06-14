@@ -1,6 +1,8 @@
 import { ethers } from 'hardhat';
 import ProgressBar from 'progress';
 import hre from 'hardhat';
+import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { Contract } from 'ethers';
 
 const dev = true;
 
@@ -20,11 +22,12 @@ async function main() {
     total: 26,
   });
 
-  progressBar.tick({ status: 'Deploying Timelock' });
-  const Timelock = await ethers.getContractFactory('Timelock');
-  const timelock = await Timelock.deploy(owner.address, dev ? 120 : 86400);
-  await timelock.deployed();
-  progressBar.tick();
+  // progressBar.tick({ status: 'Deploying Timelock' });
+  // const Timelock = await ethers.getContractFactory('Timelock');
+  // const timelock = await Timelock.deploy(owner.address, dev ? 120 : 86400);
+  // await timelock.deployed();
+  // progressBar.tick();
+  const timelock: Contract | SignerWithAddress = owner;
 
   progressBar.tick({ status: 'Deploying VDaoToken' });
   const VDao = await ethers.getContractFactory('VDaoToken');
@@ -52,10 +55,10 @@ async function main() {
   );
   await vDAOProxy.deployed();
 
-  await timelock.setPendingAdmin(vDAOProxy.address);
+  if (timelock instanceof Contract) await timelock.setPendingAdmin(vDAOProxy.address);
 
   const proxiedVDao = await VDAOImplementation.attach(vDAOProxy.address);
-  await proxiedVDao._initiate();
+  if (timelock instanceof Contract) await proxiedVDao._initiate();
   progressBar.tick();
 
   progressBar.tick({ status: 'Deploying Treasury' });
@@ -86,6 +89,8 @@ async function main() {
   await roundFactory.initialize();
   await roundFactory.updateRoundContract(roundImplementation.address);
   progressBar.tick();
+
+  await vDao.enableTrading();
 
   await sleep(5000);
 

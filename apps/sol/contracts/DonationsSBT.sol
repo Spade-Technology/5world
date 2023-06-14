@@ -21,7 +21,7 @@ contract VDonations is ERC721, ERC721Enumerable, AccessControl {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
     /// @notice Counter for generating token ids.
-    Counters.Counter private _toRoundFactorykenIdCounter;
+    Counters.Counter private _tokenIdCounter;
 
     /// @notice Base URI for the donations SBTs.
     string private baseURI;
