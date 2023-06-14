@@ -216,9 +216,9 @@ const MobileSubmenu = (props: {
 const HeaderManifesto = (props: Props) => {
   return (
     <div className='mx-auto flex w-11/12 items-center justify-between bg-vdao-deep px-[11px] py-11 md:px-0 lg:max-w-[1140px]'>
-      <Image src={logo} alt='VDAO' className='my-auto h-[17px] w-[76px] md:h-[30px]  md:w-[130px]' />
+      <Image src={logo} alt='VDAO' className='my-auto h-[17.74px] w-[76px] md:h-[30px]  md:w-[130px]' />
       <div className='flex items-center gap-[56px]'>
-        <section className='flex items-center justify-between gap-[35px]'>
+        <section className='md:flex items-center justify-between gap-[35px] hidden'>
           {navigationElementsWeb2.map(
             (element, index) =>
               index > 0 && (
