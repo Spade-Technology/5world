@@ -1,4 +1,5 @@
 import { Button, Skeleton } from 'antd'
+import PrimaryButton from '../../styles/shared/buttons/primaryButton'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -101,27 +102,27 @@ const Footer = (props: Props) => {
 
 const FooterManifesto = (props: Props) => {
   return (
-    <div className='bg-white px-14 py-10'>
-      <div className='mx-auto flex max-w-[1280px] flex-col gap-10'>
-        <div className='flex gap-9'>
+    <div className='bg-white px-14 py-5 md:bg-[#000912] md:py-10'>
+      <div className='mx-auto flex max-w-[208px] flex-col gap-10'>
+        <div className='flex flex-col gap-[24px] md:flex-row md:gap-[36px]'>
           <Link href='#'>
-            <h2>Home</h2>
+            <h2 className='text-center font-heading text-[13px] font-medium text-vdao-dark md:text-white'>Home</h2>
           </Link>
           <Link href='#'>
-            <h2>Discord</h2>
+            <h2 className='text-center font-heading text-[13px] font-medium text-vdao-dark md:text-white'>Discord</h2>
           </Link>
           <Link href='#'>
-            <h2>Twitter</h2>
+            <h2 className='text-center font-heading text-[13px] font-medium text-vdao-dark md:text-white'>Twitter</h2>
           </Link>
         </div>
         <div className='flex flex-col gap-3'>
-          <span className='items flex items-start justify-start gap-3 text-base font-medium text-black'>
-            <Skeleton active={props.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={props.loading} className='my-auto !w-5'>
+          <span className='items flex items-start justify-center gap-3 text-base font-medium md:text-white text-vdao-dark'>
+            <Skeleton active={props.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={props.loading} className='my-auto !w-5 mr-1'>
               {props.signatures || 0}
             </Skeleton>
-            Signatures
+             Signatures
           </span>
-          <Button type='primary' className='!h-10 w-44 !bg-vdao-dark' onClick={() => props.signModuleRef?.current?.scrollIntoView({ block: 'end', behavior: 'smooth' })}>
+          <Button type='primary' className='!h-10 w-44 !bg-vdao-dark mx-auto' onClick={() => props.signModuleRef?.current?.scrollIntoView({ block: 'end', behavior: 'smooth' })}>
             Sign Manifesto
           </Button>
         </div>

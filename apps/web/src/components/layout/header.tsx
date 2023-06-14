@@ -215,21 +215,42 @@ const MobileSubmenu = (props: {
 
 const HeaderManifesto = (props: Props) => {
   return (
-    <div className='mx-auto flex max-w-[1280px] justify-between bg-vdao-deep py-11 '>
-      <Image src={logo} alt='VDAO' className='mx-auto my-auto h-[30px] w-[130px] md:mx-0' />
-      <div className='flex flex-row justify-center gap-7'>
-        <Image src={twitter} alt='VDAO' width={30} height={30} className='hidden md:block' />
-        <Image src={discord} alt='VDAO' width={30} height={30} className='hidden md:block' />
-        <Divider type='vertical' className='hidden !h-full bg-[#848484] md:block' />
-        <div className='flex flex-col-reverse gap-4 px-4 text-center md:flex-row md:gap-8'>
-          <span className='my-auto flex gap-3 text-lg font-medium text-white max-md:mx-auto'>
-            <Skeleton active={props.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={props.loading} className='my-auto !w-1/2'>
-              {props.signatures || 0}
-            </Skeleton>{' '}
-            Signatures
-          </span>
+    <div className='mx-auto flex w-11/12 items-center justify-between bg-vdao-deep px-[11px] py-11 md:px-0 lg:max-w-[1140px]'>
+      <Image src={logo} alt='VDAO' className='my-auto h-[17px] w-[76px] md:h-[30px]  md:w-[130px]' />
+      <div className='flex items-center gap-[56px]'>
+        <section className='flex items-center justify-between gap-[35px]'>
+          {navigationElementsWeb2.map(
+            (element, index) =>
+              index > 0 && (
+                <Tooltip
+                  placement='bottomLeft'
+                  color='white'
+                  title={
+                    element.children &&
+                    element.children.length > 0 && (
+                      <div className='flex flex-col gap-5 px-10 py-8 '>
+                        {element.children?.map(child => (
+                          <Link className='small-text !text-vdao-dark hover:opacity-80' href={child.link} key={child.name}>
+                            {child.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )
+                  }
+                  key={element.name}
+                >
+                  <Link href={element.link} className={`text-body text-lg font-medium ${props.web2 ? 'text-vdao-dark' : 'text-white'}`}>
+                    {element.name}
+                  </Link>
+                </Tooltip>
+              ),
+          )}
+        </section>
+        <div className='flex items-center justify-center gap-4 md:gap-7'>
+          <Image src={twitter} alt='VDAO' width={30} height={30} className='' />
+          <Image src={discord} alt='VDAO' width={30} height={30} className='' />
 
-          <VDAOConnectButton className='border-vdao-light !text-xs text-vdao-light' />
+          <VDAOConnectButton className='!mx-0 border-vdao-light text-sm text-vdao-light' />
         </div>
       </div>
     </div>

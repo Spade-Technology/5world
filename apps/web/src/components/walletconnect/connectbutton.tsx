@@ -39,7 +39,7 @@ export const VDAOConnectButton = ({
   redirectDisabled?: boolean
   onClickOverride?: () => void
 }) => {
-  const buttonStyle = `rounded-md border-[1px] h-10 px-5 font-heading text-xl font-medium ${className || ''}`
+  const buttonStyle = `rounded-md border-[1px] h-10 px-5 font-heading text-sm md:text-xl font-medium ${className || ''}`
 
   const { address } = useAccount()
   const { data: siwe, status } = useSession()
