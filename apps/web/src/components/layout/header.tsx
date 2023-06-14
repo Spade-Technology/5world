@@ -215,22 +215,13 @@ const MobileSubmenu = (props: {
 
 const HeaderManifesto = (props: Props) => {
   return (
-    <div className='mx-auto flex max-w-[1280px] justify-between bg-vdao-deep py-11 '>
-      <Image src={logo} alt='VDAO' className='mx-auto my-auto h-[30px] w-[130px] md:mx-0' />
-      <div className='flex flex-row justify-center gap-7'>
-        <Image src={twitter} alt='VDAO' width={30} height={30} className='hidden md:block' />
-        <Image src={discord} alt='VDAO' width={30} height={30} className='hidden md:block' />
-        <Divider type='vertical' className='hidden !h-full bg-[#848484] md:block' />
-        <div className='flex flex-col-reverse gap-4 px-4 text-center md:flex-row md:gap-8'>
-          <span className='my-auto flex gap-3 text-lg font-medium text-white max-md:mx-auto'>
-            <Skeleton active={props.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={props.loading} className='my-auto !w-1/2'>
-              {props.signatures || 0}
-            </Skeleton>{' '}
-            Signatures
-          </span>
+    <div className='px-[11px] mx-auto flex max-w-[1280px] items-center justify-between bg-vdao-deep py-11'>
+      <Image src={logo} alt='VDAO' className='my-auto h-[17px] w-[76px] md:mx-auto md:h-[30px]  md:w-[130px]' />
+      <div className='flex items-center justify-center gap-4 md:gap-7'>
+        <Image src={twitter} alt='VDAO' width={30} height={30} className='' />
+        <Image src={discord} alt='VDAO' width={30} height={30} className='' />
 
-          <VDAOConnectButton className='border-vdao-light text-vdao-light text-sm' />
-        </div>
+        <VDAOConnectButton className='!mx-0 border-vdao-light text-sm text-vdao-light' />
       </div>
     </div>
   )
