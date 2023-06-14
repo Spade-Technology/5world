@@ -158,12 +158,12 @@ const Header = (props: Props) => {
         <div className='flex flex-col items-center pt-4 pb-3'>
           <div className='my-10 flex gap-7'>
             <Link href='https://vdao.discourse.group' target='_blank' rel='noopener noreferrer'>
-              <Image src={discourse} alt='VDAO' width={50} height={50} />
+              <Image src={!props.dark ? discourse : darkDiscourse} alt='VDAO' width={50} height={50} />
             </Link>
-            <Image src={discordCircle} alt='VDAO' width={50} height={50} />
+            <Image src={!props.dark ? discordCircle : darkDiscord} alt='VDAO' width={50} height={50} />
           </div>
           <div className='flex items-center px-5'>
-            <VDAOConnectButton className='border-vdao-dark text-vdao-dark' web2={props.web2} />
+            <VDAOConnectButton className={`${!props.dark ? 'border-vdao-dark text-vdao-dark ' : 'border-white text-white '} `} web2={props.web2} />
           </div>
         </div>
       </div>
