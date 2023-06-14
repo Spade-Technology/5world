@@ -113,7 +113,7 @@ export const Card = ({ data, setOpenProfile }: CardProps) => {
               Praise <br /> Score
             </div>
           </div>
-          <Image src={InfoIcon} alt='InfoIcon' />
+          {/* <Image src={InfoIcon} alt='InfoIcon' /> */}
         </div>
 
         <div className='flex flex-col justify-between pt-[30px] md:flex-row md:pt-10'>
