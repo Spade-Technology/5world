@@ -271,7 +271,7 @@ const HeaderManifesto = (props: Props) => {
         <div className='flex flex-col-reverse gap-4 px-4 text-center md:flex-row md:gap-8'>
           <span className='my-auto text-lg font-medium text-white'>{props.signatures || 0} Signatures</span>
 
-          <VDAOConnectButton className='border-vdao-light text-vdao-light' />
+          <VDAOConnectButton className='border-vdao-light text-vdao-light text-sm' />
         </div>
       </div>
     </div>

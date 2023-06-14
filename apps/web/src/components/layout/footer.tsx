@@ -1,4 +1,5 @@
 import { Button } from 'antd'
+import PrimaryButton from '../../styles/shared/buttons/primaryButton'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -100,31 +101,31 @@ const Footer = (props: Props) => {
 
 const FooterManifesto = (props: Props) => {
   return (
-    <div className='bg-white px-14 py-10'>
-      <div className='mx-auto flex max-w-[1280px] flex-col gap-10'>
-        <div className='flex gap-9'>
+    <div className='bg-white md:bg-[#000912] px-14 py-5 md:py-10'>
+      <div className='mx-auto flex max-w-[208px] flex-col gap-10'>
+        <div className='flex gap-[24px] md:gap-[36px] flex-col md:flex-row'>
           <Link href='#'>
-            <h2>Home</h2>
+            <h2 className='text-[13px] font-heading font-medium text-vdao-dark md:text-white text-center'>Home</h2>
           </Link>
           <Link href='#'>
-            <h2>Discord</h2>
+            <h2 className='text-[13px] font-heading font-medium text-vdao-dark md:text-white text-center'>Discord</h2>
           </Link>
           <Link href='#'>
-            <h2>Twitter</h2>
+            <h2 className='text-[13px] font-heading font-medium text-vdao-dark md:text-white text-center'>Twitter</h2>
           </Link>
         </div>
         <div className='flex flex-col gap-3'>
-          <span className='text-base font-medium text-black'>{props.signatures || 0} Signatures</span>
-          <Button
-            type='primary'
-            className='!h-10 w-44 !bg-vdao-dark'
+          <span className='text-center font-body text-base font-medium  text-vdao-dark md:text-white'>{props.signatures || 0} Signatures</span>
+
+          <div
             onClick={() => {
               const element = document.getElementById('SignModule')
               element?.scrollIntoView({ block: 'end', behavior: 'smooth' })
             }}
+            className='w-fit mx-auto cursor-pointer rounded-md bg-vdao-dark md:bg-vdao-light px-9 py-1.5 font-heading text-sm font-medium text-white md:text-vdao-dark md:py-[13px] md:px-[30px] '
           >
             Sign Manifesto
-          </Button>
+          </div>
         </div>
       </div>
     </div>

@@ -18,6 +18,7 @@ const config = {
         body: ["Satoshi", "sans-serif"],
         heading: ["Clash Display", "sans-serif"],
         inter: ["Inter", "sans-serif"],
+        roboto: ["Roboto", "sans-serif"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
