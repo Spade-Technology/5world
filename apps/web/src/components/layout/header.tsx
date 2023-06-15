@@ -229,7 +229,7 @@ const HeaderManifesto = (props: Props) => {
     <div className='mx-auto flex w-full items-center justify-between bg-vdao-deep px-4 py-11 lg:max-w-[1140px]'>
       <Image src={logo} alt='VDAO' className='my-auto h-[17.74px] w-[76px] md:h-[30px]  md:w-[130px]' />
       <div className='flex items-center gap-[56px]'>
-        <section className='hidden items-center justify-between gap-[35px] md:flex'>
+        <section className='hidden items-center justify-between gap-[35px] lg:flex'>
           {navigationElementsWeb2.map(
             (element, index) =>
               index > 0 && (

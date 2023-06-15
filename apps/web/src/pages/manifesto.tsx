@@ -12,7 +12,6 @@ import { Button, Divider, Skeleton, Spin, notification } from 'antd'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import Image from 'next/image'
-import Tick from 'public/icons/home/tick.svg'
 import { useAccount } from 'wagmi'
 import { FooterManifesto } from '~/components/layout/footer'
 import { VDAOConnectButton } from '~/components/walletconnect/connectbutton'
@@ -20,10 +19,8 @@ import { VDAOConnectButton } from '~/components/walletconnect/connectbutton'
 import { useSignMessage } from 'wagmi'
 
 import { useSession } from 'next-auth/react'
-import COLOR_VDAO_LARGE from 'public/logo/png/color_large.png'
-import VDAO_whiteIcon from 'public/logo/svg/white.svg'
-import Green_VDAO from 'public/logo/svg/VDAO-twitter-background-black 1.svg'
 import SubmitIcon from 'public/icons/manifesto/submitIcon.svg'
+import Green_VDAO from 'public/logo/svg/VDAO-twitter-background-black 1.svg'
 import { RefObject, useEffect, useRef, useState } from 'react'
 
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
@@ -56,8 +53,21 @@ const Home: NextPage<any> = () => {
 
       <main className='bg-vdao-deep'>
         <HeaderManifesto signatures={signatures.total} loading={signatures.loading} />
-        <div className='md:px-4'>
+        <div className='overflow-hidden md:px-4'>
           <SectionOne />
+          <div className='left-0 right-0 md:absolute md:h-[5150px]'>
+            <div className='mx-auto mt-10 w-full max-w-[1280px] items-center justify-between rounded-[20px] bg-vdao-dark py-5 px-[38px] font-body text-xl font-medium text-white md:sticky md:top-10 md:mt-20 md:flex md:h-[96px] md:py-0 md:px-10'>
+              <div className='flex flex-col justify-between gap-7 md:flex-row md:gap-[16px]'>
+                <div className='mx-auto h-[36px] w-[36px] bg-[url(/icons/manifesto/Pen.svg)] bg-contain bg-center bg-no-repeat md:mx-0' />
+                <div className='opacity-70'> Sign to join Vcommunity & be eligible for future benefits.</div>
+              </div>
+
+              <div className='mt-10 flex flex-col justify-between gap-5  md:mt-0 md:flex-row md:items-center md:gap-0'>
+                <div className='opacity-70'>Signatures</div>
+                <PrimaryButton text='Sign Manifesto' className='md:ml-[35px]' />
+              </div>
+            </div>
+          </div>
           <SectionTwo />
 
           <Signing signatures={signatures} signModuleRef={signModuleRef} fetchSignatures={fetchSignatures} />
@@ -81,7 +91,6 @@ function Signing({
 }) {
   const list = signatures.list
   const [step, setStep] = useState(0)
-  const [sticky, setSticky] = useState(false)
 
   // wagmi get address
   const { address } = useAccount()
@@ -140,24 +149,6 @@ function Signing({
       setStep(0)
     }
   }, [address, status])
-
-  useEffect(() => {
-    window.addEventListener('scroll', isSticky)
-    return () => {
-      window.removeEventListener('scroll', isSticky)
-    }
-  })
-
-  /* Method that will fix header after a specific scrollable */
-  const isSticky = (e: any) => {
-    const scrollTop = window.scrollY
-
-    if ((window.screen.availWidth <= 390 && scrollTop >= 7130) || (window.screen.availWidth > 390 && scrollTop >= 5880)) {
-      setSticky(true)
-    } else {
-      setSticky(false)
-    }
-  }
 
   return (
     <section>
@@ -227,7 +218,7 @@ function Signing({
           {signatures.loading && <Spin className='w-full' />}
           {list.map((item, i) => (
             <>
-              <div key={i} className={`mt-4 flex w-full flex-row items-center justify-between ${sticky ? '' : ''}`}>
+              <div key={i} className='mt-4 flex w-full flex-row items-center justify-between'>
                 <div className='flex w-full items-center  gap-3'>
                   <div
                     className='rounded-full'
@@ -280,7 +271,7 @@ function SectionTwo() {
   return (
     // light to dark
 
-    <section className='px-4'>
+    <section className='px-4 md:mt-60'>
       <div className='mx-auto mt-24 flex max-w-[860px] flex-col items-center md:mt-[122px] '>
         <div className='mr-auto text-left font-heading text-[28px] font-medium text-vdao-light md:text-[32px]'>The Metacrisis</div>
         <div className='mt-5 font-body text-base font-normal leading-[28px] text-white md:text-xl'>
@@ -424,17 +415,6 @@ function SectionOne() {
               <u className='text-base font-bold font-medium leading-[28px] text-vdao-light md:text-xl md:text-white'>Sign up</u> to our mailing list
             </div>
           </span>
-        </div>
-      </div>
-
-      <div className='mt-10 w-full items-center justify-between rounded-[20px] bg-vdao-dark py-5 px-[38px] font-body text-xl font-medium text-white  md:mt-20 md:flex md:h-[96px] md:py-0 md:px-10'>
-        <div className='flex flex-col justify-between gap-7 md:flex-row md:gap-[16px]'>
-          <div className='mx-auto h-[36px] w-[36px] bg-[url(/icons/manifesto/Pen.svg)] bg-contain bg-center bg-no-repeat md:mx-0' />
-          <div className='opacity-70'> Sign to join Vcommunity & be eligible for future benefits.</div>
-        </div>
-        <div className='mt-10 flex flex-col justify-between gap-5  md:mt-0 md:flex-row md:items-center md:gap-0'>
-          <div className='opacity-70'>Signatures</div>
-          <PrimaryButton text='Sign Manifesto' className='md:ml-[35px]' />
         </div>
       </div>
     </section>
