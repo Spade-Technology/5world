@@ -313,7 +313,7 @@ function SectionTwo() {
           turns at the front, pushing through the resistance of the air and drafting for the benefit of the others, until another teammate moves forward to lead the flock, relieving the teammate that
           now falls back and rejoins the group. This is the essence of the 5th World and V DAO leadership.
         </div>
-        <div className='mx-auto my-[52px] max-w-[313px] text-left font-heading text-[22px] font-normal leading-[32px] text-vdao-light md:mt-24 md:max-w-[630px] md:text-[40px] md:font-light md:leading-10'>
+        <div className='mx-auto my-[52px] max-w-[313px] text-left font-heading text-[22px] font-normal leading-[32px] text-vdao-light md:my-20 md:mt-24 md:max-w-[630px] md:text-[40px] md:font-light md:leading-10'>
           It is a decentralized community of
           <span className='font-heading text-[22px] font-medium leading-[32px] text-vdao-light md:text-[40px] md:leading-10'> creators, contributors, artists, thinkers and seekers.</span>
         </div>
@@ -430,7 +430,7 @@ function SectionOne() {
       </div>
 
       <div className='mt-10 w-full items-center justify-between rounded-[20px] bg-vdao-dark py-5 px-[38px] font-body text-xl font-medium text-white  md:mt-20 md:flex md:h-[96px] md:py-0 md:px-10'>
-        <div className='flex flex-col justify-between gap-7 md:flex-row md:gap-[16px]'>
+        <div className='flex flex-col justify-between gap-7 md:flex-row md:items-center md:gap-[16px]'>
           <div className='mx-auto h-[36px] w-[36px] bg-[url(/icons/manifesto/Pen.svg)] bg-contain bg-center bg-no-repeat md:mx-0' />
           <div className='opacity-70'> Sign to join Vcommunity & be eligible for future benefits.</div>
         </div>
