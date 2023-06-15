@@ -43,52 +43,6 @@ const Home: NextPage<any> = () => {
     return res
   }
 
-  return (
-    <>
-      <Head>
-        <title>VDAO Manifesto</title>
-        <meta name='description' content='Restoring Ecosystems From the Soil up.' />
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
-
-      <main className='bg-vdao-deep'>
-        <HeaderManifesto signatures={signatures.total} loading={signatures.loading} />
-        <div className='overflow-hidden md:px-4'>
-          <SectionOne />
-          <div className='left-0 right-0 md:absolute md:h-[5150px]'>
-            <div className='mx-auto mt-10 w-full max-w-[1280px] items-center justify-between rounded-[20px] bg-vdao-dark py-5 px-[38px] font-body text-xl font-medium text-white md:sticky md:top-10 md:mt-20 md:flex md:h-[96px] md:py-0 md:px-10'>
-              <div className='flex flex-col justify-between gap-7 md:flex-row md:gap-[16px]'>
-                <div className='mx-auto h-[36px] w-[36px] bg-[url(/icons/manifesto/Pen.svg)] bg-contain bg-center bg-no-repeat md:mx-0' />
-                <div className='opacity-70'> Sign to join Vcommunity & be eligible for future benefits.</div>
-              </div>
-
-              <div className='mt-10 flex flex-col justify-between gap-5  md:mt-0 md:flex-row md:items-center md:gap-0'>
-                <div className='opacity-70'>Signatures</div>
-                <PrimaryButton text='Sign Manifesto' className='md:ml-[35px]' />
-              </div>
-            </div>
-          </div>
-          <SectionTwo />
-
-          <Signing signatures={signatures} signModuleRef={signModuleRef} fetchSignatures={fetchSignatures} />
-        </div>
-        <FooterManifesto signatures={signatures.total} signModuleRef={signModuleRef} loading={signatures.loading} />
-      </main>
-    </>
-  )
-}
-
-export default Home
-
-function Signing({
-  signatures,
-  signModuleRef,
-  fetchSignatures,
-}: {
-  signatures: { total: number; list: any[]; loading: boolean }
-  signModuleRef: RefObject<HTMLDivElement>
-  fetchSignatures: () => void
-}) {
   const list = signatures.list
   const [step, setStep] = useState(0)
 
@@ -151,8 +105,58 @@ function Signing({
   }, [address, status])
 
   return (
+    <>
+      <Head>
+        <title>VDAO Manifesto</title>
+        <meta name='description' content='Restoring Ecosystems From the Soil up.' />
+        <link rel='icon' href='/favicon.ico' />
+      </Head>
+
+      <main className='bg-vdao-deep'>
+        <HeaderManifesto signatures={signatures.total} loading={signatures.loading} />
+        <div className='overflow-hidden md:px-4'>
+          {contextHolder}
+          <SectionOne />
+          <div className='pointer-events-none left-0 right-0 md:absolute md:h-[5150px]'>
+            <div className='mx-auto mt-10 w-full max-w-[1280px] items-center justify-between rounded-[20px] bg-vdao-dark py-5 px-[38px] font-body text-xl font-medium text-white md:sticky md:top-10 md:mt-20 md:flex md:h-[96px] md:py-0 md:px-10'>
+              <div className='flex flex-col justify-between gap-7 md:flex-row md:gap-[16px]'>
+                <div className='mx-auto h-[36px] w-[36px] bg-[url(/icons/manifesto/Pen.svg)] bg-contain bg-center bg-no-repeat md:mx-0' />
+                <div className='opacity-70'> Sign to join Vcommunity & be eligible for future benefits.</div>
+              </div>
+
+              <div className='mt-10 flex flex-col justify-between gap-5  md:mt-0 md:flex-row md:items-center md:gap-0'>
+                <div className='opacity-70'>Signatures</div>
+                <PrimaryButton text='Sign Manifesto' className='pointer-events-auto md:ml-[35px]' onClick={signManifesto} />
+              </div>
+            </div>
+          </div>
+          <SectionTwo />
+
+          <Signing signatures={signatures} signModuleRef={signModuleRef} step={step} signManifesto={signManifesto} list={list} />
+        </div>
+        <FooterManifesto signatures={signatures.total} signModuleRef={signModuleRef} loading={signatures.loading} />
+      </main>
+    </>
+  )
+}
+
+export default Home
+
+function Signing({
+  signatures,
+  signModuleRef,
+  step,
+  signManifesto,
+  list,
+}: {
+  signatures: { total: number; list: any[]; loading: boolean }
+  signModuleRef: RefObject<HTMLDivElement>
+  step: number
+  signManifesto: () => void
+  list: any[]
+}) {
+  return (
     <section>
-      {contextHolder}
       <div className='mx-auto max-w-[850px]' id='SignModule' ref={signModuleRef}>
         <div className='mx-4 max-w-[358px] rounded-lg bg-vdao-dark p-4 md:mx-auto md:pr-[32px]'>
           <span className='font-body text-lg font-medium'>Sign the manifesto with 3 simple steps</span>
@@ -218,7 +222,7 @@ function Signing({
           {signatures.loading && <Spin className='w-full' />}
           {list.map((item, i) => (
             <>
-              <div key={i} className="flex w-full flex-row items-end justify-between py-4 md:mt-4 md:items-center">
+              <div key={i} className='flex w-full flex-row items-end justify-between py-4 md:mt-4 md:items-center'>
                 <div className='flex w-full items-center  gap-3'>
                   <div className=''>
                     <div
@@ -417,17 +421,6 @@ function SectionOne() {
               <u className='text-base font-bold leading-[28px] text-vdao-light md:text-xl md:text-white'>Sign up</u> to our mailing list
             </div>
           </span>
-        </div>
-      </div>
-
-      <div className='mt-10 w-full items-center justify-between rounded-[20px] bg-vdao-dark py-5 px-[38px] font-body text-xl font-medium text-white  md:mt-20 md:flex md:h-[96px] md:py-0 md:px-10'>
-        <div className='flex flex-col justify-between gap-7 md:flex-row md:gap-[16px]'>
-          <div className='mx-auto h-[36px] w-[36px] bg-[url(/icons/manifesto/Pen.svg)] bg-contain bg-center bg-no-repeat md:mx-0' />
-          <div className='opacity-70'> Sign to join Vcommunity & be eligible for future benefits.</div>
-        </div>
-        <div className='mt-10 flex flex-col justify-between gap-5  md:mt-0 md:flex-row md:items-center md:gap-0'>
-          <div className='opacity-70'>Signatures</div>
-          <PrimaryButton text='Sign Manifesto' className='md:ml-[35px]' />
         </div>
       </div>
     </section>
