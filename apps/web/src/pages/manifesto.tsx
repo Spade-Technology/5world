@@ -89,6 +89,7 @@ const Home: NextPage<any> = () => {
   })
 
   const signManifesto = () => {
+    if (!address) notification.error({ message: 'Please connect your wallet' })
     signMessage({
       message: `I agree to the terms of the Manifesto of the VDAO Project.\n\n\n\nDate of signing: ${new Date().toISOString()} Signing Nounce: ${(Math.random() * 1000000).toFixed(0) + 1}`,
     })
