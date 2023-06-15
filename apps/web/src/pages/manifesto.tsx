@@ -368,7 +368,7 @@ function SectionTwo() {
           We have got to go
           <span className='font-heading text-[22px] font-medium leading-[27px] tracking-[-1.5px] text-vdao-light md:text-[40px] md:leading-10'> back to the soil.</span>
         </div>
-        <span className=' mt-5 font-body text-base font-normal leading-[28px] text-white md:mt-0 md:text-xl '>
+        <span className=' font-body text-base font-normal leading-[28px] text-white md:mt-0 md:text-xl '>
           Our goal is to create space for an authentic self-organizing community to emerge. The community will develop the whitepaper including the decentralization roadmap, the DAO token governance
           model, as well as the NFT art collaboration model.
         </span>
