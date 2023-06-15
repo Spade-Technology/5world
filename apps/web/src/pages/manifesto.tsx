@@ -163,7 +163,7 @@ function Signing({
     <section>
       {contextHolder}
       <div className='mx-auto max-w-[850px]' id='SignModule' ref={signModuleRef}>
-        <div className='mx-auto max-w-[358px] rounded-lg bg-vdao-dark p-4 md:pr-[32px]'>
+        <div className='mx-4 max-w-[358px] rounded-lg bg-vdao-dark p-4 md:mx-auto md:pr-[32px]'>
           <span className='font-body text-lg font-medium'>Sign the manifesto with 3 simple steps</span>
           <div className='ml-1 mt-4 flex'>
             {/* left */}
