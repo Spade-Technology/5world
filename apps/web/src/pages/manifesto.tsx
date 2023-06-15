@@ -56,7 +56,7 @@ const Home: NextPage<any> = () => {
 
       <main className='bg-vdao-deep'>
         <HeaderManifesto signatures={signatures.total} loading={signatures.loading} />
-        <div className='px-4'>
+        <div className='md:px-4'>
           <SectionOne />
           <SectionTwo />
 
@@ -163,8 +163,8 @@ function Signing({
     <section>
       {contextHolder}
       <div className='mx-auto max-w-[850px]' id='SignModule' ref={signModuleRef}>
-        <div className='mx-auto max-w-[350px] rounded-lg bg-vdao-dark p-4 '>
-          <span className='text-lg font-medium'>Sign the manifesto with 3 simple steps</span>
+        <div className='mx-auto max-w-[358px] rounded-lg bg-vdao-dark p-4 md:pr-[32px]'>
+          <span className='font-body text-lg font-medium'>Sign the manifesto with 3 simple steps</span>
           <div className='ml-1 mt-4 flex'>
             {/* left */}
             <div className='my-[10px] mr-6 flex flex-col'>
@@ -211,19 +211,19 @@ function Signing({
           </div>
         </div>
 
-        <h3 className='mt-24 mr-auto text-left text-center font-heading text-5xl text-[48px] font-medium leading-[54px] text-vdao-light md:mt-40 md:text-start md:text-[32px] md:font-normal'>
+        <h3 className='mt-[50px] mr-auto px-4 font-heading text-5xl text-[28px] font-medium leading-[28px] text-vdao-light md:mt-20 md:px-0 md:text-start md:text-[32px] md:font-normal md:leading-[54px]'>
           Manifesto Signers
         </h3>
-        <div className='mt-[32px] flex items-center justify-between'>
-          <div className='font-heading text-[32px] font-medium text-white md:text-xl md:font-normal '>Signed By :</div>
-          <span className='font-heading text-3xl font-medium leading-[36px] md:text-xl '>
+        <div className='mt-5 flex items-center justify-between px-4 md:mt-[32px] md:px-0'>
+          <div className='font-heading text-base font-medium leading-[28px] text-white md:text-xl md:font-normal'>Signed By :</div>
+          <span className='font-heading text-base font-medium leading-[28px] md:text-xl '>
             <Skeleton active={signatures.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={signatures.loading} className='my-auto !w-5'>
               {signatures.total || 0}
             </Skeleton>
-            <div className='font-body text-sm font-normal'>Signatures</div>
+            <div className='font-body text-sm font-normal leading-[28px]'>Signatures</div>
           </span>
         </div>
-        <div className={`mt-3 max-w-[860px] rounded-lg bg-vdao-dark py-5 px-6`}>
+        <div className={`mt-4 max-w-[860px] bg-vdao-dark py-5 px-6 md:mt-3 md:rounded-lg`}>
           {signatures.loading && <Spin className='w-full' />}
           {list.map((item, i) => (
             <>
@@ -233,11 +233,11 @@ function Signing({
                     className='rounded-full'
                     style={{
                       background: 'linear-gradient(221.35deg, #36DFAE 0%, #28B6A5 36.46%, #1D555C 100%)',
-                      width: '50px',
+                      width: '44px',
                       height: '44px',
                     }}
                   />
-                  <span className=' w-48 overflow-hidden overflow-ellipsis text-sm font-medium md:hidden md:w-full'>{item?.name || item?.eoa.substring(0, 13)}</span>
+                  <span className=' overflow-hidden overflow-ellipsis text-sm font-medium md:hidden md:w-full'>{item?.name || item?.eoa.substring(0, 13)}</span>
                   <span className='hidden w-48 overflow-hidden overflow-ellipsis text-sm font-medium md:block md:w-full'>{item?.name || item?.eoa}</span>
                 </div>
                 <span className='w-full text-right font-body  text-[13px] font-normal'>{dayjs(item.updatedAt).fromNow()}</span>
@@ -247,7 +247,7 @@ function Signing({
           ))}
         </div>
 
-        <div className={`max-w-96 mt-24 flex flex-col justify-between gap-7 rounded-lg bg-vdao-dark px-6 pt-[16px] pb-[46px] text-white md:mt-44 md:flex-row md:gap-0 md:py-5`}>
+        <div className={`max-w-96 mx-4 mt-[90px] flex flex-col justify-between gap-7 rounded-lg bg-vdao-dark px-6 pt-[16px] pb-[46px] text-white md:mx-0 md:mt-40 md:flex-row md:gap-0 md:py-5`}>
           <div className='my-auto font-body text-lg font-medium'>
             Join our mailing list
             <br />
@@ -261,16 +261,16 @@ function Signing({
           </div>
         </div>
       </div>
-      <div className='mx-auto mt-20 flex  flex-col items-center justify-center gap-[38px] md:mb-48 md:mt-60 md:max-w-[860px] md:flex-row'>
+      <div className='mx-4 mt-20 flex flex-col  items-center justify-center gap-[28px] md:mx-auto md:mb-20 md:mt-[119] md:max-w-[860px] md:flex-row md:gap-[8px] lg:justify-between lg:gap-[38px] '>
         <div className='flex w-full flex-col'>
-          <div className='max-w-[293px] mr-auto text-left font-heading text-[24px] font-light leading-none text-vdao-light md:mt-9 md:w-[496px] md:max-w-[496px] md:text-[40px] '>
-            <div className='font-medium leading-[28px] md:leading-[60px] md:tracking-[-1.5px]'>Feeling inspired?</div>
+          <div className='mr-auto max-w-[293px] text-left font-heading text-[24px] font-light leading-none text-vdao-light md:mt-9 md:w-[496px] md:max-w-[496px] md:text-[40px] '>
+            <div className='font-light leading-[28px] md:font-medium md:leading-[60px] md:tracking-[-1.5px]'>Feeling inspired?</div>
             <div className='font-light leading-[28px] md:leading-[60px] md:tracking-[-1.5px]'>Want to get more involved?</div>
             <div className='font-medium leading-[28px] md:leading-[60px] md:tracking-[-1.5px]'>APPLY TO JOIN THE DAO.</div>
           </div>
-          <div className='n=md:text-[24px] mt-10 w-fit cursor-pointer rounded-md bg-vdao-light px-9 py-1.5 font-heading text-xl font-medium text-vdao-dark md:py-[18px] md:px-[33px]'>Join Now</div>
+          <div className='mt-10 w-fit cursor-pointer rounded-md bg-vdao-light px-9 py-1.5 font-heading text-xl font-medium text-vdao-dark md:py-[18px] md:px-[33px] md:text-[24px]'>Join Now</div>
         </div>
-        <Image src={VDAOApply} width={0} height={0} alt='apply' className='pointer-events-none md:h-[420px]  w-9/12 h-[284px] transform md:mt-0 md:w-[326px] mb-[69px] md:mb-0' />
+        <Image src={VDAOApply} width={0} height={0} alt='apply' className='pointer-events-none mb-[69px]  h-[284px] w-10/12 transform md:mt-0 md:mb-0 md:h-[420px]  md:w-[326px]' />
       </div>
     </section>
   )
@@ -280,20 +280,19 @@ function SectionTwo() {
   return (
     // light to dark
 
-    <section>
-      <div className='mx-auto mt-24 flex max-w-[860px] flex-col items-center md:mt-48 '>
-        <div className='mr-auto text-left font-heading text-[28px] md:text-[32px] font-medium text-vdao-light'>The Metacrisis</div>
-        <br />
-        <div className='font-body text-base md:text-xl font-normal leading-[28px] text-white'>
+    <section className='px-4'>
+      <div className='mx-auto mt-24 flex max-w-[860px] flex-col items-center md:mt-[122px] '>
+        <div className='mr-auto text-left font-heading text-[28px] font-medium text-vdao-light md:text-[32px]'>The Metacrisis</div>
+        <div className='mt-5 font-body text-base font-normal leading-[28px] text-white md:text-xl'>
           Humanity is at the peak of our known history. The economic, industrial, agricultural, energy and technological systems that helped us evolve have become the very liabilities that now
           challenge our survival. These systems were designed with growth and profitability as the top priority, which has led to negative externalities impacting our health, well-being and to single
           points of failure across the various centralized systems we rely on. 
         </div>
-        <div className='mx-auto mx-auto my-[64px] md:my-20 max-w-[638px] text-left font-heading text-[28px] md:text-[40px] font-light leading-[36px] md:leading-10 text-vdao-light'>
+        <div className='mx-auto my-[64px] max-w-[638px] text-left font-heading text-[28px] font-light leading-[36px] text-vdao-light md:my-20 md:text-[40px] md:leading-10'>
           “Our societies have devolved into a zero-sum scarcity mindset, with{' '}
-          <span className='font-heading text-[28px] md:text-[40px] font-medium leading-[36px] mdLleading-10 text-vdao-light'> band-aid solutions that exacerbate the problems.”</span>
+          <span className='mdLleading-10 font-heading text-[28px] font-medium leading-[36px] text-vdao-light md:text-[40px]'> band-aid solutions that exacerbate the problems.”</span>
         </div>
-        <div className='font-body text-base md:text-xl font-normal leading-[28px] text-white'>
+        <div className='font-body text-base font-normal leading-[28px] text-white md:text-xl'>
           The signs are everywhere for those with the eyes to see. Financial systems are collapsing. The Web 2 model is polarizing society and exploiting consumers. Mainstream media has become a
           propaganda machine. Manufacturing systems and supply chains are increasingly fragile. Energy systems rely heavily on oil and minerals, both of which are running out. Agricultural and food
           systems are energy intensive, while nutrient density diminishes and we degrade our soil.
@@ -302,45 +301,46 @@ function SectionTwo() {
           fallen out of harmony with it.
         </div>
       </div>
-
-      <div className='mx-auto flex max-w-[860px] flex-col items-center  mt-[100px] md:mt-[160px]'>
-        <div className='mr-auto text-left font-heading text-[28px] md:text-[32px] font-medium text-vdao-light'>VDAO</div>
-        <br />
-        <div className='font-body text-base md:text-xl font-normal leading-[28px] text-white'>
+      <div className='mx-auto mt-[100px] flex max-w-[860px] flex-col  items-center md:mt-[160px]'>
+        <div className='mr-auto text-left font-heading text-[28px] font-medium text-vdao-light md:text-[32px]'>VDAO</div>
+        <div className='mt-5 font-body text-base font-normal leading-[28px] text-white md:text-xl'>
           Vdao is a place for collaboration, to build regenerative and anti-fragile systems to propel humanity out of our existing paradigm into a new world - the 5th World. 
           <br />
           <br />
-          “V” stands for ‘5’ and that humanity is on the ‘Verge’ of transitioning into the 5th World. The ‘V’ also symbolizes a formation of birds benefiting from shared leadership. Each bird takes turns at the front, pushing through the resistance of the air and drafting for the benefit of the others, until another teammate moves forward to lead the flock, relieving the teammate that now falls back and rejoins the group. This is the essence of the 5th World and V DAO leadership.
+          “V” stands for ‘5’ and that humanity is on the ‘Verge’ of transitioning into the 5th World. The ‘V’ also symbolizes a formation of birds benefiting from shared leadership. Each bird takes
+          turns at the front, pushing through the resistance of the air and drafting for the benefit of the others, until another teammate moves forward to lead the flock, relieving the teammate that
+          now falls back and rejoins the group. This is the essence of the 5th World and V DAO leadership.
         </div>
-        <div className='mx-auto mx-auto mt-24 mb-20 max-w-[630px] text-left font-heading text-[40px] font-light leading-10 text-vdao-light hidden md:block'>
-         It is a decentralized community of
-          <span className='font-heading text-[40px] font-medium leading-10 text-vdao-light'> creators, contributors, artists, thinkers and seekers.</span>
+        <div className='mx-auto my-[52px] max-w-[313px] text-left font-heading text-[22px] font-normal leading-[32px] text-vdao-light md:mt-24 md:max-w-[630px] md:text-[40px] md:font-light md:leading-10'>
+          It is a decentralized community of
+          <span className='font-heading text-[22px] font-medium leading-[32px] text-vdao-light md:text-[40px] md:leading-10'> creators, contributors, artists, thinkers and seekers.</span>
         </div>
-        <br />
-        <div className='font-body text-base md:text-xl font-normal leading-[28px] text-white'>
-          We believe that the only way to address the challenges that are facing us is to go back to the first principles of system design and leverage regenerative, anti-fragile and decentralized primitives to build the 5th World systems, with a focus on generating positive externalities and adopting an abundance mindset of enlightened self-interest where all stakeholders win together.
+        <div className='font-body text-base font-normal leading-[28px] text-white md:text-xl'>
+          We believe that the only way to address the challenges that are facing us is to go back to the first principles of system design and leverage regenerative, anti-fragile and decentralized
+          primitives to build the 5th World systems, with a focus on generating positive externalities and adopting an abundance mindset of enlightened self-interest where all stakeholders win
+          together.
         </div>
       </div>
-  
-      <Image src={Green_VDAO} alt='Green_VDAO' className='mx-auto my-24 h-[86px] max-w-[358px] md:my-40 md:h-[260px] md:w-11/12 md:max-w-[860px] hidden md:block' />
-
-      <div className='mx-auto w-full max-w-[860px] font-body text-xl font-normal leading-[28px] text-white hidden md:block'>
+       
+      <Image src={Green_VDAO} alt='Green_VDAO' className='mx-auto my-[52px] h-[86px] w-full md:my-40  md:h-[260px] md:w-11/12 md:max-w-[860px]' />
+      <div className='mx-auto w-full max-w-[860px] font-body text-base font-normal leading-[28px] text-white md:text-xl'>
         The VDAO philosophy is based on the principles of freedom, liberty and enlightened self-interest. We believe that we are able to build systems that ensure profits along with impact, without
         compromising on any of the two.   <br />
         <br />
-      The V community is built on a simple but essential umbrella principle: “Do the right thing”. Beneath this umbrella are 4 core values that are used in common practice to ensure integrity at all times: Fairness & Caring, Trust & Respect, Generous Listening, and Straight Talk.
-      <div>
+        The V community is built on a simple but essential umbrella principle: “Do the right thing”. Beneath this umbrella are 4 core values that are used in common practice to ensure integrity at all
+        times: Fairness & Caring, Trust & Respect, Generous Listening, and Straight Talk.
+        <div>
           <br />
-          <br />
-          The V community is apolitical and does not engage in political, religious, and social issues as a rule. No matter your background and personal beliefs, as long as you agree with our mission and community core values, we welcome you into the V community and hope that you will contribute towards building the new world systems.
+          The V community is apolitical and does not engage in political, religious, and social issues as a rule. No matter your background and personal beliefs, as long as you agree with our mission
+          and community core values, we welcome you into the V community and hope that you will contribute towards building the new world systems.
         </div>
       </div>
-
-      <div className='mx-auto flex max-w-[860px] flex-col items-center font-body md:my-40 '>
-       <div className="font-heading text-[32px] mt-[425px] mb-[100px] leading-[36px] md:hidden font-medium text-white">The VDAO philosophy is based on the principles of freedom, liberty and enlightened self-interest.</div>
-        <div className='mr-auto text-left font-heading text-[28px] md:text-[32px] font-medium text-vdao-light'>VDAO Objectives</div>
-        <br />
-        <span className='font-body text-base  md:text-xl font-normal leading-[28px] text-white'>
+      <div className='mx-auto mt-[100px] flex max-w-[860px] flex-col items-center font-body md:mt-40 md:mb-[52px]'>
+        {/* <div className='mt-[425px] mb-[100px] font-heading text-[32px] font-medium leading-[36px] text-white md:hidden'>
+          The VDAO philosophy is based on the principles of freedom, liberty and enlightened self-interest.
+        </div> */}
+        <div className='mr-auto text-left font-heading text-[28px] font-medium text-vdao-light md:text-[32px]'>VDAO Objectives</div>
+        <span className='mt-5 font-body  text-base font-normal leading-[28px] text-white md:text-xl'>
           VDAO will be built around two main pillars.
           <br />
           <br />
@@ -355,30 +355,24 @@ function SectionTwo() {
           <li className='ml-8'>Organizing immersive exhibitions and building metaverse experiences</li>
         </span>
         <br />
-        <div className='mt-[100px] md:mt-24 mr-auto text-left font-heading text-[28px] md:text-[32px] font-medium text-vdao-light md:mt-40'>V DAO Roadmap</div>
+        <div className='mt-[100px] mr-auto text-left font-heading text-[28px] font-medium text-vdao-light md:mt-40 md:text-[32px]'>V DAO Roadmap</div>
 
-        <div className=' md:hidden tracking-[-1.5%] my-[44px] mr-auto font-heading text-[32px] md:text-[40px] font-light leading-10 text-white'>
-         We have got to go 
-          <div className='font-heading text-[32px] md:text-[40px] font-medium leading-10 text-white tracking-[-1.5%]'> back to the soil.</div>
-        </div>
-      
-        <span className='md:mt-[32px] font-body text-base md:text-xl font-normal leading-[28px] text-white '>
-        Agriculture is the foundational layer of our society and we believe, as a start, V DAO should be focused on building and scaling regenerative and anti-fragile agricultural systems. As the DAO grows, the community will vote on expanding the scope to include other verticals such as energy, finance and others.
+        <span className='mt-5 font-body text-base font-normal leading-[28px] text-white md:mt-[32px] md:text-xl'>
+          Agriculture is the foundational layer of our society and we believe, as a start, V DAO should be focused on building and scaling regenerative and anti-fragile agricultural systems. As the
+          DAO grows, the community will vote on expanding the scope to include other verticals such as energy, finance and others.
         </span>
 
-          <div className='mx-auto hidden md:block tracking-[-1.5%] my-[60px] text-left font-heading text-[40px] text-center font-light leading-10 text-vdao-light'>
-         We have got to go 
-          <span className='font-heading text-[40px] font-medium leading-10 text-vdao-light tracking-[-1.5%]'> back to the soil.</span>
+        <div className='mx-auto my-[32px] w-[175px] font-heading text-[22px] font-normal leading-[27px] tracking-[-1.5px] text-vdao-light md:my-[60px] md:w-auto md:text-left md:text-[40px] md:font-light md:leading-10'>
+          We have got to go
+          <span className='font-heading text-[22px] font-medium leading-[27px] tracking-[-1.5px] text-vdao-light md:text-[40px] md:leading-10'> back to the soil.</span>
         </div>
-   <span className=' font-body text-base mt-5 md:mt-0 md:text-xl font-normal leading-[28px] text-white '>
-     Our goal is to create space for an authentic self-organizing community to emerge. The community will develop the whitepaper including the decentralization roadmap, the DAO token governance model, as well as the NFT art collaboration model.
+        <span className=' mt-5 font-body text-base font-normal leading-[28px] text-white md:mt-0 md:text-xl '>
+          Our goal is to create space for an authentic self-organizing community to emerge. The community will develop the whitepaper including the decentralization roadmap, the DAO token governance
+          model, as well as the NFT art collaboration model.
         </span>
 
-
-        <h4 className='mt-24 text-[28px] mr-auto text-left font-heading md:text-[32px] font-medium text-vdao-light md:mt-40'>Time for Action</h4>
-        <br />
-
-        <span className='mr-auto font-body text-base md:text-xl font-normal leading-[28px] text-white mb-[106px] md:mb-0'>
+        <h4 className='mt-[100px] mr-auto text-left font-heading text-[28px] font-medium leading-[28px] text-vdao-light md:mt-40 md:text-[32px]'>Time for Action</h4>
+        <span className='mt-5 mr-auto mb-9 font-body text-base font-normal leading-[28px] text-white md:mt-8 md:mb-0 md:text-xl'>
           If you agree with this manifesto and want to be part of our community, please <u className='font-bold'>sign here.</u>
         </span>
       </div>
@@ -388,59 +382,59 @@ function SectionTwo() {
 
 function SectionOne() {
   return (
-    <section className='md:mx-auto mt-9 flex max-w-[1140px] flex-col md:mt-20 mx-[8px]'>
-      <div className='md:text-center font-heading text-[38px] font-medium leading-[48px] md:leading-[72px] tracking-[-1.5px] text-vdao-light md:text-[96px]'>VDAO Manifesto</div>
-      <div className='mt-[16px] w-[307px] md:w-full md:mt-[24px] md:text-center font-heading text-xl font-medium text-white md:text-[32px]'>Restoring Ecosystems From the Soil up.</div>
-      <div className='mt-[64px] md:flex h-[96px] w-full items-center justify-between rounded-[20px] bg-vdao-dark px-10 font-body text-xl font-medium text-white hidden'>
-        <div className='flex items-center justify-between gap-[16px]'>
-          <div className='h-[36px] w-[36px] bg-[url(/icons/manifesto/Pen.svg)] bg-contain bg-center bg-no-repeat'></div>
-          <div className=''>
-            {' '}
-            <span className='opacity-70'>Restoring Ecosy</span>stems From the Soil up.
-          </div>
-        </div>
-        <div className='flex items-center justify-between'>
-          <div className=''>
-            1739 Signa<span className='opacity-70'>tures</span>
-          </div>
-          <PrimaryButton text='Sign Manifesto' className='ml-[35px]' />
-        </div>
-      </div>
-      <div className='md:mt-20 mt-10 flex flex-col-reverse md:flex-row gap-10 md:gap-0'>
-        <Image src={VDAOGetInvolved} alt='VDAO' width={0} height={0} className='mx-auto h-[248px] w-[230px] md:w-[338px] md:h-[364px] ' />
+    <section className='mx-[8px] mt-9 flex max-w-[1140px] flex-col !px-4 md:mx-auto md:mt-20'>
+      <div className='font-heading text-[38px] font-medium leading-[48px] tracking-[-1.5px] text-vdao-light md:text-center md:text-[96px] md:leading-[72px]'>VDAO Manifesto</div>
+      <div className='mt-[16px] w-[307px] font-heading text-xl font-medium text-white md:mt-[24px] md:w-full md:text-center md:text-[32px]'>Restoring Ecosystems From the Soil up.</div>
+
+      <div className='mt-10 flex flex-col-reverse gap-10 md:mt-[64px] md:flex-row md:gap-0'>
+        <Image src={VDAOGetInvolved} alt='VDAO' width={0} height={0} className='mx-auto h-[248px] w-[230px] md:h-[364px] md:w-[338px] ' />
         {/* line height 28px */}
         <div className='my-auto flex flex-col gap-4  md:w-1/2'>
-          <span className='mb-[16px] md:mb-[35px] md:w-[412px] font-body md:text-xl text-base font-medium leading-[28px] text-white'>Complete all 4 steps to join the Vcommunity & gain full access to future benefits.</span>
-          <div className=' flex items-start gap-3 '>
-            <div className='mt-1 h-[19.64px] w-[19.32px] rounded-[2px] bg-vdao-light opacity-20 hidden md:block' />
-              <div className='h-[19px] w-[25px] bg-[url(/icons/manifesto/Group.svg)] mt-2 bg-contain bg-center bg-no-repeat md:hidden'></div>
+          <span className='mb-[16px] font-body text-base font-medium leading-[28px] text-white md:mb-[35px] md:w-[412px] md:text-xl'>
+            Complete all 4 steps to join the Vcommunity & gain full access to future benefits.
+          </span>
+          <div className=' flex w-full items-start gap-3'>
+            <div className='mt-1 hidden h-[19.64px] w-[19.32px] rounded-[2px] bg-vdao-light opacity-20 md:block' />
+            <div className=''>
+              <div className='mt-2 h-[19px] w-[25px] bg-[url(/icons/manifesto/Group.svg)] bg-contain bg-center bg-no-repeat md:hidden'></div>
+            </div>
 
-            <div className='font-body text-base md:text-xl font-medium leading-[28px] md:text-white text-vdao-light md:w-[327px]'>
-              
+            <div className=' font-body text-base font-medium leading-[28px] text-vdao-light md:w-[327px] md:text-xl md:text-white '>
               Read the manifesto below and <u>sign</u> using your wallet if you agree.
             </div>
           </div>
           <span className='mb-1 inline-flex gap-3'>
-            <div className='mt-1 h-[19.64px] w-[19.32px] rounded-[2px] bg-vdao-light opacity-20 hidden md:block' />
-             <div className='h-[19px] w-[25px] bg-[url(/icons/manifesto/Group.svg)] mt-2 bg-contain bg-center bg-no-repeat md:hidden'></div>
-            <div className='font-body text-base md:text-xl font-medium leading-[28px] md:text-white text-vdao-light'>
+            <div className='mt-1 hidden h-[19.64px] w-[19.32px] rounded-[2px] bg-vdao-light opacity-20 md:block' />
+            <div className='mt-2 h-[19px] w-[25px] bg-[url(/icons/manifesto/Group.svg)] bg-contain bg-center bg-no-repeat md:hidden'></div>
+            <div className='font-body text-base font-medium leading-[28px] text-vdao-light md:text-xl md:text-white'>
               Follow us on <u className='font-bold'>Twitter</u>
             </div>
           </span>
           <span className='mb-1 inline-flex gap-3'>
-            <div className='mt-1 h-[19.64px] w-[19.32px] rounded-[2px] bg-vdao-light opacity-20 hidden md:block' />
-             <div className='h-[19px] w-[25px] bg-[url(/icons/manifesto/Group.svg)] mt-2 bg-contain bg-center bg-no-repeat md:hidden'></div>
-            <div className='font-body text-base md:text-xl font-medium leading-[28px] md:text-white text-vdao-light'>
+            <div className='mt-1 hidden h-[19.64px] w-[19.32px] rounded-[2px] bg-vdao-light opacity-20 md:block' />
+            <div className='mt-2 h-[19px] w-[25px] bg-[url(/icons/manifesto/Group.svg)] bg-contain bg-center bg-no-repeat md:hidden'></div>
+            <div className='font-body text-base font-medium leading-[28px] text-vdao-light md:text-xl md:text-white'>
               Join us on <u className='font-bold'>Discord</u>
             </div>
           </span>
           <span className='mb-1 inline-flex gap-3'>
-            <div className='mt-1 h-[19.64px] w-[19.32px] rounded-[2px] bg-vdao-light opacity-20 hidden md:block' />
-             <div className='h-[19px] w-[25px] bg-[url(/icons/manifesto/Group.svg)] mt-2 bg-contain bg-center bg-no-repeat md:hidden'></div>
-            <div className='font-body text-base md:text-xl font-medium leading-[28px] md:text-white text-vdao-light'>
-              <u className='font-bold text-base md:text-xl font-medium leading-[28px] md:text-white text-vdao-light'>Sign up</u> to our mailing list
+            <div className='mt-1 hidden h-[19.64px] w-[19.32px] rounded-[2px] bg-vdao-light opacity-20 md:block' />
+            <div className='mt-2 h-[19px] w-[25px] bg-[url(/icons/manifesto/Group.svg)] bg-contain bg-center bg-no-repeat md:hidden'></div>
+            <div className='font-body text-base font-medium leading-[28px] text-vdao-light md:text-xl md:text-white'>
+              <u className='text-base font-bold font-medium leading-[28px] text-vdao-light md:text-xl md:text-white'>Sign up</u> to our mailing list
             </div>
           </span>
+        </div>
+      </div>
+
+      <div className='mt-10 w-full items-center justify-between rounded-[20px] bg-vdao-dark py-5 px-[38px] font-body text-xl font-medium text-white  md:mt-20 md:flex md:h-[96px] md:py-0 md:px-10'>
+        <div className='flex flex-col justify-between gap-7 md:flex-row md:gap-[16px]'>
+          <div className='mx-auto h-[36px] w-[36px] bg-[url(/icons/manifesto/Pen.svg)] bg-contain bg-center bg-no-repeat md:mx-0' />
+          <div className='opacity-70'> Sign to join Vcommunity & be eligible for future benefits.</div>
+        </div>
+        <div className='mt-10 flex flex-col justify-between gap-5  md:mt-0 md:flex-row md:items-center md:gap-0'>
+          <div className='opacity-70'>Signatures</div>
+          <PrimaryButton text='Sign Manifesto' className='md:ml-[35px]' />
         </div>
       </div>
     </section>

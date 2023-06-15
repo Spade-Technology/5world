@@ -226,10 +226,10 @@ const MobileSubmenu = (props: {
 
 const HeaderManifesto = (props: Props) => {
   return (
-    <div className='mx-auto flex w-11/12 items-center justify-between bg-vdao-deep px-[11px] py-11 md:px-0 lg:max-w-[1140px]'>
+    <div className='mx-auto flex w-full items-center justify-between bg-vdao-deep px-4 py-11 lg:max-w-[1140px]'>
       <Image src={logo} alt='VDAO' className='my-auto h-[17.74px] w-[76px] md:h-[30px]  md:w-[130px]' />
       <div className='flex items-center gap-[56px]'>
-        <section className='md:flex items-center justify-between gap-[35px] hidden'>
+        <section className='hidden items-center justify-between gap-[35px] md:flex'>
           {navigationElementsWeb2.map(
             (element, index) =>
               index > 0 && (
@@ -261,7 +261,7 @@ const HeaderManifesto = (props: Props) => {
           <Image src={twitter} alt='VDAO' width={30} height={30} className='' />
           <Image src={discord} alt='VDAO' width={30} height={30} className='' />
 
-          <VDAOConnectButton className='!mx-0 border-vdao-light text-sm text-vdao-light' />
+          <VDAOConnectButton className='!mx-0 flex items-center justify-center border-vdao-light !px-[23px] !py-[11px] text-sm text-vdao-light' />
         </div>
       </div>
     </div>
