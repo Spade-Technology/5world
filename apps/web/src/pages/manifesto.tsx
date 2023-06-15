@@ -154,7 +154,7 @@ function Signing({
     <section>
       {contextHolder}
       <div className='mx-auto max-w-[850px]' id='SignModule' ref={signModuleRef}>
-        <div className='mx-auto max-w-[358px] rounded-lg bg-vdao-dark p-4 md:pr-[32px]'>
+        <div className='mx-4 max-w-[358px] rounded-lg bg-vdao-dark p-4 md:mx-auto md:pr-[32px]'>
           <span className='font-body text-lg font-medium'>Sign the manifesto with 3 simple steps</span>
           <div className='ml-1 mt-4 flex'>
             {/* left */}
@@ -207,33 +207,35 @@ function Signing({
         </h3>
         <div className='mt-5 flex items-center justify-between px-4 md:mt-[32px] md:px-0'>
           <div className='font-heading text-base font-medium leading-[28px] text-white md:text-xl md:font-normal'>Signed By :</div>
-          <span className='font-heading text-base font-medium leading-[28px] md:text-xl '>
+          <span className='font-heading text-lg font-medium leading-3 md:text-xl md:leading-[28px] '>
             <Skeleton active={signatures.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={signatures.loading} className='my-auto !w-5'>
               {signatures.total || 0}
             </Skeleton>
             <div className='font-body text-sm font-normal leading-[28px]'>Signatures</div>
           </span>
         </div>
-        <div className={`mt-4 max-w-[860px] bg-vdao-dark py-5 px-6 md:mt-3 md:rounded-lg`}>
+        <div className={`mt-4 max-w-[860px] bg-vdao-dark px-6 py-3 md:mt-3 md:rounded-lg`}>
           {signatures.loading && <Spin className='w-full' />}
           {list.map((item, i) => (
             <>
-              <div key={i} className='mt-4 flex w-full flex-row items-center justify-between'>
+              <div key={i} className="flex w-full flex-row items-end justify-between py-4 md:mt-4 md:items-center">
                 <div className='flex w-full items-center  gap-3'>
-                  <div
-                    className='rounded-full'
-                    style={{
-                      background: 'linear-gradient(221.35deg, #36DFAE 0%, #28B6A5 36.46%, #1D555C 100%)',
-                      width: '44px',
-                      height: '44px',
-                    }}
-                  />
+                  <div className=''>
+                    <div
+                      className='rounded-full'
+                      style={{
+                        background: 'linear-gradient(221.35deg, #36DFAE 0%, #28B6A5 36.46%, #1D555C 100%)',
+                        width: '44px',
+                        height: '44px',
+                      }}
+                    />
+                  </div>
                   <span className=' overflow-hidden overflow-ellipsis text-sm font-medium md:hidden md:w-full'>{item?.name || item?.eoa.substring(0, 13)}</span>
                   <span className='hidden w-48 overflow-hidden overflow-ellipsis text-sm font-medium md:block md:w-full'>{item?.name || item?.eoa}</span>
                 </div>
                 <span className='w-full text-right font-body  text-[13px] font-normal'>{dayjs(item.updatedAt).fromNow()}</span>
               </div>
-              {i !== list.length - 1 && <Divider className='w-full bg-white opacity-20' />}
+              {i !== list.length - 1 && <div className='h-[1px] w-full bg-white opacity-20' />}
             </>
           ))}
         </div>
@@ -302,7 +304,7 @@ function SectionTwo() {
           turns at the front, pushing through the resistance of the air and drafting for the benefit of the others, until another teammate moves forward to lead the flock, relieving the teammate that
           now falls back and rejoins the group. This is the essence of the 5th World and V DAO leadership.
         </div>
-        <div className='mx-auto my-[52px] max-w-[313px] text-left font-heading text-[22px] font-normal leading-[32px] text-vdao-light md:mt-24 md:max-w-[630px] md:text-[40px] md:font-light md:leading-10'>
+        <div className='mx-auto my-[52px] max-w-[313px] text-left font-heading text-[22px] font-normal leading-[32px] text-vdao-light md:my-20 md:mt-24 md:max-w-[630px] md:text-[40px] md:font-light md:leading-10'>
           It is a decentralized community of
           <span className='font-heading text-[22px] font-medium leading-[32px] text-vdao-light md:text-[40px] md:leading-10'> creators, contributors, artists, thinkers and seekers.</span>
         </div>
@@ -357,7 +359,7 @@ function SectionTwo() {
           We have got to go
           <span className='font-heading text-[22px] font-medium leading-[27px] tracking-[-1.5px] text-vdao-light md:text-[40px] md:leading-10'> back to the soil.</span>
         </div>
-        <span className=' mt-5 font-body text-base font-normal leading-[28px] text-white md:mt-0 md:text-xl '>
+        <span className=' font-body text-base font-normal leading-[28px] text-white md:mt-0 md:text-xl '>
           Our goal is to create space for an authentic self-organizing community to emerge. The community will develop the whitepaper including the decentralization roadmap, the DAO token governance
           model, as well as the NFT art collaboration model.
         </span>
@@ -391,7 +393,7 @@ function SectionOne() {
             </div>
 
             <div className=' font-body text-base font-medium leading-[28px] text-vdao-light md:w-[327px] md:text-xl md:text-white '>
-              Read the manifesto below and <u>sign</u> using your wallet if you agree.
+              Read the manifesto below and <u className='font-bold'>sign</u> using your wallet if you agree.
             </div>
           </div>
           <span className='mb-1 inline-flex gap-3'>
@@ -412,9 +414,20 @@ function SectionOne() {
             <div className='mt-1 hidden h-[19.64px] w-[19.32px] rounded-[2px] bg-vdao-light opacity-20 md:block' />
             <div className='mt-2 h-[19px] w-[25px] bg-[url(/icons/manifesto/Group.svg)] bg-contain bg-center bg-no-repeat md:hidden'></div>
             <div className='font-body text-base font-medium leading-[28px] text-vdao-light md:text-xl md:text-white'>
-              <u className='text-base font-bold font-medium leading-[28px] text-vdao-light md:text-xl md:text-white'>Sign up</u> to our mailing list
+              <u className='text-base font-bold leading-[28px] text-vdao-light md:text-xl md:text-white'>Sign up</u> to our mailing list
             </div>
           </span>
+        </div>
+      </div>
+
+      <div className='mt-10 w-full items-center justify-between rounded-[20px] bg-vdao-dark py-5 px-[38px] font-body text-xl font-medium text-white  md:mt-20 md:flex md:h-[96px] md:py-0 md:px-10'>
+        <div className='flex flex-col justify-between gap-7 md:flex-row md:gap-[16px]'>
+          <div className='mx-auto h-[36px] w-[36px] bg-[url(/icons/manifesto/Pen.svg)] bg-contain bg-center bg-no-repeat md:mx-0' />
+          <div className='opacity-70'> Sign to join Vcommunity & be eligible for future benefits.</div>
+        </div>
+        <div className='mt-10 flex flex-col justify-between gap-5  md:mt-0 md:flex-row md:items-center md:gap-0'>
+          <div className='opacity-70'>Signatures</div>
+          <PrimaryButton text='Sign Manifesto' className='md:ml-[35px]' />
         </div>
       </div>
     </section>
