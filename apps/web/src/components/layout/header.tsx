@@ -258,8 +258,8 @@ const HeaderManifesto = (props: Props) => {
           )}
         </section>
         <div className='flex items-center justify-center gap-4 md:gap-7'>
-          <Image src={twitter} alt='VDAO' width={30} height={30} className='' />
-          <Image src={discord} alt='VDAO' width={30} height={30} className='' />
+          <Image src={twitter} alt='VDAO' width={30} height={30} className='max-[350px]:hidden' />
+          <Image src={discord} alt='VDAO' width={30} height={30} className='max-[350px]:hidden' />
 
           <VDAOConnectButton className='!mx-0 flex items-center justify-center border-vdao-light !px-[23px] !py-[11px] text-sm text-vdao-light' />
         </div>
