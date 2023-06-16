@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Image from 'next/image'
 
@@ -82,6 +82,14 @@ const Header = (props: Props) => {
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen)
 
+  const [pathname, setPathname] = useState('')
+
+  useEffect(() => {
+    if (typeof window != 'undefined') {
+      setPathname(window.location.pathname)
+    }
+  }, [])
+
   return (
     <header className={!props.dark ? 'overflow-hidden bg-white' : 'w-full overflow-hidden bg-vdao-deep'}>
       {/* Desktop */}
@@ -127,7 +135,7 @@ const Header = (props: Props) => {
       {/* Mobile */}
       <div
         className={`flex w-full items-center justify-between py-16 px-4 md:hidden ${!props.dark ? 'bg-white ' : 'bg-vdao-deep '} ${isMobileMenuOpen ? 'fixed top-0 left-0 z-50' : ''} ${
-          window.location.pathname === '/blog/details' ? '!pb-4' : ''
+          pathname === '/blog/details' ? '!pb-4' : ''
         }`}
       >
         <Link href='/'>
