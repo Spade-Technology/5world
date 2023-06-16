@@ -34,10 +34,7 @@ const BlogPagination = () => {
     if (pageCount) {
       let updatedBlogsArr = []
       const startBlog = itemsPerPage * (pageCount - 1)
-      const endBlog =
-        (pageCount - 1) * itemsPerPage + 3 <= blogDetails.length
-          ? (pageCount - 1) * itemsPerPage + 3
-          : blogDetails.length
+      const endBlog = (pageCount - 1) * itemsPerPage + 3 <= blogDetails.length ? (pageCount - 1) * itemsPerPage + 3 : blogDetails.length
 
       for (let i = startBlog; i < endBlog; i++) {
         updatedBlogsArr.push(blogDetails[i])

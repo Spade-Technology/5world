@@ -28,7 +28,7 @@ const FormOne = ({ podName, description, podImage, setPodImage, setNextForm, set
 
   const nextHandler = () => {
     // if (podName && description && podImage.image) {
-      setNextForm(true)
+    setNextForm(true)
     // } else {
     //   setError(true)
     //   setTimeout(() => {

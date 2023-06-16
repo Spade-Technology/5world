@@ -31,9 +31,7 @@ const FormOne = ({ title, setTitle, description, setDescription, setNextForm }: 
         <EllipseComponent className='pt-5 text-[22px] font-medium md:text-[26px]' text='Correct chain selected' />
         <EllipseComponent className='pt-5 text-[22px] font-medium md:text-[26px]' text='You have 217 voting power' />
 
-        <div className='mt-5 w-fit cursor-pointer rounded-[5px] bg-vdao-pink py-[5px] px-[35px] font-heading text-xl font-medium md:mt-[30px]'>
-          Switch Wallet
-        </div>
+        <div className='mt-5 w-fit cursor-pointer rounded-[5px] bg-vdao-pink py-[5px] px-[35px] font-heading text-xl font-medium md:mt-[30px]'>Switch Wallet</div>
       </div>
 
       <div>
@@ -53,20 +51,14 @@ const FormOne = ({ title, setTitle, description, setDescription, setNextForm }: 
           className={` mt-[15px] h-[143px] w-full max-w-[510px] truncate break-words rounded-[10px] border-[1px] p-5 outline-none placeholder:text-opacity-80 md:mt-5 md:p-[30px]
           ${error && !description ? 'border-red-600 placeholder:text-red-400 ' : ' border-vdao-dark'}`}
           placeholder={`${
-            error && !title
-              ? '* Required'
-              : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet elementum urna, in volutpat risus. Quisque nec tempus diam, sit amet luctus mi.'
+            error && !title ? '* Required' : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet elementum urna, in volutpat risus. Quisque nec tempus diam, sit amet luctus mi.'
           }`}
           value={description}
           onChange={evt => setDescription(evt.target.value)}
         />
 
         <div className='pt-5 pb-1 md:pt-[35px]'>
-          <PrimaryButton
-            text='Next'
-            className='float-right py-[5px] px-[35px] text-lg font-medium'
-            onClick={nextHandler}
-          />
+          <PrimaryButton text='Next' className='float-right py-[5px] px-[35px] text-lg font-medium' onClick={nextHandler} />
         </div>
       </div>
     </div>

@@ -5,12 +5,7 @@ import Header from '~/components/layout/header'
 import Page from '~/components/layout/page'
 import MailingListComponent from '~/components/misc/mailinglist'
 
-import {
-  AboutUsComponent,
-  AboutUsCoreTeamComponent,
-  AboutUsCoreValueComponent,
-  AboutUsVisionMissionComponent,
-} from '~/components/pages/about'
+import { AboutUsComponent, AboutUsCoreTeamComponent, AboutUsCoreValueComponent, AboutUsVisionMissionComponent } from '~/components/pages/about'
 
 const AboutUs: NextPage = () => {
   return (

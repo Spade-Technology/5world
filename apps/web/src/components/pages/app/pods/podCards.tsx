@@ -36,34 +36,16 @@ const PodCards = ({ setPid, setOpenedPod, data, isLoading }: PodCardProps) => {
   return (
     <div className='mx-auto w-screen bg-vdao-deep'>
       <div className='mx-auto max-w-[1280px] pb-[120px]'>
-        <div
-          id='currentPods'
-          className='mx-6 max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'
-        >
+        <div id='currentPods' className='mx-6 max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'>
           Current Pods
         </div>
 
         <div className='mx-6 mt-5 grid grid-cols-1 gap-5 md:mx-0 md:grid-cols-2'>
           {isLoading ? (
             <>
-              <Skeleton.Avatar
-                shape='square'
-                style={{ height: '400px', width: '100%' }}
-                className='col-span-2'
-                active
-              />
-              <Skeleton.Avatar
-                shape='square'
-                style={{ height: '400px', width: '100%' }}
-                className='col-span-2'
-                active
-              />
-              <Skeleton.Avatar
-                shape='square'
-                style={{ height: '400px', width: '100%' }}
-                className='col-span-2'
-                active
-              />
+              <Skeleton.Avatar shape='square' style={{ height: '400px', width: '100%' }} className='col-span-2' active />
+              <Skeleton.Avatar shape='square' style={{ height: '400px', width: '100%' }} className='col-span-2' active />
+              <Skeleton.Avatar shape='square' style={{ height: '400px', width: '100%' }} className='col-span-2' active />
             </>
           ) : data && data.length > 0 ? (
             data?.map((pod, idx) => {
@@ -133,9 +115,7 @@ export const Card = ({ setOpenedPod, pod, setPid }: CardProps) => {
               </div>
 
               <div className='!w-1/3 pl-[10px] md:pl-[16px]'>
-                <div className='font-body text-lg font-semibold'>
-                  {pod.admins[0]?.name ? shortenText(pod.admins[0]?.name) : 'Unnamed'}
-                </div>
+                <div className='font-body text-lg font-semibold'>{pod.admins[0]?.name ? shortenText(pod.admins[0]?.name) : 'Unnamed'}</div>
                 <div className='font-body text-sm'>{shortenAddress(pod.admins[0]?.address || '0x')}</div>
               </div>
             </div>
@@ -162,9 +142,7 @@ export const Card = ({ setOpenedPod, pod, setPid }: CardProps) => {
                 )}
               </div>
               <div className='!w-1/3 pl-[10px] md:pl-[16px]'>
-                <div className='font-body text-lg font-semibold'>
-                  {member.name ? shortenText(member.name) : 'Unnamed'}
-                </div>
+                <div className='font-body text-lg font-semibold'>{member.name ? shortenText(member.name) : 'Unnamed'}</div>
                 <div className='font-body text-sm'>{shortenAddress(member.address || '0x')}</div>
               </div>
             </div>

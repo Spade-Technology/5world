@@ -23,9 +23,7 @@ const GrantDetails = ({ show, close }: Props) => {
 
       <div className='grid grid-cols-1 gap-[73px] py-[27px] px-[24px] font-body text-lg font-normal text-vdao-dark md:grid-cols-3 md:py-10 md:px-[50px]'>
         <div className='col-span-2'>
-          <div className=' border-b-[1px] border-b-vdao-dark pb-5 font-heading text-[26px] font-medium md:text-[30px]'>
-            Grant Title Goes Here
-          </div>
+          <div className=' border-b-[1px] border-b-vdao-dark pb-5 font-heading text-[26px] font-medium md:text-[30px]'>Grant Title Goes Here</div>
 
           <div className='grid grid-cols-1 gap-5 pt-5 font-medium md:grid-cols-2 md:gap-0 md:pt-10'>
             <div className='flex gap-[10px] '>
@@ -48,22 +46,17 @@ const GrantDetails = ({ show, close }: Props) => {
           <div className='pt-[30px] text-[22px] font-bold md:pt-10'>Delegate your vote</div>
 
           <div className='flex gap-5 pt-[22px]'>
-            <WhiteButton
-              text='60'
-              className='border-[1px] border-vdao-dark py-[9px] px-[27px] font-heading text-xl font-medium'
-            />
+            <WhiteButton text='60' className='border-[1px] border-vdao-dark py-[9px] px-[27px] font-heading text-xl font-medium' />
 
             <PrimaryButton text='Vote' className='py-[9\px] font-heading text-xl font-medium' />
           </div>
 
           <div className='pt-[30px] md:pt-[60px]'>
-            The Governance Facilitator(s) and the Protocol Engineering Core Unit have placed an urgent out-of-schedule
-            executive proposal into the voting system. MKR Holders should vote for this proposal if they support the
-            following alterations to the Maker Protocol.
+            The Governance Facilitator(s) and the Protocol Engineering Core Unit have placed an urgent out-of-schedule executive proposal into the voting system. MKR Holders should vote for this
+            proposal if they support the following alterations to the Maker Protocol.
             <br />
             <br />
-            If you are new to voting in the Maker Protocol, please see the voting guide to learn how voting works, and
-            this wallet setup guide to set up your wallet to vote.
+            If you are new to voting in the Maker Protocol, please see the voting guide to learn how voting works, and this wallet setup guide to set up your wallet to vote.
             <br />
             <br />
             Executive Summary
@@ -73,25 +66,20 @@ const GrantDetails = ({ show, close }: Props) => {
             <br />
             Urgent Parameter Changes to MATIC-A, LINK-A, YFI-A, renBTC-A, and MANA-A Vaults, as detailed below.
             <br />
-            Voting for this executive proposal will place your MKR in support of the changes and additions outlined
-            above.
+            Voting for this executive proposal will place your MKR in support of the changes and additions outlined above.
           </div>
 
           <Image src={GitCoinImage} alt='GitCoin' className='pt-[30px] md:pt-16' />
 
           <div className='pt-10'>
-            Unless otherwise noted, the changes and additions listed above are subject to the GSM Pause Delay. This
-            means that if this executive proposal passes, the changes and additions listed above will only become active
-            in the Maker Protocol after the GSM Pause Delay has expired. The GSM Pause Delay is currently set to 48
-            hours.
+            Unless otherwise noted, the changes and additions listed above are subject to the GSM Pause Delay. This means that if this executive proposal passes, the changes and additions listed above
+            will only become active in the Maker Protocol after the GSM Pause Delay has expired. The GSM Pause Delay is currently set to 48 hours.
             <br /> <br />
-            If this executive proposal does not pass within 30 days, then it will expire and can no longer have any
-            effect on the Maker Protocol.
+            If this executive proposal does not pass within 30 days, then it will expire and can no longer have any effect on the Maker Protocol.
             <br /> <br />
             Urgent Collateral Parameter Proposal Details <br />
-            As per this successful urgent signal request, the following parameter changes will take place if this
-            out-of-schedule executive proposal passes. To read more on the process for urgent responses, please see
-            MIP24: Emergency Response.
+            As per this successful urgent signal request, the following parameter changes will take place if this out-of-schedule executive proposal passes. To read more on the process for urgent
+            responses, please see MIP24: Emergency Response.
           </div>
 
           <div className='pt-[68px]'>
@@ -100,16 +88,10 @@ const GrantDetails = ({ show, close }: Props) => {
               Activity{" "}
             </div> */}
             <div className='flex gap-[30px] border-b-[1px] border-b-vdao-dark pb-5 pt-[44px] font-body text-[22px] font-bold'>
-              <div
-                className={` ${!showActivity && 'text-vdao-light'} cursor-pointer justify-start`}
-                onClick={() => setShowActivity(false)}
-              >
+              <div className={` ${!showActivity && 'text-vdao-light'} cursor-pointer justify-start`} onClick={() => setShowActivity(false)}>
                 Detail
               </div>
-              <div
-                className={` ${showActivity && 'text-vdao-light'} cursor-pointer justify-start`}
-                onClick={() => setShowActivity(true)}
-              >
+              <div className={` ${showActivity && 'text-vdao-light'} cursor-pointer justify-start`} onClick={() => setShowActivity(true)}>
                 Activity
               </div>
               <div

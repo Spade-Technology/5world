@@ -18,7 +18,8 @@ const FAQSection = (props: FAQProps) => {
       <div className='w-[342px] font-heading text-[32px] font-medium leading-[38px] md:w-[447px] md:text-[46px] md:leading-[52px]'>Frequently asked Questions</div>
       <div className='mt-5 flex-1'>
         <div className='font-heading text-[22px] font-medium leading-[26px] md:pr-10 md:font-body md:text-[26px] md:leading-[30px]'>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi turpis mi, faucibus vitae elementum id, tristique at lectus.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi turpis mi, faucibus vitae elementum id, tristique at lectus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+          turpis mi, faucibus vitae elementum id, tristique at lectus.
         </div>
 
         {props.FAQS.map((faq, idx) => {
@@ -29,6 +30,7 @@ const FAQSection = (props: FAQProps) => {
                 {index === idx && <div className='pt-2 font-body text-lg font-normal leading-[22px]'>{faq.description}</div>}
               </div>
 
+              <Image src={UpWardsArrow} alt='arrow' className={`h-6 w-6 ${index === idx ? 'mt-10 origin-top rotate-180 transition-transform' : ''} `} />
               <Image src={UpWardsArrow} alt='arrow' className={`h-6 w-6 ${index === idx ? 'mt-10 origin-top rotate-180 transition-transform' : ''} `} />
             </div>
           )

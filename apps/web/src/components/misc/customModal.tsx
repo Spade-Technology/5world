@@ -26,11 +26,8 @@ const CustomModal = ({ show, close, children, heading, modalMarginTop, padding, 
 
   return (
     <div className={`fixed top-0 left-0 bottom-0 flex h-[100vh] w-[100vw] items-center justify-center transition-all ease-in-out ${show ? 'visible z-50 opacity-100' : 'invisible opacity-0'}`}>
-        <div
-          className={`absolute -z-10 h-full w-full bg-black bg-opacity-60 backdrop-blur-sm backdrop-opacity-0 transition-all ${show && 'backdrop-opacity-100'}`}
-          onClick={close} 
-        />
-    {/* <div
+      <div className={`absolute -z-10 h-full w-full bg-black bg-opacity-60 backdrop-blur-sm backdrop-opacity-0 transition-all ${show && 'backdrop-opacity-100'}`} onClick={close} />
+      {/* <div
       className={`${
         show ? 'block' : 'hidden'
       } fixed top-0 left-0 z-50 mx-auto h-full w-full overflow-auto backdrop-brightness-50 `}
@@ -42,11 +39,7 @@ const CustomModal = ({ show, close, children, heading, modalMarginTop, padding, 
         // ref={ref}
       >
         <div className='flex justify-between'>
-          <div>
-            {heading && (
-              <div className='pt-5 font-heading text-[26px] font-medium text-vdao-dark md:text-3xl'>{heading}</div>
-            )}
-          </div>
+          <div>{heading && <div className='pt-5 font-heading text-[26px] font-medium text-vdao-dark md:text-3xl'>{heading}</div>}</div>
 
           {!removeCloseIcon && (
             <Image
