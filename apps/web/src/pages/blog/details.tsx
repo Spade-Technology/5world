@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import Recommends from '~/components/pages/blog/recommends'
 import Footer from '~/components/layout/footer'
 import Link from 'next/link'
+import MailingListComponent from '~/components/misc/mailinglist'
 
 const BlogDetails = () => {
   const router = useRouter()
@@ -17,17 +18,17 @@ const BlogDetails = () => {
     <>
       <Header web2 />
 
-      <div className='mx-auto max-w-[1280px] bg-white text-vdao-dark'>
-        <Link href='/blog' className='mt-5 mb-8 flex gap-3'>
+      <div className='mx-auto mb-[84px] max-w-[1280px] bg-white px-6 text-vdao-dark md:mb-28 md:px-0'>
+        <Link href='/blog' className='mb-8 flex gap-3 md:mt-5  md:pl-6 xl:pl-0'>
           <Image src={BackArrow} alt='' width={20} />
-          <div className='text-lg'> Back</div>
+          <div className='font-body text-lg font-normal'> Back</div>
         </Link>
 
         <Details id={id ? id : '0'} />
 
         <Recommends />
       </div>
-
+      <MailingListComponent />
       <Footer />
     </>
   )

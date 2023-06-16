@@ -80,16 +80,17 @@ export function HomeCommunityComponent() {
                 We welcome members from all walks of life and political beliefs if they are aligned with the DAO’s core values and mission.
               </div>
             </div>
-            <div className='flex flex-col gap-4 md:w-10/12 lg:w-9/12'>
-              <div className='font-body text-[26px] font-medium md:font-heading md:text-3xl'>Positive</div>
-              <div className='font-body text-lg font-normal leading-[22px] text-white'>We believe that with focus and collective effort, the world's ecosystems can and will be regenerated.</div>
-            </div>
-            <div className='flex flex-col gap-4 md:mt-10 md:w-10/12 lg:w-9/12'>
+            <div className='flex flex-col gap-4  md:w-10/12 lg:w-9/12'>
               <div className='font-body text-[26px] font-medium md:font-heading md:text-3xl'>Curious</div>
               <div className='font-body text-lg font-normal leading-[22px] text-white'>
                 We exist at the bleeding edge of regenerative agriculture innovation, creating global networks that can bring about a new era of modern agriculture.
               </div>
             </div>
+            <div className='flex flex-col gap-4 md:mt-10 md:w-10/12 lg:w-9/12'>
+              <div className='font-body text-[26px] font-medium md:font-heading md:text-3xl'>Positive</div>
+              <div className='font-body text-lg font-normal leading-[22px] text-white'>We believe that with focus and collective effort, the world's ecosystems can and will be regenerated.</div>
+            </div>
+
             <div className='flex flex-col gap-4 md:mt-10 md:w-10/12 lg:w-9/12'>
               <div className='font-body text-[26px] font-medium md:font-heading md:text-3xl'>Engaged</div>
               <div className=' font-body text-lg font-normal leading-[22px] text-white'>We contribute to regenerative agriculture conversations, developing a vibrant learning culture.</div>

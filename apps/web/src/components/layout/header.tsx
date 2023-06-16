@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Image from 'next/image'
 
@@ -82,6 +82,14 @@ const Header = (props: Props) => {
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen)
 
+  const [pathname, setPathname] = useState('')
+
+  useEffect(() => {
+    if (typeof window != 'undefined') {
+      setPathname(window.location.pathname)
+    }
+  }, [])
+
   return (
     <header className={!props.dark ? 'overflow-hidden bg-white' : 'w-full overflow-hidden bg-vdao-deep'}>
       {/* Desktop */}
@@ -108,7 +116,7 @@ const Header = (props: Props) => {
               }
               key={element.name}
             >
-              <Link href={element.link} className={`text-body text-lg font-medium ${props.web2 ? 'text-vdao-dark' : 'text-white'}`}>
+              <Link href={element.link} className={`font-body text-lg font-medium ${props.web2 ? 'text-vdao-dark' : 'text-white'}`}>
                 {element.name}
               </Link>
             </Tooltip>
@@ -125,7 +133,11 @@ const Header = (props: Props) => {
       </div>
 
       {/* Mobile */}
-      <div className={`flex w-full items-center justify-between py-16 px-4 md:hidden ${!props.dark ? 'bg-white ' : 'bg-vdao-deep '} ${isMobileMenuOpen ? 'fixed top-0 left-0 z-50' : ''}`}>
+      <div
+        className={`flex w-full items-center justify-between py-16 px-4 md:hidden ${!props.dark ? 'bg-white ' : 'bg-vdao-deep '} ${isMobileMenuOpen ? 'fixed top-0 left-0 z-50' : ''} ${
+          pathname === '/blog/details' ? '!pb-4' : ''
+        }`}
+      >
         <Link href='/'>
           <Image src={logo} alt='VDAO' height={30} />
         </Link>
@@ -250,7 +262,7 @@ const HeaderManifesto = (props: Props) => {
                   }
                   key={element.name}
                 >
-                  <Link href={element.link} className={`text-body text-lg font-medium ${props.web2 ? 'text-vdao-dark' : 'text-white'}`}>
+                  <Link href={element.link} className={`font-body text-lg font-medium ${props.web2 ? 'text-vdao-dark' : 'text-white'}`}>
                     {element.name}
                   </Link>
                 </Tooltip>
