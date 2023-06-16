@@ -118,15 +118,17 @@ const Home: NextPage<any> = () => {
         <div className='overflow-hidden md:px-4'>
           {contextHolder}
           <SectionOne />
-          <div className='pointer-events-none left-0 right-0 md:absolute md:h-[5150px]'>
-            <div className='mx-auto mt-10 w-full max-w-[1280px] items-center justify-between rounded-[20px] bg-vdao-dark py-5 px-[38px] font-body text-xl font-medium text-white md:sticky md:top-10 md:mt-20 md:flex md:h-[96px] md:py-0 md:px-10'>
-              <div className='flex flex-col justify-between gap-7 md:flex-row md:gap-[16px]'>
-                <div className='mx-auto h-[36px] w-[36px] bg-[url(/icons/manifesto/Pen.svg)] bg-contain bg-center bg-no-repeat md:mx-0' />
+          <div className='pointer-events-none left-0 right-0 px-4 md:absolute md:h-[5150px] md:px-0'>
+            <div className='z-50 mx-auto mt-10 w-full max-w-[342px] items-center justify-between rounded-[20px] bg-vdao-dark py-5 px-[38px] font-body text-xl font-medium text-white md:sticky md:top-10 md:mt-20 md:flex md:w-11/12 md:max-w-[1140px] md:px-10 lg:h-[96px] lg:py-0'>
+              <div className='flex flex-col items-center justify-between gap-7 md:w-80 md:flex-row md:gap-[16px] lg:w-auto'>
+                <div className=''>
+                  <div className='mx-auto h-[36px] w-[36px] bg-[url(/icons/manifesto/Pen.svg)] bg-contain bg-center bg-no-repeat md:mx-0' />
+                </div>
                 <div className='opacity-70'> Sign to join Vcommunity & be eligible for future benefits.</div>
               </div>
 
-              <div className='mt-10 flex flex-col justify-between gap-5  md:mt-0 md:flex-row md:items-center md:gap-0'>
-                <div className='opacity-70'>Signatures</div>
+              <div className='mt-10 flex flex-col justify-between gap-5  md:mt-0 lg:flex-row lg:items-center lg:gap-0'>
+                <div className='opacity-70 md:text-center lg:text-left'>Signatures</div>
                 <PrimaryButton text='Sign Manifesto' className='pointer-events-auto md:ml-[35px]' onClick={signManifesto} />
               </div>
             </div>
