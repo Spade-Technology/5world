@@ -14,11 +14,7 @@ const StewardProfile = () => {
             Profile
           </div>
         }
-        description={
-          <div className='font-body text-[26px] font-medium'>
-            Stewards are leaders within the community who are strongly aligned with the DAO’s vision and mission.
-          </div>
-        }
+        description={<div className='font-body text-[26px] font-medium'>Stewards are leaders within the community who are strongly aligned with the DAO’s vision and mission.</div>}
       />
 
       <HowItWorks
@@ -27,12 +23,10 @@ const StewardProfile = () => {
             heading: ['How it works'],
             content: (
               <div>
-                There are six steward positions (one from each guild and two from the core DAO community) and each term
-                lasts 180 days before a new election.
+                There are six steward positions (one from each guild and two from the core DAO community) and each term lasts 180 days before a new election.
                 <br />
                 <br />
-                The primary role of the DAO Stewards is to support the growth of the DAO and engage consistently in DAO
-                voting via delegation.
+                The primary role of the DAO Stewards is to support the growth of the DAO and engage consistently in DAO voting via delegation.
                 <br />
                 <br />
                 This page provides details of each DAO steward and tracks their contributions within the DAO over time.

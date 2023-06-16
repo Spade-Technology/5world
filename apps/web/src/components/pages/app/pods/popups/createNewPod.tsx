@@ -60,15 +60,7 @@ const CreateNewPod = ({ show, close, refetch, data }: CreatePodProps) => {
   return (
     <CustomModal show={show} close={close} heading='Create New Pod' modalMarginTop='my-[40px]'>
       {!nextFrom ? (
-        <FormOne
-          setNextForm={setNextForm}
-          podName={podName}
-          setPodName={setPodName}
-          description={description}
-          setDescription={setDescription}
-          podImage={podImage}
-          setPodImage={setPodImage}
-        />
+        <FormOne setNextForm={setNextForm} podName={podName} setPodName={setPodName} description={description} setDescription={setDescription} podImage={podImage} setPodImage={setPodImage} />
       ) : (
         <FormTwo
           setNextForm={setNextForm}

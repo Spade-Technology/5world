@@ -9,9 +9,7 @@ const Insights = () => {
   return (
     <div className='mx-auto w-screen bg-vdao-deep'>
       <div className='mx-auto max-w-[1280px] pb-[120px]'>
-        <div className='mx-6 max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto  md:text-[46px]'>
-          Proposal Insights
-        </div>
+        <div className='mx-6 max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto  md:text-[46px]'>Proposal Insights</div>
 
         <div className='mx-6 mt-[28px] grid grid-cols-1 gap-5 md:mx-auto md:mt-11 md:grid-cols-4'>
           <InsightBox title='Total Proposals' value='68' />
@@ -95,10 +93,7 @@ const RecentProposals = () => {
           <div className='font-normal opacity-80'>Status</div>
           {recentProsposalInfo.map((proposal, idx) => {
             return (
-              <div
-                className={`${proposal.status === 'Active' ? 'text-vdao-light' : 'text-[#909090]'} my-auto"`}
-                key={idx}
-              >
+              <div className={`${proposal.status === 'Active' ? 'text-vdao-light' : 'text-[#909090]'} my-auto"`} key={idx}>
                 {proposal.status}
               </div>
             )

@@ -216,4 +216,3 @@ export function HomeWelcomeComponent() {
     </Section>
   )
 }
-

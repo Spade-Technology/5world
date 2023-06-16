@@ -69,15 +69,14 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
       const values = [0n]
 
       // Use these in your createProposal call
-        await createProposal({
-          title: 'test',
-          description: 'test',
-          authorAddress: address,
-          calldatas,
-          targets,
-          values,
-        }
-        )
+      await createProposal({
+        title: 'test',
+        description: 'test',
+        authorAddress: address,
+        calldatas,
+        targets,
+        values,
+      })
     }
 
     close()
@@ -103,7 +102,7 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
           contractAction={contractAction}
         />
       ) : (
-        <Preview values={args} targets = {contractAddress}  setNextForm={setNextForm} setShowPreview={setShowPreview} title={title} description={description} callData={callData} submit={submit} />
+        <Preview values={args} targets={contractAddress} setNextForm={setNextForm} setShowPreview={setShowPreview} title={title} description={description} callData={callData} submit={submit} />
       )}{' '}
     </CustomModal>
   )

@@ -19,13 +19,7 @@ const PodModal = ({ pod, close, setShowManageMembers }: PodModalProps) => {
       <div className='grid grid-cols-1 gap-10 py-[30px] font-body text-lg font-normal text-vdao-dark md:grid-cols-2 md:gap-[106px] md:py-10'>
         <div>
           <div className='flex flex-col justify-between gap-5 md:flex-row md:gap-7'>
-            <Image
-              src={pod?.picture ? pod.picture : PodImage}
-              height={120}
-              width={120}
-              alt='PodImage'
-              className='my-auto align-top'
-            />
+            <Image src={pod?.picture ? pod.picture : PodImage} height={120} width={120} alt='PodImage' className='my-auto align-top' />
 
             <div className='text-lg font-normal'>
               {pod
@@ -61,12 +55,7 @@ const PodModal = ({ pod, close, setShowManageMembers }: PodModalProps) => {
 
           <div>
             {pod?.admins?.map((user: User, idx: number) => (
-              <ProfileCard
-                icon={user?.picture ? user.picture : PodImage}
-                name={user.name || 'Unknown'}
-                address={user.address}
-                key={idx}
-              />
+              <ProfileCard icon={user?.picture ? user.picture : PodImage} name={user.name || 'Unknown'} address={user.address} key={idx} />
             ))}
           </div>
           <div className='flex justify-start gap-[30px] pt-[30px] md:pt-10'>
@@ -76,14 +65,7 @@ const PodModal = ({ pod, close, setShowManageMembers }: PodModalProps) => {
 
           <div className='grid grid-cols-2 pt-5'>
             {pod?.members?.map((user: User, idx: number) => {
-              return (
-                <ProfileCard
-                  icon={user?.picture ? user.picture : PodImage}
-                  name={user.name || 'Unknown'}
-                  address={user.address}
-                  key={idx}
-                />
-              )
+              return <ProfileCard icon={user?.picture ? user.picture : PodImage} name={user.name || 'Unknown'} address={user.address} key={idx} />
             })}
           </div>
         </div>

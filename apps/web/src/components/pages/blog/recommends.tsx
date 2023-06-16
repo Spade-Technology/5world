@@ -51,9 +51,7 @@ export const RecommendedCard = (Props: RecommendedProps) => {
         <div className='py-8 font-body text-lg font-normal text-black'>{Props.blog?.about}</div>
 
         <Link href={'/blog/details?id=' + Props.blog?.id}>
-          <div className='mb-10 w-fit cursor-pointer border-b-2 border-b-vdao-light font-heading text-xl font-medium md:mb-0 '>
-            Read More
-          </div>
+          <div className='mb-10 w-fit cursor-pointer border-b-2 border-b-vdao-light font-heading text-xl font-medium md:mb-0 '>Read More</div>
         </Link>
       </div>
     </>

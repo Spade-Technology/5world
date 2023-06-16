@@ -39,10 +39,7 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
                 <div className='text-[22px] font-bold'>Project Twitter Account</div>
                 <div className='text-[#909090]'>Optional</div>
               </div>
-              <input
-                className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none placeholder:py-2 placeholder:pl-5 md:mt-5'
-                placeholder='twitterid'
-              />
+              <input className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none placeholder:py-2 placeholder:pl-5 md:mt-5' placeholder='twitterid' />
             </div>
           </div>
 
@@ -76,13 +73,11 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
           </div>
 
           <div className='mt-5 rounded-[10px] py-[30px] px-5 outline md:p-10 md:pr-[94px]'>
-            The Governance Facilitator(s) and the Protocol Engineering Core Unit have placed an urgent out-of-schedule
-            executive proposal into the voting system. MKR Holders should vote for this proposal if they support the
-            following alterations to the Maker Protocol.
+            The Governance Facilitator(s) and the Protocol Engineering Core Unit have placed an urgent out-of-schedule executive proposal into the voting system. MKR Holders should vote for this
+            proposal if they support the following alterations to the Maker Protocol.
             <br />
             <br />
-            If you are new to voting in the Maker Protocol, please see the voting guide to learn how voting works, and
-            this wallet setup guide to set up your wallet to vote.
+            If you are new to voting in the Maker Protocol, please see the voting guide to learn how voting works, and this wallet setup guide to set up your wallet to vote.
             <br />
             <br />
             Executive Summary
@@ -90,17 +85,13 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
             If this executive proposal passes, the following changes will occur within the Maker Protocol:
             <br />
             <br />
-            Urgent Parameter Changes to MATIC-A, LINK-A, YFI-A, renBTC-A, and MANA-A Vaults, as detailed below. Voting
-            for this executive proposal will place your MKR in support of the changes and additions outlined above.
+            Urgent Parameter Changes to MATIC-A, LINK-A, YFI-A, renBTC-A, and MANA-A Vaults, as detailed below. Voting for this executive proposal will place your MKR in support of the changes and
+            additions outlined above.
           </div>
         </div>
 
         <div className='pt-[20px] md:pt-10'>
-          <PrimaryButton
-            text='Submit'
-            className='float-right py-[5px] px-[35px] text-xl font-medium'
-            onClick={() => close()}
-          />
+          <PrimaryButton text='Submit' className='float-right py-[5px] px-[35px] text-xl font-medium' onClick={() => close()} />
         </div>
       </div>
     </CustomModal>

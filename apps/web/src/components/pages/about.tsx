@@ -10,8 +10,7 @@ export function AboutUsCoreTeamComponent() {
       <div className='flex w-full flex-col md:flex-row'>
         <div className='mb-6 w-full text-left font-heading text-[32px] font-medium md:text-[46px]'>Our Core Team</div>
         <div className='ml-auto max-w-md font-body text-[22px] font-medium leading-[26px] text-vdao-dark md:text-[26px]'>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi turpis mi, faucibus vitae elementum id,
-          tristique at lectus.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi turpis mi, faucibus vitae elementum id, tristique at lectus.
         </div>
       </div>
       <div className='w-100 mt-20 md:px-6 lg:w-[1140px] lg:px-0'>
@@ -68,14 +67,11 @@ export function AboutUsVisionMissionComponent() {
     <Section className='xl:px-O my-36 flex max-w-[1440px] flex-col  overflow-hidden py-24 px-6 text-vdao-dark md:flex-row md:px-12 lg:mx-auto'>
       <div className='mx-auto flex w-full max-w-[1280px] flex-col gap-20'>
         <div className='flex flex-col md:flex-row'>
-          <div className='mb-6 w-full font-heading text-[32px] font-medium underline md:text-center md:text-[36px]'>
-            Vision
-          </div>
+          <div className='mb-6 w-full font-heading text-[32px] font-medium underline md:text-center md:text-[36px]'>Vision</div>
           <div className='mr-auto w-full font-body text-lg font-normal'>
             <div className='max-w-[410px] leading-[22px]'>
-              Historically, regenerative agriculture projects have been under-researched and under-funded. By supporting
-              research initiatives and real-world R&D, VDAO is building an innovation network to restore global
-              ecosystem health from the soil up.
+              Historically, regenerative agriculture projects have been under-researched and under-funded. By supporting research initiatives and real-world R&D, VDAO is building an innovation network
+              to restore global ecosystem health from the soil up.
             </div>
           </div>
         </div>
@@ -83,14 +79,12 @@ export function AboutUsVisionMissionComponent() {
           <h1 className='mb-6 w-full text-[32px] font-medium underline md:text-center md:text-[36px]'>Mission</h1>
           <div className='mr-auto w-full text-lg font-normal'>
             <div className='max-w-[410px] leading-[22px]'>
-              Traditional industrial/chemical agricultural systems have reached the limits of what they can offer us
-              without damaging the eco-systems we all depend upon. Our need for viable alternatives has never been more
-              clear.
+              Traditional industrial/chemical agricultural systems have reached the limits of what they can offer us without damaging the eco-systems we all depend upon. Our need for viable
+              alternatives has never been more clear.
               <br />
               <br />
-              VDAO is a novel Web3 coordination platform where individuals, institutions and skilled professionals can
-              come together to fund regenerative agriculture R&D, creating a decentralised, open-source network of
-              collective intelligence that will regenerate our planet.
+              VDAO is a novel Web3 coordination platform where individuals, institutions and skilled professionals can come together to fund regenerative agriculture R&D, creating a decentralised,
+              open-source network of collective intelligence that will regenerate our planet.
             </div>
           </div>
         </div>
@@ -108,24 +102,16 @@ export function AboutUsCoreValueComponent() {
           <h1 className='mb-6 w-full text-left text-[32px] font-medium md:text-[46px]'>Our Core Value</h1>
         </div>
         <div className='mt-12 flex flex-col-reverse md:flex-row'>
-          <Image
-            src={CoreValueBeaverHero}
-            alt='VDAO'
-            className='mt-auto h-full scale-125 md:-mb-32 md:w-1/3 md:scale-100'
-          />
+          <Image src={CoreValueBeaverHero} alt='VDAO' className='mt-auto h-full scale-125 md:-mb-32 md:w-1/3 md:scale-100' />
           <div className='grid w-full grid-cols-1 grid-rows-4 gap-4 md:grid-cols-2 md:grid-rows-2  md:gap-10'>
             <div className='flex max-w-[340px] flex-col gap-4'>
               <h1 className='text-[26px] font-medium md:text-[30px]'>Faireness & Caring</h1>
-              <span className='text-lg font-normal leading-[22px]'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget eleifend nisi. Vestibulum
-                euismod, augue at tempor.
-              </span>
+              <span className='text-lg font-normal leading-[22px]'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget eleifend nisi. Vestibulum euismod, augue at tempor.</span>
             </div>
             <div className='flex max-w-[340px] flex-col gap-4'>
               <h1 className='text-[26px] font-medium md:text-[30px]'>Generous Listening</h1>
               <span className='text-lg font-normal leading-[22px]'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget eleifend nisi. Vestibulum
-                euismod, augue at tempor.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget eleifend nisi. Vestibulum euismod, augue at tempor.
                 <br />
                 <br />
                 Healthy community relations are supported via our comprehensive Code of Conduct.
@@ -133,17 +119,11 @@ export function AboutUsCoreValueComponent() {
             </div>
             <div className='flex max-w-[340px] flex-col gap-4'>
               <h1 className='text-[26px] font-medium md:text-[30px]'>Trust & Respect</h1>
-              <span className='text-lg font-normal leading-[22px]'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget eleifend nisi. Vestibulum
-                euismod, augue at tempor.
-              </span>
+              <span className='text-lg font-normal leading-[22px]'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget eleifend nisi. Vestibulum euismod, augue at tempor.</span>
             </div>
             <div className='flex max-w-[340px] flex-col gap-4'>
               <h1 className='text-[26px] font-medium md:text-[30px]'>Straight Talk</h1>
-              <span className='text-lg font-normal leading-[22px]'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget eleifend nisi. Vestibulum
-                euismod, augue at tempor.
-              </span>
+              <span className='text-lg font-normal leading-[22px]'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget eleifend nisi. Vestibulum euismod, augue at tempor.</span>
             </div>
           </div>
         </div>
@@ -162,8 +142,7 @@ export function AboutUsComponent() {
         Global ecosystem regeneration is a positive sum game: the more effort we put in, the more we benefit.
         <br />
         <br />
-        Regardless of our political views, lifestyle or opinions, we can all agree that regenerating degraded ecosystems
-        is both neccessary and worthwhile.
+        Regardless of our political views, lifestyle or opinions, we can all agree that regenerating degraded ecosystems is both neccessary and worthwhile.
       </div>
     </Section>
   )

@@ -88,9 +88,7 @@ export function ProposalComponent() {
               <div className='satoshi hidden text-sm font-normal text-white md:col-span-2 md:block'>{'End Date'}</div>
               <div className='satoshi hidden text-sm font-normal text-white md:col-span-1 md:block'>{'Votes'}</div>
               <div className='satoshi hidden text-sm font-normal text-white md:col-span-1 md:block'>{'Acceptance'}</div>
-              <div className='satoshi col-span-5 flex justify-end text-sm font-normal text-white md:col-span-1'>
-                {'Status'}
-              </div>
+              <div className='satoshi col-span-5 flex justify-end text-sm font-normal text-white md:col-span-1'>{'Status'}</div>
             </div>
             {data.map(({ proposal, startDate, endDate, votes, acceptance, status }, index) => {
               return (
@@ -100,13 +98,7 @@ export function ProposalComponent() {
                   <div className='satoshi hidden text-sm font-bold text-white md:col-span-2 md:block'>{endDate}</div>
                   <div className='satoshi hidden text-sm font-bold text-white md:col-span-1 md:block'>{votes}</div>
                   <div className='satoshi hidden text-sm font-bold text-white md:col-span-1 md:block'>{acceptance}</div>
-                  <div
-                    className={`satoshi ${
-                      status !== 'Active' ? 'text-[#909090]' : 'text-vdao-light'
-                    } col-span-5 flex justify-end text-sm font-bold md:col-span-1`}
-                  >
-                    {status}
-                  </div>
+                  <div className={`satoshi ${status !== 'Active' ? 'text-[#909090]' : 'text-vdao-light'} col-span-5 flex justify-end text-sm font-bold md:col-span-1`}>{status}</div>
                 </div>
               )
             })}
@@ -177,21 +169,13 @@ export function MembershipComponent() {
           },
         ].map(({ title, period, percent }, index) => {
           return (
-            <div
-              key={index}
-              className='mt-5 flex w-full flex-col rounded-2xl bg-vdao-dark px-7 pt-5 pb-10 md:w-[48.5%]'
-            >
+            <div key={index} className='mt-5 flex w-full flex-col rounded-2xl bg-vdao-dark px-7 pt-5 pb-10 md:w-[48.5%]'>
               <div className='flex items-center justify-between'>
                 <div className='satoshi text-lg font-bold leading-[22px] text-white'>{title}</div>
                 <div className='flex gap-5'>
                   {period.map(time => {
                     return (
-                      <div
-                        onClick={() => setDuration(time)}
-                        className={`satoshi cursor-pointer text-sm font-normal leading-5 ${
-                          duration !== time ? 'text-white' : 'text-vdao-light'
-                        }`}
-                      >
+                      <div onClick={() => setDuration(time)} className={`satoshi cursor-pointer text-sm font-normal leading-5 ${duration !== time ? 'text-white' : 'text-vdao-light'}`}>
                         {time}
                       </div>
                     )
@@ -199,13 +183,7 @@ export function MembershipComponent() {
                 </div>
               </div>
               <div className='satoshi text-sm font-normal leading-5 text-white'>{percent}</div>
-              <Chart
-                options={LinearChart.options}
-                series={LinearChart.series}
-                type='line'
-                width={'100%'}
-                height={'333px'}
-              />
+              <Chart options={LinearChart.options} series={LinearChart.series} type='line' width={'100%'} height={'333px'} />
             </div>
           )
         })}
@@ -258,7 +236,5 @@ export function MembershipComponent() {
 }
 
 export function TitleComponent() {
-  return (
-    <div className='clash pb-10 text-[44px] font-medium text-vdao-light md:pt-20 md:pb-28 md:text-7xl'>Analytics</div>
-  )
+  return <div className='clash pb-10 text-[44px] font-medium text-vdao-light md:pt-20 md:pb-28 md:text-7xl'>Analytics</div>
 }

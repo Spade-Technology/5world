@@ -10,8 +10,7 @@ export const ApplyDescription = () => {
       }
       description={
         <div className='w-full font-body text-[26px] font-medium leading-[30px] md:w-full md:max-w-[557px]'>
-          The DAO invites members who share our core values and are passionate about restoring our planet. We're looking
-          for contributors with skills and experience in key areas such as:
+          The DAO invites members who share our core values and are passionate about restoring our planet. We're looking for contributors with skills and experience in key areas such as:
         </div>
       }
     />

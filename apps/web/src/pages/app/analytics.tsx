@@ -9,17 +9,16 @@ import { MembershipComponent, ProposalComponent, TitleComponent } from '~/compon
 const Analytics = () => {
   return (
     <>
-    
-      <Page >
-      <div className='bg-vdao-deep px-6 md:px-0'>
-        <Section className='mx-auto lg:max-w-[1280px]'>
-          <TitleComponent />
+      <Page>
+        <div className='bg-vdao-deep px-6 md:px-0'>
+          <Section className='mx-auto lg:max-w-[1280px]'>
+            <TitleComponent />
 
-          <MembershipComponent />
+            <MembershipComponent />
 
-          <ProposalComponent />
-        </Section>
-      </div>
+            <ProposalComponent />
+          </Section>
+        </div>
       </Page>
     </>
   )

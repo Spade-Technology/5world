@@ -40,15 +40,7 @@ export function usePodRead(id: number, include: PodInclude = {}) {
   return api.pod.getPod.useQuery({ id, include })
 }
 
-export function usePodReads({
-  ids,
-  createdBy,
-  include = {},
-}: {
-  ids?: number[]
-  include?: PodInclude
-  createdBy?: string
-}) {
+export function usePodReads({ ids, createdBy, include = {} }: { ids?: number[]; include?: PodInclude; createdBy?: string }) {
   const query = api.pod.getPods.useQuery({ ids, include, createdBy })
 
   return {

@@ -49,8 +49,7 @@ const Pods = () => {
             {data?.map(pod => (
               <div className='mx-auto flex w-full text-center'>
                 <div className='mx-auto flex gap-2 text-xl text-white'>
-                  Image: <img src={('data:image/png;base64,' + pod.picture) as any} /> || PodId: {pod.id} || PodName:{' '}
-                  {pod.name} || PodDescription: {pod.description}
+                  Image: <img src={('data:image/png;base64,' + pod.picture) as any} /> || PodId: {pod.id} || PodName: {pod.name} || PodDescription: {pod.description}
                   <br />
                 </div>
               </div>
