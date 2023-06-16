@@ -28,9 +28,7 @@ const Offers = () => {
           return (
             <div className='flex-1' key={idx}>
               <Image src={offer.img} alt='image' className='mx-auto' />
-              <div className='mx-auto w-[230px] pt-5 text-center font-inter text-[16px] leading-5 md:w-[207px]'>
-                {offer.content}
-              </div>
+              <div className='mx-auto w-[230px] pt-5 text-center font-inter text-[16px] leading-5 md:w-[207px]'>{offer.content}</div>
             </div>
           )
         })}

@@ -18,10 +18,7 @@ const GrantCards = ({ setViewDetails }: Props) => {
   return (
     <div className='mx-auto w-screen bg-vdao-deep'>
       <div className='mx-auto max-w-[1280px] pb-[120px]'>
-        <div
-          id='currentGrants'
-          className='mx-6 max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'
-        >
+        <div id='currentGrants' className='mx-6 max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'>
           Current Grants
         </div>
 
@@ -53,11 +50,7 @@ export const Card = ({ details, setViewDetails }: CardProps) => {
 
         <div className='pt-[30px] text-lg font-normal'>{details.description}</div>
 
-        <PrimaryButton
-          text='View Detail'
-          className='mt-[30px] py-[5px] px-[35px] text-xl font-medium'
-          onClick={() => setViewDetails(true)}
-        />
+        <PrimaryButton text='View Detail' className='mt-[30px] py-[5px] px-[35px] text-xl font-medium' onClick={() => setViewDetails(true)} />
 
         <div className='pt-11 text-xl font-medium'>Delegate your vote</div>
 

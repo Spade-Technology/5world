@@ -12,8 +12,7 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { Skeleton } from 'antd'
 import { useUserReads } from '~/hooks/web3/useUser'
 import { User } from '@prisma/client'
-import InfoIcon from "public/icons/stewards/infoIcon.svg"
-
+import InfoIcon from 'public/icons/stewards/infoIcon.svg'
 
 type Props = {
   setOpenProfile: Dispatch<SetStateAction<User | undefined>>
@@ -61,10 +60,7 @@ export const Card = ({ data, setOpenProfile }: CardProps) => {
   }
   return (
     <div className='rounded-[20px] bg-vdao-dark text-white'>
-      <div
-        className='float-right cursor-pointer pt-5 pr-5 text-sm font-semibold underline underline-offset-2 md:pt-[30px] md:pr-[30px]'
-        onClick={() => setOpenProfile(data)}
-      >
+      <div className='float-right cursor-pointer pt-5 pr-5 text-sm font-semibold underline underline-offset-2 md:pt-[30px] md:pr-[30px]' onClick={() => setOpenProfile(data)}>
         View Profile
       </div>
 

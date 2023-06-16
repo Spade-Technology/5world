@@ -7,10 +7,7 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
-const { chains, publicClient } = configureChains(
-  [process.env.NODE_ENV === 'production' ? mainnet : sepolia],
-  [publicProvider()],
-)
+const { chains, publicClient } = configureChains([process.env.NODE_ENV === 'production' ? mainnet : sepolia], [publicProvider()])
 
 export const connectors = [
   new MetaMaskConnector({

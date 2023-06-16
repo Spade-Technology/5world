@@ -102,27 +102,27 @@ const Footer = (props: Props) => {
 
 const FooterManifesto = (props: Props) => {
   return (
-    <div className='bg-white px-14 py-5 md:bg-[#000912] md:py-10'>
+    <div className=' bg-[#000912] px-14 py-5 md:py-10'>
       <div className='mx-auto flex max-w-[208px] flex-col gap-10'>
         <div className='flex flex-col gap-[24px] md:flex-row md:gap-[36px]'>
           <Link href='#'>
-            <h2 className='text-center font-heading text-[13px] font-medium text-vdao-dark md:text-white'>Home</h2>
+            <h2 className='text-center font-heading text-[13px] font-medium  text-white'>Home</h2>
           </Link>
           <Link href='#'>
-            <h2 className='text-center font-heading text-[13px] font-medium text-vdao-dark md:text-white'>Discord</h2>
+            <h2 className='text-center font-heading text-[13px] font-medium  text-white'>Discord</h2>
           </Link>
           <Link href='#'>
-            <h2 className='text-center font-heading text-[13px] font-medium text-vdao-dark md:text-white'>Twitter</h2>
+            <h2 className='text-center font-heading text-[13px] font-medium  text-white'>Twitter</h2>
           </Link>
         </div>
         <div className='flex flex-col gap-3'>
-          <span className='items flex items-start justify-center gap-3 text-base font-medium md:text-white text-vdao-dark'>
-            <Skeleton active={props.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={props.loading} className='my-auto !w-5 mr-1'>
+          <span className='items flex items-start justify-center gap-3 text-base font-medium text-white'>
+            <Skeleton active={props.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={props.loading} className='my-auto mr-1 !w-5'>
               {props.signatures || 0}
             </Skeleton>
-             Signatures
+            Signatures
           </span>
-          <Button type='primary' className='!h-10 w-44 !bg-vdao-dark mx-auto' onClick={() => props.signModuleRef?.current?.scrollIntoView({ block: 'end', behavior: 'smooth' })}>
+          <Button type='primary' className='mx-auto !h-10 w-44 !bg-vdao-dark' onClick={() => props.signModuleRef?.current?.scrollIntoView({ block: 'end', behavior: 'smooth' })}>
             Sign Manifesto
           </Button>
         </div>

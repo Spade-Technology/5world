@@ -6,8 +6,7 @@ export const WhatsInIt = () => {
       contents={[
         {
           heading: 'What’s in it for me?',
-          content:
-            'There is no minimum donation amount. All donors get to rest in the knowledge that they are contributing to ecosystem regeneration.',
+          content: 'There is no minimum donation amount. All donors get to rest in the knowledge that they are contributing to ecosystem regeneration.',
         },
         {
           heading: 'Badges',

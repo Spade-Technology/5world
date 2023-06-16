@@ -1,4 +1,3 @@
-
 import Page from '~/components/layout/page'
 import { useCreatePod, usePodReads } from '~/hooks/web3/usePod'
 import { useAccount } from 'wagmi'

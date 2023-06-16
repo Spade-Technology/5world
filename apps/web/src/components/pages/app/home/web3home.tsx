@@ -153,46 +153,21 @@ export function NewMembersComponent({ newMembersArr }: NewMembersProps) {
             return (
               <div className='mt-5 flex items-center justify-between md:w-80 lg:w-auto' key={index}>
                 <div className='mr-6 flex items-center'>
-                  <Image
-                    src={member.picture ? member.picture : StaticProfilePic}
-                    alt=''
-                    className='mr-4 h-10 w-10 rounded-full lg:mr-2.5'
-                  />
+                  <Image src={member.picture ? member.picture : StaticProfilePic} alt='' className='mr-4 h-10 w-10 rounded-full lg:mr-2.5' />
                   <div>
-                    <div className='font-body text-lg font-medium leading-5 text-vdao-light'>
-                      {member.name ? shortenText(member.name) : 'Unnamed'}
-                    </div>
-                    <div className='font-body text-sm font-normal leading-5 text-white'>
-                      {member.role ? member.role : 'Guest'}
-                    </div>
+                    <div className='font-body text-lg font-medium leading-5 text-vdao-light'>{member.name ? shortenText(member.name) : 'Unnamed'}</div>
+                    <div className='font-body text-sm font-normal leading-5 text-white'>{member.role ? member.role : 'Guest'}</div>
                   </div>
                 </div>
                 <div className=''>
                   <div className='flex justify-end font-body text-sm font-bold leading-5 text-[#F8F2FF]'>
-                    {member?.JoinedAt
-                      ? monthNames[member.JoinedAt.getUTCMonth()] +
-                        ' ' +
-                        member.JoinedAt.getDate() +
-                        ', ' +
-                        member.JoinedAt.getFullYear()
-                      : 'Unavailable'}
+                    {member?.JoinedAt ? monthNames[member.JoinedAt.getUTCMonth()] + ' ' + member.JoinedAt.getDate() + ', ' + member.JoinedAt.getFullYear() : 'Unavailable'}
                   </div>
                   <div className='flex justify-end font-body text-sm font-normal leading-5 text-[#F8F2FF]'>
                     {member?.JoinedAt
                       ? member.JoinedAt.getHours() > 12
-                        ? member.JoinedAt.getHours() -
-                          12 +
-                          ':' +
-                          member.JoinedAt.getMinutes() +
-                          ':' +
-                          member.JoinedAt.getSeconds() +
-                          ' PM'
-                        : member.JoinedAt.getHours() +
-                          ':' +
-                          member.JoinedAt.getMinutes() +
-                          ':' +
-                          member.JoinedAt.getSeconds() +
-                          ' AM'
+                        ? member.JoinedAt.getHours() - 12 + ':' + member.JoinedAt.getMinutes() + ':' + member.JoinedAt.getSeconds() + ' PM'
+                        : member.JoinedAt.getHours() + ':' + member.JoinedAt.getMinutes() + ':' + member.JoinedAt.getSeconds() + ' AM'
                       : 'at Unavailable'}
                   </div>
                 </div>
@@ -239,16 +214,13 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: Profi
   })
 
   const { data: newData } = useUserReads({})
-  console.log({data})
-  console.log({ newData })
   const { data: siwe } = useSession()
-
 
   let skeletonActive = !data
 
   const [praiseScore, setPraiseScore] = useState(0)
   const date = new Date()
-  
+
   useEffect(() => {
     if (newData) {
       const newDataArr: any = []
@@ -256,8 +228,7 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: Profi
         const joinedAt = member.JoinedAt
         if (
           joinedAt.getFullYear() === date.getFullYear() &&
-          ((joinedAt.getMonth() + 1 === date.getMonth() && joinedAt.getDate() <= date.getDate()) ||
-            (joinedAt.getMonth() === date.getMonth() - 1 && joinedAt.getDate() >= date.getDate()))
+          ((joinedAt.getMonth() + 1 === date.getMonth() && joinedAt.getDate() <= date.getDate()) || (joinedAt.getMonth() === date.getMonth() - 1 && joinedAt.getDate() >= date.getDate()))
         ) {
           newDataArr.push(member)
         }
@@ -288,7 +259,7 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: Profi
       </div>
 
       {/* User Info */}
-      <div className='flex flex-col md:gap-5 lg:mx-8'>
+      <div className='flex h-full flex-col md:gap-5 lg:mx-8'>
         <Skeleton active={skeletonActive} paragraph={{ rows: 1 }} avatar className='!w-1/2' loading={skeletonActive}>
           <div className={'flex gap-3 ' + (skeletonActive && 'opacity-0')}>
             <Image src={ProfilePic} alt='Profile Picture' className='h-14 w-14 rounded-full' />
@@ -306,18 +277,16 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: Profi
           </Skeleton>
         </div>
         {/* Guild & Pod */}
-        <Skeleton className='mt-12 inline-grid grid-cols-[max-content_auto] gap-5 md:gap-6' active={skeletonActive} title={false} paragraph={{ rows: 2 }} loading={skeletonActive}>
-          <div className='mt-12 inline-grid grid-cols-[max-content_auto] gap-5 md:gap-6'>
+        <Skeleton className='mt-auto inline-grid grid-cols-[max-content_auto] gap-5 md:gap-6' active={skeletonActive} title={false} paragraph={{ rows: 2 }} loading={skeletonActive}>
+          <div className='mt-auto inline-grid grid-cols-[max-content_auto] gap-5 md:gap-6'>
             <span className='font-body text-lg font-bold md:text-base'>Guild</span>
-            <span className='font-body text-lg font-bold text-vdao-light md:text-base'>
-              {data?.guild?.name ? data.guild.name : 'No Guild '}
-            </span>
+            <span className='font-body text-lg font-bold text-vdao-light md:text-base'>{data?.guild?.name ? data.guild.name : 'No Guild '}</span>
             <span className='font-body text-lg font-bold md:text-base'>Pod</span>
             <span className='font-body text-lg font-bold text-vdao-light md:text-base'>{data?.podsAsAdmin[0]?.name ? data?.podsAsAdmin[0]?.name : 'No pod'}</span>
           </div>
         </Skeleton>
         {/* Statistics */}
-        <div className='my-10 grid  grid-cols-2 items-start gap-10 md:grid-cols-4 lg:mb-0 lg:gap-5'>
+        <div className='my-10 grid w-full grid-cols-2 items-start gap-10 md:grid-cols-3 lg:mb-0 lg:gap-5'>
           {[
             {
               name: 'Votes Delegated',

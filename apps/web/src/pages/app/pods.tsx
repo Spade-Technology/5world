@@ -38,17 +38,9 @@ const Pods = () => {
         <EnforceAuth>
           <PodCards setOpenedPod={setOpenedPod} setPid={setPid} data={data} isLoading={isLoading} />
 
-          {openCreatePod && (
-            <CreateNewPod show={openCreatePod} close={() => setOpenCreatePod(false)} refetch={refetch} data={data} />
-          )}
+          {openCreatePod && <CreateNewPod show={openCreatePod} close={() => setOpenCreatePod(false)} refetch={refetch} data={data} />}
 
-          {!!openedPod && (
-            <PodModal
-              close={() => setOpenedPod(undefined)}
-              pod={openedPod}
-              setShowManageMembers={setShowManageMembers}
-            />
-          )}
+          {!!openedPod && <PodModal close={() => setOpenedPod(undefined)} pod={openedPod} setShowManageMembers={setShowManageMembers} />}
 
           {showManageMembers && (
             <ManageMembers
