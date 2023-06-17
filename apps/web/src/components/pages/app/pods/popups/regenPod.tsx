@@ -41,7 +41,7 @@ const PodModal = ({ pod, close, setShowManageMembers }: PodModalProps) => {
 
         <div className='pr-5'>
           <div className='flex justify-between'>
-            <div className='text-[22px] font-bold'>Members</div>
+            <div className='text-[22px] font-bold'>Manager</div>
             <div
               className='my-auto cursor-pointer text-sm font-bold underline'
               onClick={() => {

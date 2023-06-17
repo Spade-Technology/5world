@@ -1,22 +1,12 @@
 import Image from 'next/image'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import PodImage from 'public/illustrations/pods/podImage.svg'
-import Icon1 from 'public/icons/pods/icon1.svg'
-import Icon2 from 'public/icons/pods/icon2.svg'
-import Icon3 from 'public/icons/pods/icon3.svg'
-import Icon4 from 'public/icons/pods/icon4.svg'
-import Icon5 from 'public/icons/pods/icon5.svg'
-import Icon6 from 'public/icons/pods/icon6.svg'
-import Icon7 from 'public/icons/pods/icon7.svg'
-import Icon8 from 'public/icons/pods/icon8.svg'
 import { Dispatch, SetStateAction } from 'react'
 import PodInfoBox from './popups/infoBox'
-import { useAccount } from 'wagmi'
-import { Pod } from '@prisma/client'
 import { pod_type } from '~/hooks/web3/usePod'
 import { shortenAddress, shortenText } from '~/utils/helpers'
-import SkeletonNode from 'antd/es/skeleton/Node'
 import { Skeleton } from 'antd'
+import ProfileCard from '~/components/misc/profileCard'
 // import { usePodReads } from '~/hooks/web3/usePod'
 
 type PodCardProps = {
@@ -96,12 +86,12 @@ export const Card = ({ setOpenedPod, pod, setPid }: CardProps) => {
 
       <div className='flex flex-col gap-[30px] pt-5 md:flex-row md:gap-[60px] md:pt-10 '>
         <div>
-          <div className='font-heading text-xl font-medium'> Manager </div>
-          {pod?.admins && (
+          <div className=' flex-1 font-heading text-xl font-medium'> Manager </div>
+          {/* {pod?.admins && (
             <div className='flex w-full pt-[14px]'>
               <div>
                 {pod.admins[0]?.picture ? (
-                  <Image src={pod.admins[0]?.picture || ''} alt='' className='rounded-full' />
+                  <Image src={pod.admins[0]?.picture || ''} height={44} width={44} alt='' className='rounded-full' />
                 ) : (
                   <div
                     className='rounded-full'
@@ -119,17 +109,20 @@ export const Card = ({ setOpenedPod, pod, setPid }: CardProps) => {
                 <div className='font-body text-sm'>{shortenAddress(pod.admins[0]?.address || '0x')}</div>
               </div>
             </div>
-          )}
+          )} */}
+          <ProfileCard icon={pod?.admins[0] ? pod.admins[0]?.picture : ''} address={pod.admins[0] ? pod.admins[0]?.address : ''} name={pod?.admins[0] ? pod.admins[0]?.name : ''} />
         </div>
 
         <div>
           <div className='font-heading text-xl font-medium'> Members </div>
 
           {pod?.members?.map(member => (
-            <div className='flex w-full pt-[14px]'>
-              <div>
+            <>
+              <div className='grid grid-cols-6 gap-2 pt-[14px]'>
+                <Image src={member.picture || ''} height={44} width={44} alt='' className='rounded-full' />
+                {/* <div>
                 {member.picture ? (
-                  <Image src={member.picture || ''} alt='' className='rounded-full' />
+                  <Image src={member.picture || ''} height={44} width={44} alt='' className='rounded-full' />
                 ) : (
                   <div
                     className='rounded-full'
@@ -144,9 +137,11 @@ export const Card = ({ setOpenedPod, pod, setPid }: CardProps) => {
               <div className='!w-1/3 pl-[10px] md:pl-[16px]'>
                 <div className='font-body text-lg font-semibold'>{member.name ? shortenText(member.name) : 'Unnamed'}</div>
                 <div className='font-body text-sm'>{shortenAddress(member.address || '0x')}</div>
+              </div> */}
               </div>
-            </div>
+            </>
           ))}
+          {/* <ProfileCard icon={pod?.members[0] ? pod.members[0]?.picture : ''} address={pod.members[0] ? pod.members[0]?.address : ''} name={pod?.members[0] ? pod.members[0]?.name : ''} /> */}
         </div>
       </div>
     </div>
