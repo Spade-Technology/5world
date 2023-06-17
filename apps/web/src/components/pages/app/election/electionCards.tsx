@@ -16,21 +16,28 @@ import InfoIcon from 'public/icons/stewards/infoIcon.svg'
 
 type Props = {
   setOpenProfile: Dispatch<SetStateAction<User | undefined>>
+  setOpenVotesNscores: Dispatch<SetStateAction<boolean>>
 }
 
 type CardProps = {
   setOpenProfile: Dispatch<SetStateAction<User | undefined>>
   data: any
+  setOpenVotesNscores: Dispatch<SetStateAction<boolean>>
 }
 
-const ElectionCards = ({ setOpenProfile }: Props) => {
+const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
   const { address } = useAccount()
   const { data, isLoading } = useUserReads({})
 
   return (
     <div className='mx-auto w-screen bg-vdao-deep'>
       <div className='mx-auto max-w-[1280px] pb-[120px]'>
-        <div className='mx-6 max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'>Candidates</div>
+        <div
+          className='mx-6 max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light 
+                    md:mx-auto md:text-[46px]'
+        >
+          Candidates
+        </div>
 
         <div className='mx-6 mt-5 grid grid-cols-1 gap-5 md:mx-0 md:grid-cols-2'>
           {isLoading ? (
@@ -40,7 +47,7 @@ const ElectionCards = ({ setOpenProfile }: Props) => {
               <Skeleton.Avatar shape='square' style={{ height: '400px', width: '100%' }} className='col-span-2' active />
             </>
           ) : (
-            data && data.length > 0 && data?.map(steward => <Card data={steward} setOpenProfile={setOpenProfile} />)
+            data && data.length > 0 && data?.map(steward => <Card data={steward} setOpenProfile={setOpenProfile} setOpenVotesNscores={setOpenVotesNscores} />)
           )}
         </div>
       </div>
@@ -48,7 +55,7 @@ const ElectionCards = ({ setOpenProfile }: Props) => {
   )
 }
 
-export const Card = ({ data, setOpenProfile }: CardProps) => {
+export const Card = ({ data, setOpenProfile, setOpenVotesNscores }: CardProps) => {
   console.log({ data })
   const [votes, setVotes] = useState('')
   const { vote } = useVote()
@@ -88,7 +95,8 @@ export const Card = ({ data, setOpenProfile }: CardProps) => {
           {data?.description ? data.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultrice ullamcorper.'}
         </div>
 
-        <div className='mt-[25px] flex justify-between rounded-[20px] bg-white px-5 py-8 md:mt-11 md:px-10'>
+        <div className='relative mt-[25px] flex justify-between rounded-[20px] bg-white px-5 py-8 md:mt-11 md:px-10'>
+          <Image src={InfoIcon} alt='InfoIcon' className='absolute right-4 top-4 cursor-pointer' onClick={() => setOpenVotesNscores(true)} />
           <div>
             <div className='text-[28px] font-semibold text-vdao-light md:text-[32px]'> 0 </div>
             <div className='text-sm font-semibold text-vdao-dark md:text-lg'>
@@ -109,7 +117,6 @@ export const Card = ({ data, setOpenProfile }: CardProps) => {
               Praise <br /> Score
             </div>
           </div>
-          {/* <Image src={InfoIcon} alt='InfoIcon' /> */}
         </div>
 
         <div className='flex flex-col justify-between pt-[30px] md:flex-row md:pt-10'>
