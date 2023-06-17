@@ -45,8 +45,6 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
 
   const { editUser } = useEditUser()
 
-  console.log('userData', data)
-
   const editAndSave = () => {
     if (!edit) {
       setEdit(true)
@@ -75,7 +73,6 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
     }
   }
 
-  console.log('data info', data)
 
   return (
     <CustomModal show={show} close={close}>
