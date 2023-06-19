@@ -19,10 +19,7 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
   const [showPreview, setShowPreview] = useState(false)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-
   const [actions, setActions] = useState<abiItem[]>([])
-  const [contractMethod, setContractMethod] = useState('')
-
   const { address } = useAccount()
   const { createProposal, isLoading } = useCreateProposal()
 
@@ -33,49 +30,61 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
   const [callData, setCallData] = useState<string>('')
 
   const handlePreviews = () => {
-    if (address && contractAddress && contractAction && showPreview) {
+    if (address && contractAddress && actions && showPreview) {
       // Encode arguments using ethers.js or a similar library
-      const inputs = contractAction?.inputs
-      const types = inputs?.map(input => ({
-        name: input.name,
-        type: input.type,
-      }))
+      actions.map(async (contract, idx) => {
+        const inputs = contract?.inputs
+        const types = inputs?.map(input => ({
+          name: input.name,
+          type: input.type,
+        }))
 
-      const callData = types && encodeAbiParameters(types, Object.values(args))
+        const valuesArr: any = []
+        types.map(type => {
+          valuesArr.push(args[type.name])
+        })
+        // const callData = types && encodeAbiParameters(types, Object.values(args))
+        const callData = types && encodeAbiParameters(types, valuesArr)
 
-      // Construct calldatas, targets, values
-      setCallData(callData)
+        // Construct calldatas, targets, values
+        setCallData(callData)
+      })
     }
   }
 
   useEffect(() => {
     handlePreviews()
-  }, [address, contractAddress, contractAction, showPreview])
+  }, [address, contractAddress, contractAction, actions, showPreview])
 
   const submit = async () => {
-    if (address && contractAddress && contractAction) {
+    if (address && contractAddress && actions) {
       // Encode arguments using ethers.js or a similar library
-      const inputs = contractAction.inputs
-      const types = inputs.map(input => ({
-        name: input.name,
-        type: input.type,
-      }))
+      actions.map(async (contract, idx) => {
+        const inputs = contract.inputs
+        const types = inputs.map(input => ({
+          name: input.name,
+          type: input.type,
+        }))
+        const valuesArr: any = []
+        types.map(type => {
+          valuesArr.push(args[type.name])
+        })
+        const callData = encodeAbiParameters(types, valuesArr)
 
-      const callData = encodeAbiParameters(types, Object.values(args))
+        // Construct calldatas, targets, values
+        const calldatas = [callData]
+        const targets = [contractAddress]
+        const values = [0n]
 
-      // Construct calldatas, targets, values
-      const calldatas = [callData]
-      const targets = [contractAddress]
-      const values = [0n]
-
-      // Use these in your createProposal call
-      await createProposal({
-        title: 'test',
-        description: 'test',
-        authorAddress: address,
-        calldatas,
-        targets,
-        values,
+        // Use these in your createProposal call
+        await createProposal({
+          title: title,
+          description: description,
+          authorAddress: address,
+          calldatas,
+          targets,
+          values,
+        })
       })
     }
 
@@ -93,8 +102,6 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
           setShowPreview={setShowPreview}
           actions={actions}
           setActions={setActions}
-          contractMethod={contractMethod}
-          setContractMethod={setContractMethod}
           setArgs={setArgs}
           args={args}
           contractAddress={contractAddress}

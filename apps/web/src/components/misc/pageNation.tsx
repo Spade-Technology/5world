@@ -9,12 +9,14 @@ type PageNationProps = {
   pageCount: number
   setPageCount: any
   web3?: boolean
+  innerClass?: string
+  outerClass?: string
 }
 
-const PageNation = ({ pageNumbers, pageCount, setPageCount, web3 }: PageNationProps) => {
+const PageNation = ({ pageNumbers, pageCount, setPageCount, web3, outerClass, innerClass }: PageNationProps) => {
   return (
-    <div className='flex w-full justify-end px-6'>
-      <div className='flex justify-center py-11 md:justify-end md:py-14 '>
+    <div className={`flex w-full px-6 ${outerClass ? outerClass : "justify-end"}`}>
+      <div className={`flex justify-center md:justify-end ${innerClass ? '' : 'py-11 md:py-14 '} `}>
         <Image src={web3 ? DarkLeftAroow : LeftArrow} alt='Left Arrow' height={10.61} width={10.61} className='mr-5 cursor-pointer' onClick={() => pageCount > 1 && setPageCount(pageCount - 1)} />
         {pageNumbers.length &&
           pageNumbers.map((number: number, idx: number) => {
