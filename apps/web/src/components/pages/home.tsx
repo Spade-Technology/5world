@@ -209,7 +209,7 @@ export function HomeWelcomeComponent() {
   return (
     <Section className='mx-auto flex max-w-[1440px] flex-col overflow-hidden md:overflow-visible'>
       <div className='mx-auto mt-28'>
-        <div className='mx-auto w-10/12 text-center font-heading text-[44px] font-medium leading-[48px] text-vdao-dark md:w-auto md:text-[80px]'>Re:imagine the future</div>
+        <div className='mx-auto w-10/12 text-center font-heading text-[44px] font-medium leading-[48px] text-vdao-dark md:w-auto md:text-[80px] md:leading-[95px]'>Re:imagine the future</div>
         <div className='mx-auto mt-5 w-[80%] px-6 text-center font-body text-[22px] font-medium leading-[26px] text-vdao-dark md:text-[26px]'>A dao to restore ecosystems from the soil up.</div>
         <PrimaryButton text='Join Us' className='mx-auto mt-10' />
       </div>
