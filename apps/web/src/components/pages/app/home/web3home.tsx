@@ -153,7 +153,7 @@ export function NewMembersComponent({ newMembersArr }: NewMembersProps) {
             return (
               <div className='mt-5 flex items-center justify-between md:w-80 lg:w-auto' key={index}>
                 <div className='mr-6 flex items-center'>
-                  <Image src={member.picture ? member.picture : StaticProfilePic} width={0} height={0} alt='' className='mr-4 h-10 w-10 rounded-full lg:mr-2.5' />
+                  <Image src={member && member.picture ? member.picture : StaticProfilePic} alt='' height={10} width={10} className='mr-4 h-10 w-10 rounded-full lg:mr-2.5' />
                   <div>
                     <div className='font-body text-lg font-medium leading-5 text-vdao-light'>{member.name ? shortenText(member.name) : 'Unnamed'}</div>
                     <div className='font-body text-sm font-normal leading-5 text-white'>{member.role ? member.role : 'Guest'}</div>

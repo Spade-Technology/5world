@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import Image from 'next/image'
 import EllipseComponent from '~/components/misc/ellipseLine'
@@ -11,8 +11,6 @@ type FormProps = {
   setShowPreview: Dispatch<SetStateAction<boolean>>
   actions: abiItem[]
   setActions: Dispatch<SetStateAction<abiItem[]>>
-  contractMethod: string
-  setContractMethod: Dispatch<SetStateAction<string>>
   setContractAction: Dispatch<SetStateAction<abiItem>>
   setArgs: Dispatch<any>
   args: any
@@ -21,50 +19,70 @@ type FormProps = {
   contractAction: abiItem
 }
 
-const FormTwo = ({
-  contractAction,
-  actions,
-  setContractAction,
-  contractAddress,
-  setContractAddress,
-  args,
-  setArgs,
-  contractMethod,
-  setActions,
-  setContractMethod,
-  setNextForm,
-  setShowPreview,
-}: FormProps) => {
-  const [action, setAction] = useState('')
+const FormTwo = ({ contractAction, actions, setContractAction, contractAddress, setContractAddress, args, setArgs, setActions, setNextForm, setShowPreview }: FormProps) => {
   const [verified, setVerified] = useState(false)
-  const [error, setError] = useState(false)
+  const [error, setError] = useState('')
   const { data: abi } = useEtherscan({ contractAddress }, { retry: 0 })
+  const [verifiedAddr, setVerifiedAddr] = useState<string[]>([])
 
-  console.log({ abi })
-  console.log({ args })
   const verifyActions = () => {
-    if (contractAction && abi) {
-      console.log('length', actions.length)
+    console.log("abi", abi)
+    if (contractAddress && abi) {
       setVerified(true)
+      setVerifiedAddr(prev => [...prev, contractAddress])
     } else {
       setVerified(false)
-      setError(true)
+      setError('UnVerified')
       setTimeout(() => {
-        setError(false)
-      }, 5000)
+        setError('')
+      }, 10000)
     }
   }
+
+  useEffect(() => {
+    if (!contractAddress || actions.length === 0) {
+      setVerified(false)
+    } else {
+      verifyActions()
+    }
+  }, [actions, abi, contractAddress])
 
   const handleMethods = (item: string) => {
     const newAction = JSON.parse(item) as abiItem
     setContractAction(newAction)
-    console.log({ newAction })
     if (actions.length < 10) {
       setActions(prev => [...prev, newAction])
     }
   }
 
-  console.log({ contractAction })
+  const confirmHandler = () => {
+    if (verified && actions.length > 0 && (args?.spender || args?.to)) {
+      setNextForm(false)
+      setShowPreview(true)
+    } else {
+      setError('UnConfirmed')
+      setTimeout(() => {
+        setError('')
+      }, 10000)
+    }
+  }
+
+  const handleContractAddress = (evt: any) => {
+    setContractAddress(evt.target.value)
+    setVerified(false)
+  }
+
+  const actionHandler = (idx: number) => {
+    setVerified(true)
+    setContractAddress(verifiedAddr[idx]!)
+  }
+
+  // abi
+  //   ?.filter(el => el.type == 'function' && el.stateMutability !== 'view')
+  //   .map((newAbi, idx) => {
+  //     console.log('newAbo', newAbi, newAbi.name)
+  //   })
+
   return (
     <div className='grid grid-cols-1 gap-10 pt-[30px] pb-[24px] font-body text-lg font-normal text-vdao-dark md:grid-cols-2 md:gap-[106px] md:pt-10'>
       <div>
@@ -76,10 +94,7 @@ const FormTwo = ({
           className='mt-5 h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 py-2 outline-none'
           placeholder='0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852'
           value={contractAddress}
-          onChange={evt => {
-            setContractAddress(evt.target.value)
-            setVerified(false)
-          }}
+          onChange={handleContractAddress}
         />
 
         <div
@@ -95,15 +110,24 @@ const FormTwo = ({
         {verified ? (
           <div className='flex w-full flex-col'>
             {/* <input className='mt-5 h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 py-2 outline-none' /> */}
-            {contractAction?.inputs?.map((el, i) => (
-              // onChange = arguments[el.name] = v.target.value
-              <input
-                className='mt-5 h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 py-2 outline-none'
-                key={i}
-                placeholder={el.name}
-                onChange={v => setArgs({ ...args, [el.name]: v.target.value })}
-              />
-            ))}
+            {actions?.map((action, idx) => {
+              return (
+                <>
+                  <div className='mt-5 text-lg font-bold text-vdao-light'>{action.name ? action.name : 'UnNamed'}</div>
+                  {action?.inputs?.map((el, i) => (
+                    // onChange = arguments[el.name] = v.target.value
+                    <>
+                      <input
+                        className='mt-2 h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 py-2 outline-none'
+                        key={i}
+                        placeholder={el.name}
+                        onChange={v => setArgs({ ...args, [el.name]: v.target.value })}
+                      />
+                    </>
+                  ))}
+                </>
+              )
+            })}
           </div>
         ) : (
           <>
@@ -135,19 +159,24 @@ const FormTwo = ({
         />
 
         <div className='pt-[40px] text-[22px] font-bold md:pt-[60px]'>Added Actions</div>
-        {actions ? (
+        {actions && actions.length > 0 ? (
           actions.map((action, idx) => {
             return (
               <div className='flex justify-start gap-[17px] pt-[10px] md:pt-5' key={idx}>
-                <div className='text-lg font-bold text-vdao-light'>{action.name ? action.name : 'UnNamed'}</div>
+                <div className='cursor-pointer text-lg font-bold text-vdao-light' onClick={() => actionHandler(idx)}>
+                  {action.name ? action.name : 'UnNamed'}
+                </div>
                 <div
                   className='my-auto cursor-pointer text-sm font-bold underline'
                   onClick={() => {
                     // actions.splice(idx, 1)
-                    setContractAddress('')
+
                     const newActions = actions.filter((action, index) => index != idx)
-                    console.log('newActions', newActions, newActions.length)
                     setActions(newActions)
+
+                    if (newActions.length === 0) {
+                      setContractAddress('')
+                    }
                   }}
                 >
                   Remove action
@@ -159,7 +188,7 @@ const FormTwo = ({
           <div className='text-lg font-bold text-vdao-light'>No Actions recorded</div>
         )}
 
-        {error && <div className='text-red-500'>Please Verify the proper contract and add some actions and add arguments</div>}
+        {error && <div className='text-red-500'>Required*: Please Add and verify the valid address, actions and arguments</div>}
         <div className='float-right flex gap-5 pt-6 md:pt-48 '>
           <div
             className='cursor-pointer rounded-[5px] border-[1px] border-vdao-dark py-[5px] px-[35px] font-heading text-lg font-medium'
@@ -169,21 +198,7 @@ const FormTwo = ({
           >
             Previous
           </div>
-          <PrimaryButton
-            text='Confirm'
-            className=' py-[5px] px-[35px] font-heading text-lg font-medium'
-            onClick={() => {
-              if (verified && actions.length > 0 && (args?.spender || args?.to)) {
-                setNextForm(false)
-                setShowPreview(true)
-              } else {
-                setError(true)
-                setTimeout(() => {
-                  setError(false)
-                }, 5000)
-              }
-            }}
-          />
+          <PrimaryButton text='Confirm' className=' py-[5px] px-[35px] font-heading text-lg font-medium' onClick={confirmHandler} />
         </div>
       </div>
     </div>
