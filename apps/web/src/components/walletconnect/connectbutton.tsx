@@ -202,7 +202,7 @@ function VerifyWallet({ setOpenModal, web2, openModal }: { setOpenModal: Dispatc
   return (
     <div
       ref={ref}
-      className='z-50 h-full w-full overflow-auto overflow-x-hidden bg-vdao-deep bg-[url(/illustrations/connectWallet/SVG/VDAO-connect-bg.svg)] bg-cover bg-center bg-no-repeat px-[35px] pb-[65px] pt-[35px] md:mx-10 md:h-[387px] md:w-fit md:rounded-[20px] md:pb-0 md:pt-[28px] md:pr-10 md:pl-10'
+      className='z-50 h-full w-full overflow-auto overflow-x-hidden  bg-vdao-deep bg-[url(/illustrations/connectWallet/SVG/VDAO-connect-wallet-mobile.svg)] bg-contain bg-center bg-no-repeat px-[35px] pb-[65px] pt-[35px] md:mx-10 md:h-[387px] md:w-[640px] md:rounded-[20px] md:bg-[url(/illustrations/connectWallet/SVG/VDAO-connect-bg.svg)] md:px-[35px] md:pb-0 md:pt-[28px]'
     >
       <div className='flex justify-between'>
         <Link href='/'>
@@ -377,26 +377,31 @@ function DisplayWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Set
   }, [openModal])
 
   return (
-    <div ref={ref} className='h-full w-full bg-vdao-deep pl-[24px] pr-[35px] pb-6 md:h-auto md:w-5/12 md:rounded-[20px] md:pr-[60px] md:pl-10 md:pt-[28px]'>
-      <div className=' hidden justify-between md:flex'>
+    <div
+      ref={ref}
+      className='h-full w-full bg-vdao-deep bg-[url(/illustrations/connectWallet/SVG/VDAO-connect-wallet-mobile.svg)] bg-contain bg-top bg-no-repeat p-[35px] md:h-auto md:w-[640px] md:rounded-[20px] md:bg-[url(/illustrations/connectWallet/SVG/VDAO-connect-bg.svg)] md:bg-center md:px-[30px] md:pb-12 md:pt-[28px]'
+    >
+      <div className=' flex justify-between'>
         <Link href='/'>
           <Image src={logo} alt='VDAO' height={30} className='md:pt-[20px]' />
         </Link>
 
         <Image src={closeIcon} onClick={() => setOpenModal(false)} alt='VDAO' height={24} className='cursor-pointer' />
       </div>
-      <div className='flex flex-col items-center justify-between gap-[100px] pt-[60px] md:gap-2'>
-        <div className='relative mx-auto h-24 w-24'>
-          <Image src={siwe?.user.picture || PodImage} alt='PodImage' className='mx-auto' sizes='square' fill />
+      <div className='mt-11 font-heading text-[26px] font-medium leading-[30.58px] text-vdao-light md:mt-[28px] md:w-[274px] md:text-[46px] md:leading-[52px] '>Your wallet</div>
+      <div className='flex items-center justify-start gap-[12px] pt-[21px] md:gap-4 md:pt-[28px]'>
+        <div className='relative ml-0 h-[54px] w-[54px] '>
+          <Image src={siwe?.user.picture || PodImage} alt='PodImage' className='' sizes='square' fill />
         </div>
-        <span className='text-xl text-white'>{shortenText(siwe?.user.name!, 20)}</span>
-        <span className='text-xl text-white'>{shortenAddress(siwe?.address || '')}</span>
-
-        <div className='flex gap-4'>
-          <Button type='primary' className='!h-9 !text-xl !text-black' onClick={() => signOut()}>
-            Sign Out
-          </Button>
+        <div className='mr-0'>
+          <div className='font-inter text-base leading-5 text-white'>{shortenText(siwe?.user.name!, 20)}eth_ninja1</div>
+          <div className=' pt-2 font-inter text-base leading-5 text-vdao-light'>0xEfC1C...Ce3b8{shortenAddress(siwe?.address || '')}</div>
         </div>
+      </div>
+      <div className='flex gap-4 pt-5'>
+        <Button type='primary' className='!h-9 !px-[35px] !text-xl !text-black' onClick={() => signOut()}>
+          Disconnect wallet
+        </Button>
       </div>
     </div>
   )
