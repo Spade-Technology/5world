@@ -10,9 +10,9 @@ import WhatsInIt from '~/components/pages/donate/whatsInIt'
 
 const Donate = () => {
   return (
-    <>
+    <article className='w-full overflow-hidden'>
       <Page>
-        <div className='mx-auto max-w-[1280px]'>
+        <div className='mx-auto max-w-[1140px]'>
           <DonateDescription />
 
           <DonateNow />
@@ -24,7 +24,7 @@ const Donate = () => {
 
         <MailingListComponent />
       </Page>
-    </>
+    </article>
   )
 }
 

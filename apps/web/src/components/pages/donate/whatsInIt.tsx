@@ -3,6 +3,7 @@ import HowItWorks from '~/components/misc/howItWorks'
 export const WhatsInIt = () => {
   return (
     <HowItWorks
+      className={'flex flex-col gap-[38px] md:gap-[72px]'}
       contents={[
         {
           heading: 'What’s in it for me?',
