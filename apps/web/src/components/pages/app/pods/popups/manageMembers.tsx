@@ -21,7 +21,24 @@ type ManageMembersProps = {
 const ManageMembers = ({ show, managerAddr, memberAddr, setManagerAddr, setMemberAddr, setShowManageMembers, setOpenedPod, pid, data }: ManageMembersProps) => {
   const { data: managerData } = useUserReads({})
   const [removeOn, setRemoveOn] = useState(false)
+  const [membersIDXs, setMembersIDXs] = useState<number[]>([])
   console.log('manage data', data)
+  console.log('membersIDXs', membersIDXs)
+
+  const handleMemberIDXs = (idx: number) => {
+    console.log('membersIDXs bool', membersIDXs.includes(idx), idx)
+    if (membersIDXs.includes(idx)) {
+      const updatedArr: number[] = []
+      membersIDXs.map(memberIDX => {
+        if (memberIDX !== idx) {
+          updatedArr.push(memberIDX)
+        }
+      })
+      setMembersIDXs(updatedArr)
+    } else {
+      setMembersIDXs((prev: number[]) => [...prev, idx])
+    }
+  }
   return (
     <CustomModal show={show} close={() => setShowManageMembers(false)} heading='Manage Members' modalMarginTop='my-[40px]'>
       <div className='grid grid-cols-1 gap-11 pt-10 font-body text-lg font-normal text-vdao-dark md:grid-cols-2 md:gap-[106px]'>
@@ -33,18 +50,32 @@ const ManageMembers = ({ show, managerAddr, memberAddr, setManagerAddr, setMembe
           <input
             className='mt-[17px] h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none md:mt-5'
             onChange={evt => setManagerAddr(evt.target.value)}
-            value={managerAddr}
+            value={managerAddr ? managerAddr : data[0]?.admins[0]?.address}
           />
 
-          <div className='mt-5 w-fit cursor-pointer rounded-[5px] bg-vdao-pink py-[5px] px-[35px] font-heading text-xl font-medium'>Add Manager</div>
+          <div
+            className={`mt-5 w-fit rounded-[5px]  py-[5px] px-[35px] font-heading text-xl font-medium
+                          ${managerAddr && managerAddr !== data[0]?.admins[0]?.address ? 'cursor-pointer bg-vdao-pink' : 'border-[1px] border-vdao-pink'}`}
+          >
+            Add Manager
+          </div>
 
           <div className='pt-11 text-[22px] font-bold'>Add Pod Members</div>
 
           <div className='pt-[5px]'>Add member address below.</div>
 
-          <input className='mt-5 h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none' onChange={evt => setMemberAddr(evt.target.value)} value={memberAddr} />
+          <input
+            className='mt-5 h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none'
+            onChange={evt => setMemberAddr(evt.target.value)}
+            value={memberAddr ? memberAddr : data[0]?.members[0]?.address}
+          />
 
-          <div className='mt-5 w-fit cursor-pointer rounded-[5px] bg-vdao-pink py-[5px] px-[35px] font-heading text-xl font-medium'>Add Member</div>
+          <div
+            className={`mt-5 w-fit rounded-[5px] py-[5px] px-[35px] 
+          font-heading text-xl font-medium ${memberAddr && memberAddr !== data[0]?.members[0]?.address ? 'cursor-pointer bg-vdao-pink' : 'border-[1px] border-vdao-pink'}`}
+          >
+            Add Member
+          </div>
         </div>
 
         {/* <div className='md:pr-5'>
@@ -100,40 +131,47 @@ const ManageMembers = ({ show, managerAddr, memberAddr, setManagerAddr, setMembe
             name={data && data[0]?.admins[0]?.name ? data[0]?.admins[0]?.name : ''}
             address={data && data[0]?.admins[0]?.address ? data[0]?.admins[0]?.address : ''}
           />
-
-          <div className='flex justify-start gap-[30px] pt-[30px] md:pt-10'>
-            <div className='text-[22px] font-bold'>Members</div>
-            <div className='text-lg font-normal'>{data && data[0]?.members ? data[0].members.length : 0}</div>
-            {/* {!removeOn && (
-              <div className='my-auto text-sm font-bold underline' onClick={() => setRemoveOn(true)}>
+          <div className='flex justify-between pt-[30px] md:pt-10'>
+            <div className='flex justify-start gap-[30px] '>
+              <div className='text-[22px] font-bold'>Members</div>
+              <div className='text-lg font-normal'>{data && data[0]?.members ? data[0].members.length : 0}</div>
+            </div>
+            {!removeOn && data && data[0]?.members.length > 0 && (
+              <div className='my-auto cursor-pointer text-sm font-bold underline' onClick={() => setRemoveOn(true)}>
                 Remove Members
               </div>
-            )} */}
+            )}
           </div>
 
           <div className='grid grid-cols-2 pt-5 '>
             {managerData &&
               managerData.map((member, idx) => {
                 return (
-                  <>
+                  <div key={idx} onClick={() => handleMemberIDXs(idx)}>
                     {/* {removeOn && <input type='radio' className='h-10 w-10'  />} */}
-                    <ProfileCard icon={member.picture} name={member.name} address={member.address} edit={true} />
-                  </>
+                    <ProfileCard icon={member.picture} name={member.name} address={member.address} edit={removeOn} />
+                  </div>
                 )
               })}
           </div>
 
-          <div className='flex justify-start gap-5 pt-6'>
-            <div className={`w-fit cursor-pointer rounded-md bg-vdao-pink py-[5px] px-9 font-heading text-xl font-medium text-vdao-dark`} onClick={() => setRemoveOn(false)}>
-              {' '}
-              Remove{' '}
-            </div>
+          {removeOn && (
+            <div className='flex justify-start gap-5 pt-6'>
+              <div
+                className={`w-fit rounded-md  py-[5px] px-9 font-heading text-xl font-medium text-vdao-dark
+                    ${membersIDXs.length > 0 ? 'cursor-pointer bg-vdao-pink' : 'border-[1px] border-vdao-pink'}`}
+                onClick={() => setRemoveOn(false)}
+              >
+                {' '}
+                Remove{' '}
+              </div>
 
-            <div className={`w-fit cursor-pointer rounded-md border-[1px] border-vdao-pink py-[5px] px-9 font-heading text-xl font-medium text-vdao-dark`} onClick={() => setRemoveOn(false)}>
-              {' '}
-              Cancel{' '}
+              <div className={`w-fit cursor-pointer rounded-md border-[1px] border-vdao-pink py-[5px] px-9 font-heading text-xl font-medium text-vdao-dark`} onClick={() => setRemoveOn(false)}>
+                {' '}
+                Cancel{' '}
+              </div>
             </div>
-          </div>
+          )}
 
           <div className='float-right flex gap-2 pt-20 pb-[30px] md:gap-5 md:pt-36 '>
             <PrimaryButton
