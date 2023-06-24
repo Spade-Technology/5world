@@ -22,11 +22,8 @@ const ManageMembers = ({ show, managerAddr, memberAddr, setManagerAddr, setMembe
   const { data: managerData } = useUserReads({})
   const [removeOn, setRemoveOn] = useState(false)
   const [membersIDXs, setMembersIDXs] = useState<number[]>([])
-  console.log('manage data', data)
-  console.log('membersIDXs', membersIDXs)
 
   const handleMemberIDXs = (idx: number) => {
-    console.log('membersIDXs bool', membersIDXs.includes(idx), idx)
     if (membersIDXs.includes(idx)) {
       const updatedArr: number[] = []
       membersIDXs.map(memberIDX => {
@@ -172,19 +169,16 @@ const ManageMembers = ({ show, managerAddr, memberAddr, setManagerAddr, setMembe
               </div>
             </div>
           )}
-
           <div className='float-right flex gap-2 pt-20 pb-[30px] md:gap-5 md:pt-36 '>
             <PrimaryButton
               text='Save'
               className=' py-[5px] px-[35px] font-heading text-lg font-medium'
               onClick={() => {
-                console.log('pid', pid)
                 const podInfo =
                   data &&
                   data.filter((podInfo: Pod) => {
                     return podInfo.id === pid
                   })
-                console.log('pid info', podInfo)
                 setOpenedPod(podInfo[0])
                 setShowManageMembers(false)
               }}
