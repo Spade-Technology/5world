@@ -6,10 +6,10 @@ const MailingListComponent = () => {
     <div className={`bg-vdao-lightpurple`}>
       <div className={`mx-auto max-w-[1280px] bg-vdao-lightpurple px-6 py-14 md:flex-row md:py-24`}>
         <div className='flex-1'>
-          <div className='w-[198px] font-heading text-[32px] font-medium leading-[38px] md:mx-auto md:w-11/12  md:text-[46px]'>Join Our Mailing List</div>
+          <div className='w-[198px] font-heading text-[32px] font-medium leading-[38px] text-vdao-dark md:mx-auto md:w-11/12  md:text-[46px]'>Join Our Mailing List</div>
         </div>
 
-        <div className='justify-center md:flex md:pt-[35px]'>
+        <div className='justify-center text-vdao-dark md:flex md:pt-[35px]'>
           <div className='pt-8 font-body text-[22px] font-medium leading-[26px] md:w-4/12  md:pt-0  md:text-[26px] md:leading-[30px]'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi turpis mi.
           </div>

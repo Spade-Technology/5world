@@ -5,6 +5,7 @@ import Image, { StaticImageData } from 'next/image'
 import CommunityHeroMobile from 'public/illustrations/home/PNG/VDAO-home-community.svg'
 import CommunityHero from 'public/illustrations/home/PNG/VDAO-home-community.png'
 import WelcomeHero from 'public/illustrations/home/PNG/VDAO-home-hero.png'
+import WelcomeHeroMobile from 'public/illustrations/home/SVG/01_main_illo_v02 1.svg'
 import IntroHero from 'public/illustrations/home/PNG/VDAO-home-intro.png'
 
 import CreateIcon from 'public/icons/home/VDAO-icon-home-create.svg'
@@ -209,11 +210,13 @@ export function HomeWelcomeComponent() {
   return (
     <Section className='mx-auto flex max-w-[1440px] flex-col overflow-hidden md:overflow-visible'>
       <div className='mx-auto mt-28'>
-        <div className='mx-auto w-10/12 text-center font-heading text-[44px] font-medium leading-[48px] text-vdao-dark md:w-auto md:text-[80px]'>Re:imagine the future</div>
+        <div className='mx-auto w-10/12 text-center font-heading text-[44px] font-medium leading-[48px] text-vdao-dark md:w-auto md:text-[80px] md:leading-[95px]'>Re:imagine the future</div>
         <div className='mx-auto mt-5 w-[80%] px-6 text-center font-body text-[22px] font-medium leading-[26px] text-vdao-dark md:text-[26px]'>A dao to restore ecosystems from the soil up.</div>
         <PrimaryButton text='Join Us' className='mx-auto mt-10' />
       </div>
-      <Image src={WelcomeHero} alt='VDAO' className='md:max-w-100 relative right-[5%] -z-10 mt-5 scale-[100%] md:mt-[20px]' />
+      <Image src={WelcomeHeroMobile} alt='VDAO' className='md:max-w-100 -z-10 mt-5 w-full md:hidden' />
+
+      <Image src={WelcomeHero} alt='VDAO' className=' relative -z-10 mt-5 hidden w-full md:mt-[20px] md:block' />
     </Section>
   )
 }

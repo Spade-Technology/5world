@@ -4,7 +4,7 @@ export const ApplyDescription = () => {
   return (
     <Description
       title={
-        <div className='w-[342px] font-heading text-[44px] font-medium leading-[42px] text-vdao-dark md:w-[400px] md:text-[60px] md:leading-[60px] lg:w-[506px] lg:text-[80px] lg:leading-[95px]'>
+        <div className='w-[342px] font-heading text-[44px] font-medium leading-[48px] text-vdao-dark md:w-[400px] md:text-[60px] md:leading-[60px] lg:w-[506px] lg:text-[80px] lg:leading-[95px]'>
           Apply to Join VDAO
         </div>
       }

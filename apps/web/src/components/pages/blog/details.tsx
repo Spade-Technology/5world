@@ -35,7 +35,7 @@ const Details = ({ id }: DetailProps) => {
           details?.fullDescription.map((description, idx) => {
             return (
               <div key={idx} className={idx < 1 ? 'mt-[30px]' : 'mt-[48px] mb-[120px] md:mb-[114px]'}>
-                <div className='font-heading text-xl font-medium leading-[24px] md:font-body md:text-[26px] md:leading-[30px]'>{description.header}</div>
+                <div className='font-heading text-xl font-medium leading-[24px] text-vdao-dark md:font-body md:text-[26px] md:leading-[30px]'>{description.header}</div>
                 {description.paras &&
                   description.paras.length > 0 &&
                   description.paras.map((para, idx) => {
@@ -51,12 +51,12 @@ const Details = ({ id }: DetailProps) => {
       </div>
 
       <div className=' border-t-[1px] border-t-vdao-dark'>
-        <div className='pt-[30px] font-body text-lg font-bold'>About Author</div>
+        <div className='pt-[30px] font-body text-lg font-bold text-vdao-dark'>About Author</div>
 
         <div className='flex items-center gap-4 pt-[26.8px] md:items-start md:justify-between md:gap-[30px]'>
           <Image src={details?.createdByProfile} alt='' width={0} height={0} className='h-[43px] w-10 rounded-full md:h-[85px]  md:w-20' />
           <div className='font-body font-normal'>
-            <div className='text-[22px] leading-[26px]'>{details?.createdBy}</div>
+            <div className='text-[22px] leading-[26px] text-vdao-dark'>{details?.createdBy}</div>
             <div className='hidden pt-[14px] text-lg leading-[24px] text-black md:block'>{details?.about}</div>
           </div>
         </div>

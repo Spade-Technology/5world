@@ -31,7 +31,6 @@ const FAQSection = (props: FAQProps) => {
               </div>
 
               <Image src={UpWardsArrow} alt='arrow' className={`h-6 w-6 ${index === idx ? 'mt-10 origin-top rotate-180 transition-transform' : ''} `} />
-              <Image src={UpWardsArrow} alt='arrow' className={`h-6 w-6 ${index === idx ? 'mt-10 origin-top rotate-180 transition-transform' : ''} `} />
             </div>
           )
         })}
