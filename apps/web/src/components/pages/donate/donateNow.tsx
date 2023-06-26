@@ -13,7 +13,7 @@ const DonateNow = (props: Props) => {
   const [radio, setRadio] = useState('')
 
   return (
-    <div className={'mx-6 mt-[49px] rounded-2xl bg-white p-14 font-body text-vdao-dark md:mx-20 md:mt-0 ' + props.className}>
+    <div className={'mx-6 mt-[49px] rounded-2xl bg-white p-[30px] font-body text-vdao-dark md:mx-20 md:mt-0 md:p-14 ' + props.className}>
       <div className='font-heading text-[26px] font-medium md:text-3xl'>Donate With</div>
       <div className='flex flex-col gap-[70px] pt-[30px] lg:flex-row'>
         <div className='flex-1'>

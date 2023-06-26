@@ -31,7 +31,7 @@ export function HomeCTAComponent() {
   return (
     <Section className='flex flex-col items-center bg-gradient-to-r from-vdao-light to-vdao-dark px-6 py-[64px] md:py-[100px] md:px-8 xl:px-0'>
       <div className='text-center font-heading text-[36px] font-medium text-white md:text-[46px]'>Ready to Join?</div>
-      <div className='mt-5 w-full max-w-3xl text-center font-body font-body text-[22px] leading-[26px] text-white md:mt-[25px] md:text-[26px] md:leading-[30px]'>
+      <div className='mt-5 w-full max-w-3xl text-center font-body text-[22px] leading-[26px] text-white md:mt-[25px] md:text-[26px] md:leading-[30px]'>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi turpis mi, faucibus vitae elementum id, tristique at lectus.
       </div>
       <PrimaryButton text=' Apply Now' className=' mx-auto mt-[36px] mr-auto bg-vdao-light md:mt-[62px]' />
@@ -147,7 +147,7 @@ export function HomeGetInvolvedComponent() {
 }
 
 const ObjectiveSubComponent = ({ icon, title, description }: { icon: StaticImageData; title: string; description: string }) => (
-  <div className='flex w-full w-10/12 flex-col items-center gap-5 md:items-start'>
+  <div className='flex w-full flex-col items-center gap-5 md:w-10/12 md:items-start'>
     <Image src={icon} alt='VDAO' height={100} />
     <div className='font-heading text-3xl font-medium'>{title}</div>
     <div className='w-full border-y-[1px] border-vdao-dark' />
