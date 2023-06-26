@@ -271,9 +271,9 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: Profi
         </Skeleton>
 
         {/* Description */}
-        <div className='mt-5 mr-7 font-body text-lg leading-6 md:mr-0 md:w-9/12'>
+        <div className='mt-5 mr-7 font-body text-lg leading-6 md:mr-0 md:w-full'>
           <Skeleton active={skeletonActive} paragraph={{ rows: 1 }} title={false} className='mt-5 mr-7 font-body text-lg leading-6 md:mr-0 md:w-9/12' loading={skeletonActive}>
-            <span>{data?.description ? data?.description : 'No Description available'}</span>
+            <span>{data?.description ? data?.description : 'No Description available'} </span>
           </Skeleton>
         </div>
         {/* Guild & Pod */}

@@ -134,7 +134,7 @@ const Header = (props: Props) => {
       </div>
 
       {/* Mobile */}
-      <div className={`flex w-full items-center justify-between py-16 px-4 md:hidden ${!props.dark ? 'bg-white ' : 'bg-vdao-deep '}  ${pathname === '/blog/details' ? '!pb-4' : ''}`}>
+      <div className={`flex w-full items-center justify-between overflow-hidden py-16 px-4 md:hidden ${!props.dark ? 'bg-white ' : 'bg-vdao-deep '}  ${pathname === '/blog/details' ? '!pb-4' : ''}`}>
         <Link href='/'>
           <Image src={logo} alt='VDAO' height={30} />
         </Link>
