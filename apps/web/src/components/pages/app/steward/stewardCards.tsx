@@ -26,10 +26,10 @@ const StewardCards = ({ setOpenProfile }: Props) => {
 
   return (
     <div className='mx-auto w-screen bg-vdao-deep'>
-      <div className='mx-auto max-w-[1280px] pb-[120px]'>
-        <div className='mx-6 max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'>Current Stewards</div>
+      <div className='mx-auto w-11/12 max-w-[1140px]  pb-[120px] pt-[63px]'>
+        <div className='font-heading text-[32px] font-medium text-vdao-light md:text-[46px]'>Current Stewards</div>
 
-        <div className='mx-6 mt-5 grid grid-cols-1 gap-5 md:mx-0 md:grid-cols-2'>
+        <div className='mx-6 mt-5 grid grid-cols-1 gap-5 md:mx-0 md:mt-[35px] md:grid-cols-2'>
           {isLoading ? (
             <>
               <Skeleton.Avatar shape='square' style={{ height: '400px', width: '100%' }} className='col-span-2' active />
@@ -61,6 +61,7 @@ export const Card = ({ setOpenProfile, user }: CardProps) => {
   })
 
   const [praiseScore, setPraiseScore] = useState(0)
+  const [readMore, setReadMore] = useState(false)
 
   useEffect(() => {
     if (userInfo) {
@@ -85,10 +86,10 @@ export const Card = ({ setOpenProfile, user }: CardProps) => {
           <Image src={ProfilePic} alt='' className='h-[64.2px] w-[60px] rounded-full' />
 
           <div className='pl-[10px] md:pl-[15px]'>
-            <div className='font-body text-[26px] font-semibold text-vdao-light'> {user && user.name ? shortenText(user.name) : 'Unnamed'} </div>
+            <div className='font-body text-[26px] font-bold text-vdao-light'> {user && user.name ? shortenText(user.name) : 'Unnamed'} </div>
             <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>
               <div className='font-light'>{user && user.address ? shortenAddress(user.address) : shortenAddress(Null_Address)}</div>
-              <div className='font-semibold'>
+              <div className='font-bold md:hidden lg:block'>
                 {user?.JoinedAt ? 'Joined ' + monthNames[user.JoinedAt.getUTCMonth()] + ' ' + user.JoinedAt.getDate() + ', ' + user.JoinedAt.getFullYear() : 'at Unavailable'}
               </div>
             </div>
@@ -97,34 +98,30 @@ export const Card = ({ setOpenProfile, user }: CardProps) => {
 
         <div className='mt-[18px] w-fit rounded-3xl border-[3px] py-[7px] px-[25px] text-xl font-medium'>DAO Operation Guild</div>
 
-        <div className='pt-5 text-lg font-normal md:pt-[30px]'>{user?.description ? user.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultrice ullamcorper.'}</div>
-
-        <div className='mt-[25px] flex justify-between rounded-[20px] bg-white px-5 py-8 md:mt-11 md:px-10'>
-          <div>
-            <div className='text-[28px] font-semibold text-vdao-light md:text-[32px]'> 0 </div>
-            <div className='text-sm font-semibold text-vdao-dark md:text-lg'>
-              Delegated <br /> Votes
-            </div>
-          </div>
-
-          <div>
-            <div className='text-[28px] font-semibold text-vdao-light md:text-[32px]'> 0% </div>
-            <div className='text-sm font-semibold text-vdao-dark md:text-lg'>
-              Voting <br /> Weight
-            </div>
-          </div>
-
-          <div>
-            <div className='text-[28px] font-semibold text-vdao-light md:text-[32px]'> {praiseScore ? praiseScore : 0} </div>
-            <div className='text-sm font-semibold text-vdao-dark md:text-lg'>
-              Praise <br /> Score
-            </div>
-          </div>
+        <div onClick={() => setReadMore(!readMore)} className=' cursor-default  pt-5 text-lg font-normal md:pt-[30px]'>
+          {user?.description
+            ? `${user.description.length < 150 ? user.description : user.description.length > 150 && readMore ? user.description : `${user.description.substring(0, 150)}...`}`
+            : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultrice ullamcorper.'}{' '}
         </div>
 
-        <div className='flex pt-[30px] md:pt-10'>
+        <div className='mt-[25px] flex justify-between rounded-[20px] bg-white px-5 py-8 md:mt-11 lg:px-10'>
+          {[
+            { num: '0', text: ' Delegated Votes' },
+            { num: '0%', text: 'Voting  Weight' },
+            { num: `${praiseScore ? praiseScore : '0'}`, text: 'Praise Score' },
+          ].map(({ num, text }) => {
+            return (
+              <div>
+                <div className='font-body text-[28px] font-bold text-vdao-light md:text-[32px]'> {num} </div>
+                <div className='font-body text-sm font-bold text-vdao-dark md:text-lg'>{text}</div>
+              </div>
+            )
+          })}
+        </div>
+
+        <div className='flex items-center gap-[30px] pt-[30px] md:pt-10'>
           <PrimaryButton text='Delegate' className='py-[5px] text-xl' onClick={() => delegate({ delegatee: user.address })} />
-          <div className='py-[5px] pl-[30px] text-xl font-medium'> Activity </div>
+          <div className='font-heading text-xl font-medium'> Activity </div>
         </div>
       </div>
     </div>

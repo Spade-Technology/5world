@@ -7,14 +7,17 @@ const StewardProfile = () => {
     <Section className='w-screen bg-vdao-deep'>
       <Description
         invertColors={true}
+        propsClass={'md:!gap-0 md:!px-0 md:w-fit'}
         title={
-          <div>
-            Steward
-            <br />
-            Profile
+          <div className='w-[342px] font-heading text-[44px] font-medium leading-[48px] text-vdao-light md:w-[400px] md:text-[60px] md:leading-[60px] lg:w-[553px] lg:text-[80px] lg:leading-[95px]'>
+            Steward Profile
           </div>
         }
-        description={<div className='font-body text-[26px] font-medium'>Stewards are leaders within the community who are strongly aligned with the DAO’s vision and mission.</div>}
+        description={
+          <div className='mr-auto w-full font-body text-[26px] font-medium leading-[30px] md:w-full md:max-w-[444px]'>
+            Stewards are leaders within the community who are strongly aligned with the DAO’s vision and mission.
+          </div>
+        }
       />
 
       <HowItWorks
