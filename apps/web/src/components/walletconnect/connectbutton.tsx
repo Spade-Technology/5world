@@ -395,7 +395,9 @@ function DisplayWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Set
         </div>
         <div className='mr-0'>
           <div className='font-inter text-base leading-5 text-white'>{shortenText(siwe?.user.name!, 20)}eth_ninja1</div>
-          <div className=' pt-2 font-inter text-base leading-5 text-vdao-light'>0xEfC1C...Ce3b8{shortenAddress(siwe?.address || '')}</div>
+          <div className=' flex items-center pt-2 font-inter text-base leading-5 text-vdao-light'>
+            {shortenAddress(siwe?.address || '')} <div className='ml-[9px] h-[17.411px] w-[15px] cursor-pointer bg-[url(/logo/svg/Vector.svg)] bg-contain bg-center bg-no-repeat'></div>
+          </div>{' '}
         </div>
       </div>
       <div className='flex gap-4 pt-5'>

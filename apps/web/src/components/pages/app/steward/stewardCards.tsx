@@ -25,11 +25,16 @@ const StewardCards = ({ setOpenProfile }: Props) => {
   console.log('stewards data', users)
 
   return (
-    <div className='mx-auto w-screen bg-vdao-deep'>
-      <div className='mx-auto w-11/12 max-w-[1140px]  pb-[120px] pt-[63px]'>
+    <div className='mx-auto w-screen bg-vdao-deep px-6 md:px-0'>
+      <div className='mx-auto w-full max-w-[1140px] pb-[120px]  pt-[0px] md:w-11/12'>
         <div className='font-heading text-[32px] font-medium text-vdao-light md:text-[46px]'>Current Stewards</div>
 
-        <div className='mx-6 mt-5 grid grid-cols-1 gap-5 md:mx-0 md:mt-[35px] md:grid-cols-2'>
+        <div className='mt-5 flex h-[43px] w-full items-center gap-[18px] overflow-hidden rounded-xl bg-vdao-dark px-3 md:hidden'>
+          <div className='h-7 w-7 bg-[url(/icons/stewards/search.svg)] bg-contain bg-center bg-no-repeat '></div>{' '}
+          <input type='text' className='h-full w-full bg-transparent  font-body text-lg font-medium text-vdao-light outline-none ' placeholder='Search username' />
+        </div>
+
+        <div className=' mt-5 grid grid-cols-1 gap-5 md:mt-[35px] md:grid-cols-2'>
           {isLoading ? (
             <>
               <Skeleton.Avatar shape='square' style={{ height: '400px', width: '100%' }} className='col-span-2' active />
@@ -82,11 +87,11 @@ export const Card = ({ setOpenProfile, user }: CardProps) => {
       </div>
 
       <div className='p-5 md:p-10'>
-        <div className='flex w-full'>
+        <div className='flex w-full items-start'>
           <Image src={ProfilePic} alt='' className='h-[64.2px] w-[60px] rounded-full' />
 
-          <div className='pl-[10px] md:pl-[15px]'>
-            <div className='font-body text-[26px] font-bold text-vdao-light'> {user && user.name ? shortenText(user.name) : 'Unnamed'} </div>
+          <div className='pl-2.5 md:pl-[15px]'>
+            <div className='font-body text-[26px] font-bold leading-[30px] text-vdao-light'> {user && user.name ? shortenText(user.name) : 'Unnamed'} </div>
             <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>
               <div className='font-light'>{user && user.address ? shortenAddress(user.address) : shortenAddress(Null_Address)}</div>
               <div className='font-bold md:hidden lg:block'>
@@ -98,7 +103,7 @@ export const Card = ({ setOpenProfile, user }: CardProps) => {
 
         <div className='mt-[18px] w-fit rounded-3xl border-[3px] py-[7px] px-[25px] text-xl font-medium'>DAO Operation Guild</div>
 
-        <div onClick={() => setReadMore(!readMore)} className=' cursor-default  pt-5 text-lg font-normal md:pt-[30px]'>
+        <div onClick={() => setReadMore(!readMore)} className=' cursor-default  pt-5 text-lg font-normal leading-[22px] md:pt-[30px]'>
           {user?.description
             ? `${user.description.length < 150 ? user.description : user.description.length > 150 && readMore ? user.description : `${user.description.substring(0, 150)}...`}`
             : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultrice ullamcorper.'}{' '}
@@ -113,7 +118,7 @@ export const Card = ({ setOpenProfile, user }: CardProps) => {
             return (
               <div>
                 <div className='font-body text-[28px] font-bold text-vdao-light md:text-[32px]'> {num} </div>
-                <div className='font-body text-sm font-bold text-vdao-dark md:text-lg'>{text}</div>
+                <div className='font-body text-sm font-bold leading-5 text-vdao-dark md:text-lg'>{text}</div>
               </div>
             )
           })}

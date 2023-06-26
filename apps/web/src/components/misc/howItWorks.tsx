@@ -9,7 +9,7 @@ type HowItWorksProps = {
 
 const HowItWorks = (props: HowItWorksProps) => {
   return (
-    <div className={`mx-auto px-6 py-20 text-white md:w-[749px] md:px-0 md:pt-[140px] md:pb-[77px] ${props.className}`}>
+    <div className={`w-full px-6 py-20 text-white md:mx-auto md:w-[749px] md:px-0 md:pt-[140px] md:pb-[77px] ${props.className}`}>
       {props.contents?.map((contents: any, idx: number) => {
         return (
           <div className={`flex flex-col justify-between gap-5 md:flex-row md:gap-[43px] md:px-6 lg:px-0 ${idx == 0 ? '' : 'pt-[30px]'}`} key={idx}>

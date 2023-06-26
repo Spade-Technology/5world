@@ -9,12 +9,12 @@ const StewardProfile = () => {
         invertColors={true}
         propsClass={'md:!gap-0 md:!px-0 md:w-fit'}
         title={
-          <div className='w-[342px] font-heading text-[44px] font-medium leading-[48px] text-vdao-light md:w-[400px] md:text-[60px] md:leading-[60px] lg:w-[553px] lg:text-[80px] lg:leading-[95px]'>
+          <div className='w-[314px] font-heading text-[44px] font-medium leading-[48px] text-vdao-light md:w-[400px] md:text-[60px] md:leading-[60px] lg:w-[553px] lg:text-[80px] lg:leading-[95px]'>
             Steward Profile
           </div>
         }
         description={
-          <div className='mr-auto w-full font-body text-[26px] font-medium leading-[30px] md:w-full md:max-w-[444px]'>
+          <div className='mr-auto w-full font-body text-[26px] font-medium leading-[30px] md:max-w-[444px]'>
             Stewards are leaders within the community who are strongly aligned with the DAO’s vision and mission.
           </div>
         }
