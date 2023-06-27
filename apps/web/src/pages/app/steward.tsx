@@ -14,7 +14,7 @@ const Steward = () => {
   const { data: siwe } = useSession()
 
   return (
-    <>
+    <div className=''>
       <Page>
         <StewardProfile />
 
@@ -23,7 +23,7 @@ const Steward = () => {
           {openProfile && <ProfilePopup profile={openProfile} close={() => setOpenProfile(undefined)} />}
         </EnforceAuth>
       </Page>
-    </>
+    </div>
   )
 }
 

@@ -116,10 +116,14 @@ const FooterManifesto = (props: Props) => {
           </Link>
         </div>
         <div className='flex flex-col gap-3'>
-          <span className='items flex items-start justify-center gap-3 text-base font-medium text-white'>
-            <Skeleton active={props.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={props.loading} className='my-auto mr-1 !w-5'>
-              {props.signatures || 0}
-            </Skeleton>
+          <span className='items flex items-start justify-center gap-3 text-base font-medium text-white md:mx-auto'>
+            {props.signatures ? (
+              <Skeleton active={props.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={props.loading} className=''>
+                {props.signatures}
+              </Skeleton>
+            ) : (
+              '0'
+            )}{' '}
             Signatures
           </span>
           <Button type='primary' className='mx-auto !h-10 w-44 !bg-vdao-dark' onClick={() => props.signModuleRef?.current?.scrollIntoView({ block: 'end', behavior: 'smooth' })}>
