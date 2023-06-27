@@ -24,9 +24,9 @@ const FormTwo = ({ contractAction, actions, setContractAction, contractAddress, 
   const [error, setError] = useState('')
   const { data: abi } = useEtherscan({ contractAddress }, { retry: 0 })
   const [verifiedAddr, setVerifiedAddr] = useState<string[]>([])
-
+  console.log('abi', abi)
   const verifyActions = () => {
-    console.log("abi", abi)
+    console.log('abi', abi)
     if (contractAddress && abi) {
       setVerified(true)
       setVerifiedAddr(prev => [...prev, contractAddress])
@@ -48,10 +48,12 @@ const FormTwo = ({ contractAction, actions, setContractAction, contractAddress, 
   }, [actions, abi, contractAddress])
 
   const handleMethods = (item: string) => {
-    const newAction = JSON.parse(item) as abiItem
-    setContractAction(newAction)
-    if (actions.length < 10) {
-      setActions(prev => [...prev, newAction])
+    if (item) {
+      const newAction = JSON.parse(item) as abiItem
+      setContractAction(newAction)
+      if (actions.length < 10) {
+        setActions(prev => [...prev, newAction])
+      }
     }
   }
 
@@ -153,9 +155,10 @@ const FormTwo = ({ contractAction, actions, setContractAction, contractAddress, 
 
         <Select
           className='antd-stop-propagation w-full'
-          options={abi?.filter(el => el.type == 'function' && el.stateMutability !== 'view').map(el => ({ value: JSON.stringify(el), label: el.name }))}
+          options={contractAddress ? abi?.filter(el => el.type == 'function' && el.stateMutability !== 'view').map(el => ({ value: JSON.stringify(el), label: el.name })) : [{ value: '', label: '' }]}
           onChange={handleMethods}
           placeholder='mockFunctionNonPayable'
+         
         />
 
         <div className='pt-[40px] text-[22px] font-bold md:pt-[60px]'>Added Actions</div>
