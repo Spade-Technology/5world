@@ -119,7 +119,7 @@ const Home: NextPage<any> = () => {
           {contextHolder}
           <SectionOne />
           <div className='pointer-events-none left-0 right-0 px-4 md:absolute md:h-[5150px] md:px-0'>
-            <div className='z-50 mx-auto mt-10 w-full max-w-[342px] items-center justify-between rounded-[20px] bg-vdao-dark py-5 px-[38px] font-body text-xl font-medium text-white md:sticky md:top-10 md:mt-20 md:flex md:w-11/12 md:max-w-[1140px] md:px-10 lg:h-[96px] lg:py-0'>
+            <div className='z-50 mx-auto mt-10 hidden w-full max-w-[342px] items-center justify-between rounded-[20px] bg-vdao-dark py-5 px-[38px] font-body text-xl font-medium text-white md:sticky md:top-10 md:mt-20 md:flex md:w-11/12 md:max-w-[1140px] md:px-10 lg:h-[96px] lg:py-0'>
               <div className='flex flex-col items-center justify-between gap-7 md:w-80 md:flex-row md:gap-[16px] lg:w-auto'>
                 <div className=''>
                   <div className='mx-auto h-[36px] w-[36px] bg-[url(/icons/manifesto/Pen.svg)] bg-contain bg-center bg-no-repeat md:mx-0' />
@@ -161,7 +161,7 @@ function Signing({
   return (
     <section>
       <div className='mx-auto max-w-[850px]' id='SignModule' ref={signModuleRef}>
-        <div className='mx-4 mb-20 mt-9 max-w-[358px] rounded-lg bg-vdao-dark p-4 md:mx-auto md:mt-[52px] md:pr-[32px]'>
+        <div className='mx-auto mb-20 mt-9 w-11/12 max-w-[358px] rounded-lg bg-vdao-dark p-4 md:mt-[52px] md:w-auto md:pr-[32px]'>
           <span className='font-body text-lg font-medium'>Sign the manifesto with 3 simple steps</span>
           <div className='ml-1 mt-4 flex'>
             {/* left */}
@@ -255,7 +255,7 @@ function Signing({
           </div>
           <div className='flex'>
             <input className='w-full rounded bg-[#14444A] px-5 py-3 font-body text-base font-normal text-[#3BA7B5] outline-none placeholder:text-[#3BA7B5]' placeholder='Enter your email address ' />
-            <div className='relative -left-1 w-16 rounded-r bg-vdao-light py-[14px] px-5'>
+            <div className='relative -left-1 flex w-16 items-center rounded-r bg-vdao-light py-[14px] px-5'>
               <Image src={SubmitIcon} alt='SubmitIcon' className='h-fit' />
             </div>
           </div>
@@ -324,7 +324,7 @@ function SectionTwo() {
         </div>
       </div>
        
-      <Image src={Green_VDAO} alt='Green_VDAO' className='mx-auto my-[52px] h-[86px] w-full md:my-20  md:h-[206px] md:w-11/12 md:max-w-[860px]' />
+      <div className='mx-auto my-[52px] h-[86px] w-full bg-[url(/logo/svg/VDAO.svg)] bg-contain bg-center bg-no-repeat md:my-20  md:h-[206px] md:w-11/12 md:max-w-[860px]' />
       <div className='mx-auto w-full max-w-[860px] font-body text-base font-normal leading-[28px] text-white md:text-xl'>
         The VDAO philosophy is based on the principles of freedom, liberty and enlightened self-interest. We believe that we are able to build systems that ensure profits along with impact, without
         compromising on any of the two.   <br />
