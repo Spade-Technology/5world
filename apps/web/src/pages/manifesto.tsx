@@ -183,18 +183,19 @@ function Signing({
               {/* step 0 */}
               <VDAOConnectButton
                 className='border-vdao-light bg-vdao-light font-roboto !text-sm font-medium text-vdao-dark outline-none'
-                messageOverrides={{ verify: 'Wallet Connected', verified: 'Wallet Connected' }}
+                messageOverrides={{register: 'Wallet Connected', verify: 'Wallet Connected', verified: 'Wallet Connected' }}
                 web2
                 redirectDisabled
+                disabled={step != 0}
               />
               {/* step 1 */}
               <VDAOConnectButton
                 className={`!h-10 w-fit font-roboto !text-sm font-medium ${
-                  step < 1 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : step == 1 ? '!text-vdao-light' : '!border-vdao-light !text-vdao-light'
+                  step < 1 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : step == 1 ? '!text-vdao-light border-vdao-light' : 'border-vdao-light bg-vdao-light text-vdao-dark'
                 }`}
                 disabled={step != 1}
                 redirectDisabled
-                messageOverrides={{ verified: 'Wallet Verified' }}
+                messageOverrides={{ walletselect: 'Verify Wallet', verified: 'Wallet Verified' }}
                 web2
               />
               {/* step 2 */}
