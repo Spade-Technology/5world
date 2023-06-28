@@ -128,7 +128,12 @@ const Home: NextPage<any> = () => {
               </div>
 
               <div className='mt-10 flex flex-col justify-between gap-5  md:mt-0 lg:flex-row lg:items-center lg:gap-0'>
-                <div className='opacity-70 md:text-center lg:text-left'>{signatures.total} Signatures</div>
+                <div className='opacity-70 md:text-center lg:text-left'>
+                  <Skeleton active={signatures.loading} paragraph={{ rows: 1, width: '20px' }} title={false} loading={signatures.loading} className='my-auto !w-5'>
+                    {signatures.total}
+                  </Skeleton>{' '}
+                  Signatures
+                </div>
                 <PrimaryButton text='Sign Manifesto' className='pointer-events-auto md:ml-[35px]' onClick={signManifesto} />
               </div>
             </div>
