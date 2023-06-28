@@ -128,7 +128,7 @@ const Home: NextPage<any> = () => {
               </div>
 
               <div className='mt-10 flex flex-col justify-between gap-5  md:mt-0 lg:flex-row lg:items-center lg:gap-0'>
-                <div className='opacity-70 md:text-center lg:text-left'>Signatures</div>
+                <div className='opacity-70 md:text-center lg:text-left'>{signatures.total} Signatures</div>
                 <PrimaryButton text='Sign Manifesto' className='pointer-events-auto md:ml-[35px]' onClick={signManifesto} />
               </div>
             </div>
@@ -183,7 +183,7 @@ function Signing({
               {/* step 0 */}
               <VDAOConnectButton
                 className='border-vdao-light bg-vdao-light font-roboto !text-sm font-medium text-vdao-dark outline-none'
-                messageOverrides={{register: 'Wallet Connected', verify: 'Wallet Connected', verified: 'Wallet Connected' }}
+                messageOverrides={{ register: 'Wallet Connected', verify: 'Wallet Connected', verified: 'Wallet Connected' }}
                 web2
                 redirectDisabled
                 disabled={step != 0}
@@ -191,7 +191,7 @@ function Signing({
               {/* step 1 */}
               <VDAOConnectButton
                 className={`!h-10 w-fit font-roboto !text-sm font-medium ${
-                  step < 1 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : step == 1 ? '!text-vdao-light border-vdao-light' : 'border-vdao-light bg-vdao-light text-vdao-dark'
+                  step < 1 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : step == 1 ? 'border-vdao-light !text-vdao-light' : 'border-vdao-light bg-vdao-light text-vdao-dark'
                 }`}
                 disabled={step != 1}
                 redirectDisabled
