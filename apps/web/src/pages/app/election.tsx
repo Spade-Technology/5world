@@ -25,7 +25,7 @@ const Election = () => {
 
           {openProfile && <ProfilePopup profile={openProfile} close={() => setOpenProfile(undefined)} />}
 
-          { openVotesNscores && <VotesNscores show={openVotesNscores} close={() => setOpenVotesNscores(false)} /> }
+          {openVotesNscores && <VotesNscores show={openVotesNscores} close={() => setOpenVotesNscores(false)} />}
         </EnforceAuth>
       </Page>
     </>

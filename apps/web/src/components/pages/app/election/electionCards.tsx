@@ -1,18 +1,15 @@
+import { User } from '@prisma/client'
+import { Skeleton } from 'antd'
 import Image from 'next/image'
-import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import ProfilePic from 'public/icons/blog/createdByLogo.svg'
-import WhiteButton from '~/styles/shared/buttons/whiteButton'
+import InfoIcon from 'public/icons/stewards/infoIcon.svg'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { useAccount } from 'wagmi'
-import { useStewardRead, useStewardReads, useVote } from '~/hooks/web3/useStewards'
-import { Address } from 'viem'
-import { JoinedAtFormat, shortenAddress, shortenText } from '~/utils/helpers'
+import { useElectionReads, useVote } from '~/hooks/web3/useStewards'
+import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { Null_Address } from '~/utils/config'
 import { monthNames } from '~/utils/date'
-import { Dispatch, SetStateAction, useState } from 'react'
-import { Skeleton } from 'antd'
-import { useUserReads } from '~/hooks/web3/useUser'
-import { User } from '@prisma/client'
-import InfoIcon from 'public/icons/stewards/infoIcon.svg'
+import { shortenAddress, shortenText } from '~/utils/helpers'
 
 type Props = {
   setOpenProfile: Dispatch<SetStateAction<User | undefined>>
@@ -27,7 +24,7 @@ type CardProps = {
 
 const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
   const { address } = useAccount()
-  const { data, isLoading } = useUserReads({})
+  const { data, isLoading } = useElectionReads({})
 
   return (
     <div className='mx-auto w-screen bg-vdao-deep'>
@@ -120,12 +117,12 @@ export const Card = ({ data, setOpenProfile, setOpenVotesNscores }: CardProps) =
         </div>
 
         <div className='flex flex-col justify-between pt-[30px] md:flex-row md:pt-10'>
-          <div className='py-[5px] text-xl font-medium md:pl-[30px]'>Delegate your vote</div>
+          <div className='w-2/3 py-[5px] text-xl font-medium md:pl-[30px]'>Delegate your vote</div>
 
-          <div className='flex gap-[10px]'>
+          <div className='flex w-full gap-[10px]'>
             <input
-              placeholder='60'
-              className=' max-h-9 w-fit max-w-[100px] rounded-md border-none px-7 font-heading text-xl text-vdao-dark outline-none'
+              placeholder='V Tokens'
+              className='max-h-9 w-full rounded-md border-none px-7 font-heading text-xl text-vdao-dark outline-none'
               value={votes}
               onChange={evt => setVotes(evt.target.value)}
             />

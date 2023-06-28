@@ -1,7 +1,7 @@
 {
   "extends": "tsconfig/nextjs.json",
   "compilerOptions": {
-    "target": "es2020",
+    "target": "es2022",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "checkJs": true,
@@ -24,15 +24,6 @@
       "~/*": ["./src/*"]
     }
   },
-  "include": [
-    ".eslintrc.cjs",
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.cjs",
-    "**/*.mjs",
-    "src/utils/web3context.tss",
-    "src/utils/web3context.tss"
-  ],
+  "include": [".eslintrc.cjs", "next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs", "src/utils/web3context.tss", "src/utils/web3context.tss"],
   "exclude": ["node_modules"]
 }
