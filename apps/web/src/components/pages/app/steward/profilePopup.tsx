@@ -29,7 +29,7 @@ const ProfilePopup = ({ profile, close }: PopupProps) => {
         <div className=''>
           <div className='flex flex-col justify-between md:flex-row'>
             <div>
-              <div className='flex w-full'>
+              <div className='flex '>
                 <Image src={ProfilePic} alt='' className='h-[64.2px] w-[60px] rounded-full md:h-[128.4px] md:w-[123.41px]' />
                 <div className='pl-[15px] md:pl-[30px]'>
                   <div className='font-body text-[26px] font-bold capitalize text-vdao-light md:text-[36px]'>{shortenText(profile?.name ? profile?.name : 'Unnamed')}</div>
