@@ -24,14 +24,14 @@ const ProfilePopup = ({ profile, close }: PopupProps) => {
   const { data } = useStewardRead(address!)
 
   return (
-    <CustomModal show={!!profile} close={close} externalStyle={'md:w-full custom-scrollbar md:mx-10 lg:mx-auto '}>
+    <CustomModal show={!!profile} close={close} externalStyle={'w-full custom-scrollbar md:mx-10 xl:mx-auto '}>
       {!!profile && (
-        <div className='pl-[10px]'>
+        <div className=''>
           <div className='flex flex-col justify-between md:flex-row'>
             <div>
               <div className='flex w-full'>
                 <Image src={ProfilePic} alt='' className='h-[64.2px] w-[60px] rounded-full md:h-[128.4px] md:w-[123.41px]' />
-                <div className='pl-[10px] md:pl-[30px]'>
+                <div className='pl-[15px] md:pl-[30px]'>
                   <div className='font-body text-[26px] font-bold capitalize text-vdao-light md:text-[36px]'>{shortenText(profile?.name ? profile?.name : 'Unnamed')}</div>
                   <div className='flex flex-col font-body text-lg lg:flex-row lg:gap-5'>
                     <div className='font-medium md:text-[22px]'>{profile?.address ? shortenAddress(profile?.address!) : shortenAddress(Null_Address)}</div>
@@ -42,9 +42,9 @@ const ProfilePopup = ({ profile, close }: PopupProps) => {
                 </div>
               </div>
 
-              {profile.guild && (
-                <div className='mt-[30px] w-fit rounded-3xl border-[3px] border-vdao-light px-5 text-lg font-medium md:ml-36 md:mt-[0px] md:py-[7px] md:px-[25px] md:text-xl'>{profile.guild.name}</div>
-              )}
+              {/* <div className='my-[30px] h-fit w-[218px] rounded-[20px] border-[3px] border-vdao-light text-center text-lg font-medium leading-[30px]'>DAO Operation Guild</div> */}
+
+              {profile.guild && <div className='mt-[30px] h-fit w-[218px] rounded-[20px] border-[3px] border-vdao-light text-center text-lg font-medium leading-[30px]'>{profile.guild.name}</div>}
             </div>
 
             <PrimaryButton
@@ -72,7 +72,7 @@ const ProfilePopup = ({ profile, close }: PopupProps) => {
 
 const Statements = () => {
   return (
-    <div className='max-w-[771px] pt-5 font-body text-lg font-normal md:pt-[30px]'>
+    <div className='max-w-[771px] pt-5 font-body text-lg font-normal leading-[22px] md:pt-[30px]'>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet elementum urna, in volutpat risus. Quisque nec tempus diam, sit amet luctus mi. Quisque auctor tortor ut nunc finibus, et
       venenatis lacus eleifend. Fusce commodo, ipsum sit amet mollis tincidunt, ipsum nibh bibendum arcu, in egestas lectus justo eget massa. Nam quis aliquet erat, in dignissim purus.
       <br />
@@ -85,7 +85,7 @@ const Statements = () => {
 
 const Activity = () => {
   return (
-    <div className='flex gap-[72px] p-5 text-sm md:py-[50px]'>
+    <div className='flex gap-[72px] py-5 text-sm md:px-5 md:py-[50px]'>
       <div className='flex flex-col justify-start gap-5 font-normal'>
         <div>Donation to VDAO Treasury</div>
         <div>Operational Proposal created</div>
