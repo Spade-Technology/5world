@@ -10,9 +10,10 @@ type ModalProps = {
   modalMarginTop?: string
   padding?: string
   removeCloseIcon?: boolean
+  externalStyle?: string
 }
 
-const CustomModal = ({ show, close, children, heading, modalMarginTop, padding, removeCloseIcon }: ModalProps) => {
+const CustomModal = ({ show, close, children, heading, modalMarginTop, padding, removeCloseIcon, externalStyle }: ModalProps) => {
   // const ref = useRef<HTMLInputElement>(null)
 
   // useEffect(() => {
@@ -33,9 +34,9 @@ const CustomModal = ({ show, close, children, heading, modalMarginTop, padding, 
       } fixed top-0 left-0 z-50 mx-auto h-full w-full overflow-auto backdrop-brightness-50 `}
     > */}
       <div
-        className={`${modalMarginTop ? modalMarginTop : 'my-[100px]'} ${
+        className={`${modalMarginTop ? modalMarginTop : 'my-[100px]'} ${externalStyle} ${
           padding ? padding : 'p-6 md:p-[30px] md:pl-[50px]'
-        } mx-auto max-h-[600px] max-w-[370px]  overflow-auto rounded-[20px] bg-white  md:max-w-[1140px] `}
+        } mx-auto max-h-[600px]  max-w-[370px] overflow-auto rounded-[20px] bg-white  md:max-w-[1140px] `}
         // ref={ref}
       >
         <div className='flex justify-between'>

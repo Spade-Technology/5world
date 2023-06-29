@@ -24,17 +24,16 @@ const ProfilePopup = ({ profile, close }: PopupProps) => {
   const { data } = useStewardRead(address!)
 
   return (
-    <CustomModal show={!!profile} close={close}>
+    <CustomModal show={!!profile} close={close} externalStyle={'md:w-full custom-scrollbar md:mx-10 lg:mx-auto '}>
       {!!profile && (
         <div className='pl-[10px]'>
           <div className='flex flex-col justify-between md:flex-row'>
             <div>
               <div className='flex w-full'>
                 <Image src={ProfilePic} alt='' className='h-[64.2px] w-[60px] rounded-full md:h-[128.4px] md:w-[123.41px]' />
-
-                <div className='pl-[10px] md:pl-[15px]'>
-                  <div className='font-body text-[26px] font-semibold text-vdao-light md:text-[36px]'>{shortenText(profile?.name ? profile?.name : 'Unnamed')}</div>
-                  <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>
+                <div className='pl-[10px] md:pl-[30px]'>
+                  <div className='font-body text-[26px] font-bold capitalize text-vdao-light md:text-[36px]'>{shortenText(profile?.name ? profile?.name : 'Unnamed')}</div>
+                  <div className='flex flex-col font-body text-lg lg:flex-row lg:gap-5'>
                     <div className='font-medium md:text-[22px]'>{profile?.address ? shortenAddress(profile?.address!) : shortenAddress(Null_Address)}</div>
                     <div className='font-bold'>
                       {profile?.JoinedAt ? 'Joined ' + monthNames[profile.JoinedAt.getUTCMonth()] + ' ' + profile.JoinedAt.getDate() + ', ' + profile.JoinedAt.getFullYear() : 'at Unavailable'}

@@ -11,7 +11,7 @@ const Analytics = () => {
     <>
       <Page>
         <div className='bg-vdao-deep px-6 md:px-0'>
-          <Section className='mx-auto lg:max-w-[1280px]'>
+          <Section className='mx-auto lg:max-w-[1140px]'>
             <TitleComponent />
 
             <MembershipComponent />

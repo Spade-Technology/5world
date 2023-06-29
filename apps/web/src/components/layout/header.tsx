@@ -94,43 +94,70 @@ const Header = (props: Props) => {
   return (
     <header className={!props.dark ? 'overflow-hidden bg-white' : 'w-full overflow-hidden bg-vdao-deep'}>
       {/* Desktop */}
-      <div className='z-50 mx-auto hidden h-24 max-w-[1280px] items-center justify-between px-0 md:flex md:px-6 xl:px-0'>
+      <div className='z-50 mx-auto hidden h-[100px] max-w-[1140px] items-center justify-center px-6 md:flex xl:px-0'>
         <Link href='/'>
           <Image src={logo} alt='VDAO' height={30} />
         </Link>
-        <div className={'xl:ml-54 flex justify-between gap-9 ' + (!props.dark ? '!text-vdao-dark' : 'text-white')}>
-          {(props.web2 ? navigationElementsWeb2 : navigationElementsWeb3).map(element => (
-            <Tooltip
-              placement='bottomLeft'
-              color='white'
-              title={
-                element.children &&
-                element.children.length > 0 && (
-                  <div className='flex flex-col gap-5 px-10 py-8 '>
-                    {element.children?.map(child => (
-                      <Link className='small-text !text-vdao-dark hover:opacity-80' href={child.link} key={child.name}>
-                        {child.name}
-                      </Link>
-                    ))}
-                  </div>
-                )
-              }
-              key={element.name}
-            >
-              <Link href={element.link} className={`font-body text-lg font-medium ${props.web2 ? 'text-vdao-dark' : 'text-white'}`}>
-                {element.name}
-              </Link>
-            </Tooltip>
-          ))}
+
+        <div className={'ml-auto mr-[50px] flex justify-between gap-5 lg:gap-[35px] ' + (!props.dark ? '!text-vdao-dark' : 'text-white')}>
+          {(props.web2 ? navigationElementsWeb2 : navigationElementsWeb3).map((element, index) =>
+            !props.web2 && index > 0 ? (
+              <Tooltip
+                placement='bottomLeft'
+                color='white'
+                title={
+                  element.children &&
+                  element.children.length > 0 && (
+                    <div className='flex flex-col gap-5 px-10 py-8 '>
+                      {element.children?.map(child => (
+                        <Link className='small-text !text-vdao-dark hover:opacity-80' href={child.link} key={child.name}>
+                          {child.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )
+                }
+                key={element.name}
+              >
+                <Link href={element.link} className={`font-body text-lg font-medium ${props.web2 ? 'text-vdao-dark' : 'text-white'}`}>
+                  {element.name}
+                </Link>
+              </Tooltip>
+            ) : props.web2 ? (
+              <Tooltip
+                placement='bottomLeft'
+                color='white'
+                title={
+                  element.children &&
+                  element.children.length > 0 && (
+                    <div className='flex flex-col gap-5 px-10 py-8 '>
+                      {element.children?.map(child => (
+                        <Link className='small-text !text-vdao-dark hover:opacity-80' href={child.link} key={child.name}>
+                          {child.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )
+                }
+                key={element.name}
+              >
+                <Link href={element.link} className={`font-body text-lg font-medium ${props.web2 ? 'text-vdao-dark' : 'text-white'}`}>
+                  {element.name}
+                </Link>
+              </Tooltip>
+            ) : (
+              ''
+            ),
+          )}
         </div>
-        <div className='hidden gap-7 lg:flex'>
-          <Link href='https://vdao.discourse.group' target='_blank' rel='noopener noreferrer'>
+
+        <div className='hidden gap-[30px] md:flex'>
+          <Link href='https://vdao.discourse.group' target='_blank' rel='noopener noreferrer' className='flex items-center'>
             <Image src={!props.dark ? discourse : darkDiscourse} alt='VDAO' width={30} height={30} className='hidden md:block' />
           </Link>
           <Image src={!props.dark ? discordCircle : darkDiscord} alt='VDAO' width={30} height={30} className='hidden md:block' />
+          <VDAOConnectButton web2={props.web2} className={!props.dark ? 'border-vdao-dark text-xl font-medium text-vdao-dark' : 'border-vdao-light text-vdao-light'} />
         </div>
-
-        <VDAOConnectButton web2={props.web2} className={!props.dark ? 'border-vdao-dark text-xl font-medium text-vdao-dark' : 'border-vdao-light text-vdao-light'} />
       </div>
 
       {/* Mobile */}
