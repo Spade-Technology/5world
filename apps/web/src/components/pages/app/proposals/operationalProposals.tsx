@@ -16,31 +16,27 @@ const OperationalProposals = ({ setOpenCreateProposal }: Props) => {
   const { data: siwe } = useSession()
 
   return (
-    <Section className='w-screen bg-vdao-deep'>
+    <Section className='w-screen  bg-vdao-deep'>
       <Description
+        propsClass={'!max-w-[1109px] !md:gap-5'}
         invertColors={true}
         title={
-          <div>
-            Operational
-            <br />
-            Profile
+          <div className='w-[342px] font-heading text-[44px] font-medium leading-[48px] text-vdao-light md:w-[400px] md:text-[60px] md:leading-[60px] lg:w-[553px] lg:text-[80px] lg:leading-[95px]'>
+            Operational Proposals{' '}
           </div>
         }
         description={
-          <div className='font-body text-[26px] font-medium'>
+          <div className='w-full font-body text-[26px] font-medium leading-[30px] md:w-full md:max-w-[557px]'>
             This page contains all formal on-chain proposals within the DAO, both active and inactive. Proposals are created by DAO stewards once a proposal received enough off-chain support in the
             discussion forum.
           </div>
         }
       />
 
-      <div className='flex flex-col md:flex-row '>
-        <div className='flex-1'></div>
-        <div className='mt-[30px] flex flex-1 flex-col gap-5 pl-6 md:mt-0 md:flex-row md:pl-16'>
-          <PrimaryButton text='Create Proposal' onClick={() => (siwe ? setOpenCreateProposal(true) : router.push('/app/proposals/#restrictedContent'))} className='py-[5px] px-[35px] text-xl' />
-          <div className='w-fit  cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white'>
-            <Link href={siwe ? '/app/proposals/#allProposals' : '/app/proposals/#restrictedContent'}>See All Proposals</Link>
-          </div>
+      <div className='mx-auto mt-[30px] flex max-w-[1130px] flex-1 flex-col justify-end gap-5 px-6 md:mt-0 md:flex-row'>
+        <PrimaryButton text='Create Proposal' onClick={() => (siwe ? setOpenCreateProposal(true) : router.push('/app/proposals/#restrictedContent'))} className='py-[5px] px-[35px] text-xl' />
+        <div className='w-fit  cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white'>
+          <Link href={siwe ? '/app/proposals/#allProposals' : '/app/proposals/#restrictedContent'}>See All Proposals</Link>
         </div>
       </div>
 
