@@ -3,7 +3,20 @@ import { type NextPage } from 'next'
 import Page from '~/components/layout/page'
 import MailingListComponent from '~/components/misc/mailinglist'
 
-import { HomeCommunityComponent, HomeCTAComponent, HomeGetInvolvedComponent, HomeIntroComponent, HomeObjectivesComponent, HomePartnersComponent, HomeWelcomeComponent } from '~/components/pages/home'
+import {
+  HomeCommunityComponent,
+  HomeCTAComponent,
+  HomeFindYourPlace,
+  HomeGetInvolvedComponent,
+  HomeIntroComponent,
+  HomeObjectivesComponent,
+  HomePartnersComponent,
+  HomeRegenerativeAgri,
+  HomeWelcomeComponent,
+  OurPartners,
+  RegeratedWorld,
+  WaysToSupportVDAO,
+} from '~/components/pages/home'
 import { useUserReads } from '~/hooks/web3/useUser'
 
 const Home: NextPage = () => {
@@ -14,9 +27,19 @@ const Home: NextPage = () => {
 
         <HomeIntroComponent />
 
+        <HomeRegenerativeAgri />
+
+        <HomeFindYourPlace />
+
         <HomeObjectivesComponent />
 
+        <OurPartners />
+
         <HomeGetInvolvedComponent />
+
+        <WaysToSupportVDAO />
+
+        <RegeratedWorld />
 
         <HomeCommunityComponent />
 
