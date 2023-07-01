@@ -6,7 +6,7 @@ import Page from '~/components/layout/page'
 import { Section } from '~/components/layout/section'
 import LoginPromptComponent, { EnforceAuth } from '~/components/misc/enforceAuth'
 import ProfilePopup from '~/components/pages/app/home/profilePopup'
-import { NewMembersComponent, ProfileHomeComponent, StatisticsHomeComponent, WelcomeComponent } from '~/components/pages/app/home/web3home'
+import { NewMembersComponent, ProfileHomeComponent, SelfDelegate, StatisticsHomeComponent, WelcomeComponent } from '~/components/pages/app/home/web3home'
 
 const Home: NextPage = () => {
   const [openProfile, setOpenProfile] = useState(false)
@@ -15,6 +15,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Page>
+        <SelfDelegate />
         <WelcomeComponent />
 
         <EnforceAuth>
