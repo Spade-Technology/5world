@@ -60,8 +60,8 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
   }, [pageCount, data])
 
   return (
-    <div className='mx-auto w-screen bg-vdao-deep'>
-      <div className='mx-auto max-w-[1280px] pb-[120px]'>
+    <div className='mx-auto w-screen bg-vdao-deep pt-[63px]'>
+      <div className='mx-auto w-full max-w-[1140px] px-10 pb-[120px]'>
         <div id='allProposals' className='mx-6 max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'>
           Proposals
         </div>
@@ -80,7 +80,7 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
 
 export const Card = ({ proposal, setViewProposal, setProposalID }: CardProps) => {
   return (
-    <div className='mt-[20px] rounded-[20px] bg-white px-5 py-10 font-body text-vdao-dark md:mt-[30px] md:p-[50px]'>
+    <div className='mt-[20px] rounded-[20px] bg-white px-5 py-10 font-body text-vdao-dark md:mt-[30px] md:p-8 lg:p-[50px]'>
       <div className='flex flex-col md:flex-row'>
         <div className='flex-1'>
           <div className='text-lg font-semibold'>

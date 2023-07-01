@@ -21,7 +21,9 @@ const Proposals = () => {
         <EnforceAuth>
           <ProposalCards setViewProposal={setViewProposal} setProposalID={setProposalID} />
 
-          <Insights />
+          <div className='px-6 md:px-10 xl:px-0'>
+            <Insights />
+          </div>
 
           {openCreateProposal && <CreateNewProposal show={openCreateProposal} close={() => setOpenCreateProposal(false)} />}
 
