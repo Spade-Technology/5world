@@ -11,7 +11,7 @@ function Page({ children, web2 = false, darkweb2 = false }: { children: React.Re
     <>
       <Header web2={web2Active} dark={darkModeActive} />
       <div className={bodyClassName}>{children}</div>
-      {/* <Footer /> */}
+      <Footer />
     </>
   )
 }
