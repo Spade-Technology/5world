@@ -209,10 +209,12 @@ export function HomeIntroComponent() {
 export function HomeWelcomeComponent() {
   return (
     <Section className='mx-auto flex max-w-[1440px] flex-col overflow-hidden md:overflow-visible'>
-      <div className='mx-auto mt-28'>
+      <div className='d-flex mx-auto mt-28'>
         <div className='mx-auto w-10/12 text-center font-heading text-[44px] font-medium leading-[48px] text-vdao-dark md:w-auto md:text-[80px] md:leading-[95px]'>Re:imagine the future</div>
         <div className='mx-auto mt-5 w-[80%] px-6 text-center font-body text-[22px] font-medium leading-[26px] text-vdao-dark md:text-[26px]'>A dao to restore ecosystems from the soil up.</div>
-        <PrimaryButton text='Join Us' className='mx-auto mt-10' />
+      </div>
+      <div className='mx-auto'>
+        <PrimaryButton text='Join Us' className='!mx-auto mt-10' />
       </div>
       <Image src={WelcomeHeroMobile} alt='VDAO' className='md:max-w-100 -z-10 mt-5 w-full md:hidden' />
 

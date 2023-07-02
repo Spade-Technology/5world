@@ -6,6 +6,15 @@ const ContentsTable = () => {
   const [sticky, setSticky] = useState(false)
   const headingCSS = 'text-3xl font-medium font-heading'
 
+  const links = [
+    { text: 'Code of Conduct', url: '/app/support/#codeOfConduct' },
+    { text: 'Our Goal', url: '/app/support/#goal' },
+    { text: 'Scope', url: '/app/support/#scope' },
+    { text: 'Enforcement', url: '/app/support/#enforcement' },
+    { text: 'Enforcement Guideline', url: '/app/support/#enf-guidelines' },
+    { text: 'License and Attribution', url: '/app/support/#license' },
+  ]
+
   useEffect(() => {
     window.addEventListener('scroll', isSticky)
     return () => {
@@ -25,23 +34,21 @@ const ContentsTable = () => {
   }
 
   return (
-    <Section className='mx-auto w-screen bg-vdao-deep py-[60px] px-6 md:px-0  '>
-      <div className=' mx-auto grid max-w-[1280px] grid-cols-1 md:grid-cols-3 md:gap-[68px]'>
+    <Section className='mx-auto w-screen bg-vdao-deep py-[60px] px-6 md:px-0'>
+      <div className=' mx-auto grid max-w-[1056px] grid-cols-1 md:grid-cols-3 md:gap-[68px]'>
         <div
           className={`flex h-fit max-w-[319px] flex-col gap-5 rounded-[20px] bg-vdao-dark p-10 font-body text-[22px] font-normal text-vdao-light
            ${sticky ? 'fixed top-5 pr-14' : ''} `}
           id='tableOfContents'
         >
-          <Link href={'/app/support/#codeOfConduct'}>Code of Conduct</Link>
-          <Link href={'/app/support/#goal'}>Our Goal</Link>
-          <Link href={'/app/support/#scope'}>Scope</Link>
-          <Link href={'/app/support/#enforcement'}>Enforcement</Link>
-          <Link href={'/app/support/#enf-guidelines'}>Enforcement Guideline</Link>
-          <Link href={'/app/support/#license'}>License and Attribution</Link>
+          {links.map(({ text, url }) => {
+            return <Link href={url}>{text}</Link>
+          })}
         </div>
+
         {sticky && <div></div>}
 
-        <div className='col-span-2 max-w-[669px] pt-11 font-body text-[22px] font-normal text-white md:pt-0'>
+        <div className='col-span-2 max-w-[669px] pt-11 font-body text-[22px] font-normal leading-[26px] text-white md:mr-6 md:pt-0 lg:mr-0'>
           {/* Code of Conduct */}
           <div id='codeOfConduct'>
             <div className={`${headingCSS}`}>Code of Conduct</div>
