@@ -22,6 +22,7 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
   const [pageCount, setPageCount] = useState(1)
   const [pageNumbers, setPageNumbers] = useState<any>([])
   const [updatedproposals, setUpdatedProposals] = useState<any>([])
+  const [proposalsType, setProposalsType] = useState('all')
   const { data } = useProposalReads({ include: { author: true, pod: true } })
   const itemsPerPage = 3
 
@@ -60,13 +61,34 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
   }, [pageCount, data])
 
   return (
-    <div className='mx-auto w-screen bg-vdao-deep pt-[63px]'>
-      <div className='mx-auto w-full max-w-[1140px] px-10 pb-[120px]'>
-        <div id='allProposals' className='mx-6 max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'>
+    <div className='mx-auto w-screen bg-vdao-deep pt-[63px] px-6'>
+      <div className='mx-auto w-full max-w-[1140px] pb-[120px]'>
+        <div id='allProposals' className='max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'>
           Proposals
         </div>
 
-        <div className='mx-6 mt-[15px]  md:mx-0 '>
+        <div
+          className='mt-5 grid max-w-[450px] grid-cols-3 rounded-[100px] border-[1px] 
+                     border-vdao-light font-heading text-xl text-vdao-light'
+        >
+          <div onClick={() => setProposalsType('all')} className={`cursor-pointer rounded-[100px] py-2 text-center font-medium ${proposalsType === 'all' ? 'bg-vdao-light  text-vdao-dark' : ''}`}>
+            All
+          </div>
+          <div
+            onClick={() => setProposalsType('active')}
+            className={`cursor-pointer rounded-[100px] py-2 text-center font-medium ${proposalsType === 'active' ? 'bg-vdao-light  text-vdao-dark' : ''}`}
+          >
+            Active
+          </div>
+          <div
+            onClick={() => setProposalsType('closed')}
+            className={`cursor-pointer rounded-[100px] py-2 text-center font-medium ${proposalsType === 'closed' ? 'bg-vdao-light  text-vdao-dark' : ''}`}
+          >
+            Closed
+          </div>
+        </div>
+
+        <div className='mt-[15px]  md:mx-0 '>
           {updatedproposals?.map((proposal: any, idx: number) => {
             return <Card proposal={proposal} key={idx} setViewProposal={setViewProposal} setProposalID={setProposalID} />
           })}

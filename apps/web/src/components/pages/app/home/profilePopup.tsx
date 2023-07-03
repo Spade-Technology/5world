@@ -1,7 +1,7 @@
 import CustomModal from '~/components/misc/customModal'
 import ProfilePic from 'public/icons/blog/createdByLogo.svg'
 
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { useAccount } from 'wagmi'
 import { useEditUser, useUserRead } from '~/hooks/web3/useUser'
@@ -14,21 +14,18 @@ import { Null_Address } from '~/utils/config'
 type PopupProps = {
   show: boolean
   close: any
+  setEditProfile: Dispatch<SetStateAction<boolean>>
 }
 
 type StatementProps = {
   description: string
 }
 
-const ProfilePopup = ({ show, close }: PopupProps) => {
+const ProfilePopup = ({ show, close, setEditProfile }: PopupProps) => {
   const [showActivity, setShowActivity] = useState(false)
-  const [edit, setEdit] = useState(false)
   const { address, isConnecting, isDisconnected } = useAccount()
-  const [name, setName] = useState('')
-  const [picture, setPicture] = useState('')
-  const [description, setDescription] = useState('')
 
-  /** Here !, tell TypeScript that even though something looks like it could be null, it can trust you that it's not */
+  /** Here '!', tell TypeScript that even though something looks like it could be null, it can trust you that it's not */
   const { data } = useUserRead(
     {
       address: address!,
@@ -43,73 +40,38 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
 
   const { delegate } = useDelegate()
 
-  const { editUser } = useEditUser()
-
-  const editAndSave = () => {
-    if (!edit) {
-      setEdit(true)
-    } else {
-      if (name || picture || description) {
-        editUser({ name: name ? name : data.name!, description: description ? description : data?.description!, picture: picture ? picture : data.picture! })
-        close()
-      }
-      setEdit(false)
-    }
-  }
-
-  const onImageChange = (evt: any) => {
-    const file = evt.target.files[0]
-    const fileName = file.name
-    // const objectUrl = URL.createObjectURL(file)
-    var reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = function () {
-      if (reader.result) {
-        setPicture(reader.result.toString())
-      }
-    }
-    reader.onerror = function (error) {
-      console.log('Error: ', error)
-    }
-  }
-
-
   return (
     <CustomModal show={show} close={close}>
-      <div>
+      <div className='w-full md:w-fit'>
         <div className='flex flex-col justify-between md:flex-row md:gap-96'>
           <div>
             <div className='flex w-full'>
-              {
-                // picture ? (
-                //   <Image src={picture} alt='preview' height={44} width={44} className='rounded-full' />
-                // ) :
+              {/* {
                 edit ? (
                   <label
                     className='my-auto cursor-pointer rounded-full border-[1px] border-black px-5 py-10
                                   text-center align-middle font-heading text-xl font-medium'
                   >
                     <input type='file' accept='image/*' onChange={onImageChange} className='hidden cursor-pointer pt-5' />
-                    {/* <div className='text-xs'>click me</div> */}
                     {picture ? 'Uploaded' : 'Click me'}
                   </label>
-                ) : (
-                  <Image src={data ? data.picture : ProfilePic} alt='' height={44} width={44} className='h-[64.2px] w-[60px] rounded-full md:h-[128.41px] md:w-[123.41px] ' />
-                )
-              }
+                ) : ( */}
+              <Image src={data ? data.picture : ProfilePic} alt='' height={44} width={44} className='h-[64.2px] w-[60px] rounded-full md:h-[128.41px] md:w-[123.41px] ' />
+              {/* )
+              } */}
 
               <div className='pl-[10px] md:pl-[15px]'>
-                {edit ? (
+                {/* {edit ? (
                   <input
                     placeholder='Enter Name'
                     value={name}
                     onChange={evt => setName(evt.target.value)}
                     className='my-5  w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark 
-                                px-5 py-2 outline-none text-[26px]'
+                                px-5 py-2 text-[26px] outline-none'
                   />
-                ) : (
-                  <div className='font-body text-[26px] font-semibold text-vdao-light md:text-[36px]'>{data?.name! ? shortenText(data.name) : 'Loading...'}</div>
-                )}
+                ) : ( */}
+                <div className='font-body text-[26px] font-semibold text-vdao-light md:text-[36px]'>{data?.name! ? shortenText(data.name) : 'Loading...'}</div>
+                {/* )} */}
 
                 <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>
                   <div className='font-medium md:text-[22px]'>{data?.address ? shortenAddress(data?.address!) : shortenAddress(Null_Address)}</div>
@@ -120,7 +82,7 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
               </div>
             </div>
 
-            {edit ? (
+            {/* {edit ? (
               <div className='mt-5 font-body text-2xl font-medium'>
                 Description:
                 <textarea
@@ -131,14 +93,27 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
                   onChange={evt => setDescription(evt.target.value)}
                 />
               </div>
-            ) : (
-              <div className='mt-[30px] w-fit rounded-3xl border-[3px] border-vdao-light px-5 text-lg font-medium md:ml-36 md:mt-[0px] md:py-[7px] md:px-[25px] md:text-xl'>
-                {data?.guild?.name ? data?.guild?.name : 'No DAO Operation Guild'}
-              </div>
-            )}
+            ) : ( */}
+            <div className='mt-[30px] w-fit rounded-3xl border-[3px] border-vdao-light px-5 text-lg font-medium md:ml-36 md:mt-[0px] md:py-[7px] md:px-[25px] md:text-xl'>
+              {data?.guild?.name ? data?.guild?.name : 'No DAO Operation Guild'}
+            </div>
+            {/* )} */}
           </div>
 
-          <div>
+          <div className='flex flex-row gap-7 md:flex-col md:gap-0'>
+            <div>
+              <PrimaryButton
+                text='Edit'
+                className='float-right mt-[30px] h-fit py-[5px] px-[35px] font-heading text-xl font-medium 
+          md:mt-[46px]'
+                // onClick={editAndSave}
+                onClick={() => {
+                  setEditProfile(true)
+                  close()
+                }}
+              />
+            </div>
+
             <div>
               {data?.stewardApplicationBlock && (
                 <PrimaryButton
@@ -148,12 +123,6 @@ const ProfilePopup = ({ show, close }: PopupProps) => {
                 />
               )}
             </div>
-            <PrimaryButton
-              text={edit ? 'Save' : 'Edit'}
-              className='float-right mt-[30px] h-fit py-[5px] px-[35px] font-heading text-xl font-medium 
-          md:mt-[46px]'
-              onClick={editAndSave}
-            />
           </div>
         </div>
 

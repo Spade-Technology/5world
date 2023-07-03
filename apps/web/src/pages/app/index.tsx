@@ -5,16 +5,19 @@ import { useState } from 'react'
 import Page from '~/components/layout/page'
 import { Section } from '~/components/layout/section'
 import LoginPromptComponent, { EnforceAuth } from '~/components/misc/enforceAuth'
+import EditProfile from '~/components/pages/app/home/editProfile'
 import ProfilePopup from '~/components/pages/app/home/profilePopup'
-import { NewMembersComponent, ProfileHomeComponent, StatisticsHomeComponent, WelcomeComponent } from '~/components/pages/app/home/web3home'
+import { NewMembersComponent, ProfileHomeComponent, SelfDelegate, StatisticsHomeComponent, WelcomeComponent } from '~/components/pages/app/home/web3home'
 
 const Home: NextPage = () => {
   const [openProfile, setOpenProfile] = useState(false)
   const [newMembersArr, setNewMembersArr] = useState<any>([])
+  const [editProfile, setEditProfile] = useState(false)
 
   return (
     <>
       <Page>
+        <SelfDelegate />
         <WelcomeComponent />
 
         <EnforceAuth>
@@ -27,7 +30,8 @@ const Home: NextPage = () => {
               <StatisticsHomeComponent />
             </Section>
           </div>
-          {openProfile && <ProfilePopup show={openProfile} close={() => setOpenProfile(false)} />}
+          {openProfile && <ProfilePopup show={openProfile} close={() => setOpenProfile(false)} setEditProfile={setEditProfile} />}
+          {editProfile && <EditProfile show={editProfile} close={() => setEditProfile(false)} setOpenProfile={setOpenProfile} />}
         </EnforceAuth>
       </Page>
     </>

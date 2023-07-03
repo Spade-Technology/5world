@@ -48,7 +48,7 @@ const FormOne = ({ title, setTitle, description, setDescription, setNextForm }: 
         <div className='pt-[30px] text-[22px] font-bold md:pt-10'>Description</div>
         <div className='pt-[5px]'>Your proposal description goes here.</div>
         <textarea
-          className={` mt-[15px] h-[143px] w-full max-w-[510px] truncate break-words rounded-[10px] border-[1px] p-5 outline-none placeholder:text-opacity-80 md:mt-5 md:p-[30px]
+          className={` mt-[15px] h-[143px] w-full max-w-[510px] rounded-[10px] border-[1px] p-5 outline-none placeholder:text-opacity-80 md:mt-5
           ${error && !description ? 'border-red-600 placeholder:text-red-400 ' : ' border-vdao-dark'}`}
           placeholder={`${
             error && !title ? '* Required' : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet elementum urna, in volutpat risus. Quisque nec tempus diam, sit amet luctus mi.'

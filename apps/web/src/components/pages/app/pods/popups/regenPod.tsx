@@ -14,6 +14,7 @@ type PodModalProps = {
 }
 
 const PodModal = ({ pod, close, setShowManageMembers }: PodModalProps) => {
+  console.log("pod", pod)
   return (
     <CustomModal show={!!pod} close={close} heading={pod?.name} modalMarginTop='my-[50px]'>
       <div className='grid grid-cols-1 gap-10 py-[30px] font-body text-lg font-normal text-vdao-dark md:grid-cols-2 md:gap-[106px] md:py-10'>
