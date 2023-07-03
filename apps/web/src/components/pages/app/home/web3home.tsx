@@ -263,7 +263,7 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: Profi
       <div className='flex h-full flex-col md:gap-5 lg:mx-8'>
         <Skeleton active={skeletonActive} paragraph={{ rows: 1 }} avatar className='!w-1/2' loading={skeletonActive}>
           <div className={'flex gap-3 ' + (skeletonActive && 'opacity-0')}>
-            <Image src={data ? data.picture : ProfilePic} alt='Profile Picture' height={14} width={14} className='h-14 w-14 rounded-full' />
+            <Image src={data?.picture ? data.picture : ProfilePic} alt='Profile Picture' height={14} width={14} className='h-14 w-14 rounded-full' />
             <div className='flex flex-col'>
               <span className='satoshi text-2xl font-bold leading-8 text-vdao-light'>{data?.name ? shortenText(data.name) : 'Unknown'}</span>
               <span className='satoshi text-base font-normal leading-6 '>{data?.address ? shortenAddress(data?.address) : shortenAddress(Null_Address)}</span>
