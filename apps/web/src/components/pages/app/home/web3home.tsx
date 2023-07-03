@@ -15,6 +15,7 @@ import { JoinedAtFormat, shortenAddress, shortenText } from '~/utils/helpers'
 import { Null_Address } from '~/utils/config'
 import { monthNames } from '~/utils/date'
 import { useSession } from 'next-auth/react'
+import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -201,7 +202,7 @@ export function NewMembersComponent({ newMembersArr }: NewMembersProps) {
 
 export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: ProfileProps) {
   const { address, isConnecting, isDisconnected } = useAccount()
-  const { data } = useUserRead({
+  const { data, refetch } = useUserRead({
     address: address as Address,
     include: {
       podsAsAdmin: true,
@@ -262,10 +263,12 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: Profi
       <div className='flex h-full flex-col md:gap-5 lg:mx-8'>
         <Skeleton active={skeletonActive} paragraph={{ rows: 1 }} avatar className='!w-1/2' loading={skeletonActive}>
           <div className={'flex gap-3 ' + (skeletonActive && 'opacity-0')}>
-            <Image src={ProfilePic} alt='Profile Picture' className='h-14 w-14 rounded-full' />
+            <Image src={data ? data.picture : ProfilePic} alt='Profile Picture' height={14} width={14} className='h-14 w-14 rounded-full' />
             <div className='flex flex-col'>
               <span className='satoshi text-2xl font-bold leading-8 text-vdao-light'>{data?.name ? shortenText(data.name) : 'Unknown'}</span>
               <span className='satoshi text-base font-normal leading-6 '>{data?.address ? shortenAddress(data?.address) : shortenAddress(Null_Address)}</span>
+
+              <div className='mt-2 rounded-[20px] border-2 border-vdao-light px-3 text-center text-xl text-vdao-light md:hidden'>Visitor </div>
             </div>
           </div>
         </Skeleton>
@@ -324,7 +327,23 @@ export function WelcomeComponent() {
   return (
     <Section className='relative mx-auto flex max-w-[1680px] flex-col-reverse items-center overflow-hidden md:h-auto md:flex-col md:pt-16'>
       <Image src={MainHero} alt='VDAO Web3 Hero' className='mb-24 translate-x-[40%] scale-[200%] md:mb-0 md:-translate-x-0 md:scale-100' />
-      <div className='z-10 w-[342px] text-center font-heading text-[44px] font-medium leading-[48px] text-white md:absolute md:w-[702px] md:text-[80px] md:leading-[95px]'>Welcome to VDAO</div>
+      <div
+        className='z-10 w-[342px] text-center font-heading text-[44px] font-medium leading-[48px]
+                     text-white md:absolute md:w-[702px] md:text-[80px] md:leading-[95px]'
+      >
+        Welcome to VDAO
+      </div>
+    </Section>
+  )
+}
+
+export function SelfDelegate() {
+  return (
+    <Section className='mx-auto max-w-[937px]  px-6 pb-6'>
+      <div className='my-auto mt-5 flex flex-col justify-between gap-5 rounded-[20px] bg-vdao-dark px-6 py-5 text-lg font-light text-white md:flex-row md:px-12'>
+        <div className='max-w-[523px]'>To be able to interact with the dao, you need to have delegates, you can also self-delegate your VDAO tokens.</div>
+        <PrimaryButton text='Self delegate' className='my-auto' />
+      </div>
     </Section>
   )
 }

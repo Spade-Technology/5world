@@ -36,7 +36,7 @@ const CustomModal = ({ show, close, children, heading, modalMarginTop, padding, 
       <div
         className={`${modalMarginTop ? modalMarginTop : 'md:my-[100px]'} ${externalStyle} ${
           padding ? padding : 'p-6 md:p-[30px] md:pl-[50px]'
-        } hide-scrollbar  h-full overflow-auto bg-white md:max-h-[600px] md:max-w-[1140px] md:rounded-[20px] `}
+        } hide-scrollbar  h-auto max-h-[650px] max-w-[390px] overflow-auto rounded-[20px]  bg-white md:max-h-[600px] md:max-w-[1140px]`}
         // ref={ref}
       >
         <div className='flex justify-between'>

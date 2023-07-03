@@ -1,9 +1,4 @@
-import { Button } from 'antd'
-
 import Image, { StaticImageData } from 'next/image'
-
-import CommunityHeroMobile from 'public/illustrations/home/PNG/VDAO-home-community.svg'
-import CommunityHero from 'public/illustrations/home/PNG/VDAO-home-community.png'
 import WelcomeHero from 'public/illustrations/home/PNG/VDAO-home-hero.png'
 import WelcomeHeroMobile from 'public/illustrations/home/SVG/01_main_illo_v02 1.svg'
 import IntroHero from 'public/illustrations/home/PNG/VDAO-home-intro.png'
@@ -12,8 +7,18 @@ import CreateIcon from 'public/icons/home/VDAO-icon-home-create.svg'
 import FundRaiseIcon from 'public/icons/home/VDAO-icon-home-fundraise.svg'
 import ImagineIcon from 'public/icons/home/VDAO-icon-home-imagine.svg'
 import InnovateIcon from 'public/icons/home/VDAO-icon-home-innovate.svg'
+import BetterNatureIcon from 'public/illustrations/home/SVG/Better-Nature.svg'
+import WorseNatureIcon from 'public/illustrations/home/SVG/Worse-Nature.svg'
+import NatureIcon from 'public/illustrations/home/SVG/Nature.svg'
+
+import CorrectIcon from 'public/icons/home/Correct-Icon.svg'
+import InCorrectIcon from 'public/icons/home/InCorrect-Icon.svg'
 
 import VDAOGetInvolved from 'public/illustrations/home/PNG/VDAO-get-involved.png'
+
+import FifthWorldIcon from 'public/illustrations/partners/5thWorld.svg'
+import ConsensysIcon from 'public/illustrations/partners/Consensys.svg'
+import SupportVDAOIcon from 'public/illustrations/partners/Support-VDAO.svg'
 
 import FifthworldLogo from 'public/thirdparty/5world.png'
 import ConsensysLogo from 'public/thirdparty/consensys.png'
@@ -105,16 +110,69 @@ export function HomeCommunityComponent() {
   )
 }
 
+export function RegeratedWorld() {
+  return (
+    <Section className='mx-auto mt-[94px] grid max-w-[1280px] flex-col-reverse items-center gap-5 md:grid-cols-2 md:px-6'>
+      <div className='z-10 flex w-11/12 flex-col px-6'>
+        <div className='font-heading text-[32px] font-medium text-vdao-dark md:text-[46px] '>Help us create real solutions for a regenerated world.</div>
+        <div className=' mt-[21px] max-w-[514px] font-body text-lg font-normal leading-[22px] text-vdao-dark md:mt-9'>
+          The solutions to a regenerative future are found in community, and there’s a place for you here among our band of creators, contributors, artists, thinkers, and seekers. 
+          <ul className='list-disc p-5 pl-5'>
+            <li>
+              <b>Feel Empowered</b> to contribute the ideas, leadership, and funds that lead to global change.
+            </li>
+            <li>
+              <b>Find Inspiration</b> in the power of community to keep hoping and fighting for a better world.
+            </li>
+            <li>
+              <b>Experience Growth</b> as the community challenges you to lean into the endless possibilities of regenerative agriculture.
+            </li>
+          </ul>
+        </div>
+        <PrimaryButton text='Join VDAO' className='mt-10' />
+      </div>
+      <Image width={'0'} height={'0'} src={'illustrations/home/SVG/illustraion02 (2).svg'} alt='VDAO' className='w-full  md:order-first md:hidden' />
+      <Image src={IntroHero} alt='VDAO' className='hidden  md:block' />
+    </Section>
+  )
+}
+
+export function WaysToSupportVDAO() {
+  return (
+    <Section className='mx-auto mt-[94px] max-w-[1280px] px-6'>
+      <div className='font-heading text-[32px] font-medium text-vdao-dark md:text-center md:text-[46px]'>Other Ways to Support VDAO</div>
+      <div className='mt-10 flex flex-col gap-32 md:flex-row md:justify-center'>
+        <div className='md:max-w-[250px]'>
+          <Image src={SupportVDAOIcon} alt='support' />
+          <div className='mt-5 font-heading text-3xl font-medium'>Donate</div>
+          <div className='mt-5 text-lg'>
+            Donate directly to the VDAO treasury to receive an exclusive on-chain badge that highlight’s your impact and unlocks access to quadratic voting in future grants rounds.
+          </div>
+          <PrimaryButton text='Donate Now' className='mt-5' />
+        </div>
+        <div className='md:max-w-[250px]'>
+          <Image src={SupportVDAOIcon} alt='support' />
+          <div className='mt-5 font-heading text-3xl font-medium'>Purchase NFTs</div>
+          <div className='mt-5 text-lg'>
+            Participate in our NFT auction for an opportunity to fund regenerative agriculture innovation, own a unique piece of art, and access real-world learning opportunities and events.
+          </div>
+          <PrimaryButton text='Learn More' className='mt-5' />
+        </div>
+      </div>
+    </Section>
+  )
+}
+
 export function HomeGetInvolvedComponent() {
   return (
-    <Section className='my-[94px] flex max-w-[1440px] flex-col lg:mx-auto'>
-      <div className='mb-[21px] ml-6 font-heading text-[32px] font-medium md:ml-9 md:text-[46px] lg:ml-[94px]'>Get Involved</div>
-      <div className='flex flex-col md:flex-row md:items-start md:gap-9'>
-        <div className='w-full md:w-1/2 '>
-          <div className='ml-6 w-[253px] font-body text-[22px] font-medium leading-[26px] text-vdao-dark md:ml-9 md:w-auto md:text-[26px] lg:ml-[94px]'>Support VDAOs mission in 3 ways:</div>
-          <Image src={VDAOGetInvolved} alt='VDAO' className='mt-12 mb-10 w-full md:mt-20 md:mb-0' />
-        </div>
-        <div className='flex flex-col gap-16 px-6 md:w-1/2 md:px-0 md:pr-5 lg:w-1/3'>
+    <Section className='my-16 flex max-w-[1280px] flex-col px-6 md:my-[94px] lg:mx-auto'>
+      <div className='w-full font-heading text-[32px] font-medium md:text-center md:text-[46px]'>How to Join VDAO</div>
+      <div className='text-lg font-light md:mx-auto md:w-7/12 md:text-center md:text-[22px] '>
+        Apply now to become a core member of the VDAO community, pledging your time and support towards our mission of global ecosystem regeneration.
+      </div>
+      <div className='flex flex-col md:mt-10 md:flex-row md:items-start md:gap-9'>
+        <Image src={VDAOGetInvolved} alt='VDAO' className='w-full max-w-[545px] md:px-10' />
+        {/* <div className='flex flex-col gap-16 px-6 md:w-1/2 md:px-0 md:pr-5 lg:w-1/3'>
           {[
             {
               title: 'NFT Collections',
@@ -140,7 +198,40 @@ export function HomeGetInvolvedComponent() {
               </div>
             )
           })}
+        </div> */}
+        <div className='max-w-[438px] text-lg'>
+          <div className='py-5 md:py-10'>
+            <div className='inline text-3xl'>1 | Apply</div> by reviewing our manifesto and completing the form here on our site.  
+          </div>
+          <div className='py-5 md:py-10'>
+            <div className='inline text-3xl'>2 | Interview</div> with a member of our community to find answers to your questions and make sure our values align.
+          </div>
+          <div className='py-5 md:py-10'>
+            <div className='inline text-3xl'>3 | Choose</div> a Guild where you feel you can best contribute to the mission of VDAO. Our four guilds include Creative, Research, Fundraising, and DAO
+            Operations. 
+          </div>
+          <PrimaryButton text='Apply Now' />
         </div>
+      </div>
+    </Section>
+  )
+}
+
+export const OurPartners = () => {
+  return (
+    <Section className='mx-auto mt-[94px] flex max-w-[1280px] flex-col gap-10 px-6 md:flex-row md:gap-36 md:px-0'>
+      <div>
+        <div className='w-full font-heading text-[32px] font-medium md:text-[46px]'>Our Partners</div>
+        <div className='max-w-[514px]'>
+          <b>5th World</b> is a leading champion in the development of regenerative agriculture solutions. During the formation of the dao, they will serve as stewards of its mission and vision.
+          <br />
+          <br />
+          <b>ConsenSys</b> is the world’s leading Ethereum software company and ensures our members a secure blockchain infrastructure. 
+        </div>
+      </div>
+      <div className='flex gap-10'>
+        <Image src={FifthWorldIcon} className='h-[157px] w-[150px] md:w-[212px]' alt='5thworld' />
+        <Image src={ConsensysIcon} className='h-[157px] w-[150px]  md:w-[212px]' alt='Consensys' />
       </div>
     </Section>
   )
@@ -157,9 +248,12 @@ const ObjectiveSubComponent = ({ icon, title, description }: { icon: StaticImage
 
 export function HomeObjectivesComponent() {
   return (
-    <Section className='xl:p-O md:lg-14 mx-auto mt-[94px] flex max-w-[1440px] flex-col p-0 md:px-16'>
-      <div className='ml-6 w-full font-heading text-[32px] font-medium md:text-center md:text-[46px]'>Core Objectives</div>
-      <div className='mx-auto mt-16 flex flex-col gap-14 px-16 md:flex-row md:gap-10 md:px-0 lg:px-16'>
+    <Section className='xl:p-O md:lg-14 mx-auto mt-[94px] flex max-w-[1280px] flex-col p-0 px-6 md:px-16'>
+      <div className='font-heading text-[32px] font-medium md:text-center md:text-[46px]'>How does VDAO support regeneration?</div>
+      <div className='text-lg font-light md:mx-auto md:w-6/12 md:text-center md:text-[22px] '>
+        VDAO invites art and science to lead each other to new discoveries and collaborate in creating scalable systems for planetary regeneration.
+      </div>
+      <div className='mx-auto mt-16 flex flex-col gap-14 px-8 md:flex-row md:gap-10 md:px-0 lg:px-16'>
         <ObjectiveSubComponent
           icon={InnovateIcon}
           title='Innovate'
@@ -181,27 +275,101 @@ export function HomeObjectivesComponent() {
           description='Our art and our vision helps others to experience how the world might look and feel once VDAO’s core mission is achieved.'
         />
       </div>
+      <PrimaryButton text='Join VDAO' className='mx-auto mt-10' />
+    </Section>
+  )
+}
+
+export function HomeFindYourPlace() {
+  return (
+    <Section className='mx-auto mt-[94px] grid max-w-[1280px] flex-col-reverse items-center gap-5 md:grid-cols-2 md:px-6'>
+      <div className='z-10 flex w-11/12 flex-col px-6'>
+        <div className='font-heading text-3xl font-medium text-vdao-dark md:text-[46px] '>Find your place in the story of planetary regeneration.</div>
+        <div className='mt-[21px] max-w-[514px] font-body text-lg font-normal leading-[22px] text-vdao-dark md:mt-9'>
+          Welcome to a decentralized community where imagination and science converge to build promising regenerative pathways towards the future.
+          <br />
+          <br />
+          Using Web 3.0, we unite artists, land stewards, funders, scientists, researchers, and innovators into <b>one massive, global research and development team</b> for scalable advancements in
+          regenerative land management.
+        </div>
+        <PrimaryButton text='Join VDAO' className='mt-10' />
+      </div>
+      <Image width={'0'} height={'0'} src={'illustrations/home/SVG/illustraion02 (2).svg'} alt='VDAO' className='w-full  md:order-first md:hidden' />
+      <Image src={IntroHero} alt='VDAO' className='hidden md:order-first md:block' />
+    </Section>
+  )
+}
+
+const NatureSubComponent = ({ icon, title, description, correctIcon }: { icon: StaticImageData; title: string; description: string; correctIcon: boolean }) => (
+  <div className='flex w-full flex-col items-center gap-5 md:w-10/12 md:items-start'>
+    <Image src={icon} alt='VDAO' height={200} />
+    <div className='flex items-start gap-2'>
+      <Image src={correctIcon ? CorrectIcon : InCorrectIcon} className='pt-2' alt='Correct/Incorrect' />
+      <div>
+        <div className='max-w-[213px] font-heading text-3xl font-medium'>{title}</div>
+        <div className='mt-5 max-w-[320px] font-inter text-base font-normal leading-5 text-vdao-dark md:text-left md:font-body md:text-lg'>{description}</div>
+      </div>
+    </div>
+  </div>
+)
+
+export function HomeRegenerativeAgri() {
+  return (
+    <Section className='xl:p-O md:lg-14 mx-auto mt-[94px] flex max-w-[1280px] flex-col px-6 md:px-16'>
+      <div className='w-full font-heading text-[32px] font-medium md:text-center md:text-[46px]'>What is regenerative agriculture?</div>
+      <div className='text-lg font-light md:mx-auto md:w-8/12 md:text-center md:text-[22px] '>
+        Rather than attempt to control nature, regeneration is a way to work WITH it. Your land knows how to heal itself, and the Regenerative Paradigm in agriculture is the key to designing an
+        antifragile, resilient ecosystem.
+      </div>
+      <div className='mx-auto mt-16 flex flex-col gap-14 md:flex-row md:gap-10 md:px-0 lg:px-16'>
+        <NatureSubComponent
+          icon={BetterNatureIcon}
+          title='We are better than nature'
+          description='The Degenerative Paradigm sees humans above nature, taking what they want without respect for the consequences. It asks, "How do I get more?"'
+          correctIcon={false}
+        />
+        <NatureSubComponent
+          icon={WorseNatureIcon}
+          title='We are worse than nature'
+          correctIcon={false}
+          description='The Sustainable Paradigm is a stark reaction to the Degenerative. It views humans as the problem and asks, "How do / cause less damage?"'
+        />
+        <NatureSubComponent
+          icon={NatureIcon}
+          title='We are nature'
+          correctIcon={true}
+          description='The Regenerative Paradigm sees humans as part of a community in partnership with all living things where everyone can thrive. It asks, "How do I do more good?"'
+        />
+      </div>
+      <PrimaryButton text='Join VDAO' className='mx-auto mt-10' />
     </Section>
   )
 }
 
 export function HomeIntroComponent() {
   return (
-    <Section className='mx-auto mt-[94px] grid max-w-[1440px] flex-col-reverse items-center gap-5 md:grid-cols-2 md:px-6'>
+    <Section className='mx-auto mt-[94px] grid max-w-[1280px] flex-col-reverse items-center gap-5 md:grid-cols-2 md:px-6'>
       <div className='z-10 flex w-11/12 flex-col px-6'>
-        <div className='font-heading text-[32px] font-medium text-vdao-dark md:text-[46px] '>Introduction</div>
-        <div className='mt-[21px] font-body text-lg font-normal leading-[22px] text-vdao-dark md:mt-9'>
-          VDAO funds regenerative agriculture research and development (R&D) projects worldwide.
-          <div className='my-5' />
-          Regenerative land management uses techniques and practices to restore soil, biodiversity, ecosystems, and water quality; techniques used in farming for centuries, but recently replaced by
-          chemical, industrial alternatives.
-          <div className='my-5' />
-          VDAO empowers us to dream of fully regenerated planet. Using cutting-edge Web3 tech, it connects artists, land stewards, funders, scientists, researchers, and innovators to collaborate for
-          planetary regeneration.
+        <div className='font-heading text-[32px] font-medium text-vdao-dark md:text-[46px] '>It’s time to step out of reaction mode.</div>
+        <div className=' mt-[21px] max-w-[514px] font-body text-lg font-normal leading-[22px] text-vdao-dark md:mt-9'>
+          <b>Out of fear, humanity keeps looking for new ways to control our ecosystems.</b>
+          <ul className='list-disc p-5 pl-5'>
+            <li>Commercial farming looks for new ways to extract value from the land.</li>
+            <li>Activists look for new ways to protect it. (Which is just another form of control.)</li>
+          </ul>
+
+          <div>
+            Doomsday predictions and the illusion of control lead us to react and double down on our desire to “do something” instead of stopping to ask if our perspective is clear to begin with.
+          </div>
+
+          <div>
+            Humanity is in desperate need of a new agricultural paradigm. So, what if we stop trying to control nature? <b>What if we partner with it instead? </b>
+          </div>
         </div>
+        <PrimaryButton text='Join VDAO' className='mt-10' />
       </div>
       <Image width={'0'} height={'0'} src={'illustrations/home/SVG/illustraion02 (2).svg'} alt='VDAO' className='w-full  md:order-first md:hidden' />
-      <Image src={IntroHero} alt='VDAO' className='hidden md:order-first md:block' />
+      <Image src={IntroHero} alt='VDAO' className='hidden  md:block' />
     </Section>
   )
 }
