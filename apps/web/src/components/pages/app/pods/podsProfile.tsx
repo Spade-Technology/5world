@@ -45,14 +45,14 @@ const PodsProfile = ({ setOpenCreatePod }: Props) => {
         <div className='flex-1'></div>
         <div className='mt-[30px] flex flex-1 flex-col gap-5 pl-6 md:mt-0 md:flex-row md:pl-16'>
           <PrimaryButton text='Create Pods' onClick={() => (siwe ? setOpenCreatePod(true) : router.push('/app/pods/#restrictedContent'))} className='py-[5px] px-[35px] text-xl' />
-          <div className='w-fit cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white'>
+          <div className='w-fit cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] font-heading text-xl text-white'>
             <Link href={siwe ? '/app/pods/#currentPods' : '/app/pods/#restrictedContent'}>See all Pods </Link>
           </div>
         </div>
       </div>
 
-      <div className={`mx-auto flex max-w-[767px] bg-vdao-deep px-6 py-16 text-white md:gap-[67px] md:py-20 md:pt-[140px] md:pb-[70px] `}>
-        <div className='w-[243px]'>
+      <div className={`mx-auto flex  max-w-[767px] flex-col gap-10 bg-vdao-deep px-6 py-16 text-white md:flex-row md:gap-[67px] md:py-20 md:pt-[140px] md:pb-[70px] `}>
+        <div className='md:w-[243px]'>
           <span className='mr-5 font-heading text-3xl font-medium underline underline-offset-8 md:text-4xl'>Four Stages of Pods</span>
         </div>
         <div className='flex flex-1'>
