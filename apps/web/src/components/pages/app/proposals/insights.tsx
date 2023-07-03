@@ -42,7 +42,7 @@ const RecentProposals = () => {
   const [sortbyType, setSortByType] = useState('')
   return (
     <article className='relative mt-5 flex w-full flex-col rounded-2xl bg-vdao-dark px-[30px] py-5 pt-5 md:px-7 md:pb-10'>
-      <div className='flex justify-between'>
+      <div className='flex flex-col justify-between gap-5 md:flex-row'>
         <div className='font-body text-lg font-bold text-white'>History</div>
         <div className='flex gap-5'>
           <div
@@ -66,14 +66,19 @@ const RecentProposals = () => {
           />
         </div>
       </div>
-      {sortby && (
-        <div className='absolute right-6 top-16 w-[230px] items-end rounded-[5px] bg-white p-4'>
+      
+      {/* {sortby && ( */}
+      <div className={`absolute top-0 left-0 bottom-0 flex h-[100vh] w-[100vw] items-center justify-center transition-all ease-in-out ${sortby ? 'visible z-50 opacity-100' : 'invisible opacity-0'}`}>
+        <div className={`absolute -z-10 h-full w-full bg-opacity-60 backdrop-opacity-0 transition-all`} onClick={() => setSortBy(false)} />
+        {/* <div className='absolute right-6 top-28 w-[120px] items-end rounded-[5px] bg-white p-4 md:top-16'> */}
+        <div className='-mt-[400px] -ml-[100px] w-[250px] items-end rounded-[5px] bg-white p-4 md:-mt-[380px] md:ml-[550px]'>
           <div className='flex cursor-pointer justify-between gap-2'>
             <div className=' text-sm font-medium' onClick={() => setSortByType('oldest')}>
               Latest to oldest
             </div>
             {sortbyType === 'oldest' && <Image src={CorrectIcon} alt='correct' />}
           </div>
+
           <div className='mt-2 flex cursor-pointer justify-between gap-2'>
             <div className='text-sm font-medium' onClick={() => setSortByType('latest')}>
               Oldest to latest
@@ -105,11 +110,16 @@ const RecentProposals = () => {
             {sortbyType === 'lowAcceptance' && <Image src={CorrectIcon} alt='correct' />}
           </div>
         </div>
-      )}
-      {filter && (
-        <div className='absolute right-6 top-16 w-[120px] items-end rounded-[5px] bg-white p-4'>
+      </div>
+
+      {/* )} */}
+      {/* {filter && ( */}
+      <div className={`absolute top-0 left-0 bottom-0 flex h-[100vh] w-[100vw] items-center justify-center transition-all ease-in-out ${filter ? 'visible z-50 opacity-100' : 'invisible opacity-0'}`}>
+        <div className={`absolute -z-10 h-full w-full bg-opacity-60 backdrop-opacity-0 transition-all`} onClick={() => setFilter(false)} />
+        {/* <div className='absolute right-6 top-28 w-[120px] items-end rounded-[5px] bg-white p-4 md:top-16'> */}
+        <div className='-mt-[520px] ml-[120px] w-[120px] items-end rounded-[5px] bg-white p-4 md:-mt-[500px] md:ml-[670px]'>
           <div className='flex cursor-pointer justify-between gap-2'>
-            <div className=' text-sm font-medium' onClick={() => setFilterType('active')}>
+            <div className='text-sm font-medium' onClick={() => setFilterType('active')}>
               Active
             </div>
             {filterType === 'active' && <Image src={CorrectIcon} alt='correct' />}
@@ -121,7 +131,8 @@ const RecentProposals = () => {
             {filterType === 'closed' && <Image src={CorrectIcon} alt='correct' />}
           </div>
         </div>
-      )}
+      </div>
+      {/* // )} */}
 
       <div className='mt-5 flex flex-col gap-2.5'>
         <div className='grid grid-cols-12 justify-between '>

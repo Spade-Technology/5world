@@ -4,43 +4,46 @@ import ProfileCard from '~/components/misc/profileCard'
 import { pod_type } from '~/hooks/web3/usePod'
 import { useUserReads } from '~/hooks/web3/useUser'
 import { Select } from 'antd'
-import type { SelectProps } from 'antd'
-import { shortenAddress } from '~/utils/helpers'
-import PurpleButton from '~/styles/shared/buttons/purpleButton'
 
 type FormProps = {
-  setNextForm: Dispatch<SetStateAction<boolean>>
+  setNextForm?: Dispatch<SetStateAction<boolean>>
   managerAddr: string
   setManagerAddr: Dispatch<SetStateAction<string>>
-  memberAddr: string[]
-  setMemberAddr: Dispatch<SetStateAction<string[]>>
+  membersInfo: string[]
+  setMembersInfo: any
   createPodHanlder: any
-  data: pod_type[]
+  pod?: pod_type | undefined
 }
 
-const FormTwo = ({ managerAddr, memberAddr, setManagerAddr, setMemberAddr, setNextForm, createPodHanlder, data }: FormProps) => {
-  const { data: managerData } = useUserReads({})
+const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, setNextForm, createPodHanlder, pod }: FormProps) => {
+  const { data: allUsersInfo } = useUserReads({})
   const [removeOn, setRemoveOn] = useState(false)
   const [options, setOptions] = useState<any>([])
   const [managerInfo, setManagerInfo] = useState<any>('')
-  const [membersInfo, setMembersInfo] = useState<any>('')
+  const [removeInfo, setRemoveInfo] = useState<any>([])
+  const [selectedOptions, setSelectedOptions] = useState<any>([])
 
   useEffect(() => {
-    if (managerData) {
-      for (let i = 0; i < managerData.length; i++) {
+    if (pod) {
+      setManagerInfo(pod.admins ? pod.admins[0] : '')
+      setMembersInfo(pod?.members)
+    }
+  }, [pod])
+  useEffect(() => {
+    if (allUsersInfo) {
+      for (let i = 0; i < allUsersInfo.length; i++) {
         const option = {
-          value: managerData[i]?.address,
-          label: managerData[i]?.name!,
+          value: allUsersInfo[i]?.address,
+          label: allUsersInfo[i]?.name!,
         }
         setOptions((prev: any) => [...prev, option])
       }
     } else {
       setOptions([])
     }
-  }, [managerData?.length])
+  }, [allUsersInfo?.length])
 
   const handleChange = (value: any) => {
-    console.log('handleChange', value)
     if (value) {
       setManagerAddr(value)
     }
@@ -48,7 +51,7 @@ const FormTwo = ({ managerAddr, memberAddr, setManagerAddr, setMemberAddr, setNe
 
   const addManager = (address: string) => {
     if (address) {
-      const info = managerData?.filter(info => {
+      const info = allUsersInfo?.filter(info => {
         return info.address === address
       })
       setManagerInfo(info[0])
@@ -59,19 +62,16 @@ const FormTwo = ({ managerAddr, memberAddr, setManagerAddr, setMemberAddr, setNe
 
   const handleMemebers = (value: string[]) => {
     if (value) {
-      setMemberAddr(value)
+      setSelectedOptions(value)
     }
   }
 
-  console.log({ memberAddr })
-
   const addMemebers = (addresses: string[]) => {
-    console.log('memebersinfo address', addresses, managerData)
     if (addresses && addresses.length > 0) {
-      const membersArr: any = []
+      setMembersInfo([])
+      setRemoveInfo([])
       for (let i = 0; i < addresses.length; i++) {
-        managerData?.map(info => {
-          console.log('memebersinfo address', i, info.address, addresses[i], info.address === addresses[i])
+        allUsersInfo?.map(info => {
           if (info.address === addresses[i]) {
             setMembersInfo((prev: any) => [...prev, info])
           }
@@ -82,20 +82,48 @@ const FormTwo = ({ managerAddr, memberAddr, setManagerAddr, setMemberAddr, setNe
     }
   }
 
-  console.log({ membersInfo })
+  const removeMemberHandler = (address: string) => {
+    if (address) {
+      const selected = removeInfo.filter((info: any) => {
+        return info.address === address
+      })
 
+      if (selected && selected.length > 0) {
+        const newRemoveArr: any = []
+        removeInfo.map((info: any) => {
+          if (info.address !== address) {
+            newRemoveArr.push(info)
+          }
+        })
+        setRemoveInfo(newRemoveArr)
+      } else {
+        const info = allUsersInfo?.filter(info => {
+          return info.address === address
+        })
+        setRemoveInfo((prev: any) => [...prev, info[0]])
+      }
+    }
+  }
+  const removeMembers = () => {
+    if (removeInfo && removeInfo.length > 0) {
+      for (let i = 0; i < removeInfo.length; i++) {
+        setMembersInfo((current: any) => current.filter((info: any) => info.address !== removeInfo[i].address))
+      }
+
+      setRemoveOn(false)
+    }
+  }
+
+  const cancelRemoveHandler = () => {
+    setRemoveInfo([])
+    setRemoveOn(false)
+  }
   return (
     <div className='grid grid-cols-1 gap-11 pt-10 font-body text-lg font-normal text-vdao-dark md:grid-cols-2 md:gap-[106px]'>
       <div>
         <div className='text-[22px] font-bold'>Assign Pod Manager</div>
 
         <div className='pt-[5px]'>Add manager address below.</div>
-
-        {/* <input
-          className='mt-[17px] h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none md:mt-5'
-          onChange={evt => setManagerAddr(evt.target.value)}
-          value={managerAddr}
-        /> */}
 
         <Select style={{ width: '100%' }} placeholder='Enter Address' onChange={handleChange} options={options} className='antd-stop-propagation w-full' />
 
@@ -114,8 +142,8 @@ const FormTwo = ({ managerAddr, memberAddr, setManagerAddr, setMemberAddr, setNe
         <Select mode='tags' style={{ width: '100%' }} placeholder='Enter Address' onChange={handleMemebers} options={options} className='antd-stop-propagation w-full' />
 
         <div
-          className={` ${memberAddr?.length > 0 ? 'bg-vdao-pink' : 'border-[1px] border-vdao-pink'} mt-5 w-fit cursor-pointer rounded-[5px] py-[5px] px-[35px] font-heading text-xl font-medium`}
-          onClick={() => addMemebers(memberAddr)}
+          className={` ${selectedOptions?.length > 0 ? 'bg-vdao-pink' : 'border-[1px] border-vdao-pink'} mt-5 w-fit cursor-pointer rounded-[5px] py-[5px] px-[35px] font-heading text-xl font-medium`}
+          onClick={() => addMemebers(selectedOptions)}
         >
           Add Member
         </div>
@@ -145,19 +173,23 @@ const FormTwo = ({ managerAddr, memberAddr, setManagerAddr, setMemberAddr, setNe
         <div className='grid grid-cols-2 pt-5 '>
           {membersInfo
             ? membersInfo.map((member: any, idx: any) => {
-                return <ProfileCard key={idx} icon={member?.picture} name={member?.name} address={member?.address} edit={removeOn} nameLength={8} />
+                return (
+                  <div className='flex' onClick={() => removeMemberHandler(member?.address)}>
+                    <ProfileCard key={idx} icon={member?.picture} name={member?.name} address={member?.address} edit={removeOn} nameLength={8} />
+                  </div>
+                )
               })
             : 'No Assigned Members'}
         </div>
 
         {removeOn && (
           <div className='flex justify-start gap-5 pt-6'>
-            <div className={`w-fit cursor-pointer rounded-md bg-vdao-pink py-[5px] px-9 font-heading text-xl font-medium text-vdao-dark`} onClick={() => setRemoveOn(false)}>
+            <div className={`w-fit cursor-pointer rounded-md bg-vdao-pink py-[5px] px-9 font-heading text-xl font-medium text-vdao-dark`} onClick={removeMembers}>
               {' '}
               Remove{' '}
             </div>
 
-            <div className={`w-fit cursor-pointer rounded-md border-[1px] border-vdao-pink py-[5px] px-9 font-heading text-xl font-medium text-vdao-dark`} onClick={() => setRemoveOn(false)}>
+            <div className={`w-fit cursor-pointer rounded-md border-[1px] border-vdao-pink py-[5px] px-9 font-heading text-xl font-medium text-vdao-dark`} onClick={cancelRemoveHandler}>
               {' '}
               Cancel{' '}
             </div>
@@ -165,10 +197,12 @@ const FormTwo = ({ managerAddr, memberAddr, setManagerAddr, setMemberAddr, setNe
         )}
 
         <div className='float-right flex gap-2 pt-20 pb-[30px] md:gap-5 md:pt-36 '>
-          <div className='cursor-pointer rounded-[5px] border-[1px] border-vdao-dark py-[5px] px-[35px] font-heading text-lg font-medium' onClick={() => setNextForm(false)}>
-            Previous
-          </div>
-          <PrimaryButton text='Confirm' className=' py-[5px] px-[35px] font-heading text-lg font-medium' onClick={() => createPodHanlder()} />
+          {setNextForm && (
+            <div className='cursor-pointer rounded-[5px] border-[1px] border-vdao-dark py-[5px] px-[35px] font-heading text-lg font-medium' onClick={() => setNextForm(false)}>
+              Previous
+            </div>
+          )}
+          <PrimaryButton text={pod ? 'Save' : 'Confirm'} className=' py-[5px] px-[35px] font-heading text-lg font-medium' onClick={() => createPodHanlder()} />
         </div>
       </div>
     </div>

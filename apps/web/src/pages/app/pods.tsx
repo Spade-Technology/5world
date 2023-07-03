@@ -14,8 +14,8 @@ import { pod_type, usePodReads } from '~/hooks/web3/usePod'
 const Pods = () => {
   const [openCreatePod, setOpenCreatePod] = useState(false)
   const [showManageMembers, setShowManageMembers] = useState(false)
-  const [openedPod, setOpenedPod] = useState<pod_type | undefined>(undefined)
-  const [pid, setPid] = useState(0)
+  const [pod, setPod] = useState<pod_type | undefined>(undefined)
+  const [openedPod, setOpenedPod] = useState<boolean>(false)
   const { address } = useAccount()
   const [managerAddr, setManagerAddr] = useState('')
   const [memberAddr, setMemberAddr] = useState('')
@@ -36,24 +36,21 @@ const Pods = () => {
         <PodsProfile setOpenCreatePod={setOpenCreatePod} />
 
         <EnforceAuth>
-          <PodCards setOpenedPod={setOpenedPod} setPid={setPid} data={data} isLoading={isLoading} />
+          <PodCards setOpenedPod={setOpenedPod} setPod={setPod} data={data} isLoading={isLoading} />
 
-          {openCreatePod && <CreateNewPod show={openCreatePod} close={() => setOpenCreatePod(false)} refetch={refetch} data={data} />}
+          {openCreatePod && <CreateNewPod show={openCreatePod} close={() => setOpenCreatePod(false)} refetch={refetch} />}
 
-          {!!openedPod && <PodModal close={() => setOpenedPod(undefined)} pod={openedPod} setShowManageMembers={setShowManageMembers} />}
+          {!!openedPod && <PodModal close={() => setOpenedPod(false)} pod={pod} setShowManageMembers={setShowManageMembers} />}
 
           {showManageMembers && (
             <ManageMembers
               show={showManageMembers}
-              managerAddr={managerAddr}
-              memberAddr={memberAddr}
-              setMemberAddr={setMemberAddr}
-              setManagerAddr={setManagerAddr}
-              setShowManageMembers={setShowManageMembers}
-              pid={pid}
-              setOpenedPod={setOpenedPod}
-              // setOpenedPod={() => setOpenedPod(undefined)}
-              data={data}
+              // managerAddr={managerAddr}
+              // memberAddr={memberAddr}
+              // setMemberAddr={setMemberAddr}
+              // setManagerAddr={setManagerAddr}
+              close={() => setShowManageMembers(false)}
+              pod={pod}
             />
           )}
         </EnforceAuth>

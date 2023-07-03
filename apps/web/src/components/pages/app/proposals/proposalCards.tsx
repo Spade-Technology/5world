@@ -61,9 +61,9 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
   }, [pageCount, data])
 
   return (
-    <div className='mx-auto w-screen bg-vdao-deep pt-[63px]'>
-      <div className='mx-auto w-full max-w-[1140px] px-10 pb-[120px]'>
-        <div id='allProposals' className='mx-6 max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'>
+    <div className='mx-auto w-screen bg-vdao-deep pt-[63px] px-6'>
+      <div className='mx-auto w-full max-w-[1140px] pb-[120px]'>
+        <div id='allProposals' className='max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'>
           Proposals
         </div>
 
@@ -88,7 +88,7 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
           </div>
         </div>
 
-        <div className='mx-6 mt-[15px]  md:mx-0 '>
+        <div className='mt-[15px]  md:mx-0 '>
           {updatedproposals?.map((proposal: any, idx: number) => {
             return <Card proposal={proposal} key={idx} setViewProposal={setViewProposal} setProposalID={setProposalID} />
           })}

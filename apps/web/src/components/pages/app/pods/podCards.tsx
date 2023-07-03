@@ -4,25 +4,23 @@ import PodImage from 'public/illustrations/pods/podImage.svg'
 import { Dispatch, SetStateAction } from 'react'
 import PodInfoBox from './popups/infoBox'
 import { pod_type } from '~/hooks/web3/usePod'
-import { shortenAddress, shortenText } from '~/utils/helpers'
 import { Skeleton } from 'antd'
 import ProfileCard from '~/components/misc/profileCard'
-// import { usePodReads } from '~/hooks/web3/usePod'
 
 type PodCardProps = {
-  setOpenedPod: Dispatch<SetStateAction<pod_type | undefined>>
+  setOpenedPod: Dispatch<SetStateAction<boolean>>
   data: pod_type[] | undefined
   isLoading: boolean
-  setPid: Dispatch<SetStateAction<number>>
+  setPod: Dispatch<SetStateAction<pod_type | undefined>>
 }
 
 type CardProps = {
-  setOpenedPod: Dispatch<SetStateAction<pod_type | undefined>>
+  setOpenedPod: Dispatch<SetStateAction<boolean>>
   pod: pod_type
-  setPid: Dispatch<SetStateAction<number>>
+  setPod: Dispatch<SetStateAction<pod_type | undefined>>
 }
 
-const PodCards = ({ setPid, setOpenedPod, data, isLoading }: PodCardProps) => {
+const PodCards = ({ setPod, setOpenedPod, data, isLoading }: PodCardProps) => {
   return (
     <div className='mx-auto w-screen bg-vdao-deep'>
       <div className='mx-auto max-w-[1280px] pb-[120px]'>
@@ -39,7 +37,7 @@ const PodCards = ({ setPid, setOpenedPod, data, isLoading }: PodCardProps) => {
             </>
           ) : data && data.length > 0 ? (
             data?.map((pod, idx) => {
-              return <Card setOpenedPod={setOpenedPod} pod={pod} setPid={setPid} />
+              return <Card setOpenedPod={setOpenedPod} pod={pod} setPod={setPod} />
             })
           ) : (
             <div className='text-white'>There are no pods available. Please do create a pod...!!</div>
@@ -50,7 +48,7 @@ const PodCards = ({ setPid, setOpenedPod, data, isLoading }: PodCardProps) => {
   )
 }
 
-export const Card = ({ setOpenedPod, pod, setPid }: CardProps) => {
+export const Card = ({ setOpenedPod, pod, setPod }: CardProps) => {
   return (
     <div className='rounded-[20px] bg-vdao-dark py-10 px-5 text-white md:py-[50px] md:px-10'>
       <div className='flex flex-col gap-[10px] md:flex-row md:gap-[25px]'>
@@ -69,8 +67,8 @@ export const Card = ({ setOpenedPod, pod, setPid }: CardProps) => {
               text='View Detail'
               className='mt-5 py-[5px] px-[35px] font-heading text-xl font-medium'
               onClick={() => {
-                setOpenedPod(pod)
-                setPid(pod.id)
+                setOpenedPod(true)
+                setPod(pod)
               }}
             />
           </div>
@@ -87,29 +85,6 @@ export const Card = ({ setOpenedPod, pod, setPid }: CardProps) => {
       <div className='flex flex-col gap-[30px] pt-5 md:flex-row md:gap-[60px] md:pt-10 '>
         <div>
           <div className=' flex-1 font-heading text-xl font-medium'> Manager </div>
-          {/* {pod?.admins && (
-            <div className='flex w-full pt-[14px]'>
-              <div>
-                {pod.admins[0]?.picture ? (
-                  <Image src={pod.admins[0]?.picture || ''} height={44} width={44} alt='' className='rounded-full' />
-                ) : (
-                  <div
-                    className='rounded-full'
-                    style={{
-                      background: 'linear-gradient(221.35deg, #36DFAE 0%, #28B6A5 36.46%, #1D555C 100%)',
-                      width: '44px',
-                      height: '44px',
-                    }}
-                  />
-                )}
-              </div>
-
-              <div className='!w-1/3 pl-[10px] md:pl-[16px]'>
-                <div className='font-body text-lg font-semibold'>{pod.admins[0]?.name ? shortenText(pod.admins[0]?.name) : 'Unnamed'}</div>
-                <div className='font-body text-sm'>{shortenAddress(pod.admins[0]?.address || '0x')}</div>
-              </div>
-            </div>
-          )} */}
           <ProfileCard icon={pod?.admins[0] ? pod.admins[0]?.picture : ''} address={pod.admins[0] ? pod.admins[0]?.address : ''} name={pod?.admins[0] ? pod.admins[0]?.name : ''} />
         </div>
 
@@ -120,28 +95,9 @@ export const Card = ({ setOpenedPod, pod, setPid }: CardProps) => {
             <>
               <div className='grid grid-cols-6 gap-2 pt-[14px]'>
                 <Image src={member.picture || ''} height={44} width={44} alt='' className='rounded-full' />
-                {/* <div>
-                {member.picture ? (
-                  <Image src={member.picture || ''} height={44} width={44} alt='' className='rounded-full' />
-                ) : (
-                  <div
-                    className='rounded-full'
-                    style={{
-                      background: 'linear-gradient(221.35deg, #36DFAE 0%, #28B6A5 36.46%, #1D555C 100%)',
-                      width: '44px',
-                      height: '44px',
-                    }}
-                  />
-                )}
-              </div>
-              <div className='!w-1/3 pl-[10px] md:pl-[16px]'>
-                <div className='font-body text-lg font-semibold'>{member.name ? shortenText(member.name) : 'Unnamed'}</div>
-                <div className='font-body text-sm'>{shortenAddress(member.address || '0x')}</div>
-              </div> */}
               </div>
             </>
           ))}
-          {/* <ProfileCard icon={pod?.members[0] ? pod.members[0]?.picture : ''} address={pod.members[0] ? pod.members[0]?.address : ''} name={pod?.members[0] ? pod.members[0]?.name : ''} /> */}
         </div>
       </div>
     </div>
