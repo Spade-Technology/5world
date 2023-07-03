@@ -10,16 +10,15 @@ type CreatePodProps = {
   show: boolean
   close: any
   refetch: any
-  data: pod_type[]
 }
 
-const CreateNewPod = ({ show, close, refetch, data }: CreatePodProps) => {
+const CreateNewPod = ({ show, close, refetch }: CreatePodProps) => {
   const [nextFrom, setNextForm] = useState(false)
   const [podName, setPodName] = useState('')
   const [podImage, setPodImage] = useState({ image: '', name: '' })
   const [description, setDescription] = useState('')
   const [managerAddr, setManagerAddr] = useState('')
-  const [memberAddr, setMemberAddr] = useState<string[]>([])
+  const [membersInfo, setMembersInfo] = useState<any>('')
   const [error, setError] = useState(false)
 
   /** Here !, tell TypeScript that even though something looks like it could be null, it can trust you that it's not */
@@ -33,8 +32,17 @@ const CreateNewPod = ({ show, close, refetch, data }: CreatePodProps) => {
 
   const createPodHanlder = () => {
     if (address) {
+      const memberAddr: any = []
+      if (membersInfo && membersInfo.length > 0) {
+        membersInfo.map((info: any) => {
+          memberAddr.push(info.address)
+        })
+      } else {
+        memberAddr.push(address)
+      }
+
       createPod(
-        { name: podName, description: description, members: [address], admins: [address], picture: podImage.image },
+        { name: podName, description: description, picture: podImage.image, members: memberAddr, admins: [managerAddr] },
         {
           onSuccess(data, variables, context) {
             notification.success({
@@ -62,15 +70,7 @@ const CreateNewPod = ({ show, close, refetch, data }: CreatePodProps) => {
       {!nextFrom ? (
         <FormOne setNextForm={setNextForm} podName={podName} setPodName={setPodName} description={description} setDescription={setDescription} podImage={podImage} setPodImage={setPodImage} />
       ) : (
-        <FormTwo
-          setNextForm={setNextForm}
-          managerAddr={managerAddr}
-          setManagerAddr={setManagerAddr}
-          memberAddr={memberAddr}
-          setMemberAddr={setMemberAddr}
-          createPodHanlder={createPodHanlder}
-          data={data}
-        />
+        <FormTwo setNextForm={setNextForm} managerAddr={managerAddr} setManagerAddr={setManagerAddr} membersInfo={membersInfo} setMembersInfo={setMembersInfo} createPodHanlder={createPodHanlder} />
       )}
     </CustomModal>
   )

@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Null_Address } from '~/utils/config'
 import { shortenAddress, shortenText } from '~/utils/helpers'
 
@@ -16,15 +16,19 @@ const ProfileCard = ({ icon, name, address, edit, nameLength }: CardProps) => {
   const handleOnchange = (evt: any) => {
     console.log('handleOnchange', evt.target.value)
   }
+
+  useEffect(() => {
+    if (!edit) {
+      setSelected(false)
+    }
+  }, [edit])
   return (
     <div className={`${edit && 'cursor-pointer'} flex w-full pt-[14px]`} onClick={() => edit && setSelected(!selected)}>
       {edit && (
         <div
           className={`my-auto mx-3 h-6 w-6 cursor-pointer rounded-full border-[1px] border-vdao-dark px-3
                       ${selected ? 'bg-vdao-light' : ''}`}
-        >
-          {/* <input type='radio' className='h-5 w-5 align-middle my-auto' value={address} onChange={handleOnchange} /> */}
-        </div>
+        ></div>
       )}
 
       <div className='my-auto'>

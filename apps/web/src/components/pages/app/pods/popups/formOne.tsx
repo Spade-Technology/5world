@@ -27,14 +27,14 @@ const FormOne = ({ podName, description, podImage, setPodImage, setNextForm, set
   const [preview, setPreview] = useState('')
 
   const nextHandler = () => {
-    // if (podName && description && podImage.image) {
+    if (podName && description && podImage.image) {
     setNextForm(true)
-    // } else {
-    //   setError(true)
-    //   setTimeout(() => {
-    //     setError(false)
-    //   }, 10000)
-    // }
+    } else {
+      setError(true)
+      setTimeout(() => {
+        setError(false)
+      }, 10000)
+    }
   }
 
   const onImageChange = (evt: any) => {
@@ -108,8 +108,9 @@ const FormOne = ({ podName, description, podImage, setPodImage, setNextForm, set
         <div className='text-[22px] font-bold'>Pod Description</div>
 
         <div className='pt-[5px]'>Your pod description goes here.</div>
+
         <textarea
-          className={`mt-5 h-[373px] w-full max-w-[510px] truncate break-words rounded-[10px] border-[1px] p-[30px] outline-none placeholder:text-opacity-80
+          className={`mt-5 h-[373px] w-full max-w-[510px] rounded-[10px] border-[1px] p-[30px] outline-none placeholder:text-opacity-80
           ${error && !description ? 'border-red-600 placeholder:text-red-400' : 'border-vdao-dark'}`}
           placeholder={`${
             error && !description
