@@ -8,6 +8,7 @@ import HowItWorks from '~/components/misc/howItWorks'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import PolygonIcon from 'public/icons/stewards/polygon.svg'
 
+
 type Props = {
   setOpenCreateProposal: Dispatch<SetStateAction<boolean>>
 }
@@ -49,7 +50,7 @@ const OperationalProposals = ({ setOpenCreateProposal }: Props) => {
             <div className='float-right mx-auto mt-1 flex w-full  max-w-[1130px] flex-col justify-end gap-[1px]'>
               <PrimaryButton
                 text='Normal Proposal'
-                className='w-full hover:bg-green-200'
+                className='hover:bg-green-200 w-full'
                 onClick={() => {
                   setOpenCreateProposal(true)
                   setDropDownOn(false)
