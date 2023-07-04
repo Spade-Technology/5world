@@ -111,7 +111,7 @@ export const Card = ({ data, setOpenProfile, setOpenVotesNscores }: CardProps) =
           <div>
             <div className='text-[28px] font-semibold text-vdao-light md:text-[32px]'> 0% </div>
             <div className='text-sm font-semibold text-vdao-dark md:text-lg'>
-              Volting <br /> Weight
+              Voting <br /> Weight
             </div>
           </div>
 

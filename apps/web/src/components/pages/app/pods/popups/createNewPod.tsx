@@ -3,7 +3,7 @@ import FormOne from './formOne'
 import { useState } from 'react'
 import FormTwo from './formTwo'
 import { useAccount } from 'wagmi'
-import { pod_type, useCreatePod, usePodReads } from '~/hooks/web3/usePod'
+import { useCreatePod } from '~/hooks/web3/usePod'
 import { notification } from 'antd'
 
 type CreatePodProps = {

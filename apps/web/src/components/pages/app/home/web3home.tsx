@@ -7,21 +7,23 @@ import { Section } from '../../../layout/section'
 import dynamic from 'next/dynamic'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
-import { useUserRead, useUserReads } from '~/hooks/web3/useUser'
+import { useUserReads } from '~/hooks/web3/useUser'
 import { useAccount } from 'wagmi'
 import { Skeleton } from 'antd'
-import { Address } from 'viem'
-import { JoinedAtFormat, shortenAddress, shortenText } from '~/utils/helpers'
+
+import { shortenAddress, shortenText } from '~/utils/helpers'
 import { Null_Address } from '~/utils/config'
 import { monthNames } from '~/utils/date'
 import { useSession } from 'next-auth/react'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
+import { User } from '@prisma/client'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 type ProfileProps = {
   setOpenProfile: Dispatch<SetStateAction<boolean>>
   setNewMembersArr: any
+  data: User
 }
 type NewMembersProps = {
   newMembersArr: any
@@ -200,19 +202,8 @@ export function NewMembersComponent({ newMembersArr }: NewMembersProps) {
   )
 }
 
-export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: ProfileProps) {
+export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr, data }: ProfileProps) {
   const { address, isConnecting, isDisconnected } = useAccount()
-  const { data, refetch } = useUserRead({
-    address: address as Address,
-    include: {
-      podsAsAdmin: true,
-      podsAsMember: true,
-      proposals: true,
-      guild: true,
-      stewardVotesAsCandidate: true,
-      stewardVotesAsVoter: true,
-    },
-  })
 
   const { data: newData } = useUserReads({})
   const { data: siwe } = useSession()

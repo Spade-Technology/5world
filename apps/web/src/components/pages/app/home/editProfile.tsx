@@ -12,9 +12,10 @@ type PopupProps = {
   show: boolean
   close: any
   setOpenProfile: Dispatch<SetStateAction<boolean>>
+  refetch: any
 }
 
-const EditProfile = ({ show, close, setOpenProfile }: PopupProps) => {
+const EditProfile = ({ show, close, setOpenProfile, refetch }: PopupProps) => {
   const { address } = useAccount()
   const [editPic, setEditPic] = useState(false)
   const [name, setName] = useState('')
@@ -52,34 +53,12 @@ const EditProfile = ({ show, close, setOpenProfile }: PopupProps) => {
     }
   }
 
-  const SaveProfile = () => {
-    // if (!edit) {
-    //   setEdit(true)
-    // } else {
+  const SaveProfile = async () => {
     if (name || picture || description) {
-      editUser(
-        { name: name ? name : data.name!, description: description ? description : data?.description!, picture: picture ? picture : data.picture! },
-        // {
-        //     onSuccess(data, variables, context) {
-        //       notification.success({
-        //         message: 'Sucessful',
-        //         description: 'Created a new pod...!',
-        //       })
-        //       refetch()
-        //     },
-        //     onError() {
-        //       notification.error({
-        //         message: 'Failed',
-        //         description: 'Try again! Failed to create a new pod.',
-        //       })
-        //     },
-        //   },
-      )
-      close()
+      await editUser({ name: name ? name : data.name!, description: description ? description : data?.description!, picture: picture ? picture : data.picture! })
+      refetch()
     }
     close()
-    //   setEdit(false)
-    // }
   }
 
   return (
