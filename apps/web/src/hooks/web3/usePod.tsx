@@ -60,31 +60,6 @@ export function useCreatePod() {
   return { createPod, mutation }
 }
 
-export function useEditPod(include: PodInclude = {}) {
-  const editPodSchema = z.object({
-    name: z.string().optional(),
-    description: z.string().optional(),
-    picture: z.string().optional(),
-  })
+export const useEditPod = api.pod.editPod.useMutation
 
-  const mutation = api.pod.editPod.useMutation()
-
-  const editPod = z
-    .function()
-    .args(editPodSchema)
-    .parse((values: EditPodSchema, include_override: PodInclude = {}) => {
-      mutation.mutate({
-        ...values,
-        include: include_override ? include_override : include,
-      })
-    })
-
-  return { editPod, mutation }
-}
-
-export function usePod(id: number, ids: number[], include: PodInclude = {}) {
-  const podRead = usePodRead(id, include)
-  const podReads = usePodReads(ids, include)
-
-  return { podRead, podReads }
-}
+export default usePodRead
