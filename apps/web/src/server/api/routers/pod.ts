@@ -77,7 +77,7 @@ export const podRouter = createTRPCRouter({
           data: {
             name,
             description,
-            ,
+            picture,
             members: { connect: allMembers.map(address => ({ address })) },
             admins: { connect: admins.map(address => ({ address })) },
             createdBy: { connect: { address } },
