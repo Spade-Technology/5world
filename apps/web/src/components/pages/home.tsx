@@ -199,7 +199,7 @@ export const OurPartners = () => {
     <Section className='mx-auto mt-[120px] flex max-w-[1141px] flex-col items-center gap-5 px-6 md:mt-[140px] md:flex-row md:gap-[0px] md:px-0'>
       <div>
         <div className='w-full font-heading text-[32px] font-medium leading-[38px] md:text-[46px]'>Our Partners</div>
-        <div className='mt-5 max-w-[514px] font-body text-lg font-normal leading-[22px] md:mt-0'>
+        <div className='mt-5 max-w-[514px] font-body text-lg font-normal leading-[22px] md:mt-[35px]'>
           <b>5th World</b> is a leading champion in the development of regenerative agriculture solutions. During the formation of the dao, they will serve as stewards of its mission and vision.
           <br />
           <br />
