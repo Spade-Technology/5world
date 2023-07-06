@@ -43,9 +43,9 @@ const Home: NextPage = () => {
 
         <HomeCommunityComponent />
 
-        <HomePartnersComponent />
+        {/* <HomePartnersComponent />
 
-        <HomeCTAComponent />
+        <HomeCTAComponent /> */}
 
         <MailingListComponent />
       </Page>

@@ -72,7 +72,7 @@ export function HomePartnersComponent() {
 
 export function HomeCommunityComponent() {
   return (
-    <Section className='relative mt-10 bg-vdao-dark px-6 text-vdao-light '>
+    <Section className='relative mt-20 bg-vdao-dark px-6 text-vdao-light md:mt-[140px] '>
       <div className='relative mx-auto flex max-w-[1440px] flex-col md:pb-48 '>
         <div className='z-10 mt-24'>
           <div className='mb-4 font-heading text-[32px] font-medium md:mb-6 md:ml-9 md:text-[46px] lg:ml-[94px]'>Community</div>
@@ -112,48 +112,50 @@ export function HomeCommunityComponent() {
 
 export function RegeratedWorld() {
   return (
-    <Section className='mx-auto mt-[94px] grid max-w-[1280px] flex-col-reverse items-center gap-5 md:grid-cols-2 md:px-6'>
-      <div className='z-10 flex w-11/12 flex-col px-6'>
-        <div className='font-heading text-[32px] font-medium text-vdao-dark md:text-[46px] '>Help us create real solutions for a regenerated world.</div>
-        <div className=' mt-[21px] max-w-[514px] font-body text-lg font-normal leading-[22px] text-vdao-dark md:mt-9'>
+    <Section className='mx-auto mt-20 flex max-w-[1215px] flex-col items-center gap-[31px] md:mt-[140px] lg:flex-row lg:items-start'>
+      <div className='z-10 flex flex-col px-6 md:w-11/12 lg:max-w-[514px]'>
+        <div className='max-w-[481px] font-heading text-[32px] font-medium leading-[38px] text-vdao-dark md:text-[46px] md:leading-[52px]'>Help us create real solutions for a regenerated world.</div>
+        <div className='mt-5 max-w-[514px] font-body text-lg font-normal leading-[22px] text-vdao-dark md:mt-9'>
           The solutions to a regenerative future are found in community, and there’s a place for you here among our band of creators, contributors, artists, thinkers, and seekers. 
           <ul className='list-disc p-5 pl-5'>
             <li>
               <b>Feel Empowered</b> to contribute the ideas, leadership, and funds that lead to global change.
             </li>
+            <br />
             <li>
               <b>Find Inspiration</b> in the power of community to keep hoping and fighting for a better world.
             </li>
+            <br />
             <li>
               <b>Experience Growth</b> as the community challenges you to lean into the endless possibilities of regenerative agriculture.
             </li>
           </ul>
         </div>
-        <PrimaryButton text='Join VDAO' className='mt-10' />
+        <PrimaryButton text='Join VDAO' className='mt-5' />
       </div>
       <Image width={'0'} height={'0'} src={'illustrations/home/SVG/illustraion02 (2).svg'} alt='VDAO' className='w-full  md:order-first md:hidden' />
-      <Image src={IntroHero} alt='VDAO' className='hidden  md:block' />
+      <Image src={IntroHero} alt='VDAO' className='hidden max-w-[670px] md:block lg:w-6/12 xl:w-full' />
     </Section>
   )
 }
 
 export function WaysToSupportVDAO() {
   return (
-    <Section className='mx-auto mt-[94px] max-w-[1280px] px-6'>
-      <div className='font-heading text-[32px] font-medium text-vdao-dark md:text-center md:text-[46px]'>Other Ways to Support VDAO</div>
-      <div className='mt-10 flex flex-col gap-32 md:flex-row md:justify-center'>
+    <Section className='mx-auto mt-20 w-full max-w-[1280px] px-6 md:mt-[140px]'>
+      <div className='font-heading text-[32px] font-medium leading-[38px] text-vdao-dark md:text-center md:text-[46px]'>Other Ways to Support VDAO</div>
+      <div className='mx-auto mt-10 max-w-[624px] justify-between md:mt-[74px] md:flex'>
         <div className='md:max-w-[250px]'>
           <Image src={SupportVDAOIcon} alt='support' />
-          <div className='mt-5 font-heading font-medium text-3xl'>Donate</div>
-          <div className='mt-5 text-lg'>
+          <div className='mt-5 font-heading text-3xl font-medium'>Donate</div>
+          <div className='mt-5 font-body text-lg font-normal leading-[22px]'>
             Donate directly to the VDAO treasury to receive an exclusive on-chain badge that highlight’s your impact and unlocks access to quadratic voting in future grants rounds.
           </div>
           <PrimaryButton text='Donate Now' className='mt-5' />
         </div>
-        <div className='md:max-w-[250px]'>
+        <div className='mt-14 md:mt-0 md:max-w-[274px] '>
           <Image src={SupportVDAOIcon} alt='support' />
-          <div className='mt-5 font-heading font-medium text-3xl'>Purchase NFTs</div>
-          <div className='mt-5 text-lg'>
+          <div className='mt-5 font-heading text-3xl font-medium'>Purchase NFTs</div>
+          <div className='mt-5 font-body text-lg font-normal leading-[22px]'>
             Participate in our NFT auction for an opportunity to fund regenerative agriculture innovation, own a unique piece of art, and access real-world learning opportunities and events.
           </div>
           <PrimaryButton text='Learn More' className='mt-5' />
@@ -165,50 +167,25 @@ export function WaysToSupportVDAO() {
 
 export function HomeGetInvolvedComponent() {
   return (
-    <Section className='my-16 flex max-w-[1280px] flex-col px-6 md:my-[94px] lg:mx-auto'>
-      <div className='w-full font-heading text-[32px] font-medium md:text-center md:text-[46px]'>How to Join VDAO</div>
-      <div className='text-lg font-light md:mx-auto md:w-7/12 md:text-center md:text-[22px] '>
+    <Section className='my-16 mt-20 flex max-w-[1091px] flex-col px-6 md:mt-[140px] lg:mx-auto'>
+      <div className='w-full font-heading text-[32px] font-medium leading-[38px] md:text-center md:text-[46px] md:leading-[52px]'>How to Join VDAO</div>
+      <div className='mt-4 max-w-[794px] text-lg font-normal leading-[22px] md:mx-auto md:w-full md:text-center md:text-[22px]'>
         Apply now to become a core member of the VDAO community, pledging your time and support towards our mission of global ecosystem regeneration.
       </div>
-      <div className='flex flex-col md:mt-10 md:flex-row md:items-start md:gap-9'>
-        <Image src={VDAOGetInvolved} alt='VDAO' className='w-full max-w-[545px] md:px-10' />
-        {/* <div className='flex flex-col gap-16 px-6 md:w-1/2 md:px-0 md:pr-5 lg:w-1/3'>
-          {[
-            {
-              title: 'NFT Collections',
-              text: 'Participate in our NFT auction for an opportunity to fund regenerative agriculture innovation, own a unique piece of art, and access real-world learning opportunities and events.',
-              btn: 'Learn More',
-            },
-            {
-              title: 'Donate',
-              text: '    Donate directly to the VDAO treasury to receive an exclusive on-chain badge that highlight’s your impact and unlocks access to quadratic voting in future grants rounds.',
-              btn: 'Donate Now',
-            },
-            {
-              title: 'Coordinate',
-              text: ' Apply now to become a core member of the VDAO community, pledging your time and support towards our mission of global ecosystem regeneration.',
-              btn: 'Apply Now',
-            },
-          ].map(({ title, text, btn }, index) => {
-            return (
-              <div className='flex flex-col' key={index}>
-                <div className='mb-[21px] font-heading text-[26px] font-medium text-vdao-dark md:text-3xl'>{title}</div>
-                <div className='w-11/12 font-body text-lg font-normal leading-[22px] text-vdao-dark'>{text}</div>
-                <PrimaryButton text={btn} className=' mt-8 mr-auto' />
-              </div>
-            )
-          })}
-        </div> */}
-        <div className='max-w-[438px] text-lg'>
+      <div className='mt-[31px] flex flex-col md:mt-[64px] md:flex-row md:items-start md:gap-5 lg:gap-[84px]'>
+        <Image src={VDAOGetInvolved} alt='VDAO' className='w-full max-w-[545px]' />
+
+        <div className='max-w-[438px] font-body text-lg font-normal'>
           <div className='py-5 md:py-10'>
-            <div className='inline text-3xl'>1 | Apply</div> by reviewing our manifesto and completing the form here on our site.  
+            <div className='inline font-heading text-[26px] font-medium md:text-3xl'>1 | Apply</div> by reviewing our manifesto and completing the form here on our site.  
           </div>
           <div className='py-5 md:py-10'>
-            <div className='inline text-3xl'>2 | Interview</div> with a member of our community to find answers to your questions and make sure our values align.
+            <div className='inline font-heading text-[26px] font-medium md:text-3xl'>2 | Interview</div> with a member of our community to find answers to your questions and make sure our values
+            align.
           </div>
           <div className='py-5 md:py-10'>
-            <div className='inline text-3xl'>3 | Choose</div> a Guild where you feel you can best contribute to the mission of VDAO. Our four guilds include Creative, Research, Fundraising, and DAO
-            Operations. 
+            <div className='inline font-heading text-[26px] font-medium md:text-3xl'>3 | Choose</div> a Guild where you feel you can best contribute to the mission of VDAO. Our four guilds include
+            Creative, Research, Fundraising, and DAO Operations. 
           </div>
           <PrimaryButton text='Apply Now' />
         </div>
@@ -219,17 +196,17 @@ export function HomeGetInvolvedComponent() {
 
 export const OurPartners = () => {
   return (
-    <Section className='mx-auto mt-[94px] flex max-w-[1280px] flex-col gap-10 px-6 md:flex-row md:gap-36 md:px-0'>
+    <Section className='mx-auto mt-[120px] flex max-w-[1141px] flex-col items-center gap-5 px-6 md:mt-[140px] md:flex-row md:gap-[0px] md:px-0'>
       <div>
-        <div className='w-full font-heading text-[32px] font-medium md:text-[46px]'>Our Partners</div>
-        <div className='max-w-[514px]'>
+        <div className='w-full font-heading text-[32px] font-medium leading-[38px] md:text-[46px]'>Our Partners</div>
+        <div className='mt-5 max-w-[514px] font-body text-lg font-normal leading-[22px] md:mt-[35px]'>
           <b>5th World</b> is a leading champion in the development of regenerative agriculture solutions. During the formation of the dao, they will serve as stewards of its mission and vision.
           <br />
           <br />
           <b>ConsenSys</b> is the world’s leading Ethereum software company and ensures our members a secure blockchain infrastructure. 
         </div>
       </div>
-      <div className='flex gap-10'>
+      <div className='mx-auto flex gap-10 md:flex-col lg:ml-auto lg:mr-0 lg:flex-row'>
         <Image src={FifthWorldIcon} className='h-[157px] w-[150px] md:w-[212px]' alt='5thworld' />
         <Image src={ConsensysIcon} className='h-[157px] w-[150px]  md:w-[212px]' alt='Consensys' />
       </div>
@@ -248,12 +225,12 @@ const ObjectiveSubComponent = ({ icon, title, description }: { icon: StaticImage
 
 export function HomeObjectivesComponent() {
   return (
-    <Section className='xl:p-O md:lg-14 mx-auto mt-[94px] flex max-w-[1280px] flex-col p-0 px-6 md:px-16'>
-      <div className='font-heading text-[32px] font-medium md:text-center md:text-[46px]'>How does VDAO support regeneration?</div>
-      <div className='text-lg font-light md:mx-auto md:w-6/12 md:text-center md:text-[22px] '>
+    <Section className='xl:p-O md:lg-14 mx-auto mt-[52px] flex max-w-[1141px] flex-col p-0 px-6 md:mt-[162px] md:px-10'>
+      <div className='w-full font-heading text-[32px] font-medium leading-[38px] md:text-center md:text-[46px] md:leading-[52px]'>How does VDAO support regeneration?</div>
+      <div className='mt-5 max-w-[702px] text-lg font-normal leading-[22px] md:mx-auto md:mt-4 md:w-full md:text-center md:text-[22px]'>
         VDAO invites art and science to lead each other to new discoveries and collaborate in creating scalable systems for planetary regeneration.
       </div>
-      <div className='mx-auto mt-16 flex flex-col gap-14 px-8 md:flex-row md:gap-10 md:px-0 lg:px-16'>
+      <div className='mx-auto mt-10 flex flex-col gap-14 px-8 md:mt-16 md:flex-row md:gap-10 md:px-0'>
         <ObjectiveSubComponent
           icon={InnovateIcon}
           title='Innovate'
@@ -282,32 +259,33 @@ export function HomeObjectivesComponent() {
 
 export function HomeFindYourPlace() {
   return (
-    <Section className='mx-auto mt-[94px] grid max-w-[1280px] flex-col-reverse items-center gap-5 md:grid-cols-2 md:px-6'>
-      <div className='z-10 flex w-11/12 flex-col px-6'>
-        <div className='font-heading text-3xl font-medium text-vdao-dark md:text-[46px] '>Find your place in the story of planetary regeneration.</div>
-        <div className='mt-[21px] max-w-[514px] font-body text-lg font-normal leading-[22px] text-vdao-dark md:mt-9'>
+    <Section className='mx-auto mt-[101px] flex max-w-[1247px] flex-col items-center gap-5 md:mt-[161px] md:gap-[63px] lg:flex-row'>
+      <div className='z-10 flex max-w-[514px] flex-col px-6 md:px-0'>
+        <div className='max-w-[470px] font-heading text-[32px] font-medium leading-[38px] text-vdao-dark md:text-[46px] md:leading-[52px]'>Find your place in the story of planetary regeneration.</div>
+        <div className='mt-5 font-body text-lg font-normal leading-[22px] text-vdao-dark md:mt-[35px]'>
           Welcome to a decentralized community where imagination and science converge to build promising regenerative pathways towards the future.
           <br />
           <br />
           Using Web 3.0, we unite artists, land stewards, funders, scientists, researchers, and innovators into <b>one massive, global research and development team</b> for scalable advancements in
           regenerative land management.
         </div>
-        <PrimaryButton text='Join VDAO' className='mt-10' />
+        <PrimaryButton text='Join VDAO' className='mt-5' />
       </div>
-      <Image width={'0'} height={'0'} src={'illustrations/home/SVG/illustraion02 (2).svg'} alt='VDAO' className='w-full  md:order-first md:hidden' />
-      <Image src={IntroHero} alt='VDAO' className='hidden md:order-first md:block' />
+      <Image width={'0'} height={'0'} src={'illustrations/home/SVG/illustraion02 (2).svg'} alt='VDAO' className='w-full md:order-first lg:hidden' />
+
+      <Image src={IntroHero} alt='VDAO' className='hidden max-w-[670px] md:w-5/12 lg:order-first lg:block lg:w-6/12' />
     </Section>
   )
 }
 
 const NatureSubComponent = ({ icon, title, description, correctIcon }: { icon: StaticImageData; title: string; description: string; correctIcon: boolean }) => (
-  <div className='flex w-full flex-col items-center gap-5 md:w-10/12 md:items-start'>
+  <div className='col-span-4 flex flex-col items-center gap-5 md:items-start'>
     <Image src={icon} alt='VDAO' height={200} />
     <div className='flex items-start gap-2'>
       <Image src={correctIcon ? CorrectIcon : InCorrectIcon} className='pt-2' alt='Correct/Incorrect' />
       <div>
-        <div className='max-w-[213px] font-heading text-3xl font-medium'>{title}</div>
-        <div className='mt-5 max-w-[320px] font-inter text-base font-normal leading-5 text-vdao-dark md:text-left md:font-body md:text-lg'>{description}</div>
+        <div className='max-w-[213px] font-heading text-3xl font-medium leading-[36px] '>{title}</div>
+        <div className='mt-5 max-w-[320px] text-lg font-normal leading-[22px] text-vdao-dark md:text-left'>{description}</div>
       </div>
     </div>
   </div>
@@ -315,13 +293,13 @@ const NatureSubComponent = ({ icon, title, description, correctIcon }: { icon: S
 
 export function HomeRegenerativeAgri() {
   return (
-    <Section className='xl:p-O md:lg-14 mx-auto mt-[94px] flex max-w-[1280px] flex-col px-6 md:px-16'>
-      <div className='w-full font-heading text-[32px] font-medium md:text-center md:text-[46px]'>What is regenerative agriculture?</div>
-      <div className='text-lg font-light md:mx-auto md:w-8/12 md:text-center md:text-[22px] '>
+    <Section className='md:lg-14 mx-auto mt-[44px] flex w-full max-w-[1141px] flex-col px-6 md:mt-[140px] md:px-10 lg:px-0'>
+      <div className='w-full font-heading text-[32px] font-medium leading-8 md:text-center md:text-[46px] md:leading-[52px]'>What is regenerative agriculture?</div>
+      <div className='mt-5 max-w-[884px] text-lg font-normal leading-[22px] md:mx-auto md:mt-4 md:w-full md:text-center md:text-[22px]'>
         Rather than attempt to control nature, regeneration is a way to work WITH it. Your land knows how to heal itself, and the Regenerative Paradigm in agriculture is the key to designing an
         antifragile, resilient ecosystem.
       </div>
-      <div className='mx-auto mt-16 flex flex-col gap-14 md:flex-row md:gap-10 md:px-0 lg:px-16'>
+      <div className='mx-auto mt-10 flex grid-cols-12 flex-col gap-[34px] md:mt-[76px] md:grid md:flex-row md:gap-10 md:px-0'>
         <NatureSubComponent
           icon={BetterNatureIcon}
           title='We are better than nature'
@@ -341,17 +319,17 @@ export function HomeRegenerativeAgri() {
           description='The Regenerative Paradigm sees humans as part of a community in partnership with all living things where everyone can thrive. It asks, "How do I do more good?"'
         />
       </div>
-      <PrimaryButton text='Join VDAO' className='mx-auto mt-10' />
+      <PrimaryButton text='Join VDAO' className='mx-auto mt-5 md:mt-10' />
     </Section>
   )
 }
 
 export function HomeIntroComponent() {
   return (
-    <Section className='mx-auto mt-[94px] grid max-w-[1280px] flex-col-reverse items-center gap-5 md:grid-cols-2 md:px-6'>
-      <div className='z-10 flex w-11/12 flex-col px-6'>
-        <div className='font-heading text-[32px] font-medium text-vdao-dark md:text-[46px] '>It’s time to step out of reaction mode.</div>
-        <div className=' mt-[21px] max-w-[514px] font-body text-lg font-normal leading-[22px] text-vdao-dark md:mt-9'>
+    <Section className='mx-auto mt-[34px] flex max-w-[1215px] flex-col items-center gap-[31px] md:mt-[140px] lg:flex-row lg:items-start'>
+      <div className='z-10 flex flex-col px-6 md:w-11/12 lg:max-w-[514px]'>
+        <div className='max-w-[418px] font-heading text-[32px] font-medium leading-8 text-vdao-dark md:text-[46px] md:leading-[52px] '>It’s time to step out of reaction mode.</div>
+        <div className=' mt-[21px] font-body text-lg font-normal leading-[22px] text-vdao-dark md:mt-[35px]'>
           <b>Out of fear, humanity keeps looking for new ways to control our ecosystems.</b>
           <ul className='list-disc p-5 pl-5'>
             <li>Commercial farming looks for new ways to extract value from the land.</li>
@@ -361,37 +339,32 @@ export function HomeIntroComponent() {
           <div>
             Doomsday predictions and the illusion of control lead us to react and double down on our desire to “do something” instead of stopping to ask if our perspective is clear to begin with.
           </div>
-
+          <br />
           <div>
             Humanity is in desperate need of a new agricultural paradigm. So, what if we stop trying to control nature? <b>What if we partner with it instead? </b>
           </div>
         </div>
-        <PrimaryButton text='Join VDAO' className='mt-10' />
+        <PrimaryButton text='Join VDAO' className='mt-5' />
       </div>
       <Image width={'0'} height={'0'} src={'illustrations/home/SVG/illustraion02 (2).svg'} alt='VDAO' className='w-full  md:order-first md:hidden' />
-      <Image src={IntroHero} alt='VDAO' className='hidden  md:block' />
+
+      <Image src={IntroHero} alt='VDAO' className='hidden max-w-[670px] md:block lg:w-6/12 xl:w-full' />
     </Section>
   )
 }
 
 export function HomeWelcomeComponent() {
   return (
-    <Section className='mx-auto flex max-w-[1280px] flex-col overflow-hidden md:overflow-visible'>
+    <Section className='mx-auto flex w-full max-w-[1440px] flex-col overflow-hidden md:overflow-visible'>
       <div className='mx-auto mt-8 md:mt-16'>
-        <div
-          className='mx-auto w-10/12 text-center font-heading text-[44px] font-medium leading-[48px]
-                       text-vdao-dark md:w-auto md:px-5 md:text-[70px] md:leading-[95px]'
-        >
+        <div className='mx-auto w-full max-w-[1124px] text-center font-heading text-[44px] font-medium leading-[48px] text-vdao-dark md:w-auto md:px-5 md:text-[50px] md:leading-[75px] lg:px-0 lg:text-[70px] lg:leading-[95px]'>
           Help build new pathways to planetary regeneration.
         </div>
-        <div
-          className='mx-auto mt-5 w-[80%] text-center font-body text-xl font-medium leading-[26px] text-vdao-dark
-                         md:px-24 md:text-xl'
-        >
+        <div className='mx-[45px] mt-5 max-w-[818px] text-center font-body text-lg font-medium leading-[26px] text-vdao-dark md:mx-auto md:w-full md:px-6 md:text-xl lg:px-0'>
           Join our DAO’s mission to realize the promise and potential of regenerative agriculture. Inspire new ideas, fund research, and help create scalable solutions for global change. 
         </div>
-        <PrimaryButton text='Join Us' className='mx-auto mt-10' />
       </div>
+      <PrimaryButton text='Join Us' className='!mx-auto mt-10' />
       <Image src={WelcomeHeroMobile} alt='VDAO' className='md:max-w-100 -z-10 mt-5 w-full md:hidden' />
 
       <Image src={WelcomeHero} alt='VDAO' className=' relative -z-10 mt-5 hidden w-full md:mt-[20px] md:block' />
