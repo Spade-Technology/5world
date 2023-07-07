@@ -8,11 +8,11 @@ function Page({ children, web2 = false, darkweb2 = false }: { children: React.Re
   const bodyClassName = 'w-full text-vdao-dark ' + (!darkweb2 && !web2 && ' bg-vdao-deep')
 
   return (
-    <>
+    <div className='w-full'>
       <Header web2={web2Active} dark={darkModeActive} />
       <div className={bodyClassName}>{children}</div>
       <Footer />
-    </>
+    </div>
   )
 }
 
