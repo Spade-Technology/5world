@@ -1,11 +1,13 @@
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { Section } from '~/components/layout/section'
 import Description from '~/components/misc/description'
 import HowItWorks from '~/components/misc/howItWorks'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
+import PolygonIcon from 'public/icons/stewards/polygon.svg'
+
 
 type Props = {
   setOpenCreateProposal: Dispatch<SetStateAction<boolean>>
@@ -14,6 +16,7 @@ type Props = {
 const OperationalProposals = ({ setOpenCreateProposal }: Props) => {
   const router = useRouter()
   const { data: siwe } = useSession()
+  const [dropDownOn, setDropDownOn] = useState(false)
 
   return (
     <Section className='w-screen  bg-vdao-deep'>
@@ -34,8 +37,30 @@ const OperationalProposals = ({ setOpenCreateProposal }: Props) => {
       />
 
       <div className='mx-auto mt-[30px] flex max-w-[1130px] flex-1 flex-col justify-end gap-5 px-6 md:mt-0 md:flex-row'>
-        <PrimaryButton text='Create Proposal' onClick={() => (siwe ? setOpenCreateProposal(true) : router.push('/app/proposals/#restrictedContent'))} className='py-[5px] px-[35px] text-xl' />
-        <div className='w-fit  cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] font-heading text-xl text-white'>
+        <div>
+          <PrimaryButton
+            text='Create Proposal'
+            // onClick={() => (siwe ? setOpenCreateProposal(true) : router.push('/app/proposals/#restrictedContent'))}
+            onClick={() => (siwe ? setDropDownOn(!dropDownOn) : router.push('/app/proposals/#restrictedContent'))}
+            className='py-[5px] px-[35px] text-xl'
+            icon={PolygonIcon}
+            dropDown
+          />
+          {dropDownOn && (
+            <div className='float-right mx-auto mt-1 flex w-full  max-w-[1130px] flex-col justify-end gap-[1px]'>
+              <PrimaryButton
+                text='Normal Proposal'
+                className='hover:bg-green-200 w-full'
+                onClick={() => {
+                  setOpenCreateProposal(true)
+                  setDropDownOn(false)
+                }}
+              />
+              <PrimaryButton text='Grant Proposal' className='w-full hover:bg-green-200' />
+            </div>
+          )}
+        </div>
+        <div className='h-fit w-fit  cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white'>
           <Link href={siwe ? '/app/proposals/#allProposals' : '/app/proposals/#restrictedContent'}>See All Proposals</Link>
         </div>
       </div>

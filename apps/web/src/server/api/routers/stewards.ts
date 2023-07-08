@@ -10,7 +10,8 @@ import VDaoToken from '~/abi/VDaoToken.json'
 
 import { TRPCError } from '@trpc/server'
 import contracts from '~/config/contracts'
-import { User } from '@prisma/client'
+import { Prisma, User } from '@prisma/client'
+import dayjs from 'dayjs'
 
 const VOTE_THRESHOLD = 1
 const PAST_MONTHS = '6 MONTH'
@@ -46,7 +47,6 @@ export const stewardRouter = createTRPCRouter({
           AND "StewardVote"."createdAt" >= (NOW() - INTERVAL '${PAST_MONTHS}')
           GROUP BY "User".address 
           LIMIT 6
-
           `
     }
 
@@ -140,14 +140,41 @@ export const stewardRouter = createTRPCRouter({
           message: 'you did not hold any tokens at the time of the candidate application',
         })
 
+      if (typeof tokenAmountAtApplicationBlock !== 'bigint') return new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'invalid token amount' })
+
       const vote = await prisma.stewardVote.create({
         data: {
           voter: { connect: { address: voterAddress } },
           candidate: { connect: { address: candidateAddress } },
-          tokenAmount: tokenAmountAtApplicationBlock as string,
+          tokenAmount: 1000n,
         },
       })
 
       return vote
+    }),
+
+  getElections: protectedProcedure
+    .input(
+      z.object({
+        search: z.string().optional(),
+      }),
+    )
+    .query(async ({ input: { search }, ctx: { prisma } }) => {
+      const sixMonthsAgo = dayjs().subtract(6, 'month').toDate()
+
+      const users = await prisma.user.findMany({
+        ...(search && { where: { address: { contains: search } } }),
+        where: {
+          stewardApplicationBlock: { not: null },
+          stewardApplicationDate: { gte: sixMonthsAgo },
+        },
+        include: {
+          _count: true,
+          stewardVotesAsCandidate: true,
+        },
+        take: 10,
+      })
+      if (!users || users.length === 0) throw new TRPCError({ code: 'NOT_FOUND', message: 'no elections found' })
+      return users
     }),
 })

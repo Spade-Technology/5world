@@ -168,9 +168,9 @@ function VerifyWallet({ setOpenModal, web2, openModal }: { setOpenModal: Dispatc
       const callbackUrl = '/protected'
       const message = new SiweMessage({
         domain: window.location.host,
+        uri: window.location.origin,
         address: address,
         statement: 'Sign in with Ethereum to VDAO.',
-        uri: window.location.origin,
         version: '1',
         chainId: chain?.id,
         nonce: await getCsrfToken(),

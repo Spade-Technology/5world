@@ -1,13 +1,8 @@
-import { Dispatch, SetStateAction, useState } from 'react'
-import PrimaryButton from '~/styles/shared/buttons/primaryButton'
-import ProfileCard from '~/components/misc/profileCard'
 import CustomModal from '~/components/misc/customModal'
-import { pod_type } from '~/hooks/web3/usePod'
-import { useUserReads } from '~/hooks/web3/useUser'
-import { Pod } from '@prisma/client'
-import { Select } from 'antd'
+import { pod_type, useEditPod } from '~/hooks/web3/usePod'
 import FormTwo from './formTwo'
 import { useAccount } from 'wagmi'
+import { useState } from 'react'
 
 type ManageMembersProps = {
   show: boolean
@@ -21,7 +16,9 @@ const ManageMembers = ({ show, close, pod }: ManageMembersProps) => {
   const [membersInfo, setMembersInfo] = useState<any>([])
   const [error, setError] = useState(false)
 
-  const createPodHanlder = () => {
+  const { mutate: editPod } = useEditPod({})
+
+  const editPodHanlder = () => {
     if (address) {
       const memberAddr: any = []
       if (membersInfo && membersInfo.length > 0) {
@@ -31,26 +28,8 @@ const ManageMembers = ({ show, close, pod }: ManageMembersProps) => {
       } else {
         memberAddr.push(address)
       }
+      editPod({ members: memberAddr })
 
-      // console.log("podImage.image", typeof(podImage.image))
-      // createPod(
-      //   { name: podName, description: description, picture: "", members: memberAddr, admins: [managerAddr] },
-      //   {
-      //     onSuccess(data, variables, context) {
-      //       notification.success({
-      //         message: 'Sucessful',
-      //         description: 'Created a new pod...!',
-      //       })
-      //       refetch()
-      //     },
-      //     onError() {
-      //       notification.error({
-      //         message: 'Failed',
-      //         description: 'Try again! Failed to create a new pod.',
-      //       })
-      //     },
-      //   },
-      // )
       close()
     } else {
       setError(true)
@@ -58,7 +37,7 @@ const ManageMembers = ({ show, close, pod }: ManageMembersProps) => {
   }
   return (
     <CustomModal show={show} close={close} heading='Manage Members' modalMarginTop='my-[40px]'>
-      <FormTwo managerAddr={managerAddr} setManagerAddr={setManagerAddr} membersInfo={membersInfo} setMembersInfo={setMembersInfo} createPodHanlder={createPodHanlder} pod={pod} />
+      <FormTwo managerAddr={managerAddr} setManagerAddr={setManagerAddr} membersInfo={membersInfo} setMembersInfo={setMembersInfo} createPodHanlder={editPodHanlder} pod={pod} />
     </CustomModal>
   )
 }

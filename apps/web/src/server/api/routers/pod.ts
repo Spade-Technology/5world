@@ -92,7 +92,7 @@ export const podRouter = createTRPCRouter({
   editPod: protectedProcedure
     .input(
       z.object({
-        id: z.number(),
+        id: z.number().optional(),
         name: z.string().optional(),
         description: z.string().optional(),
         picture: z.string().optional(),

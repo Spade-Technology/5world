@@ -33,6 +33,8 @@ const stewardArgsSchema = z.object({
 
 export const useStewardReads = api.steward.getStewards.useQuery
 
+export const useElectionReads = api.steward.getElections.useQuery
+
 export function useStewardRead(address: string) {
   const schema = z.object({ address: z.string() })
   schema.parse({ address })

@@ -6,6 +6,13 @@ import { SupporterDetails } from './details'
 import { useProposalRead } from '~/hooks/web3/useProposal'
 import { monthNames } from '~/utils/date'
 import DummyIcon from 'public/icons/pods/icon1.svg'
+import PrimaryButton from '~/styles/shared/buttons/primaryButton'
+import ViewsIcon from 'public/icons/proposal/viewsIcon.svg'
+import LikedIcon from 'public/icons/proposal/liked.svg'
+import DisLikedIcon from 'public/icons/proposal/disLiked.svg'
+import AbstainIcon from 'public/icons/proposal/abstain.svg'
+import PolygonIcon from 'public/icons/stewards/polygon.svg'
+import TenderlyIcon from 'public/icons/proposal/tenderly.svg'
 
 type ViewProposalProps = {
   show: boolean
@@ -14,8 +21,10 @@ type ViewProposalProps = {
 }
 
 const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
-  const [showComments, setShowComments] = useState(false)
+  const [actions, setActions] = useState(false)
   const { data: proposal } = useProposalRead(proposalID)
+  const [dropDownOn, setDropDownOn] = useState(false)
+  const [btnStatus, setBtnStatus] = useState('Votes')
 
   return (
     <CustomModal show={show} close={close}>
@@ -27,37 +36,91 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
         <div className='grid grid-cols-1 gap-[73px] py-[10px] md:grid-cols-3 md:py-5'>
           <div className='col-span-2'>
             <div className='font-heading text-[26px] font-medium md:text-[30px]'>{proposal ? proposal.title : 'No title'}</div>
-            <div className='pt-[10px] md:pt-5'>
+            <div className='grid grid-cols-2 pt-[10px] md:grid-cols-4 md:pt-5'>
               <ProfileCard icon={proposal ? proposal.picture : DummyIcon} name={proposal ? proposal.name : 'Unnamed'} address={proposal?.authorId} />
+              <div className={`mt-6 w-fit h-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-7  text-lg font-medium text-vdao-light`}>Active</div>
             </div>
 
-            <div className={` mt-[25px] flex flex-col gap-[22px] md:mt-11 md:flex-row md:gap-20`}>
-              <div>
-                <div className=' font-medium text-vdao-dark md:text-[22px]'>0xDve212....21E</div>
-                <div className={` pt-1`}>Spell Address</div>
-              </div>
+            <div className='flex justify-between'>
+              <div className={` mt-[25px] flex flex-col gap-3 md:mt-11 md:flex-row md:gap-5`}>
+                <div>
+                  <div className=' flex gap-1 font-medium text-vdao-dark md:text-[22px]'>
+                    12M
+                    <Image src={ViewsIcon} alt='ViewsIcon' />
+                  </div>
+                  <div className={` pt-1`}>Votes For</div>
+                </div>
 
-              <div>
-                <div className='font-medium text-vdao-dark md:text-[22px]'>10.0</div>
-                <div className={`pt-1`}>ETH Support</div>
-              </div>
+                <div>
+                  <div className='flex gap-1 font-medium text-vdao-dark md:text-[22px]'>
+                    8M
+                    <Image src={ViewsIcon} alt='ViewsIcon' />
+                  </div>
+                  <div className={`pt-1`}>Votes Against</div>
+                </div>
 
-              <div>
-                <div className='font-medium text-vdao-dark md:text-[22px]'>5</div>
-                <div className={` pt-1`}>Supporters</div>
+                <div>
+                  <div className='flex gap-1 font-medium text-vdao-dark md:text-[22px]'>
+                    2M
+                    <Image src={ViewsIcon} alt='ViewsIcon' />
+                  </div>
+                  <div className={` pt-1`}>Votes Abstained</div>
+                </div>
+              </div>
+              <div className={` mt-[25px] md:mt-11 `}>
+                <div className='relative'>
+                  <PrimaryButton
+                    text={btnStatus}
+                    className='h-fit w-full text-center'
+                    onClick={() => setDropDownOn(!dropDownOn)}
+                    icon={btnStatus === 'Vote for proposal' ? LikedIcon : btnStatus === 'Vote against proposal' ? DisLikedIcon : btnStatus === 'Abstain' ? AbstainIcon : PolygonIcon}
+                    dropDown
+                  />
+                  {dropDownOn && (
+                    <div className='float-right mx-auto mt-1 flex  max-w-[1130px] flex-col justify-end gap-[1px]'>
+                      <PrimaryButton
+                        text='Vote for proposal'
+                        className='w-full hover:bg-green-200'
+                        onClick={() => {
+                          setBtnStatus('Vote for proposal')
+                          setDropDownOn(false)
+                        }}
+                        icon={LikedIcon}
+                      />
+                      <PrimaryButton
+                        text='Vote against proposal'
+                        className='w-full hover:bg-green-200'
+                        icon={DisLikedIcon}
+                        onClick={() => {
+                          setBtnStatus('Vote against proposal')
+                          setDropDownOn(false)
+                        }}
+                      />
+                      <PrimaryButton
+                        text='Abstain'
+                        className='w-full hover:bg-green-200'
+                        icon={AbstainIcon}
+                        onClick={() => {
+                          setBtnStatus('Abstain')
+                          setDropDownOn(false)
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
-            <div className='flex gap-[10px] border-b-[1px] border-b-vdao-dark pb-2 pt-10 font-body font-bold'>
-              <div className={` ${!showComments && 'text-vdao-light'} cursor-pointer justify-start`} onClick={() => setShowComments(false)}>
+            <div className=' flex gap-10 border-b-[1px] border-b-vdao-dark pb-2 pt-10 font-body font-bold'>
+              <div className={` ${!actions && 'text-vdao-light'} cursor-pointer justify-start`} onClick={() => setActions(false)}>
                 Proposal Detail
               </div>
-              <div className={` ${showComments && 'text-vdao-light'} cursor-pointer justify-start`} onClick={() => setShowComments(true)}>
-                Comments (5)
+              <div className={` ${actions && 'text-vdao-light'} cursor-pointer justify-start`} onClick={() => setActions(true)}>
+                Actions
               </div>
             </div>
 
-            {!showComments && <Detailed />}
+            {actions ? <ActionDetails /> : <ProposalDetails />}
           </div>
 
           <div>
@@ -82,9 +145,9 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   )
 }
 
-const Detailed = () => {
+const ProposalDetails = () => {
   return (
-    <div className='pt-11 text-black'>
+    <div className='pt-11 font-body text-lg text-black'>
       The Governance Facilitator(s) and the Protocol Engineering Core Unit have placed an urgent out-of-schedule executive proposal into the voting system. MKR Holders should vote for this proposal if
       they support the following alterations to the Maker Protocol.
       <br />
@@ -161,6 +224,68 @@ const Detailed = () => {
       <br />
       <br />
       To add current and upcoming votes to your calendar, please see the MakerDAO Public Events Calendar.
+    </div>
+  )
+}
+
+const ActionDetails = () => {
+  return (
+    <div className='pt-2 font-body text-lg text-black'>
+      <PrimaryButton text='' icon={TenderlyIcon} className='my-5' />
+      Action 0:
+      <br />
+      Calling Approve on 0x1234.....7890 using parameters:
+      <br />
+      <br />
+      Spender: 0x00000000000000000000000
+      <br />
+      Amount: 1234567890
+      <br />
+      Calldata:
+      <br />
+      0x0000000000000000000000000000000000000000 000000000000000000000000000000000000000000 000000000000000000000000000000000000000000 0000000000000000000000000000000000000
+      <br />
+      <br />
+      Action 2:
+      <br />
+      Calling Approve on 0x1234.....7890 using parameters:
+      <br />
+      <br />
+      Spender: 0x00000000000000000000000
+      <br />
+      Amount: 1234567890
+      <br />
+      Calldata:
+      <br />
+      0x0000000000000000000000000000000000000000 000000000000000000000000000000000000000000 000000000000000000000000000000000000000000 0000000000000000000000000000000000000
+      <br />
+      <br />
+      Action 3:
+      <br />
+      Calling Approve on 0x1234.....7890 using parameters:
+      <br />
+      <br />
+      Spender: 0x00000000000000000000000
+      <br />
+      Amount: 1234567890
+      <br />
+      Calldata:
+      <br />
+      0x0000000000000000000000000000000000000000 000000000000000000000000000000000000000000 000000000000000000000000000000000000000000 0000000000000000000000000000000000000
+      <br />
+      <br />
+      Action 4:
+      <br />
+      Calling Approve on 0x1234.....7890 using parameters:
+      <br />
+      <br />
+      Spender: 0x00000000000000000000000
+      <br />
+      Amount: 1234567890
+      <br />
+      Calldata:
+      <br />
+      0x0000000000000000000000000000000000000000 000000000000000000000000000000000000000000 000000000000000000000000000000000000000000 0000000000000000000000000000000000000
     </div>
   )
 }

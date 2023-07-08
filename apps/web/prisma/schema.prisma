@@ -20,6 +20,7 @@ model Signatures {
 }
 
 enum UserRole {
+    ADMIN
     MODERATOR
     MEMBER
 }
@@ -36,7 +37,7 @@ model User {
 
     // Steward
     stewardApplicationDate  DateTime?
-    stewardApplicationBlock Decimal?      @db.Decimal(65, 0)
+    stewardApplicationBlock BigInt?
     stewardVotesAsCandidate StewardVote[] @relation("CandidateRelation")
     stewardVotesAsVoter     StewardVote[] @relation("VoterRelation")
 
@@ -71,11 +72,9 @@ model StewardVote {
     candidateAddress String
 
     // tokenAmount
-    tokenAmount Decimal @db.Decimal(65, 0)
+    tokenAmount BigInt
 
     createdAt DateTime @default(now())
-
-    @@unique([voterAddress, candidateAddress])
 }
 
 model Pod {
@@ -84,6 +83,7 @@ model Pod {
     // Media
     name        String
     description String
+    picture     String @default("")
 
     // Relations
     admins      User[]     @relation("PodAdminsRelation")

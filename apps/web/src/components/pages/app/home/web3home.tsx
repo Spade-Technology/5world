@@ -7,21 +7,23 @@ import { Section } from '../../../layout/section'
 import dynamic from 'next/dynamic'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
-import { useUserRead, useUserReads } from '~/hooks/web3/useUser'
+import { useUserReads } from '~/hooks/web3/useUser'
 import { useAccount } from 'wagmi'
 import { Skeleton } from 'antd'
-import { Address } from 'viem'
-import { JoinedAtFormat, shortenAddress, shortenText } from '~/utils/helpers'
+
+import { shortenAddress, shortenText } from '~/utils/helpers'
 import { Null_Address } from '~/utils/config'
 import { monthNames } from '~/utils/date'
 import { useSession } from 'next-auth/react'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
+import { User } from '@prisma/client'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 type ProfileProps = {
   setOpenProfile: Dispatch<SetStateAction<boolean>>
   setNewMembersArr: any
+  data: User
 }
 type NewMembersProps = {
   newMembersArr: any
@@ -200,19 +202,8 @@ export function NewMembersComponent({ newMembersArr }: NewMembersProps) {
   )
 }
 
-export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: ProfileProps) {
+export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr, data }: ProfileProps) {
   const { address, isConnecting, isDisconnected } = useAccount()
-  const { data, refetch } = useUserRead({
-    address: address as Address,
-    include: {
-      podsAsAdmin: true,
-      podsAsMember: true,
-      proposals: true,
-      guild: true,
-      stewardVotesAsCandidate: true,
-      stewardVotesAsVoter: true,
-    },
-  })
 
   const { data: newData } = useUserReads({})
   const { data: siwe } = useSession()
@@ -263,7 +254,7 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr }: Profi
       <div className='flex h-full flex-col md:gap-5 lg:mx-8'>
         <Skeleton active={skeletonActive} paragraph={{ rows: 1 }} avatar className='!w-1/2' loading={skeletonActive}>
           <div className={'flex gap-3 ' + (skeletonActive && 'opacity-0')}>
-            <Image src={data ? data.picture : ProfilePic} alt='Profile Picture' height={14} width={14} className='h-14 w-14 rounded-full' />
+            <Image src={data?.picture ? data.picture : ProfilePic} alt='Profile Picture' height={14} width={14} className='h-14 w-14 rounded-full' />
             <div className='flex flex-col'>
               <span className='satoshi text-2xl font-bold leading-8 text-vdao-light'>{data?.name ? shortenText(data.name) : 'Unknown'}</span>
               <span className='satoshi text-base font-normal leading-6 '>{data?.address ? shortenAddress(data?.address) : shortenAddress(Null_Address)}</span>
