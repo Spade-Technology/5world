@@ -105,9 +105,13 @@ export const Card = ({ setOpenProfile, user }: CardProps) => {
         <div className='mt-[18px] w-fit rounded-3xl border-[3px] py-[7px] px-[25px] text-xl font-medium'>DAO Operation Guild</div>
 
         <div onClick={() => setReadMore(!readMore)} className=' cursor-default  pt-5 text-lg font-normal leading-[22px] md:pt-[30px]'>
-          {user?.description
-            ? `${user.description.length < 150 ? user.description : user.description.length > 150 && readMore ? user.description : `${user.description.substring(0, 150)}...`}`
-            : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultrice ullamcorper.'}{' '}
+          {user.description?.length > 150 ? (
+            <div onClick={() => setOpenProfile(user)} className=''>
+              {user.description.substring(0, 150)} <span className=' cursor-pointer text-base text-gray-200 '>...Read more</span>
+            </div>
+          ) : (
+            user.description
+          )}
         </div>
 
         <div className='mt-[25px] flex justify-between rounded-[20px] bg-white px-5 py-8 md:mt-11 lg:px-10'>

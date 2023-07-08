@@ -79,7 +79,7 @@ export function HomeCommunityComponent() {
           <div className='md:font-satoshi font-heading text-[22px] font-medium text-white md:ml-9 md:text-[26px] lg:ml-[94px]'>The VDAO Community is:</div>
         </div>
         <div className='mt-12 flex flex-col-reverse md:flex-row'>
-          <div className='z-10 mb-[463px] grid gap-12 md:ml-[40%] md:mb-0 md:grid-cols-2 md:gap-0 lg:ml-[40%]'>
+          <div className='z-10 mb-[463px] grid gap-12 md:ml-[20%] md:mb-0 md:grid-cols-2 md:gap-0 lg:ml-[40%]'>
             <div className='flex  flex-col gap-4 md:w-9/12'>
               <div className='font-body text-[26px] font-medium md:font-heading md:text-3xl'>Apolitical</div>
               <div className='font-body text-lg font-normal leading-[22px] text-white'>
@@ -114,8 +114,10 @@ export function RegeratedWorld() {
   return (
     <Section className='mx-auto mt-20 flex max-w-[1215px] flex-col items-center gap-[31px] md:mt-[140px] lg:flex-row lg:items-start'>
       <div className='z-10 flex flex-col px-6 md:w-11/12 lg:max-w-[514px]'>
-        <div className='max-w-[481px] font-heading text-[32px] font-medium leading-[38px] text-vdao-dark md:text-[46px] md:leading-[52px]'>Help us create real solutions for a regenerated world.</div>
-        <div className='mt-5 max-w-[514px] font-body text-lg font-normal leading-[22px] text-vdao-dark md:mt-9'>
+        <div className='font-heading text-[32px] font-medium leading-[38px] text-vdao-dark md:text-[46px] md:leading-[52px] lg:max-w-[481px]'>
+          Help us create real solutions for a regenerated world.
+        </div>
+        <div className='mt-5 font-body text-lg font-normal leading-[22px] text-vdao-dark md:mt-9'>
           The solutions to a regenerative future are found in community, and there’s a place for you here among our band of creators, contributors, artists, thinkers, and seekers. 
           <ul className='list-disc p-5 pl-5'>
             <li>
@@ -134,7 +136,7 @@ export function RegeratedWorld() {
         <PrimaryButton text='Join VDAO' className='mt-5' />
       </div>
       <Image width={'0'} height={'0'} src={'illustrations/home/SVG/illustraion02 (2).svg'} alt='VDAO' className='w-full  md:order-first md:hidden' />
-      <Image src={IntroHero} alt='VDAO' className='hidden max-w-[670px] md:block lg:w-6/12 xl:w-full' />
+      <Image src={IntroHero} alt='VDAO' className='hidden md:block lg:w-6/12 lg:max-w-[670px] xl:w-full' />
     </Section>
   )
 }
@@ -173,7 +175,7 @@ export function HomeGetInvolvedComponent() {
         Apply now to become a core member of the VDAO community, pledging your time and support towards our mission of global ecosystem regeneration.
       </div>
       <div className='mt-[31px] flex flex-col md:mt-[64px] md:flex-row md:items-start md:gap-5 lg:gap-[84px]'>
-        <Image src={VDAOGetInvolved} alt='VDAO' className='w-full max-w-[545px]' />
+        <Image src={VDAOGetInvolved} alt='VDAO' className='w-full max-w-[545px] md:w-5/12 lg:w-full' />
 
         <div className='max-w-[438px] font-body text-lg font-normal'>
           <div className='py-5 md:py-10'>
@@ -260,7 +262,7 @@ export function HomeObjectivesComponent() {
 export function HomeFindYourPlace() {
   return (
     <Section className='mx-auto mt-[101px] flex max-w-[1247px] flex-col items-center gap-5 md:mt-[161px] md:gap-[63px] lg:flex-row'>
-      <div className='z-10 flex max-w-[514px] flex-col px-6 md:px-0'>
+      <div className='z-10 flex flex-col px-6 md:w-10/12 md:px-0 lg:max-w-[514px]'>
         <div className='max-w-[470px] font-heading text-[32px] font-medium leading-[38px] text-vdao-dark md:text-[46px] md:leading-[52px]'>Find your place in the story of planetary regeneration.</div>
         <div className='mt-5 font-body text-lg font-normal leading-[22px] text-vdao-dark md:mt-[35px]'>
           Welcome to a decentralized community where imagination and science converge to build promising regenerative pathways towards the future.
@@ -272,7 +274,6 @@ export function HomeFindYourPlace() {
         <PrimaryButton text='Join VDAO' className='mt-5' />
       </div>
       <Image width={'0'} height={'0'} src={'illustrations/home/SVG/illustraion02 (2).svg'} alt='VDAO' className='w-full md:order-first lg:hidden' />
-
       <Image src={IntroHero} alt='VDAO' className='hidden max-w-[670px] md:w-5/12 lg:order-first lg:block lg:w-6/12' />
     </Section>
   )
@@ -357,7 +358,7 @@ export function HomeWelcomeComponent() {
   return (
     <Section className='mx-auto flex w-full max-w-[1440px] flex-col overflow-hidden md:overflow-visible'>
       <div className='mx-auto mt-8 md:mt-16'>
-        <div className='mx-auto w-full max-w-[1124px] text-center font-heading text-[44px] font-medium leading-[48px] text-vdao-dark md:w-auto md:px-5 md:text-[50px] md:leading-[75px] lg:px-0 lg:text-[70px] lg:leading-[95px]'>
+        <div className='mx-auto w-full max-w-[1124px] px-[33px] text-center font-heading text-[44px] font-medium leading-[48px] text-vdao-dark md:w-auto md:px-5 md:text-[50px] md:leading-[75px] lg:px-0 lg:text-[70px] lg:leading-[95px]'>
           Help build new pathways to planetary regeneration.
         </div>
         <div className='mx-[45px] mt-5 max-w-[818px] text-center font-body text-lg font-medium leading-[26px] text-vdao-dark md:mx-auto md:w-full md:px-6 md:text-xl lg:px-0'>

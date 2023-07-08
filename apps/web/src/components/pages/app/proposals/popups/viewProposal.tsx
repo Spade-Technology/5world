@@ -6,7 +6,7 @@ import { SupporterDetails } from './details'
 import { useProposalRead } from '~/hooks/web3/useProposal'
 import { monthNames } from '~/utils/date'
 import DummyIcon from 'public/icons/pods/icon1.svg'
-import PrimaryButton from '~/styles/shared/buttons/primaryButton'
+import { DropdownPrimaryButton } from '~/styles/shared/buttons/PrimaryButton'
 import ViewsIcon from 'public/icons/proposal/viewsIcon.svg'
 import LikedIcon from 'public/icons/proposal/liked.svg'
 import DisLikedIcon from 'public/icons/proposal/disLiked.svg'
@@ -27,18 +27,18 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   const [btnStatus, setBtnStatus] = useState('Votes')
 
   return (
-    <CustomModal show={show} close={close}>
+    <CustomModal show={show} close={close} externalStyle={'w-full custom-scrollbar md:mx-20 lg:mx-10 xl:mx-auto '}>
       <div className='pb-[30px] font-body text-lg font-normal text-vdao-dark'>
         <div className='font-bold'>
           {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()] + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
         </div>
 
-        <div className='grid grid-cols-1 gap-[73px] py-[10px] md:grid-cols-3 md:py-5'>
+        <div className='grid grid-cols-1 gap-[73px] py-[10px] md:py-5 lg:grid-cols-3'>
           <div className='col-span-2'>
-            <div className='font-heading text-[26px] font-medium md:text-[30px]'>{proposal ? proposal.title : 'No title'}</div>
+            <div className='font-heading text-[26px] font-medium leading-9 md:text-[30px]'>{proposal ? proposal.title : 'No title'}</div>
             <div className='grid grid-cols-2 pt-[10px] md:grid-cols-4 md:pt-5'>
               <ProfileCard icon={proposal ? proposal.picture : DummyIcon} name={proposal ? proposal.name : 'Unnamed'} address={proposal?.authorId} />
-              <div className={`mt-6 w-fit h-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-7  text-lg font-medium text-vdao-light`}>Active</div>
+              <div className={`mt-6 h-fit w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-7 text-lg  font-medium text-vdao-light lg:ml-5`}>Active</div>
             </div>
 
             <div className='flex justify-between'>
@@ -69,44 +69,44 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
               </div>
               <div className={` mt-[25px] md:mt-11 `}>
                 <div className='relative'>
-                  <PrimaryButton
+                  <DropdownPrimaryButton
                     text={btnStatus}
                     className='h-fit w-full text-center'
                     onClick={() => setDropDownOn(!dropDownOn)}
                     icon={btnStatus === 'Vote for proposal' ? LikedIcon : btnStatus === 'Vote against proposal' ? DisLikedIcon : btnStatus === 'Abstain' ? AbstainIcon : PolygonIcon}
                     dropDown
                   />
-                  {dropDownOn && (
-                    <div className='float-right mx-auto mt-1 flex  max-w-[1130px] flex-col justify-end gap-[1px]'>
-                      <PrimaryButton
-                        text='Vote for proposal'
-                        className='w-full hover:bg-green-200'
-                        onClick={() => {
-                          setBtnStatus('Vote for proposal')
-                          setDropDownOn(false)
-                        }}
-                        icon={LikedIcon}
-                      />
-                      <PrimaryButton
-                        text='Vote against proposal'
-                        className='w-full hover:bg-green-200'
-                        icon={DisLikedIcon}
-                        onClick={() => {
-                          setBtnStatus('Vote against proposal')
-                          setDropDownOn(false)
-                        }}
-                      />
-                      <PrimaryButton
-                        text='Abstain'
-                        className='w-full hover:bg-green-200'
-                        icon={AbstainIcon}
-                        onClick={() => {
-                          setBtnStatus('Abstain')
-                          setDropDownOn(false)
-                        }}
-                      />
-                    </div>
-                  )}
+                  {/* {dropDownOn && (
+                  )} */}
+                  <div style={{transition: '0.2s ease-in', height: dropDownOn ? '120px' : '0px'}} className={`float-right overflow-hidden mx-auto mt-1 flex  max-w-[1130px] flex-col justify-end gap-[1px]`}>
+                    <DropdownPrimaryButton
+                      text='Vote for proposal'
+                      className='w-full hover:bg-green-200'
+                      onClick={() => {
+                        setBtnStatus('Vote for proposal')
+                        setDropDownOn(false)
+                      }}
+                      icon={LikedIcon}
+                    />
+                    <DropdownPrimaryButton
+                      text='Vote against proposal'
+                      className='w-full hover:bg-green-200'
+                      icon={DisLikedIcon}
+                      onClick={() => {
+                        setBtnStatus('Vote against proposal')
+                        setDropDownOn(false)
+                      }}
+                    />
+                    <DropdownPrimaryButton
+                      text='Abstain'
+                      className='w-full hover:bg-green-200'
+                      icon={AbstainIcon}
+                      onClick={() => {
+                        setBtnStatus('Abstain')
+                        setDropDownOn(false)
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -147,7 +147,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
 
 const ProposalDetails = () => {
   return (
-    <div className='pt-11 font-body text-lg text-black'>
+    <div className='pt-11 font-body text-lg font-normal leading-[22px] text-black'>
       The Governance Facilitator(s) and the Protocol Engineering Core Unit have placed an urgent out-of-schedule executive proposal into the voting system. MKR Holders should vote for this proposal if
       they support the following alterations to the Maker Protocol.
       <br />
@@ -231,7 +231,7 @@ const ProposalDetails = () => {
 const ActionDetails = () => {
   return (
     <div className='pt-2 font-body text-lg text-black'>
-      <PrimaryButton text='' icon={TenderlyIcon} className='my-5' />
+      <DropdownPrimaryButton text='' icon={TenderlyIcon} className='my-5' />
       Action 0:
       <br />
       Calling Approve on 0x1234.....7890 using parameters:

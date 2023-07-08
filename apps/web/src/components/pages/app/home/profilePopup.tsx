@@ -41,9 +41,9 @@ const ProfilePopup = ({ show, close, setEditProfile }: PopupProps) => {
   const { delegate } = useDelegate()
 
   return (
-    <CustomModal show={show} close={close}>
-      <div className='w-full md:w-fit'>
-        <div className='flex flex-col justify-between md:flex-row md:gap-96'>
+    <CustomModal show={show} close={close} externalStyle={'w-full custom-scrollbar md:mx-10 xl:mx-auto '}>
+      <div className='w-full'>
+        <div className='flex flex-col justify-between md:flex-row'>
           <div>
             <div className='flex w-full'>
               {/* {

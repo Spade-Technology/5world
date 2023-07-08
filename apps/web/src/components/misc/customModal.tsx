@@ -53,7 +53,6 @@ const CustomModal = ({ show, close, children, heading, modalMarginTop, padding, 
             />
           )}
         </div>
-
         {children}
       </div>
     </div>

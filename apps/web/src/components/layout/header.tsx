@@ -141,7 +141,7 @@ const Header = (props: Props) => {
                 }
                 key={element.name}
               >
-                <Link href={element.link} className={`font-body text-lg font-medium ${props.web2 ? 'text-vdao-dark' : 'text-white'}`}>
+                <Link href={element.link} className={`font-body text-lg font-medium ${props.web2 && window.location.pathname !== '/nft' ? 'text-vdao-dark' : 'text-white'}`}>
                   {element.name}
                 </Link>
               </Tooltip>

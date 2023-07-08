@@ -8,7 +8,7 @@ type ButtonProps = {
   dropDown?: boolean
 }
 
-const PrimaryButton = ({ text, className, onClick, icon, dropDown }: ButtonProps) => {
+export const DropdownPrimaryButton = ({ text, className, onClick, icon, dropDown }: ButtonProps) => {
   return (
     <div
       className={` w-fit cursor-pointer rounded-md bg-vdao-light px-9 py-1.5 font-heading text-xl font-medium text-vdao-dark md:py-[5px] md:px-[35px]  ${className}`}
@@ -19,6 +19,17 @@ const PrimaryButton = ({ text, className, onClick, icon, dropDown }: ButtonProps
         {text}
       </div>
     </div>
+  )
+}
+
+const PrimaryButton = ({ text, className, onClick, icon, dropDown }: ButtonProps) => {
+  return (
+    <button className={` custom-btn btn-7 !w-fit cursor-pointer rounded-md bg-vdao-light hover:bg-white ${className}`} onClick={() => onClick && onClick()}>
+      <span className={`mx-auto flex w-full gap-1 px-9 py-1.5 font-heading text-xl font-medium !text-vdao-dark md:py-[5px] md:px-[35px] ${dropDown ? 'flex-row-reverse justify-between' : ''}`}>
+        {icon && <Image src={icon} alt='icon' className={dropDown ? 'h-4 w-4' : ''} />}
+        <div className=''>{text}</div>
+      </span>
+    </button>
   )
 }
 
