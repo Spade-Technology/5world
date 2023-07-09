@@ -5,28 +5,32 @@ import EllipseComponent from '~/components/misc/ellipseLine'
 import { Input, Select } from 'antd'
 import { abiItem } from '~/server/api/routers/etherscan'
 import { useEtherscan } from '~/hooks/web3/useEtherscan'
+import { Spell } from './createProposal'
+import { shortenAddress } from '~/utils/helpers'
 
 type FormProps = {
   setNextForm: Dispatch<SetStateAction<boolean>>
-  setShowPreview: Dispatch<SetStateAction<boolean>>
-  actions: abiItem[]
-  setActions: Dispatch<SetStateAction<abiItem[]>>
-  setContractAction: Dispatch<SetStateAction<abiItem>>
-  setArgs: Dispatch<any>
-  args: any
-  contractAddress: string
-  setContractAddress: Dispatch<SetStateAction<string>>
-  contractAction: abiItem
+  setShowPreview: (preview: boolean) => void
+
+  spells: Spell[]
+  setSpells: Dispatch<SetStateAction<Spell[]>>
 }
 
-const FormTwo = ({ contractAction, actions, setContractAction, contractAddress, setContractAddress, args, setArgs, setActions, setNextForm, setShowPreview }: FormProps) => {
+const FormTwo = ({ setNextForm, setShowPreview, spells, setSpells }: FormProps) => {
   const [verified, setVerified] = useState(false)
   const [error, setError] = useState('')
+
+  const [contractAddress, setContractAddress] = useState('')
   const { data: abi } = useEtherscan({ contractAddress }, { retry: 0 })
+
   const [verifiedAddr, setVerifiedAddr] = useState<string[]>([])
-  console.log('abi', abi)
+
+  const handleContractAddress = (evt: any) => {
+    setContractAddress(evt.target.value)
+    setVerified(false)
+  }
+
   const verifyActions = () => {
-    console.log('abi', abi)
     if (contractAddress && abi) {
       setVerified(true)
       setVerifiedAddr(prev => [...prev, contractAddress])
@@ -40,25 +44,29 @@ const FormTwo = ({ contractAction, actions, setContractAction, contractAddress, 
   }
 
   useEffect(() => {
-    if (!contractAddress || actions.length === 0) {
+    if (!contractAddress || spells.length === 0) {
       setVerified(false)
     } else {
       verifyActions()
     }
-  }, [actions, abi, contractAddress])
+  }, [spells, abi, contractAddress])
 
   const handleMethods = (item: string) => {
     if (item) {
       const newAction = JSON.parse(item) as abiItem
-      setContractAction(newAction)
-      if (actions.length < 10) {
-        setActions(prev => [...prev, newAction])
+      const newSpell = {
+        calldata: {},
+        name: newAction.name,
+        target: contractAddress,
+        abi: abi,
+        value: '0',
       }
+      setSpells(prev => [...prev, newSpell])
     }
   }
 
   const confirmHandler = () => {
-    if (verified && actions.length > 0 && (args?.spender || args?.to)) {
+    if (spells.length > 0) {
       setNextForm(false)
       setShowPreview(true)
     } else {
@@ -67,11 +75,6 @@ const FormTwo = ({ contractAction, actions, setContractAction, contractAddress, 
         setError('')
       }, 10000)
     }
-  }
-
-  const handleContractAddress = (evt: any) => {
-    setContractAddress(evt.target.value)
-    setVerified(false)
   }
 
   const actionHandler = (idx: number) => {
@@ -84,6 +87,8 @@ const FormTwo = ({ contractAction, actions, setContractAction, contractAddress, 
   //   .map((newAbi, idx) => {
   //     console.log('newAbo', newAbi, newAbi.name)
   //   })
+
+  console.log(error)
 
   return (
     <div className='grid grid-cols-1 gap-10 pt-[30px] pb-[24px] font-body text-lg font-normal text-vdao-dark md:grid-cols-2 md:gap-[106px] md:pt-10'>
@@ -109,24 +114,74 @@ const FormTwo = ({ contractAction, actions, setContractAction, contractAddress, 
 
         {verified && <EllipseComponent className='py-[14px] text-sm font-normal md:py-5' text='Verified Contract found on Etherscan. ABI automatically imported.' />}
 
-        {verified ? (
+        <div className='pt-[40px] text-[22px] font-bold md:pt-[60px]'>Added Actions</div>
+        {spells && spells.length > 0 ? (
+          spells.map((spell: Spell, idx: number) => {
+            return (
+              <div className='flex justify-start gap-[17px] pt-[10px] md:pt-5' key={idx}>
+                <div className='flex cursor-pointer text-lg font-bold text-vdao-light' onClick={() => actionHandler(idx)}>
+                  {spell.name || 'unnamed action'} <div className='mx-2 my-auto text-sm'>({shortenAddress(spell.target)})</div>
+                </div>
+                <div className='my-auto cursor-pointer text-sm font-bold underline' onClick={() => setSpells(prev => prev.filter((_, i) => i !== idx))}>
+                  Remove action
+                </div>
+              </div>
+            )
+          })
+        ) : (
+          <div className='text-lg font-bold text-vdao-light'>No Actions recorded</div>
+        )}
+      </div>
+
+      <div className='pr-5'>
+        <div className='text-[22px] font-bold'>Contract Method</div>
+
+        <Select
+          className='antd-stop-propagation w-full'
+          options={contractAddress ? abi?.filter(el => el.type == 'function' && el.stateMutability !== 'view').map(el => ({ value: JSON.stringify(el), label: el.name })) : [{ value: '', label: '' }]}
+          onChange={handleMethods}
+          placeholder='mockFunctionNonPayable'
+        />
+
+        {spells.length > 0 ? (
           <div className='flex w-full flex-col'>
             {/* <input className='mt-5 h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 py-2 outline-none' /> */}
-            {actions?.map((action, idx) => {
+            {spells?.map((spell, idx) => {
               return (
                 <>
-                  <div className='mt-5 text-lg font-bold text-vdao-light'>{action.name ? action.name : 'UnNamed'}</div>
-                  {action?.inputs?.map((el, i) => (
-                    // onChange = arguments[el.name] = v.target.value
-                    <>
-                      <input
-                        className='mt-2 h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 py-2 outline-none'
-                        key={i}
-                        placeholder={el.name}
-                        onChange={v => setArgs({ ...args, [el.name]: v.target.value })}
-                      />
-                    </>
-                  ))}
+                  <div className='mt-5 text-lg font-bold text-vdao-light'>{spell.name ? spell.name : 'UnNamed'}</div>
+                  {spell.abi
+                    ?.find((v: any) => v.name === spell.name)
+                    ?.inputs?.map((el: any, i: number) => (
+                      // onChange = arguments[el.name] = v.target.value
+                      <>
+                        <input
+                          className='mt-2 h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 py-2 outline-none'
+                          key={i}
+                          placeholder={el.name}
+                          onChange={v =>
+                            setSpells(
+                              spells.map((spell, i) =>
+                                i === idx
+                                  ? {
+                                      ...spell,
+                                      calldata: {
+                                        ...spell.calldata,
+                                        [el.name]: v.target.value,
+                                      },
+                                    }
+                                  : spell,
+                              ),
+                            )
+                          }
+                        />
+                      </>
+                    ))}
+                  <input
+                    className='mt-2 h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 py-2 outline-none'
+                    placeholder='Spell Value in Wei (1e18 = 1 ETH)'
+                    onChange={v => setSpells(spells.map((el, i) => (i === idx ? { ...el, value: v.target.value } : el)))}
+                  />
                 </>
               )
             })}
@@ -140,55 +195,6 @@ const FormTwo = ({ contractAction, actions, setContractAction, contractAddress, 
 
             <EllipseComponent className='py-[10px] text-sm font-normal md:py-5' text='ABI file uploaded' />
           </>
-        )}
-      </div>
-
-      <div className='pr-5'>
-        <div className='text-[22px] font-bold'>Contract Method</div>
-
-        {/* <input
-          className='mt-5 h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 py-2 outline-none'
-          placeholder='mockFunctionNonPayable'
-          value={contractMethod}
-          onChange={evt => setContractMethod(evt.target.value)}
-        /> */}
-
-        <Select
-          className='antd-stop-propagation w-full'
-          options={contractAddress ? abi?.filter(el => el.type == 'function' && el.stateMutability !== 'view').map(el => ({ value: JSON.stringify(el), label: el.name })) : [{ value: '', label: '' }]}
-          onChange={handleMethods}
-          placeholder='mockFunctionNonPayable'
-         
-        />
-
-        <div className='pt-[40px] text-[22px] font-bold md:pt-[60px]'>Added Actions</div>
-        {actions && actions.length > 0 ? (
-          actions.map((action, idx) => {
-            return (
-              <div className='flex justify-start gap-[17px] pt-[10px] md:pt-5' key={idx}>
-                <div className='cursor-pointer text-lg font-bold text-vdao-light' onClick={() => actionHandler(idx)}>
-                  {action.name ? action.name : 'UnNamed'}
-                </div>
-                <div
-                  className='my-auto cursor-pointer text-sm font-bold underline'
-                  onClick={() => {
-                    // actions.splice(idx, 1)
-
-                    const newActions = actions.filter((action, index) => index != idx)
-                    setActions(newActions)
-
-                    if (newActions.length === 0) {
-                      setContractAddress('')
-                    }
-                  }}
-                >
-                  Remove action
-                </div>
-              </div>
-            )
-          })
-        ) : (
-          <div className='text-lg font-bold text-vdao-light'>No Actions recorded</div>
         )}
 
         {error && <div className='text-red-500'>Required*: Please Add and verify the valid address, actions and arguments</div>}

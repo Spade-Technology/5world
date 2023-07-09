@@ -14,102 +14,91 @@ type CreateProposalProps = {
   close: any
 }
 
+export type Spell = {
+  name: string
+  calldata: any
+  target: string
+  abi: any
+  value: string
+}
+
 const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
   const [nextFrom, setNextForm] = useState(false)
-  const [showPreview, setShowPreview] = useState(false)
+  const [showPreview, _setShowPreview] = useState(false)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [actions, setActions] = useState<abiItem[]>([])
   const { address } = useAccount()
   const { createProposal, isLoading } = useCreateProposal()
 
-  const [contractAddress, setContractAddress] = useState('')
-  const [contractAction, setContractAction] = useState({} as abiItem)
-  const [args, setArgs] = useState({} as any)
-
-  const [callData, setCallData] = useState<string>('')
+  const [spells, setSpells] = useState<Spell[]>([])
+  const [callDatas, setCallDatas] = useState<string[]>([])
+  const [loading, setLoading] = useState(false)
 
   const handlePreviews = () => {
-    if (address && contractAddress && actions && showPreview) {
+    let cds: string[] = []
+    if (address && spells.length > 0) {
       // Encode arguments using ethers.js or a similar library
-      actions.map(async (contract, idx) => {
-        const inputs = contract?.inputs
-        const types = inputs?.map(input => ({
-          name: input.name,
-          type: input.type,
-        }))
+      spells.map(async (spell, idx) => {
+        type typing = {
+          name: string
+          type: string
+        }
+
+        const types: typing[] = spell?.abi
+          ?.filter((item: abiItem) => item.name === spell.name)[0]
+          .inputs.map((item: abiItem) => {
+            return {
+              name: item.name,
+              type: item.type,
+            }
+          })
 
         const valuesArr: any = []
         types.map(type => {
-          valuesArr.push(args[type.name])
+          valuesArr.push(spell.calldata[type.name])
         })
+
         // const callData = types && encodeAbiParameters(types, Object.values(args))
         const callData = types && encodeAbiParameters(types, valuesArr)
 
         // Construct calldatas, targets, values
-        setCallData(callData)
+        cds.push(callData)
       })
+
+      setCallDatas(cds)
     }
   }
 
-  useEffect(() => {
-    handlePreviews()
-  }, [address, contractAddress, contractAction, actions, showPreview])
+  const setShowPreview = (preview: boolean) => {
+    _setShowPreview(preview)
+    preview && handlePreviews()
+  }
 
   const submit = async () => {
-    if (address && contractAddress && actions) {
-      // Encode arguments using ethers.js or a similar library
-      actions.map(async (contract, idx) => {
-        const inputs = contract.inputs
-        const types = inputs.map(input => ({
-          name: input.name,
-          type: input.type,
-        }))
-        const valuesArr: any = []
-        types.map(type => {
-          valuesArr.push(args[type.name])
-        })
-        const callData = encodeAbiParameters(types, valuesArr)
-
-        // Construct calldatas, targets, values
-        const calldatas = [callData]
-        const targets = [contractAddress]
-        const values = [0n]
-
-        // Use these in your createProposal call
-        await createProposal({
-          title: title,
-          description: description,
-          authorAddress: address,
-          calldatas,
-          targets,
-          values,
-        })
+    if (address && spells) {
+      setLoading(true)
+      await createProposal({
+        title: title,
+        description: description,
+        authorAddress: address,
+        calldatas: callDatas,
+        targets: spells.map(spell => spell.target),
+        values: spells.map(spell => BigInt(spell.value)),
+      }).then(el => {
+        el && close()
       })
+      setLoading(false)
     }
-
-    close()
   }
 
   return (
-    <CustomModal show={show} close={close} heading={` ${showPreview ? '' : 'Create New Proposal'}`} modalMarginTop='my-[40px]'>
+    <CustomModal show={show} close={close} heading={` ${showPreview ? '' : 'Create New Proposal'}`} modalMarginTop='my-[40px]' canExit={!loading}>
       {!nextFrom && !showPreview ? (
         <FormOne setNextForm={setNextForm} title={title} setTitle={setTitle} description={description} setDescription={setDescription} />
       ) : nextFrom ? (
-        <FormTwo
-          setContractAction={setContractAction}
-          setNextForm={setNextForm}
-          setShowPreview={setShowPreview}
-          actions={actions}
-          setActions={setActions}
-          setArgs={setArgs}
-          args={args}
-          contractAddress={contractAddress}
-          setContractAddress={setContractAddress}
-          contractAction={contractAction}
-        />
+        <FormTwo setNextForm={setNextForm} setShowPreview={setShowPreview} spells={spells} setSpells={setSpells} />
       ) : (
-        <Preview values={args} targets={contractAddress} setNextForm={setNextForm} setShowPreview={setShowPreview} title={title} description={description} callData={callData} submit={submit} />
+        <Preview loading={loading} spells={spells} setNextForm={setNextForm} setShowPreview={setShowPreview} title={title} description={description} callDatas={callDatas} submit={submit} />
       )}{' '}
     </CustomModal>
   )

@@ -1,13 +1,89 @@
-import { parseAbi } from 'viem'
 import { z } from 'zod'
-import { createTRPCRouter, protectedProcedure, publicProcedure } from '~/server/api/trpc'
+import { currentChainId, currentContracts } from '~/config/contracts'
+import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc'
 
 export const tenderlyRouter = createTRPCRouter({
-  getContractABI: protectedProcedure
+  simulateProposal: protectedProcedure
     .input(
       z.object({
-        // ...
+        id: z.number(),
+        spell: z.number(),
       }),
     )
-    .query(async ({ input: {} }) => {}),
+    .mutation(async ({ input: { id, spell }, ctx: { prisma } }) => {
+      const { TENDERLY_USER, TENDERLY_PROJECT, TENDERLY_ACCESS_KEY, TENDERLY_TTL } = process.env
+      const proposal = await prisma.proposal.findUnique({
+        where: { id: id },
+        include: { simulation: true },
+      })
+
+      if (!proposal) throw new Error('Proposal not found')
+
+      const { simulation } = proposal
+
+      // if (simulation[spell] && (simulation[spell] as any).createdAt.getTime() > Date.now() - (!!TENDERLY_TTL ? parseInt(TENDERLY_TTL) : 3600) * 1000) return simulation[spell]?.url
+
+      console.log('Simulating proposal', id, 'spell', spell)
+
+      const resp = await fetch(
+        `https://api.tenderly.co/api/v1/account/${TENDERLY_USER}/project/${TENDERLY_PROJECT}/simulate`,
+        // the transaction
+        {
+          method: 'POST',
+          headers: { 'X-Access-Key': TENDERLY_ACCESS_KEY as string },
+
+          body: JSON.stringify({
+            /* Simulation Configuration */
+            save: true, // if true simulation is saved and shows up in the dashboard
+            save_if_fails: true, // if true, reverting simulations show up in the dashboard
+            simulation_type: 'full', // full or quick (full is default)
+
+            network_id: currentChainId, // network to simulate on
+
+            /* Standard EVM Transaction object */
+            from: currentContracts.proxiedVDao,
+            to: currentContracts.timelock,
+            input: proposal.spellCalldatas[spell],
+            gas: 8000000,
+            gas_price: 0,
+            value: 0,
+          }),
+        },
+      )
+
+      const url = 'https://dashboard.tenderly.co/' + TENDERLY_USER + '/' + TENDERLY_PROJECT + '/simulator/' + (await resp.json()).simulation.id
+
+      if (!simulation || simulation.length === 0) {
+        const simulate = proposal.spells.map((spell, spellIndex) => ({
+          spellIndex,
+          url: '',
+          createdAt: new Date(0),
+        }))
+        console.log(simulate)
+        await prisma.proposal.update({
+          where: { id: id },
+          data: {
+            simulation: {
+              createMany: {
+                data: simulate,
+              },
+            },
+          },
+        })
+      } else {
+        await prisma.proposal.update({
+          where: { id: id },
+
+          data: {
+            simulation: {
+              updateMany: {
+                where: { spellIndex: spell },
+                data: { url: url, createdAt: new Date() },
+              },
+            },
+          },
+        })
+      }
+      return url
+    }),
 })

@@ -2,11 +2,14 @@ import { z } from 'zod'
 
 import { createTRPCRouter, publicProcedure, protectedProcedure } from '~/server/api/trpc'
 import VDAOImplementation from '~/abi/VDAOImplementation.json'
-import { fetchTransaction, waitForTransaction } from '@wagmi/core'
+import { fetchTransaction, readContracts, waitForTransaction } from '@wagmi/core'
 import { Address, decodeEventLog } from 'viem'
 import { TRPCError } from '@trpc/server'
-import contracts, { currentContracts } from '~/config/contracts'
+import { currentContracts } from '~/config/contracts'
+import { log } from 'console'
+import { wagmiConfig } from '~/components/web3context'
 
+console.log(wagmiConfig)
 const includeZod = z
   .object({
     pod: z.boolean().optional(),
@@ -23,12 +26,38 @@ export const proposalRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input: { id, include }, ctx: { prisma } }) => {
-      const proposal = await prisma.proposal.findUnique({
+      let web3Proposal = {} as any
+      const web2Proposal = await prisma.proposal.findUnique({
         where: { id: id },
         include: include,
       })
-      if (!proposal) throw new Error('Proposal not found')
-      return proposal
+
+      const proposalValues = await readContracts({
+        contracts: [
+          {
+            abi: VDAOImplementation as any,
+            address: currentContracts.proxiedVDao as Address,
+            functionName: 'proposals',
+            args: [id],
+          },
+        ],
+      })
+
+      const argkeys: string[] = ['id', 'proposer', 'proposalThreshold', 'eta', 'startBlock', 'endBlock', 'forVotes', 'againstVotes', 'abstainVotes', 'canceled', 'executed', 'vetoed']
+
+      for (let i = 0; i < argkeys.length; i++) {
+        const key = argkeys[i] as string
+
+        const value = (proposalValues[0].result as any)[i]
+
+        if (value === undefined) continue
+
+        web3Proposal[key] = value
+      }
+
+      if (!web2Proposal || !web3Proposal) throw new Error('Proposal not found')
+
+      return { ...web3Proposal, ...web2Proposal }
     }),
 
   getProposals: publicProcedure
@@ -107,6 +136,7 @@ export const proposalRouter = createTRPCRouter({
             spells,
             spellValues,
             spellCalldatas,
+            spellSignatures: (txEvent.args as any).spellSignatures,
 
             ...(podId && { pod: { connect: { id: podId } } }),
 

@@ -92,10 +92,11 @@ model Pod {
     proposals   Proposal[]
 
     // Meta
-    createdBy   User   @relation("CreatedPodRelation", fields: [createdById], references: [address])
-    createdById String
-    updatedBy   User   @relation("UpdatedPodRelation", fields: [updatedById], references: [address])
-    updatedById String
+    createdBy    User           @relation("CreatedPodRelation", fields: [createdById], references: [address])
+    createdById  String
+    updatedBy    User           @relation("UpdatedPodRelation", fields: [updatedById], references: [address])
+    updatedById  String
+    GrantProject GrantProject[]
 }
 
 model Guild {
@@ -108,6 +109,57 @@ model Guild {
     User User[] @relation("GuildMemberRelation")
 }
 
+model tenderly {
+    id         Int @id @default(autoincrement())
+    spellIndex Int
+
+    url String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    Proposal   Proposal? @relation(fields: [proposalId], references: [id])
+    proposalId Int?
+}
+
+model GrantProject {
+    id         Int @id @default(autoincrement())
+    spellIndex Int
+
+    Image           String
+    BackgroundImage String
+    Title           String
+    Description     String
+
+    url     String
+    twitter String
+    address String
+
+    pod   Pod? @relation(fields: [podId], references: [id])
+    podId Int?
+
+    createdBy DateTime @default(now())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Grant {
+    id Int @id
+
+    // Media
+    title       String
+    description String
+    rules       String
+    picture     String @default("")
+    url         String @default("")
+
+    Proposal Proposal[]
+
+    // Meta
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
 model Proposal {
     id              Int    @id
     transactionHash String @unique
@@ -116,9 +168,12 @@ model Proposal {
     description String
     picture     String @default("")
 
-    spells         String[]
-    spellValues    BigInt[]
-    spellCalldatas String[]
+    simulation tenderly[]
+
+    spells          String[]
+    spellValues     BigInt[]
+    spellCalldatas  String[]
+    spellSignatures String[]
 
     // Relations
     pod      Pod?   @relation(fields: [podId], references: [id])
@@ -133,4 +188,7 @@ model Proposal {
     updatedById String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @default(now()) @updatedAt
+
+    grant   Grant? @relation(fields: [grantId], references: [id])
+    grantId Int?
 }

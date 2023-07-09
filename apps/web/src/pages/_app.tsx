@@ -9,7 +9,7 @@ import { StyleProvider } from '@ant-design/cssinjs'
 import { api } from '~/utils/api'
 
 import Web3Context from '~/components/web3context'
-import { ConfigProvider, notification, theme } from 'antd'
+import { ConfigProvider } from 'antd'
 
 import Head from 'next/head'
 
@@ -28,6 +28,11 @@ const MyApp: AppType<{ session: Session | null }> = ({ Component, pageProps: { s
               token: {
                 colorPrimary: '#36DFAE',
                 fontFamily: 'Clash Display',
+              },
+              components: {
+                Spin: {
+                  colorPrimary: 'white',
+                },
               },
             }}
           >

@@ -74,7 +74,7 @@ export function useCreateProposal() {
         address: currentContracts.proxiedVDao as Address,
         abi: VDAOImplementation,
         functionName: 'propose',
-        args: [targets, values, [''], calldatas, description],
+        args: [targets, values, calldatas, calldatas, description],
       })
     } catch (e) {
       setIsLoading(false)
@@ -103,7 +103,13 @@ export function useCreateProposal() {
 
     setIsLoading(false)
 
-    return mutation.mutate(...new_args) as any
+    return mutation.mutateAsync(...new_args).then(el => {
+      notification.success({
+        message: 'Proposal created',
+        description: 'Your proposal has been created',
+      })
+      return el
+    }) as any
   }
 
   return { createProposal, mutation, isLoading: isLoading || mutation.isLoading }
