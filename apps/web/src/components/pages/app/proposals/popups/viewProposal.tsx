@@ -29,6 +29,9 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   const [dropDownOn, setDropDownOn] = useState(false)
   const [btnStatus, setBtnStatus] = useState('Votes')
 
+  console.log(proposal)
+
+  const proposalStatus = proposal?.canceled ? 'Canceled' : proposal?.executed ? 'Executed' : proposal?.vetoed ? 'Vetoed' : 'Active'
   return (
     <CustomModal show={show} close={close} externalStyle={'w-full custom-scrollbar md:mx-20 lg:mx-10 xl:mx-auto '}>
       <div className='pb-[30px] font-body text-lg font-normal text-vdao-dark'>
@@ -41,7 +44,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
             <div className='font-heading text-[26px] font-medium leading-9 md:text-[30px]'>{proposal ? proposal.title : 'No title'}</div>
             <div className='grid grid-cols-2 pt-[10px] md:grid-cols-4 md:pt-5'>
               <ProfileCard icon={proposal ? proposal.picture : DummyIcon} name={proposal ? proposal.name : 'Unnamed'} address={proposal?.authorId} />
-              <div className={`mt-6 h-fit w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-7 text-lg  font-medium text-vdao-light lg:ml-5`}>Active</div>
+              <div className={`mt-6 h-fit w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-7 text-lg  font-medium text-vdao-light lg:ml-5`}>{proposalStatus}</div>
             </div>
 
             <div className='flex justify-between'>

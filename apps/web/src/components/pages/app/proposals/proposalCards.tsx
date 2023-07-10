@@ -102,20 +102,20 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
 
 export const Card = ({ proposal, setViewProposal, setProposalID }: CardProps) => {
   return (
-    <div className='mt-[20px] rounded-[20px] bg-white px-5 py-10 font-body text-vdao-dark md:mt-[30px] md:p-8 lg:p-[50px]'>
+    <div className='mt-[20px] overflow-hidden rounded-[20px] bg-white px-5 py-10 font-body text-vdao-dark md:mt-[30px] md:p-8 lg:p-[50px]'>
       <div className='flex flex-col md:flex-row'>
-        <div className='flex-1'>
+        <div className='w-2/3 flex-1'>
           <div className='text-lg font-semibold'>
             {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()] + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
           </div>
-          <div className='pt-[10px] text-3xl font-medium'>{proposal?.title}</div>
+          <div className='overflow-hidden overflow-ellipsis pt-[10px] text-3xl font-medium'>{proposal?.title}</div>
 
           <ProfileCard icon={proposal?.author?.picture ? proposal?.author?.picture : DummyIcon} name={proposal?.author?.name} address={proposal?.author?.address} />
 
-          <div className={`mt-[30px] w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-9 py-[5px] text-lg font-medium text-vdao-light`}>Active</div>
+          {/* <div className={`mt-[30px] w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-9 py-[5px] text-lg font-medium text-vdao-light`}>Active</div> */}
         </div>
-        <div className='flex-1'>
-          <div className='pt-7 text-lg font-normal md:pt-9'>{proposal.description}</div>
+        <div className='w-1/3 flex-1'>
+          <div className='overflow-hidden overflow-ellipsis pt-7 text-lg font-normal md:pt-9'>{proposal.description}</div>
           <PrimaryButton
             text='View Detail'
             className='mt-[30px] py-[5px] px-9 text-xl font-medium'
