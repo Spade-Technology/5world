@@ -114,7 +114,7 @@ export const Card = ({ proposal, setViewProposal, setProposalID }: CardProps) =>
 
           {/* <div className={`mt-[30px] w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-9 py-[5px] text-lg font-medium text-vdao-light`}>Active</div> */}
         </div>
-        <div className='w-1/3 flex-1'>
+        <div className='w-1/3'>
           <div className='overflow-hidden overflow-ellipsis pt-7 text-lg font-normal md:pt-9'>{proposal.description}</div>
           <PrimaryButton
             text='View Detail'
