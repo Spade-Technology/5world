@@ -5,7 +5,7 @@ import HowItWorks from './howItWorks'
 
 const NFTCollections = () => {
   return (
-    <div className='w-screen bg-vdao-deep'>
+    <div className='w-full bg-vdao-deep'>
       <Description
         invertColors={true}
         propsClass={'!max-w-[1068px] !md:gap-5'}
