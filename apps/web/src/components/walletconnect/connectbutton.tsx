@@ -362,7 +362,7 @@ function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Se
             </Tooltip>
           </div>
         </div>
-        <ImageInput className='max-md:hidden' />
+        {/* <ImageInput className='max-md:hidden' /> */}
       </div>
     </div>
   )

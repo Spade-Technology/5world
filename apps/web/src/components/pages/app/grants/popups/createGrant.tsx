@@ -2,6 +2,8 @@ import CustomModal from '~/components/misc/customModal'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import UploadImage from 'public/illustrations/grants/uploadImage.svg'
 import Image from 'next/image'
+// import Calendar from 'react-calendar'
+import { useState } from 'react'
 
 type CreateGrantProps = {
   show: boolean
@@ -9,6 +11,8 @@ type CreateGrantProps = {
 }
 
 const CreateGrant = ({ show, close }: CreateGrantProps) => {
+  const [date, setDate] = useState(new Date())
+
   return (
     <CustomModal show={show} close={close} heading='Create Grant Operaitonal Proposal'>
       <div className='pt-10 pb-[24px] font-body text-lg font-normal md:pt-[60px]'>
@@ -16,7 +20,7 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
           <div>
             <div>
               <div className='flex justify-between'>
-                <div className='text-[22px] font-bold'>Round Name *</div>
+                <div className='text-[22px] font-bold'>Round Name*</div>
                 {/* <div className='text-vdao-light'>*Required</div> */}
               </div>
               <input
@@ -27,7 +31,7 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
 
             <div className='pt-10'>
               <div className='flex justify-between'>
-                <div className='text-[22px] font-bold'>Token Address *</div>
+                <div className='text-[22px] font-bold'>Token Address*</div>
                 {/* <div className='text-vdao-light'>*Required</div> */}
               </div>
               <input
@@ -38,7 +42,7 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
 
             <div className='pt-10'>
               <div className='flex justify-between'>
-                <div className='text-[22px] font-bold'>Matching amount *</div>
+                <div className='text-[22px] font-bold'>Matching amount*</div>
                 {/* <div className='text-vdao-light'>*Required</div> */}
               </div>
               <input
@@ -47,20 +51,22 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
               />
             </div>
 
-            <div className='pt-10'>
+            {/* <div className='pt-10'>
               <div className='flex justify-between'>
                 <div className='text-[22px] font-bold'>Duration *</div>
-                {/* <div className='text-[#909090]'>Optional</div> */}
               </div>
               <input className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none placeholder:py-2 placeholder:pl-5 md:mt-5' placeholder='14 days' />
-            </div>
+            </div> */}
 
             <div className='pt-10'>
               <div className='flex justify-between'>
-                <div className='text-[22px] font-bold'>Startup time *</div>
-                {/* <div className='text-[#909090]'>Optional</div> */}
+                <div className='text-[22px] font-bold'>Startup time*</div>
               </div>
               <input className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none placeholder:py-2 placeholder:pl-5 md:mt-5' placeholder='5 days' />
+              {/* <div className='calendar-container'>
+                <Calendar onChange={(evt: any) => setDate(evt.target.value)} value={date} />
+              </div>
+              <div className='text-center'>Selected date: {date.toDateString()}</div> */}
             </div>
           </div>
 
@@ -76,7 +82,7 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
 
             <div className='pt-[30px]'>
               <div className='text-[22px] font-bold'>Round Theme</div>
-              <div className='mt-5 rounded-[10px] py-5 text-center outline-dotted md:py-9'>
+              <div className='mt-5 rounded-[10px] px-20 py-5 text-center outline-dotted md:py-9'>
                 <Image src={UploadImage} alt='upload' className='mx-auto' />
                 <div className='py-3 font-medium md:text-[22px]'>Drop your PNG or JPG file here!</div>
                 <div className='text-lg font-normal'>Recommended size: 300px X 300px</div>
@@ -87,7 +93,7 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
 
         <div className='mt-10'>
           <div className='flex justify-between'>
-            <div className='text-[22px] font-bold'>Grant Round Description *</div>
+            <div className='text-[22px] font-bold'>Grant Round Description*</div>
             {/* <div className='text-vdao-light'>*Required</div> */}
           </div>
 
