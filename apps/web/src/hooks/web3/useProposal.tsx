@@ -40,17 +40,17 @@ export function useProposal(id: number, ids: number[], include: ProposalInclude 
 
 export function useProposalAction(id: number) {
   // @param support The support value for the vote. 0=against, 1=for, 2=abstain
-  const castVote = (support: number) =>
-    useContractWrite({
+  const castVote = async (support: number) =>
+    await writeContract({
       address: currentContracts.proxiedVDao as Address,
       abi: VDAOImplementation,
       functionName: 'vote',
       args: [id, support],
     })
 
-  const voteFor = () => castVote(1)
-  const voteAgainst = () => castVote(0)
-  const voteAbstain = () => castVote(2)
+  const voteFor = async () => await castVote(1)
+  const voteAgainst = async () => await castVote(0)
+  const voteAbstain = async () => await castVote(2)
 
   return { voteFor, voteAgainst, voteAbstain }
 }
