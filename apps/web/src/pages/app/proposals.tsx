@@ -3,6 +3,7 @@ import Footer from '~/components/layout/footer'
 import Header from '~/components/layout/header'
 import Page from '~/components/layout/page'
 import { EnforceAuth } from '~/components/misc/enforceAuth'
+import CreateGrant from '~/components/pages/app/grants/popups/createGrant'
 import Insights from '~/components/pages/app/proposals/insights'
 import OperationalProposals from '~/components/pages/app/proposals/operationalProposals'
 import CreateNewProposal from '~/components/pages/app/proposals/popups/createProposal'
@@ -11,13 +12,15 @@ import ProposalCards from '~/components/pages/app/proposals/proposalCards'
 
 const Proposals = () => {
   const [openCreateProposal, setOpenCreateProposal] = useState(false)
+  const [openCreateGrantProposal, setOpenCreateGrantProposal] = useState(false)
   const [viewProposal, setViewProposal] = useState(false)
   const [proposalID, setProposalID] = useState(0)
 
   return (
     <Page>
       <div className='w-full text-vdao-dark'>
-        <OperationalProposals setOpenCreateProposal={setOpenCreateProposal} />
+        <OperationalProposals {...{ setOpenCreateProposal, setOpenCreateGrantProposal }} />
+
         <EnforceAuth>
           <ProposalCards setViewProposal={setViewProposal} setProposalID={setProposalID} />
 
@@ -26,7 +29,7 @@ const Proposals = () => {
           </div>
 
           {openCreateProposal && <CreateNewProposal show={openCreateProposal} close={() => setOpenCreateProposal(false)} />}
-
+          {openCreateGrantProposal && <CreateGrant show={openCreateGrantProposal} close={() => setOpenCreateGrantProposal(false)} />}
           {viewProposal && <ViewProposal show={viewProposal} proposalID={proposalID} close={() => setViewProposal(false)} />}
         </EnforceAuth>
       </div>

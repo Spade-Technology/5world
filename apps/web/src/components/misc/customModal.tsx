@@ -15,29 +15,14 @@ type ModalProps = {
 }
 
 const CustomModal = ({ show, close, children, heading, modalMarginTop, padding, removeCloseIcon, externalStyle, canExit = true }: ModalProps) => {
-  // const ref = useRef<HTMLInputElement>(null)
-
-  // useEffect(() => {
-  //   const muf = (e: any) => {
-  //     if (ref.current && !ref.current.contains(e.target)) {
-  //       close()
-  //     }
-  //   }
-  //   document.addEventListener('mousedown', muf)
-  // }, [ref])
-
   return (
     <div className={`fixed top-0 left-0 bottom-0 flex h-[100vh] w-full items-center justify-center transition-all ease-in-out ${show ? 'visible z-50 opacity-100' : 'invisible opacity-0'}`}>
       <div className={`absolute -z-10 h-full w-full bg-black bg-opacity-60 backdrop-blur-sm backdrop-opacity-0 transition-all ${show && 'backdrop-opacity-100'}`} onClick={canExit && close} />
-      {/* <div
-      className={`${
-        show ? 'block' : 'hidden'
-      } fixed top-0 left-0 z-50 mx-auto h-full w-full overflow-auto backdrop-brightness-50 `}
-    > */}
+
       <div
         className={`${modalMarginTop ? modalMarginTop : 'md:my-[100px]'} ${externalStyle} ${
           padding ? padding : 'p-6 md:p-[30px] md:pl-[50px]'
-        } hide-scrollbar  h-auto max-w-[390px] overflow-auto rounded-[20px]  bg-white md:max-h-[600px] md:max-w-[1140px]`}
+        } hide-scrollbar  h-auto max-w-[390px] overflow-auto rounded-[20px]  bg-white md:max-h-[80vh] md:max-w-[1140px]`}
       >
         <div className='flex justify-between'>
           <div>{heading && <div className='pt-5 font-heading text-[26px] font-medium text-vdao-dark md:text-3xl'>{heading}</div>}</div>

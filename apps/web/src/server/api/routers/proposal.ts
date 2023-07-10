@@ -7,9 +7,7 @@ import { Address, decodeEventLog } from 'viem'
 import { TRPCError } from '@trpc/server'
 import { currentContracts } from '~/config/contracts'
 import { log } from 'console'
-import { wagmiConfig } from '~/components/web3context'
 
-console.log(wagmiConfig)
 const includeZod = z
   .object({
     pod: z.boolean().optional(),

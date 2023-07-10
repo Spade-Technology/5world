@@ -10,9 +10,10 @@ import PolygonIcon from 'public/icons/stewards/polygon.svg'
 
 type Props = {
   setOpenCreateProposal: Dispatch<SetStateAction<boolean>>
+  setOpenCreateGrantProposal: Dispatch<SetStateAction<boolean>>
 }
 
-const OperationalProposals = ({ setOpenCreateProposal }: Props) => {
+const OperationalProposals = ({ setOpenCreateProposal, setOpenCreateGrantProposal }: Props) => {
   const router = useRouter()
   const { data: siwe } = useSession()
   const [dropDownOn, setDropDownOn] = useState(false)
@@ -54,11 +55,20 @@ const OperationalProposals = ({ setOpenCreateProposal }: Props) => {
               text='Normal Proposal'
               className='w-full'
               onClick={() => {
-                setOpenCreateProposal(true)
+                setOpenCreateGrantProposal(false)
                 setDropDownOn(false)
+                setOpenCreateProposal(true)
               }}
             />
-            <PrimaryButton text='Grant Proposal' className='w-full' />
+            <PrimaryButton
+              text='Grant Proposal'
+              className='w-full'
+              onClick={() => {
+                setOpenCreateProposal(false)
+                setDropDownOn(false)
+                setOpenCreateGrantProposal(true)
+              }}
+            />
           </div>
         </div>
         <div className='h-fit w-fit  cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white'>

@@ -6,7 +6,7 @@ import { SupporterDetails } from './details'
 import { useProposalRead } from '~/hooks/web3/useProposal'
 import { monthNames } from '~/utils/date'
 import DummyIcon from 'public/icons/pods/icon1.svg'
-import { DropdownPrimaryButton } from '~/styles/shared/buttons/PrimaryButton'
+
 import ViewsIcon from 'public/icons/proposal/viewsIcon.svg'
 import LikedIcon from 'public/icons/proposal/liked.svg'
 import DisLikedIcon from 'public/icons/proposal/disLiked.svg'
@@ -15,6 +15,7 @@ import PolygonIcon from 'public/icons/stewards/polygon.svg'
 import TenderlyIcon from 'public/icons/proposal/tenderly.svg'
 import { api } from '~/utils/api'
 import { useRouter } from 'next/router'
+import PrimaryButton, { DropdownPrimaryButton } from '~/styles/shared/buttons/primaryButton'
 
 type ViewProposalProps = {
   show: boolean
@@ -27,8 +28,6 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   const { data: proposal } = useProposalRead(proposalID)
   const [dropDownOn, setDropDownOn] = useState(false)
   const [btnStatus, setBtnStatus] = useState('Votes')
-
-  console.log(proposal)
 
   return (
     <CustomModal show={show} close={close} externalStyle={'w-full custom-scrollbar md:mx-20 lg:mx-10 xl:mx-auto '}>
@@ -80,9 +79,11 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                     icon={btnStatus === 'Vote for proposal' ? LikedIcon : btnStatus === 'Vote against proposal' ? DisLikedIcon : btnStatus === 'Abstain' ? AbstainIcon : PolygonIcon}
                     dropDown
                   />
-                  {/* {dropDownOn && (
-                  )} */}
-                  <div style={{transition: '0.2s ease-in', height: dropDownOn ? '120px' : '0px'}} className={`float-right overflow-hidden mx-auto mt-1 flex  max-w-[1130px] flex-col justify-end gap-[1px]`}>
+
+                  <div
+                    style={{ transition: '0.2s ease-in', height: dropDownOn ? '120px' : '0px' }}
+                    className={`float-right mx-auto mt-1 flex max-w-[1130px]  flex-col justify-end gap-[1px] overflow-hidden`}
+                  >
                     <DropdownPrimaryButton
                       text='Vote for proposal'
                       className='w-full hover:bg-green-200'
@@ -149,87 +150,8 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   )
 }
 
-const ProposalDetails = () => {
-  return (
-    <div className='pt-11 font-body text-lg font-normal leading-[22px] text-black'>
-      The Governance Facilitator(s) and the Protocol Engineering Core Unit have placed an urgent out-of-schedule executive proposal into the voting system. MKR Holders should vote for this proposal if
-      they support the following alterations to the Maker Protocol.
-      <br />
-      <br />
-      If you are new to voting in the Maker Protocol, please see the voting guide to learn how voting works, and this wallet setup guide to set up your wallet to vote.
-      <br />
-      <br />
-      Executive Summary
-      <br />
-      If this executive proposal passes, the following changes will occur within the Maker Protocol:
-      <br />
-      <br />
-      Urgent Parameter Changes to MATIC-A, LINK-A, YFI-A, renBTC-A, and MANA-A Vaults, as detailed below.
-      <br />
-      Voting for this executive proposal will place your MKR in support of the changes and additions outlined above.
-      <br />
-      <br />
-      Unless otherwise noted, the changes and additions listed above are subject to the GSM Pause Delay. This means that if this executive proposal passes, the changes and additions listed above will
-      only become active in the Maker Protocol after the GSM Pause Delay has expired. The GSM Pause Delay is currently set to 48 hours.
-      <br />
-      <br />
-      If this executive proposal does not pass within 30 days, then it will expire and can no longer have any effect on the Maker Protocol.
-      <br />
-      <br />
-      Urgent Collateral Parameter Proposal Details
-      <br />
-      As per this successful urgent signal request, the following parameter changes will take place if this out-of-schedule executive proposal passes. To read more on the process for urgent responses,
-      please see MIP24: Emergency Response.
-      <br />
-      <br />
-      MATIC-A Changes
-      <br />
-      Reduce the MATIC-A Maximum Debt Ceiling (line) by 10 million DAI from 20 million DAI to 10 million DAI.
-      <br />
-      <br />
-      LINK-A Changes
-      <br />
-      Reduce the LINK-A Maximum Debt Ceiling (line) by 20 million DAI from 25 million DAI to 5 million DAI.
-      <br />
-      <br />
-      YFI-A Changes
-      <br />
-      Reduce the YFI-A Maximum Debt Ceiling (line) by 7 million DAI from 10 million DAI to 3 million DAI.
-      <br />
-      <br />
-      renBTC-A Changes
-      <br />
-      Reduce the renBTC-A Maximum Debt Ceiling (line) by 10 million DAI from 10 million DAI to 0.
-      <br />
-      <br />
-      MANA-A Changes
-      <br />
-      Reduce the MANA-A Maximum Debt Ceiling (line) by 7 million DAI from 10 million DAI to 3 million DAI.
-      <br />
-      Increase the MANA-A Stability Fee by 42.5% from 7.5% to 50%.
-      <br />
-      Increase the MANA-A Liquidation Penalty (chop) by 17% from 13% to 30%.
-      <br />
-      <br />
-      Review
-      <br />
-      Community debate on these topics can be found on the MakerDAO Governance forum. Please review any linked threads to inform your position before voting.
-      <br />
-      <br />
-      Additionally, these changes may have been discussed further in recent Governance calls. Video for these calls is available to review.
-      <br />
-      <br />
-      Resources
-      <br />
-      Additional information about the Governance process can be found in the Governance section of the MakerDAO community portal.
-      <br />
-      <br />
-      To participate in future Governance calls, please join us every Thursday at 17:00 UTC.
-      <br />
-      <br />
-      To add current and upcoming votes to your calendar, please see the MakerDAO Public Events Calendar.
-    </div>
-  )
+const ProposalDetails = ({ proposal }: { proposal: any }) => {
+  return <div className='pt-11 font-body text-lg text-black'>{proposal?.description}</div>
 }
 
 const ActionDetails = ({ proposal }: { proposal: any }) => {
@@ -246,61 +168,21 @@ const ActionDetails = ({ proposal }: { proposal: any }) => {
 
   return (
     <div className='pt-2 font-body text-lg text-black'>
-      <DropdownPrimaryButton text='' icon={TenderlyIcon} className='my-5' />
-      Action 0:
-      <br />
-      Calling Approve on 0x1234.....7890 using parameters:
-      <br />
-      <br />
-      Spender: 0x00000000000000000000000
-      <br />
-      Amount: 1234567890
-      <br />
-      Calldata:
-      <br />
-      0x0000000000000000000000000000000000000000 000000000000000000000000000000000000000000 000000000000000000000000000000000000000000 0000000000000000000000000000000000000
-      <br />
-      <br />
-      Action 2:
-      <br />
-      Calling Approve on 0x1234.....7890 using parameters:
-      <br />
-      <br />
-      Spender: 0x00000000000000000000000
-      <br />
-      Amount: 1234567890
-      <br />
-      Calldata:
-      <br />
-      0x0000000000000000000000000000000000000000 000000000000000000000000000000000000000000 000000000000000000000000000000000000000000 0000000000000000000000000000000000000
-      <br />
-      <br />
-      Action 3:
-      <br />
-      Calling Approve on 0x1234.....7890 using parameters:
-      <br />
-      <br />
-      Spender: 0x00000000000000000000000
-      <br />
-      Amount: 1234567890
-      <br />
-      Calldata:
-      <br />
-      0x0000000000000000000000000000000000000000 000000000000000000000000000000000000000000 000000000000000000000000000000000000000000 0000000000000000000000000000000000000
-      <br />
-      <br />
-      Action 4:
-      <br />
-      Calling Approve on 0x1234.....7890 using parameters:
-      <br />
-      <br />
-      Spender: 0x00000000000000000000000
-      <br />
-      Amount: 1234567890
-      <br />
-      Calldata:
-      <br />
-      0x0000000000000000000000000000000000000000 000000000000000000000000000000000000000000 000000000000000000000000000000000000000000 0000000000000000000000000000000000000
+      {proposal?.spells.map((spell: any, idx: number) => (
+        <div className='!text-black'>
+          <div>Action {idx + 1}:</div>
+          <PrimaryButton text='' icon={TenderlyIcon} className='my-5' onClick={() => simulateProposal(idx)} />
+          <br />
+          <div className='font-bold'>
+            Calling {spell} Using {proposal?.spellValues[idx].toString()} Wei
+          </div>
+          <br />
+          <div className='font-bold'>and Calldata:</div>
+          <div>{proposal?.spellCalldatas[idx]}</div>
+          <br />
+          <br />
+        </div>
+      ))}
     </div>
   )
 }
