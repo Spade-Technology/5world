@@ -38,6 +38,23 @@ export function useProposal(id: number, ids: number[], include: ProposalInclude 
   return { proposalRead, proposalReads }
 }
 
+export function useProposalAction(id: number) {
+  // @param support The support value for the vote. 0=against, 1=for, 2=abstain
+  const castVote = (support: number) =>
+    useContractWrite({
+      address: currentContracts.proxiedVDao as Address,
+      abi: VDAOImplementation,
+      functionName: 'vote',
+      args: [id, support],
+    })
+
+  const voteFor = () => castVote(1)
+  const voteAgainst = () => castVote(0)
+  const voteAbstain = () => castVote(2)
+
+  return { voteFor, voteAgainst, voteAbstain }
+}
+
 export function useCreateProposal() {
   const mutation = api.proposal.createProposal.useMutation()
   const [isLoading, setIsLoading] = useState(false)
