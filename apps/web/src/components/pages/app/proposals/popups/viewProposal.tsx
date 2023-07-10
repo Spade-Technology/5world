@@ -29,8 +29,6 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   const [dropDownOn, setDropDownOn] = useState(false)
   const [btnStatus, setBtnStatus] = useState('Votes')
 
-  console.log(proposal)
-
   const proposalStatus = proposal?.canceled ? 'Canceled' : proposal?.executed ? 'Executed' : proposal?.vetoed ? 'Vetoed' : 'Active'
   return (
     <CustomModal show={show} close={close} externalStyle={'w-full custom-scrollbar md:mx-20 lg:mx-10 xl:mx-auto '}>

@@ -66,11 +66,39 @@ export const proposalRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input: { ids, include }, ctx: { prisma } }) => {
-      const proposals = await prisma.proposal.findMany({
+      const web2Proposals = await prisma.proposal.findMany({
         ...(ids && { where: { id: { in: ids } } }),
         include: include,
         take: 10,
       })
+
+      const proposalValues = await readContracts({
+        contracts: web2Proposals.map(proposal => ({
+          abi: VDAOImplementation as any,
+          address: currentContracts.proxiedVDao as Address,
+          functionName: 'proposals',
+          args: [proposal.id],
+        })),
+      })
+
+      const argkeys: string[] = ['id', 'proposer', 'proposalThreshold', 'eta', 'startBlock', 'endBlock', 'forVotes', 'againstVotes', 'abstainVotes', 'canceled', 'executed', 'vetoed']
+
+      const proposals = web2Proposals.map((proposal, idx) => {
+        const web3Proposal = {} as any
+
+        for (let i = 0; i < argkeys.length; i++) {
+          const key = argkeys[i] as string
+
+          const value = proposalValues[idx]?.result?.[i]
+
+          if (value === undefined) continue
+
+          web3Proposal[key] = value
+        }
+
+        return { ...web3Proposal, ...proposal }
+      })
+
       if (!proposals || proposals.length === 0) throw new Error('Proposals not found')
       return proposals
     }),
