@@ -331,7 +331,7 @@ export function HomeIntroComponent() {
   return (
     <Section className='mx-auto mt-[34px] flex max-w-[1215px] flex-col items-center gap-[31px] md:mt-[140px] lg:flex-row lg:items-start'>
       <div className='z-10 flex flex-col px-6 md:w-11/12 lg:max-w-[514px]'>
-        <div className='max-w-[418px] font-heading text-[32px] font-medium leading-8 text-vdao-dark md:text-[46px] md:leading-[52px] '>It’s time to step out of reaction mode.</div>
+        <div className='font-heading text-[32px] font-medium leading-8 text-vdao-dark md:text-[46px] md:leading-[52px] lg:max-w-[418px] '>It’s time to step out of reaction mode.</div>
         <div className=' mt-[21px] font-body text-lg font-normal leading-[22px] text-vdao-dark md:mt-[35px]'>
           <b>Out of fear, humanity keeps looking for new ways to control our ecosystems.</b>
           <ul className='list-disc p-5 pl-5'>
