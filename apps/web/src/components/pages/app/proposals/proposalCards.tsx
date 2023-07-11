@@ -24,41 +24,61 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
   const [updatedproposals, setUpdatedProposals] = useState<any>([])
   const [proposalsType, setProposalsType] = useState('all')
   const { data } = useProposalReads({ include: { author: true, pod: true } })
+  const [updatedData, setUpdatedData] = useState<any>([])
   const itemsPerPage = 3
 
+  useEffect(() => {
+    if (proposalsType === 'closed') {
+      const newData = data?.filter((proposal: any, idx: any) => {
+        return proposal?.vetoed
+      })
+      setUpdatedData(newData)
+    } else if (proposalsType === 'active') {
+      const newData = data?.filter((proposal: any, idx: any) => {
+        return !proposal?.canceled && !proposal?.executed && !proposal?.vetoed
+      })
+      setUpdatedData(newData)
+    } else {
+      setUpdatedData(data)
+    }
+  }, [proposalsType])
   /** The following two useEffects are for Pagenation functionality. */
   useEffect(() => {
-    if (data) {
+    if (updatedData) {
       let pageCountArr = []
       let count = 0
-      for (let i = 0; i < data?.length; i++) {
+      for (let i = 0; i < updatedData?.length; i++) {
         if ((i + 1) % itemsPerPage === 0) {
           count = count + 1
           pageCountArr.push(count)
         }
       }
 
-      if (data.length % itemsPerPage !== 0) {
+      if (updatedData.length % itemsPerPage !== 0) {
         pageCountArr.push(count + 1)
       }
 
       setPageNumbers(pageCountArr)
+    } else {
+      setPageNumbers([])
     }
-  }, [data])
+  }, [updatedData])
 
   useEffect(() => {
-    if (pageCount && data) {
+    if (pageCount && updatedData) {
       let updatedBlogsArr = []
       const startBlog = itemsPerPage * (pageCount - 1)
-      const endBlog = (pageCount - 1) * itemsPerPage + 3 <= data.length ? (pageCount - 1) * itemsPerPage + 3 : data.length
+      const endBlog = (pageCount - 1) * itemsPerPage + 3 <= updatedData.length ? (pageCount - 1) * itemsPerPage + 3 : updatedData.length
 
       for (let i = startBlog; i < endBlog; i++) {
-        updatedBlogsArr.push(data[i])
+        updatedBlogsArr.push(updatedData[i])
       }
 
       setUpdatedProposals(updatedBlogsArr)
+    } else {
+      setUpdatedProposals([])
     }
-  }, [pageCount, data])
+  }, [pageCount, updatedData])
 
   return (
     <div className='mx-auto w-full bg-vdao-deep px-6 pt-[63px]'>
@@ -89,9 +109,9 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
         </div>
 
         <div className='mt-[15px]  md:mx-0 '>
-          {updatedproposals?.map((proposal: any, idx: number) => {
+          {updatedproposals && updatedproposals.length > 0 ? updatedproposals?.map((proposal: any, idx: number) => {
             return <Card proposal={proposal} key={idx} setViewProposal={setViewProposal} setProposalID={setProposalID} />
-          })}
+          }) : <div className='text-white p-10 text-3xl'>No proposals available</div>}
         </div>
 
         <PageNation pageNumbers={pageNumbers} pageCount={pageCount} setPageCount={setPageCount} web3 />

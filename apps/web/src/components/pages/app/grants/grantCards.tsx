@@ -24,8 +24,6 @@ type GrantProps = {
 const GrantCards = ({ setViewDetails }: Props) => {
   const [grant, setGrant] = useState({})
   const router = useRouter()
-  console.log('routerInfo', router, router.query, typeof parseFloat(router.query.id))
-
   const [pageCount, setPageCount] = useState(1)
   const [pageNumbers, setPageNumbers] = useState<any>([])
   const [updatedRounds, setUpdatedRounds] = useState<any>([])
@@ -72,7 +70,6 @@ const GrantCards = ({ setViewDetails }: Props) => {
       const details = GrantDetails.filter(grant => {
         return id === grant.id
       })
-      console.log('details', details[0])
       setGrant(details[0])
     } else {
       setGrant('')
@@ -85,17 +82,17 @@ const GrantCards = ({ setViewDetails }: Props) => {
         {grant ? (
           <CurrentRound grant={grant} />
         ) : (
-          updatedRounds.map((grant:any, idx:number) => {
+          updatedRounds.map((grant: any, idx: number) => {
             return <CurrentRound grant={grant} key={idx} />
           })
         )}
-      <Pagination web3 pageNumbers={pageNumbers} pageCount={pageCount} setPageCount={setPageCount} />
+        {!grant && <Pagination web3 pageNumbers={pageNumbers} pageCount={pageCount} setPageCount={setPageCount} />}
 
         {grant && (
           <div>
             <div id='currentGrants' className='mx-6 mt-20 flex max-w-[1280px] justify-between font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'>
               <div>Current Grants</div>
-              <div className='text-white underline underline-offset-4 opacity-75 cursor-pointer' onClick={() => router.push('/app/grants')}>
+              <div className='cursor-pointer text-white underline underline-offset-4 opacity-75' onClick={() => router.push('/app/grants')}>
                 Past Rounds
               </div>
             </div>

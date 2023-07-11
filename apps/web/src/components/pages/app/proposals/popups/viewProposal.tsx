@@ -30,7 +30,6 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   const [dropDownOn, setDropDownOn] = useState(false)
   const [btnStatus, setBtnStatus] = useState('Votes')
   const { voteFor, voteAgainst, voteAbstain } = useProposalAction(proposalID)
-  // .... Button onClick={voteFor} ....
 
   const proposalStatus = proposal?.canceled ? 'Canceled' : proposal?.executed ? 'Executed' : proposal?.vetoed ? 'Vetoed' : 'Active'
 
