@@ -1,17 +1,20 @@
+import Image from 'next/image'
+import UploadImage from 'public/illustrations/grants/uploadImage.svg'
 import CustomModal from '~/components/misc/customModal'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
-import UploadImage from 'public/illustrations/grants/uploadImage.svg'
-import Image from 'next/image'
 // import Calendar from 'react-calendar'
-import { useState } from 'react'
-import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
-import { Button } from '~/components/ui/button'
 import { cn } from '@/lib/utils'
-import { CalendarIcon } from 'lucide-react'
-import { format } from 'date-fns'
-import { Calendar } from '~/components/ui/calendar'
-import { DropzoneOptions, useDropzone } from 'react-dropzone'
 import { notification } from 'antd'
+import { format } from 'date-fns'
+import { CalendarIcon } from 'lucide-react'
+import { useState } from 'react'
+import { DropzoneOptions, useDropzone } from 'react-dropzone'
+import { Button } from '~/components/ui/button'
+import { Calendar } from '~/components/ui/calendar'
+import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
+import { useCreateProposal } from '~/hooks/web3/useProposal'
+import { title } from 'process'
+import { Address, useAccount } from 'wagmi'
 
 type CreateGrantProps = {
   show: boolean
@@ -24,6 +27,8 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
   const [matchingAmount, setMatchingAmount] = useState<string>('')
   const [date, setDate] = useState<Date>()
   const [description, setDescription] = useState<string>('')
+  const { createGrantProposal, generateGrantIPFSHash } = useCreateProposal()
+  const { address } = useAccount()
 
   const dropzoneParams: DropzoneOptions = { accept: { 'image/*': [] }, multiple: false, maxSize: 4194304 }
   const {
@@ -37,7 +42,7 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
     acceptedFiles: { 0: theme },
   } = useDropzone(dropzoneParams)
 
-  const submit = () => {
+  const submit = async () => {
     const requiredFields = { name, tokenAddress, matchingAmount, date, description, logo, theme }
     const emptyFields = Object.keys(requiredFields).filter(field => !(requiredFields as any)[field])
 
@@ -54,6 +59,20 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
         description: 'Invalid token address',
         placement: 'bottomRight',
       })
+
+    const hash = await generateGrantIPFSHash.mutateAsync({
+      authorAddress: address as Address,
+
+      name: name,
+      description,
+      rules: description,
+      amount: matchingAmount,
+      token: tokenAddress,
+      image: logo?.toString() || '',
+      theme: theme?.toString() || '',
+    })
+
+    console.log(hash)
   }
 
   return (
@@ -124,7 +143,7 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
                   <Image src={URL.createObjectURL(logo)} alt='upload' className='mx-auto' width={300} height={300} />
                 </div>
               ) : (
-                <div className='mt-5 md:px-16 rounded-[10px] py-5 text-center outline-dashed md:py-9' {...getLogoRootProps()}>
+                <div className='mt-5 rounded-[10px] py-5 text-center outline-dashed md:px-16 md:py-9' {...getLogoRootProps()}>
                   <input {...getLogoInputProps()} />
                   <Image src={UploadImage} alt='upload' className='mx-auto' />
                   <div className='py-3 font-medium md:text-[22px]'>Drop your PNG or JPG file here!</div>
@@ -140,7 +159,7 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
                   <Image src={URL.createObjectURL(theme)} alt='upload' className='mx-auto' width={300} height={300} />
                 </div>
               ) : (
-                <div className='mt-5 md:px-16 rounded-[10px] px-20 py-5 text-center outline-dotted md:py-9' {...getThemeRootProps()}>
+                <div className='mt-5 rounded-[10px] px-20 py-5 text-center outline-dotted md:px-16 md:py-9' {...getThemeRootProps()}>
                   <input {...getThemeInputProps()} />
                   <Image src={UploadImage} alt='upload' className='mx-auto' />
                   <div className='py-3 font-medium md:text-[22px]'>Drop your PNG or JPG file here!</div>
@@ -175,7 +194,7 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
         </div>
 
         <div className='pt-[20px] md:pt-10'>
-          <PrimaryButton text='Submit' className='float-right py-[5px] px-[35px] text-xl font-medium' onClick={() => submit()} />
+          <PrimaryButton text='Submit' className='float-right py-[5px] px-[35px] text-xl font-medium' onClick={submit} />
         </div>
       </div>
     </CustomModal>

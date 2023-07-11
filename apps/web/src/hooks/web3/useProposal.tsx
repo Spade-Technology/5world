@@ -44,7 +44,7 @@ export function useProposalAction(id: number) {
     await writeContract({
       address: currentContracts.proxiedVDao as Address,
       abi: VDAOImplementation,
-      functionName: 'vote',
+      functionName: 'castVote',
       args: [id, support],
     })
 
@@ -56,7 +56,11 @@ export function useProposalAction(id: number) {
 }
 
 export function useCreateProposal() {
-  const mutation = api.proposal.createProposal.useMutation()
+  const createProposalMutation = api.proposal.createProposal.useMutation()
+
+  const createGrantProposalMutation = api.proposal.createGrantProposal.useMutation()
+  const generateGrantIPFSHash = api.proposal.generateIPFSHash.useMutation()
+
   const [isLoading, setIsLoading] = useState(false)
 
   const createProposal = async ({
@@ -73,7 +77,7 @@ export function useCreateProposal() {
     description: string
     title: string
     authorAddress: string
-  }): Promise<({ data: Proposal & {} } & InferReturn<typeof mutation.mutate>) | void> => {
+  }): Promise<({ data: Proposal & {} } & InferReturn<typeof createProposalMutation.mutate>) | void> => {
     setIsLoading(true)
     // check that calldatas, targets, and values are all the same length
     if (calldatas.length !== targets.length || targets.length !== values.length) {
@@ -120,7 +124,7 @@ export function useCreateProposal() {
 
     setIsLoading(false)
 
-    return mutation.mutateAsync(...new_args).then(el => {
+    return createProposalMutation.mutateAsync(...new_args).then(el => {
       notification.success({
         message: 'Proposal created',
         description: 'Your proposal has been created',
@@ -129,5 +133,63 @@ export function useCreateProposal() {
     }) as any
   }
 
-  return { createProposal, mutation, isLoading: isLoading || mutation.isLoading }
+  const createGrantProposal = async ({
+    authorAddress,
+    description,
+    title,
+
+    grantTitle,
+    grantDescription,
+    grantRules,
+    grantAmount,
+    grantToken,
+    grantImage,
+    grantTheme,
+  }: {
+    authorAddress: string
+    description: string
+    title: string
+
+    grantTitle: string
+    grantDescription: string
+    grantRules: string
+    grantAmount: string
+    grantToken: string
+    grantImage: string
+    grantTheme: string
+  }) => {
+    setIsLoading(true)
+
+    const hash = await generateGrantIPFSHash
+      .mutateAsync({
+        name: grantTitle,
+        description: grantDescription,
+        rules: grantRules,
+        amount: grantAmount,
+        token: grantToken,
+        image: grantImage,
+        theme: grantTheme,
+        authorAddress,
+      })
+      .catch(e => {
+        setIsLoading(false)
+        console.error(e)
+        return notification.error({
+          message: 'Error creating proposal',
+          description: 'Failed to generate IPFS hash',
+        })
+      })
+
+    console.log(hash)
+
+    setIsLoading(false)
+  }
+
+  return {
+    createProposal,
+    createProposalMutation,
+    createGrantProposal,
+    generateGrantIPFSHash,
+    isLoading: isLoading || createProposalMutation.isLoading || createGrantProposalMutation.isLoading || generateGrantIPFSHash.isLoading,
+  }
 }

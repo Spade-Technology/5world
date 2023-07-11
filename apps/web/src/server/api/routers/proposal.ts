@@ -112,15 +112,6 @@ export const proposalRouter = createTRPCRouter({
         podId: z.number().optional(),
         transactionHash: z.string(),
         authorAddress: z.string(),
-
-        grantName: z.string(),
-        grantDescription: z.string(),
-        grantRules: z.string(),
-        grantToken: z.string(),
-        grantAmount: z.string(),
-        grantImage: z.string(),
-        grantTheme: z.string(),
-
         include: includeZod,
 
         spells: z.array(z.string()).max(10, 'Too many spells'),
@@ -130,25 +121,7 @@ export const proposalRouter = createTRPCRouter({
     )
     .mutation(
       async ({
-        input: {
-          podId,
-          authorAddress,
-          transactionHash,
-          include,
-          title,
-          description,
-          picture,
-          spells,
-          spellValues,
-          spellCalldatas,
-          grantName,
-          grantDescription,
-          grantRules,
-          grantToken,
-          grantAmount,
-          grantImage,
-          grantTheme,
-        },
+        input: { podId, authorAddress, transactionHash, include, title, description, picture, spells, spellValues, spellCalldatas },
         ctx: {
           prisma,
           session: { address },
@@ -179,25 +152,13 @@ export const proposalRouter = createTRPCRouter({
           throw new TRPCError({ code: 'BAD_REQUEST', message: 'Transaction not sent to VDAO' })
 
         // all good
+
         const newProposal = await prisma.proposal.create({
           data: {
             id: Number((txEvent.args as any).id),
             title,
             description,
             picture,
-
-            grant: {
-              create: {
-                id: Number((txEvent.args as any).id),
-                title: grantName,
-                description: grantDescription,
-                rules: grantRules,
-                token: grantToken,
-                amount: BigInt(grantAmount),
-                logo: grantImage,
-                theme: grantTheme,
-              },
-            },
 
             spells,
             spellValues,
@@ -218,6 +179,49 @@ export const proposalRouter = createTRPCRouter({
         return newProposal
       },
     ),
+
+  generateIPFSHash: protectedProcedure
+    .input(
+      z.object({
+        authorAddress: z.string(),
+        name: z.string(),
+        description: z.string(),
+        rules: z.string(),
+        token: z.string(),
+        amount: z.string(),
+        image: z.string(),
+        theme: z.string(),
+      }),
+    )
+    .mutation(async ({ input: { authorAddress, name, description, rules, token, amount, image, theme }, ctx: { prisma } }) => {
+      const ipfs = await fetch('https://api.pinata.cloud/pinning/pinJSONToIPFS', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: process.env.PINATA_PRIVATE_KEY || '',
+        },
+        body: JSON.stringify({
+          content: {
+            name: name,
+            rules: rules,
+            description: description,
+            image: image,
+            theme: theme,
+
+            external_url: 'https://vdao.app',
+
+            token: token,
+            amount: amount,
+
+            author: authorAddress,
+          },
+        }),
+      })
+
+      console.log('ipfs', await ipfs.json())
+
+      return ipfs
+    }),
 
   createProposal: protectedProcedure
     .input(
