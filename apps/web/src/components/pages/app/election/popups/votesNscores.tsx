@@ -1,9 +1,9 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import CustomModal from '~/components/misc/customModal'
-import PageNation from '~/components/misc/pageNation'
 import { PraiseInfo, VotesInfo } from './votesNscoresInfo'
 import { useUserRead, useUserReads } from '~/hooks/web3/useUser'
 import { useAccount } from 'wagmi'
+import Pagination from '~/components/misc/pageNation'
 
 type Props = {
   show: boolean
@@ -27,7 +27,7 @@ const VotesNscores = ({ show, close }: Props) => {
 
   console.log('data', data)
 
-  /** The following two useEffects are for Pagenation functionality. */
+  /** The following two useEffects are for Pagination functionality. */
   useEffect(() => {
     const info = delegated ? VotesInfo : PraiseInfo
     if (info) {
@@ -88,7 +88,7 @@ const VotesNscores = ({ show, close }: Props) => {
           <div></div>
           <div></div>
         </div>
-        <PageNation pageNumbers={pageNumbers} pageCount={pageCount} setPageCount={setPageCount} outerClass='justify-center' innerClass='py-0' />
+        <Pagination pageNumbers={pageNumbers} pageCount={pageCount} setPageCount={setPageCount} outerClass='justify-center' innerClass='py-0' />
       </div>
     </CustomModal>
   )

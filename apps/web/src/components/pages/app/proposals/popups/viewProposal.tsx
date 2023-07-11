@@ -3,8 +3,9 @@ import CustomModal from '~/components/misc/customModal'
 import ProfileCard from '~/components/misc/profileCard'
 import Image from 'next/image'
 import { SupporterDetails } from './details'
-import { useProposalRead } from '~/hooks/web3/useProposal'
+import { useProposalRead, useProposalAction } from '~/hooks/web3/useProposal'
 import { monthNames } from '~/utils/date'
+import { shortenText } from '~/utils/helpers'
 import DummyIcon from 'public/icons/pods/icon1.svg'
 
 import ViewsIcon from 'public/icons/proposal/viewsIcon.svg'
@@ -28,8 +29,38 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   const { data: proposal } = useProposalRead(proposalID)
   const [dropDownOn, setDropDownOn] = useState(false)
   const [btnStatus, setBtnStatus] = useState('Votes')
+  const { voteFor, voteAgainst, voteAbstain } = useProposalAction(proposalID)
+  // .... Button onClick={voteFor} ....
 
   const proposalStatus = proposal?.canceled ? 'Canceled' : proposal?.executed ? 'Executed' : proposal?.vetoed ? 'Vetoed' : 'Active'
+
+  const votesHandler = (type: string) => {
+    if (type === 'for') {
+      try {
+        voteFor()
+        setBtnStatus('Vote for proposal')
+        setDropDownOn(false)
+      } catch (error) {
+        setBtnStatus('Votes')
+      }
+    } else if (type === 'against') {
+      try {
+        voteAgainst()
+        setBtnStatus('Vote against proposal')
+        setDropDownOn(false)
+      } catch (error) {
+        setBtnStatus('Votes')
+      }
+    } else if (type === 'abstain') {
+      try {
+        voteAbstain()
+        setBtnStatus('Abstain')
+        setDropDownOn(false)
+      } catch (error) {
+        setBtnStatus('Votes')
+      }
+    }
+  }
   return (
     <CustomModal show={show} close={close} externalStyle={'w-full custom-scrollbar md:mx-20 lg:mx-10 xl:mx-auto '}>
       <div className='pb-[30px] font-body text-lg font-normal text-vdao-dark'>
@@ -39,7 +70,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
 
         <div className='grid grid-cols-1 gap-[73px] py-[10px] md:py-5 lg:grid-cols-3'>
           <div className='col-span-2'>
-            <div className='font-heading text-[26px] font-medium leading-9 md:text-[30px]'>{proposal ? proposal.title : 'No title'}</div>
+            <div className='font-heading text-[26px] font-medium leading-9 md:text-[30px]'>{proposal?.title ? shortenText(proposal.title) : 'No title'}</div>
             <div className='grid grid-cols-2 pt-[10px] md:grid-cols-4 md:pt-5'>
               <ProfileCard icon={proposal ? proposal.picture : DummyIcon} name={proposal ? proposal.name : 'Unnamed'} address={proposal?.authorId} />
               <div className={`mt-6 h-fit w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-7 text-lg  font-medium text-vdao-light lg:ml-5`}>{proposalStatus}</div>
@@ -71,12 +102,17 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                   <div className={` pt-1`}>Votes Abstained</div>
                 </div>
               </div>
+
               <div className={` mt-[25px] md:mt-11 `}>
                 <div className='relative'>
                   <DropdownPrimaryButton
                     text={btnStatus}
                     className='h-fit w-full text-center'
-                    onClick={() => setDropDownOn(!dropDownOn)}
+                    onClick={() => {
+                      // if (btnStatus === 'Votes') {
+                        setDropDownOn(!dropDownOn)
+                      // }
+                    }}
                     icon={btnStatus === 'Vote for proposal' ? LikedIcon : btnStatus === 'Vote against proposal' ? DisLikedIcon : btnStatus === 'Abstain' ? AbstainIcon : PolygonIcon}
                     dropDown
                   />
@@ -85,33 +121,9 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                     style={{ transition: '0.2s ease-in', height: dropDownOn ? '120px' : '0px' }}
                     className={`float-right mx-auto mt-1 flex max-w-[1130px]  flex-col justify-end gap-[1px] overflow-hidden`}
                   >
-                    <DropdownPrimaryButton
-                      text='Vote for proposal'
-                      className='w-full hover:bg-green-200'
-                      onClick={() => {
-                        setBtnStatus('Vote for proposal')
-                        setDropDownOn(false)
-                      }}
-                      icon={LikedIcon}
-                    />
-                    <DropdownPrimaryButton
-                      text='Vote against proposal'
-                      className='w-full hover:bg-green-200'
-                      icon={DisLikedIcon}
-                      onClick={() => {
-                        setBtnStatus('Vote against proposal')
-                        setDropDownOn(false)
-                      }}
-                    />
-                    <DropdownPrimaryButton
-                      text='Abstain'
-                      className='w-full hover:bg-green-200'
-                      icon={AbstainIcon}
-                      onClick={() => {
-                        setBtnStatus('Abstain')
-                        setDropDownOn(false)
-                      }}
-                    />
+                    <DropdownPrimaryButton text='Vote for proposal' className='w-full hover:bg-green-200' onClick={() => votesHandler('for')} icon={LikedIcon} />
+                    <DropdownPrimaryButton text='Vote against proposal' className='w-full hover:bg-green-200' icon={DisLikedIcon} onClick={() => votesHandler('against')} />
+                    <DropdownPrimaryButton text='Abstain' className='w-full hover:bg-green-200' icon={AbstainIcon} onClick={() => votesHandler('abstain')} />
                   </div>
                 </div>
               </div>
