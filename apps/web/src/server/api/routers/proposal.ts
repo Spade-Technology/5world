@@ -152,6 +152,7 @@ export const proposalRouter = createTRPCRouter({
           throw new TRPCError({ code: 'BAD_REQUEST', message: 'Transaction not sent to VDAO' })
 
         // all good
+
         const newProposal = await prisma.proposal.create({
           data: {
             id: Number((txEvent.args as any).id),
@@ -178,6 +179,49 @@ export const proposalRouter = createTRPCRouter({
         return newProposal
       },
     ),
+
+  generateIPFSHash: protectedProcedure
+    .input(
+      z.object({
+        authorAddress: z.string(),
+        name: z.string(),
+        description: z.string(),
+        rules: z.string(),
+        token: z.string(),
+        amount: z.string(),
+        image: z.string(),
+        theme: z.string(),
+      }),
+    )
+    .mutation(async ({ input: { authorAddress, name, description, rules, token, amount, image, theme }, ctx: { prisma } }) => {
+      const ipfs = await fetch('https://api.pinata.cloud/pinning/pinJSONToIPFS', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: process.env.PINATA_PRIVATE_KEY || '',
+        },
+        body: JSON.stringify({
+          content: {
+            name: name,
+            rules: rules,
+            description: description,
+            image: image,
+            theme: theme,
+
+            external_url: 'https://vdao.app',
+
+            token: token,
+            amount: amount,
+
+            author: authorAddress,
+          },
+        }),
+      })
+
+      console.log('ipfs', await ipfs.json())
+
+      return ipfs
+    }),
 
   createProposal: protectedProcedure
     .input(

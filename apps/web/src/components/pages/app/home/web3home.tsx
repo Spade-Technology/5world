@@ -269,10 +269,13 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr, data }:
           <Skeleton active={skeletonActive} paragraph={{ rows: 1 }} title={false} className='mt-5 mr-7 font-body text-lg leading-6 md:mr-0 md:w-9/12' loading={skeletonActive}>
             <span>
               {data?.description?.length > 250 ? (
-                <div onClick={() => setOpenProfile(true)} className=''>
-                  {data?.description.substring(0, 250)} <span className=' cursor-pointer text-base text-gray-200 '>...Read more</span>
+                <div className=''>
+                  {data?.description.substring(0, 250)}{' '}
+                  <span onClick={() => setOpenProfile(true)} className=' cursor-pointer text-base text-gray-200 '>
+                    ...Read more
+                  </span>
                 </div>
-              ) : data?.description .length < 250 ? (
+              ) : data?.description.length < 250 ? (
                 data?.description
               ) : (
                 'No Description available'
