@@ -41,7 +41,7 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
     } else {
       setUpdatedData(data)
     }
-  }, [proposalsType])
+  }, [data, proposalsType])
   /** The following two useEffects are for Pagenation functionality. */
   useEffect(() => {
     if (updatedData) {
