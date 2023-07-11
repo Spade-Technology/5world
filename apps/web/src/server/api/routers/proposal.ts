@@ -112,6 +112,15 @@ export const proposalRouter = createTRPCRouter({
         podId: z.number().optional(),
         transactionHash: z.string(),
         authorAddress: z.string(),
+
+        grantName: z.string(),
+        grantDescription: z.string(),
+        grantRules: z.string(),
+        grantToken: z.string(),
+        grantAmount: z.string(),
+        grantImage: z.string(),
+        grantTheme: z.string(),
+
         include: includeZod,
 
         spells: z.array(z.string()).max(10, 'Too many spells'),
@@ -121,7 +130,25 @@ export const proposalRouter = createTRPCRouter({
     )
     .mutation(
       async ({
-        input: { podId, authorAddress, transactionHash, include, title, description, picture, spells, spellValues, spellCalldatas },
+        input: {
+          podId,
+          authorAddress,
+          transactionHash,
+          include,
+          title,
+          description,
+          picture,
+          spells,
+          spellValues,
+          spellCalldatas,
+          grantName,
+          grantDescription,
+          grantRules,
+          grantToken,
+          grantAmount,
+          grantImage,
+          grantTheme,
+        },
         ctx: {
           prisma,
           session: { address },
@@ -158,6 +185,19 @@ export const proposalRouter = createTRPCRouter({
             title,
             description,
             picture,
+
+            grant: {
+              create: {
+                id: Number((txEvent.args as any).id),
+                title: grantName,
+                description: grantDescription,
+                rules: grantRules,
+                token: grantToken,
+                amount: BigInt(grantAmount),
+                logo: grantImage,
+                theme: grantTheme,
+              },
+            },
 
             spells,
             spellValues,
