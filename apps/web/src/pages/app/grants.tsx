@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import Footer from '~/components/layout/footer'
-import Header from '~/components/layout/header'
 import Page from '~/components/layout/page'
 import { EnforceAuth } from '~/components/misc/enforceAuth'
 import GrantCards from '~/components/pages/app/grants/grantCards'

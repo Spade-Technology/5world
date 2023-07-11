@@ -10,6 +10,7 @@ import CreateNewProposal from '~/components/pages/app/proposals/popups/createPro
 import ViewProposal from '~/components/pages/app/proposals/popups/viewProposal'
 import ProposalCards from '~/components/pages/app/proposals/proposalCards'
 
+
 const Proposals = () => {
   const [openCreateProposal, setOpenCreateProposal] = useState(false)
   const [openCreateGrantProposal, setOpenCreateGrantProposal] = useState(false)

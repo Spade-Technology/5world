@@ -1,10 +1,10 @@
 import Image from 'next/image'
-import LeftArrow from 'public/icons/pageNation/leftArrow.svg'
-import RightArrow from 'public/icons/pageNation/rightArrow.svg'
-import DarkLeftAroow from 'public/icons/pageNation/darkLeftArrow.svg'
-import DarkRightArrow from 'public/icons/pageNation/darkRight.svg'
+import LeftArrow from 'public/icons/pagination/leftArrow.svg'
+import RightArrow from 'public/icons/pagination/rightArrow.svg'
+import DarkLeftAroow from 'public/icons/pagination/darkLeftArrow.svg'
+import DarkRightArrow from 'public/icons/pagination/darkRight.svg'
 
-type PageNationProps = {
+type PaginationProps = {
   pageNumbers: any
   pageCount: number
   setPageCount: any
@@ -13,9 +13,9 @@ type PageNationProps = {
   outerClass?: string
 }
 
-const PageNation = ({ pageNumbers, pageCount, setPageCount, web3, outerClass, innerClass }: PageNationProps) => {
+const Pagination = ({ pageNumbers, pageCount, setPageCount, web3, outerClass, innerClass }: PaginationProps) => {
   return (
-    <div className={`flex w-full px-6 ${outerClass ? outerClass : "justify-end"}`}>
+    <div className={`flex w-full px-6 ${outerClass ? outerClass : "justify-end"} ${pageNumbers.length > 1 ? 'none' : "hidden"}`}>
       <div className={`flex justify-center md:justify-end ${innerClass ? '' : 'py-11 md:py-14 '} `}>
         <Image src={web3 ? DarkLeftAroow : LeftArrow} alt='Left Arrow' height={10.61} width={10.61} className='mr-5 cursor-pointer' onClick={() => pageCount > 1 && setPageCount(pageCount - 1)} />
         {pageNumbers.length &&
@@ -44,4 +44,4 @@ const PageNation = ({ pageNumbers, pageCount, setPageCount, web3, outerClass, in
   )
 }
 
-export default PageNation
+export default Pagination
