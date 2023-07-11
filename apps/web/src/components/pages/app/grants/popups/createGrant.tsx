@@ -124,7 +124,7 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
                   <Image src={URL.createObjectURL(logo)} alt='upload' className='mx-auto' width={300} height={300} />
                 </div>
               ) : (
-                <div className='mt-5 h-[300px] w-[300px] rounded-[10px] py-5 text-center outline-dashed md:py-9' {...getLogoRootProps()}>
+                <div className='mt-5 md:px-16 rounded-[10px] py-5 text-center outline-dashed md:py-9' {...getLogoRootProps()}>
                   <input {...getLogoInputProps()} />
                   <Image src={UploadImage} alt='upload' className='mx-auto' />
                   <div className='py-3 font-medium md:text-[22px]'>Drop your PNG or JPG file here!</div>
@@ -140,7 +140,7 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
                   <Image src={URL.createObjectURL(theme)} alt='upload' className='mx-auto' width={300} height={300} />
                 </div>
               ) : (
-                <div className='mt-5 h-[300px] w-[300px] rounded-[10px] px-20 py-5 text-center outline-dotted md:py-9' {...getThemeRootProps()}>
+                <div className='mt-5 md:px-16 rounded-[10px] px-20 py-5 text-center outline-dotted md:py-9' {...getThemeRootProps()}>
                   <input {...getThemeInputProps()} />
                   <Image src={UploadImage} alt='upload' className='mx-auto' />
                   <div className='py-3 font-medium md:text-[22px]'>Drop your PNG or JPG file here!</div>

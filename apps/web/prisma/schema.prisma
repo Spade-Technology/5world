@@ -146,12 +146,20 @@ model GrantProject {
 model Grant {
     id Int @id
 
+    status String @default("proposed")
+
     // Media
     title       String
     description String
     rules       String
-    picture     String @default("")
-    url         String @default("")
+
+    amount BigInt
+    token  String
+
+    logo  String @default("")
+    theme String @default("")
+
+    url String @default("")
 
     Proposal Proposal[]
 

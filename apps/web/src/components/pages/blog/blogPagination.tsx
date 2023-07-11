@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { blogDetails } from './blogDetails'
 import BlogCard from './blogCard'
-import PageNation from '~/components/misc/pageNation'
+import Pagination from '~/components/misc/Pagination'
 
 const BlogPagination = () => {
   const [pageCount, setPageCount] = useState(1)
@@ -10,7 +10,7 @@ const BlogPagination = () => {
 
   const itemsPerPage = 3
 
-  /** The following two useEffects are for Pagenation functionality. */
+  /** The following two useEffects are for Pagination functionality. */
   useEffect(() => {
     if (blogDetails.length) {
       let pageCountArr = []
@@ -52,7 +52,7 @@ const BlogPagination = () => {
             return <BlogCard blog={blog} key={idx} showBorder={idx + 1 < updatedBlogs.length} id={idx} />
           })}
       </div>
-      <PageNation pageNumbers={pageNumbers} pageCount={pageCount} setPageCount={setPageCount} />
+      <Pagination pageNumbers={pageNumbers} pageCount={pageCount} setPageCount={setPageCount} />
     </>
   )
 }
