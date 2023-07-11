@@ -106,8 +106,11 @@ export const Card = ({ setOpenProfile, user }: CardProps) => {
 
         <div onClick={() => setReadMore(!readMore)} className=' cursor-default  pt-5 text-lg font-normal leading-[22px] md:pt-[30px]'>
           {user.description?.length > 150 ? (
-            <div onClick={() => setOpenProfile(user)} className=''>
-              {user.description.substring(0, 150)} <span className=' cursor-pointer text-base text-gray-200 '>...Read more</span>
+            <div className=''>
+              {user.description.substring(0, 150)}{' '}
+              <span onClick={() => setOpenProfile(user)} className=' cursor-pointer text-base text-gray-200 '>
+                ...Read more
+              </span>
             </div>
           ) : (
             user.description

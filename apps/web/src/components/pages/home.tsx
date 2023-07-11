@@ -263,7 +263,9 @@ export function HomeFindYourPlace() {
   return (
     <Section className='mx-auto mt-[101px] flex max-w-[1247px] flex-col items-center gap-5 md:mt-[161px] md:gap-[63px] lg:flex-row'>
       <div className='z-10 flex flex-col px-6 md:w-10/12 md:px-0 lg:max-w-[514px]'>
-        <div className='max-w-[470px] font-heading text-[32px] font-medium leading-[38px] text-vdao-dark md:text-[46px] md:leading-[52px]'>Find your place in the story of planetary regeneration.</div>
+        <div className='font-heading text-[32px] font-medium leading-[38px] text-vdao-dark md:text-[46px] md:leading-[52px] lg:max-w-[470px]'>
+          Find your place in the story of planetary regeneration.
+        </div>
         <div className='mt-5 font-body text-lg font-normal leading-[22px] text-vdao-dark md:mt-[35px]'>
           Welcome to a decentralized community where imagination and science converge to build promising regenerative pathways towards the future.
           <br />
