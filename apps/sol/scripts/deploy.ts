@@ -12,22 +12,28 @@ async function sleep(ms) {
   });
 }
 
+async function getBlockTime() {
+  const block = await ethers.provider.getBlock('latest');
+  return block.timestamp;
+}
+
+// azeazeazeaze
 async function main() {
   const [owner] = await ethers.getSigners();
 
-  const progressBar = new ProgressBar('Deploying contracts [:bar] :percent :etas', {
+  const progressBar = new ProgressBar('Deploying contracts [:bar] :percent :etas || :status', {
     complete: '=',
     incomplete: ' ',
     width: 20,
-    total: 26,
+    total: 27,
   });
 
-  // progressBar.tick({ status: 'Deploying Timelock' });
-  // const Timelock = await ethers.getContractFactory('Timelock');
-  // const timelock = await Timelock.deploy(owner.address, dev ? 120 : 86400);
-  // await timelock.deployed();
-  // progressBar.tick();
-  const timelock: Contract | SignerWithAddress = owner;
+  progressBar.tick({ status: 'Deploying Timelock' });
+  const Timelock = await ethers.getContractFactory('Timelock');
+  const timelock = await Timelock.deploy(owner.address, dev ? 0 : 86400);
+  await timelock.deployed();
+  progressBar.tick();
+  // const timelock: Contract | SignerWithAddress = owner;
 
   progressBar.tick({ status: 'Deploying VDaoToken' });
   const VDao = await ethers.getContractFactory('VDaoToken');
@@ -55,7 +61,29 @@ async function main() {
   );
   await vDAOProxy.deployed();
 
-  if (timelock instanceof Contract) await timelock.setPendingAdmin(vDAOProxy.address);
+
+  // execute transaction
+  if (timelock instanceof Contract) {
+    // setup parameter
+    const target = vDao.address;
+    const value = 0;
+    const signature = "enableTrading()"; // function signature
+    const data = ethers.utils.arrayify(0); // No arguments to pass, so data is 0
+    const eta = Math.floor(await getBlockTime() + 20); // set ETA to now
+
+
+    await timelock.queueTransaction(target, value, signature, data, eta);
+    
+    // push evm forward by 10 seconds if hardhat network is hardhat or localhost
+    progressBar.tick({ status: 'Waiting for timelock tx to be accepted.' });
+    if (hre.network.name === 'hardhat' || hre.network.name === 'localhost') await hre.network.provider.send('evm_increaseTime', [1]);
+    else await sleep(25000);
+
+    // execute transaction
+    await timelock.executeTransaction(target, value, signature, data, eta);
+
+    await timelock.setPendingAdmin(vDAOProxy.address);
+  }
 
   const proxiedVDao = await VDAOImplementation.attach(vDAOProxy.address);
   if (timelock instanceof Contract) await proxiedVDao._initiate();
@@ -90,7 +118,26 @@ async function main() {
   await roundFactory.updateRoundContract(roundImplementation.address);
   progressBar.tick();
 
-  await vDao.enableTrading();
+ 
+
+  const contracts = {
+    timelock: timelock.address,
+    vDao: vDao.address,
+    vDAOImplementation: vDAOImplementation.address,
+    proxiedVDao: proxiedVDao.address,
+    treasury: treasury.address,
+    donationSBT: donationSBT.address,
+    roundImplementation: roundImplementation.address,
+    roundFactory: roundFactory.address,
+  };
+
+  console.log("-- --- --")
+  console.log(`-- vdao has successfully deployed on ${hre.network.name} --`);
+  console.log('you can add the following to your contracts.ts file:');
+  console.log(`${hre.network.name}: ${JSON.stringify(contracts, null, 2)};`);
+  console.log("-- --- --");
+  console.log('Waiting 5 seconds for etherscan to index contracts');
+  console.log("-- --- --");
 
   await sleep(5000);
 
@@ -98,7 +145,7 @@ async function main() {
   progressBar.tick({ status: 'Verifying Timelock' });
   await hre.run('verify:verify', {
     address: timelock.address,
-    constructorArguments: [owner.address, dev ? 120 : 86400],
+    constructorArguments: [owner.address, dev ? 0 : 86400],
   });
 
   progressBar.tick({ status: 'Verifying VDaoToken' });
@@ -150,22 +197,9 @@ async function main() {
   await hre.run('verify:verify', {
     address: roundFactory.address,
     constructorArguments: [],
-  });
+  });  
 
-  const contracts = {
-    timelock: timelock.address,
-    vDao: vDao.address,
-    vDAOImplementation: vDAOImplementation.address,
-    proxiedVDao: proxiedVDao.address,
-    treasury: treasury.address,
-    donationSBT: donationSBT.address,
-    roundImplementation: roundImplementation.address,
-    roundFactory: roundFactory.address,
-  };
 
-  console.log(`-- vdao has successfully deployed on ${hre.network.name} --`);
-  console.log('you can add the following to your contracts.ts file:');
-  console.log(`${hre.network.name}: ${JSON.stringify(contracts, null, 2)};`);
 }
 
 main().catch((error) => {

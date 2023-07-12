@@ -170,6 +170,8 @@ contract VDAOImplementation is
         newProposal.canceled = false;
         newProposal.executed = false;
         newProposal.vetoed = false;
+        newProposal.startBlock = startBlock;
+        newProposal.endBlock = endBlock;
 
         latestProposalIds[newProposal.proposer] = newProposal.id;
 
