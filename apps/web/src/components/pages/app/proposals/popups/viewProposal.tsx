@@ -61,7 +61,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
     }
   }
   return (
-    <CustomModal show={show} close={close} externalStyle={'w-full custom-scrollbar md:mx-20 lg:mx-10 xl:mx-auto '}>
+    <CustomModal show={show} close={close} externalStyle={'w-full custom-scrollbar md:mx-10 lg:mx-10 xl:mx-auto '}>
       <div className='pb-[30px] font-body text-lg font-normal text-vdao-dark'>
         <div className='font-bold'>
           {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()] + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
@@ -109,7 +109,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                     className='h-fit w-full text-center'
                     onClick={() => {
                       // if (btnStatus === 'Votes') {
-                        setDropDownOn(!dropDownOn)
+                      setDropDownOn(!dropDownOn)
                       // }
                     }}
                     icon={btnStatus === 'Vote for proposal' ? LikedIcon : btnStatus === 'Vote against proposal' ? DisLikedIcon : btnStatus === 'Abstain' ? AbstainIcon : PolygonIcon}
@@ -183,14 +183,14 @@ const ActionDetails = ({ proposal }: { proposal: any }) => {
       {proposal?.spells.map((spell: any, idx: number) => (
         <div className='!text-black'>
           <div>Action {idx + 1}:</div>
-          <PrimaryButton text='' icon={TenderlyIcon} className='my-5' onClick={() => simulateProposal(idx)} />
+          <DropdownPrimaryButton text='' icon={TenderlyIcon} className='my-5' onClick={() => simulateProposal(idx)} />
           <br />
           <div className='font-bold'>
             Calling {spell} Using {proposal?.spellValues[idx].toString()} Wei
           </div>
           <br />
-          <div className='font-bold'>and Calldata:</div>
-          <div>{proposal?.spellCalldatas[idx]}</div>
+          <div className=' font-bold'>and Calldata:</div>
+          <div className='break-all'>{proposal?.spellCalldatas[idx]}</div>
           <br />
           <br />
         </div>
