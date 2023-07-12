@@ -17,6 +17,7 @@ import TenderlyIcon from 'public/icons/proposal/tenderly.svg'
 import { api } from '~/utils/api'
 import { useRouter } from 'next/router'
 import PrimaryButton, { DropdownPrimaryButton } from '~/styles/shared/buttons/primaryButton'
+import Decimal from 'decimal.js'
 
 type ViewProposalProps = {
   show: boolean
@@ -79,7 +80,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
               <div className={` mt-[25px] flex flex-col gap-3 md:mt-11 md:flex-row md:gap-5`}>
                 <div>
                   <div className=' flex gap-1 font-medium text-vdao-dark md:text-[22px]'>
-                    {proposal?.forVotes.toString()}
+                    {proposal ? (BigInt(proposal?.forVotes) / 10n ** 18n).toString() : 0}
                     <Image src={ViewsIcon} alt='ViewsIcon' />
                   </div>
                   <div className={` pt-1`}>Votes For</div>
@@ -87,7 +88,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
 
                 <div>
                   <div className='flex gap-1 font-medium text-vdao-dark md:text-[22px]'>
-                    {proposal?.againstVotes.toString()}
+                    {proposal ? (BigInt(proposal?.againstVotes) / 10n ** 18n).toString() : 0}
                     <Image src={ViewsIcon} alt='ViewsIcon' />
                   </div>
                   <div className={`pt-1`}>Votes Against</div>
@@ -95,7 +96,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
 
                 <div>
                   <div className='flex gap-1 font-medium text-vdao-dark md:text-[22px]'>
-                    {proposal?.abstainVotes.toString()}
+                    {proposal ? (BigInt(proposal?.abstainVotes) / 10n ** 18n).toString() : 0}
                     <Image src={ViewsIcon} alt='ViewsIcon' />
                   </div>
                   <div className={` pt-1`}>Votes Abstained</div>
@@ -109,7 +110,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                     className='h-fit w-full text-center'
                     onClick={() => {
                       // if (btnStatus === 'Votes') {
-                        setDropDownOn(!dropDownOn)
+                      setDropDownOn(!dropDownOn)
                       // }
                     }}
                     icon={btnStatus === 'Vote for proposal' ? LikedIcon : btnStatus === 'Vote against proposal' ? DisLikedIcon : btnStatus === 'Abstain' ? AbstainIcon : PolygonIcon}
