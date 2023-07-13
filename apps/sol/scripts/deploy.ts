@@ -56,7 +56,7 @@ async function main() {
     owner.address,
     vDAOImplementation.address,
     7200,
-    1000,
+    1,
     '1000000000000000000000'
   );
   await vDAOProxy.deployed();

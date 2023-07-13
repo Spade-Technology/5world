@@ -82,14 +82,6 @@ const FormTwo = ({ setNextForm, setShowPreview, spells, setSpells }: FormProps) 
     setContractAddress(verifiedAddr[idx]!)
   }
 
-  // abi
-  //   ?.filter(el => el.type == 'function' && el.stateMutability !== 'view')
-  //   .map((newAbi, idx) => {
-  //     console.log('newAbo', newAbi, newAbi.name)
-  //   })
-
-  console.log(error)
-
   return (
     <div className='grid grid-cols-1 gap-10 pt-[30px] pb-[24px] font-body text-lg font-normal text-vdao-dark md:grid-cols-2 md:gap-[106px] md:pt-10'>
       <div>

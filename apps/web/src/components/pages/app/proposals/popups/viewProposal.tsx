@@ -18,6 +18,8 @@ import { api } from '~/utils/api'
 import { useRouter } from 'next/router'
 import PrimaryButton, { DropdownPrimaryButton } from '~/styles/shared/buttons/primaryButton'
 import Decimal from 'decimal.js'
+import { Spin } from 'antd'
+import { Skeleton } from '~/components/ui/skeleton'
 
 type ViewProposalProps = {
   show: boolean
@@ -27,10 +29,10 @@ type ViewProposalProps = {
 
 const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   const [actions, setActions] = useState(false)
-  const { data: proposal } = useProposalRead(proposalID)
+  const { data: proposal, isLoading: isProposalLoading } = useProposalRead(proposalID, { author: true })
   const [dropDownOn, setDropDownOn] = useState(false)
   const [btnStatus, setBtnStatus] = useState('Votes')
-  const { voteFor, voteAgainst, voteAbstain } = useProposalAction(proposalID)
+  const { voteFor, voteAgainst, voteAbstain, isLoading } = useProposalAction(proposalID)
 
   const proposalStatus = proposal?.canceled ? 'Canceled' : proposal?.executed ? 'Executed' : proposal?.vetoed ? 'Vetoed' : 'Active'
 
@@ -63,102 +65,149 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   }
   return (
     <CustomModal show={show} close={close} externalStyle={'w-full custom-scrollbar md:mx-20 lg:mx-10 xl:mx-auto '}>
-      <div className='pb-[30px] font-body text-lg font-normal text-vdao-dark'>
-        <div className='font-bold'>
-          {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()] + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
+      {!proposal ? (
+        <div className='pb-[30px] font-body text-lg font-normal text-vdao-dark'>
+          <Skeleton className=' h-4 w-[200px]' />
+          <div className='grid grid-cols-1 gap-[73px] py-[10px] md:py-5 lg:grid-cols-3'>
+            <div className='col-span-2'>
+              <Skeleton className='h-8 w-[250px] leading-9' />
+              <div className='flex gap-10 pt-[10px] md:grid-cols-4 md:pt-10'>
+                <Skeleton className='h-11 w-11 rounded-full' />
+                <Skeleton className='h-11 w-40' />
+                <Skeleton className='h-8 w-24 rounded-3xl' />
+              </div>
+
+              <div className='flex justify-between'>
+                <div className={` mt-[25px] flex flex-col gap-3 md:mt-11 md:flex-row md:gap-5`}>
+                  <div className='flex flex-col gap-4'>
+                    <Skeleton className='h-4 w-40' />
+                    <Skeleton className='h-8 w-40' />
+                  </div>
+                  <div className='flex flex-col gap-4'>
+                    <Skeleton className='h-4 w-40' />
+                    <Skeleton className='h-8 w-40' />
+                  </div>
+                  <div className='flex flex-col gap-4'>
+                    <Skeleton className='h-4 w-40' />
+                    <Skeleton className='h-8 w-40' />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className=' flex gap-10 border-b-[1px] border-b-vdao-dark pb-2 pt-10 font-body font-bold'>
+            <Skeleton className='h-4 w-40' />
+            <Skeleton className='h-4 w-40' />
+          </div>
+          <div className='flex flex-col gap-4 py-10'>
+            <Skeleton className='h-4 w-full' />
+            <Skeleton className='h-4 w-full' />
+            <Skeleton className='h-4 w-full' />
+            <Skeleton className='h-4 w-full' />
+            <Skeleton className='h-4 w-full' />
+            <Skeleton className='h-4 w-full' />
+            <Skeleton className='h-4 w-full' />
+          </div>
         </div>
-
-        <div className='grid grid-cols-1 gap-[73px] py-[10px] md:py-5 lg:grid-cols-3'>
-          <div className='col-span-2'>
-            <div className='font-heading text-[26px] font-medium leading-9 md:text-[30px]'>{proposal?.title ? shortenText(proposal.title) : 'No title'}</div>
-            <div className='grid grid-cols-2 pt-[10px] md:grid-cols-4 md:pt-5'>
-              <ProfileCard icon={proposal ? proposal.picture : DummyIcon} name={proposal ? proposal.name : 'Unnamed'} address={proposal?.authorId} />
-              <div className={`mt-6 h-fit w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-7 text-lg  font-medium text-vdao-light lg:ml-5`}>{proposalStatus}</div>
-            </div>
-
-            <div className='flex justify-between'>
-              <div className={` mt-[25px] flex flex-col gap-3 md:mt-11 md:flex-row md:gap-5`}>
-                <div>
-                  <div className=' flex gap-1 font-medium text-vdao-dark md:text-[22px]'>
-                    {proposal ? (BigInt(proposal?.forVotes) / 10n ** 18n).toString() : 0}
-                    <Image src={ViewsIcon} alt='ViewsIcon' />
-                  </div>
-                  <div className={` pt-1`}>Votes For</div>
-                </div>
-
-                <div>
-                  <div className='flex gap-1 font-medium text-vdao-dark md:text-[22px]'>
-                    {proposal ? (BigInt(proposal?.againstVotes) / 10n ** 18n).toString() : 0}
-                    <Image src={ViewsIcon} alt='ViewsIcon' />
-                  </div>
-                  <div className={`pt-1`}>Votes Against</div>
-                </div>
-
-                <div>
-                  <div className='flex gap-1 font-medium text-vdao-dark md:text-[22px]'>
-                    {proposal ? (BigInt(proposal?.abstainVotes) / 10n ** 18n).toString() : 0}
-                    <Image src={ViewsIcon} alt='ViewsIcon' />
-                  </div>
-                  <div className={` pt-1`}>Votes Abstained</div>
-                </div>
-              </div>
-
-              <div className={` mt-[25px] md:mt-11 `}>
-                <div className='relative'>
-                  <DropdownPrimaryButton
-                    text={btnStatus}
-                    className='h-fit w-full text-center'
-                    onClick={() => {
-                      // if (btnStatus === 'Votes') {
-                      setDropDownOn(!dropDownOn)
-                      // }
-                    }}
-                    icon={btnStatus === 'Vote for proposal' ? LikedIcon : btnStatus === 'Vote against proposal' ? DisLikedIcon : btnStatus === 'Abstain' ? AbstainIcon : PolygonIcon}
-                    dropDown
-                  />
-
-                  <div
-                    style={{ transition: '0.2s ease-in', height: dropDownOn ? '120px' : '0px' }}
-                    className={`float-right mx-auto mt-1 flex max-w-[1130px]  flex-col justify-end gap-[1px] overflow-hidden`}
-                  >
-                    <DropdownPrimaryButton text='Vote for proposal' className='w-full hover:bg-green-200' onClick={() => votesHandler('for')} icon={LikedIcon} />
-                    <DropdownPrimaryButton text='Vote against proposal' className='w-full hover:bg-green-200' icon={DisLikedIcon} onClick={() => votesHandler('against')} />
-                    <DropdownPrimaryButton text='Abstain' className='w-full hover:bg-green-200' icon={AbstainIcon} onClick={() => votesHandler('abstain')} />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className=' flex gap-10 border-b-[1px] border-b-vdao-dark pb-2 pt-10 font-body font-bold'>
-              <div className={` ${!actions && 'text-vdao-light'} cursor-pointer justify-start`} onClick={() => setActions(false)}>
-                Proposal Detail
-              </div>
-              <div className={` ${actions && 'text-vdao-light'} cursor-pointer justify-start`} onClick={() => setActions(true)}>
-                Actions
-              </div>
-            </div>
-
-            {actions ? <ActionDetails proposal={proposal} /> : <ProposalDetails proposal={proposal} />}
+      ) : (
+        <div className='pb-[30px] font-body text-lg font-normal text-vdao-dark'>
+          <div className='font-bold'>
+            {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()] + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
           </div>
 
-          <div>
-            <div className='text-xl font-bold'>Supporters</div>
-            <div className='pt-5 pr-[60px]'>
-              {SupporterDetails.map((details, idx) => {
-                return (
-                  <div className='flex justify-between pt-5' key={idx}>
-                    <div className='flex gap-3'>
-                      <Image src={details.icon} height={40} width={40} alt='icon' />
-                      <div className='my-auto text-sm'>{details.name}</div>
+          <div className='grid grid-cols-1 gap-[73px] py-[10px] md:py-5 lg:grid-cols-3'>
+            <div className='col-span-2'>
+              <div className='font-heading text-[26px] font-medium leading-9 md:text-[30px]'>{proposal?.title ? shortenText(proposal.title) : 'No title'}</div>
+              <div className='grid grid-cols-2 pt-[10px] md:grid-cols-3 md:pt-5'>
+                <ProfileCard icon={proposal ? proposal.picture : DummyIcon} name={proposal ? proposal?.author?.name : 'Unnamed'} address={proposal?.authorId} />
+                <div className={`mt-6 h-fit w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-7 text-lg  font-medium text-vdao-light lg:ml-5`}>{proposalStatus}</div>
+              </div>
+
+              <div className='flex justify-between'>
+                <div className={` mt-[25px] flex flex-col gap-3 md:mt-11 md:flex-row md:gap-5`}>
+                  <div>
+                    <div className=' flex gap-1 font-medium text-vdao-dark md:text-[22px]'>
+                      {proposal ? (BigInt(proposal?.forVotes) / 10n ** 18n).toString() : 0}
+                      <Image src={ViewsIcon} alt='ViewsIcon' />
                     </div>
-                    <div className='my-auto text-sm font-bold'>{details.percentage}</div>
+                    <div className={` pt-1`}>Votes For</div>
                   </div>
-                )
-              })}
+
+                  <div>
+                    <div className='flex gap-1 font-medium text-vdao-dark md:text-[22px]'>
+                      {proposal ? (BigInt(proposal?.againstVotes) / 10n ** 18n).toString() : 0}
+                      <Image src={ViewsIcon} alt='ViewsIcon' />
+                    </div>
+                    <div className={`pt-1`}>Votes Against</div>
+                  </div>
+
+                  <div>
+                    <div className='flex gap-1 font-medium text-vdao-dark md:text-[22px]'>
+                      {proposal ? (BigInt(proposal?.abstainVotes) / 10n ** 18n).toString() : 0}
+                      <Image src={ViewsIcon} alt='ViewsIcon' />
+                    </div>
+                    <div className={` pt-1`}>Votes Abstained</div>
+                  </div>
+                </div>
+
+                <div className={` mt-[25px] md:mt-11 `}>
+                  <div className='relative'>
+                    <DropdownPrimaryButton
+                      text={btnStatus}
+                      className='h-fit w-full text-center'
+                      onClick={() => {
+                        // if (btnStatus === 'Votes') {
+                        setDropDownOn(!dropDownOn)
+                        // }
+                      }}
+                      icon={btnStatus === 'Vote for proposal' ? LikedIcon : btnStatus === 'Vote against proposal' ? DisLikedIcon : btnStatus === 'Abstain' ? AbstainIcon : PolygonIcon}
+                      dropDown
+                      loading={isLoading}
+                    />
+
+                    <div
+                      style={{ transition: '0.2s ease-in', height: dropDownOn ? '120px' : '0px' }}
+                      className={`float-right mx-auto mt-1 flex max-w-[1130px]  flex-col justify-end gap-[1px] overflow-hidden`}
+                    >
+                      <DropdownPrimaryButton text='Vote for proposal' className='w-full hover:bg-green-200' onClick={() => votesHandler('for')} icon={LikedIcon} />
+                      <DropdownPrimaryButton text='Vote against proposal' className='w-full hover:bg-green-200' icon={DisLikedIcon} onClick={() => votesHandler('against')} />
+                      <DropdownPrimaryButton text='Abstain' className='w-full hover:bg-green-200' icon={AbstainIcon} onClick={() => votesHandler('abstain')} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className=' flex gap-10 border-b-[1px] border-b-vdao-dark pb-2 pt-10 font-body font-bold'>
+                <div className={` ${!actions && 'text-vdao-light'} cursor-pointer justify-start`} onClick={() => setActions(false)}>
+                  Proposal Detail
+                </div>
+                <div className={` ${actions && 'text-vdao-light'} cursor-pointer justify-start`} onClick={() => setActions(true)}>
+                  Actions
+                </div>
+              </div>
+
+              {actions ? <ActionDetails proposal={proposal} /> : <ProposalDetails proposal={proposal} />}
+            </div>
+
+            <div>
+              <div className='text-xl font-bold'>Supporters</div>
+              <div className='pt-5 pr-[60px]'>
+                {SupporterDetails.map((details, idx) => {
+                  return (
+                    <div className='flex justify-between pt-5' key={idx}>
+                      <div className='flex gap-3'>
+                        <Image src={details.icon} height={40} width={40} alt='icon' />
+                        <div className='my-auto text-sm'>{details.name}</div>
+                      </div>
+                      <div className='my-auto text-sm font-bold'>{details.percentage}</div>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </CustomModal>
   )
 }
