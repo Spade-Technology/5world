@@ -26,7 +26,7 @@ type ViewProposalProps = {
 
 const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   const [actions, setActions] = useState(false)
-  const { data: proposal } = useProposalRead(proposalID)
+  const { data: proposal } = useProposalRead(proposalID, {author: true, pod: true})
   const [dropDownOn, setDropDownOn] = useState(false)
   const [btnStatus, setBtnStatus] = useState('Votes')
   const { voteFor, voteAgainst, voteAbstain } = useProposalAction(proposalID)
@@ -69,9 +69,9 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
 
         <div className='grid grid-cols-1 gap-[73px] py-[10px] md:py-5 lg:grid-cols-3'>
           <div className='col-span-2'>
-            <div className='font-heading text-[26px] font-medium leading-9 md:text-[30px]'>{proposal?.title ? shortenText(proposal.title) : 'No title'}</div>
+            <div className='font-heading text-[26px] font-medium leading-9 md:text-[30px]'>{proposal?.title ? shortenText(proposal?.title) : 'No title'}</div>
             <div className='grid grid-cols-2 pt-[10px] md:grid-cols-4 md:pt-5'>
-              <ProfileCard icon={proposal ? proposal.picture : DummyIcon} name={proposal ? proposal.name : 'Unnamed'} address={proposal?.authorId} />
+            <ProfileCard icon={proposal?.author?.picture ? proposal?.author?.picture : DummyIcon} name={proposal?.author?.name} address={proposal?.author?.address} />
               <div className={`mt-6 h-fit w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-7 text-lg  font-medium text-vdao-light lg:ml-5`}>{proposalStatus}</div>
             </div>
 
