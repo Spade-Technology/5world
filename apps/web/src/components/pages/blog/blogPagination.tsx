@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { blogDetails } from './blogDetails'
 import BlogCard from './blogCard'
-import Pagination from '~/components/misc/Pagination'
+import Pagination from '~/components/misc/pageNation'
 
 const BlogPagination = () => {
   const [pageCount, setPageCount] = useState(1)
@@ -46,7 +46,7 @@ const BlogPagination = () => {
 
   return (
     <>
-      <div className='px-6 md:mt-16'>
+      <div className='mt-10 md:mt-16'>
         {updatedBlogs &&
           updatedBlogs.map((blog: any, idx: number) => {
             return <BlogCard blog={blog} key={idx} showBorder={idx + 1 < updatedBlogs.length} id={idx} />

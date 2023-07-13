@@ -103,13 +103,13 @@ export function AboutUsCoreValueComponent() {
           <div className='mb-[33px] w-full text-left font-heading text-[32px] font-medium md:mb-6 md:text-[46px]'>Our Core Value</div>
           <div className='z-50 flex flex-col-reverse md:mt-12 md:flex-row lg:ml-[286px]'>
             <div className='rid-rows-4 grid w-full grid-cols-1 gap-10 md:grid-cols-2  md:grid-rows-2'>
-              <div className='flex max-w-[340px] flex-col gap-4'>
+              <div className='flex w-full flex-col gap-4 md:max-w-[340px]'>
                 <div className='font-heading text-[26px] font-medium md:text-[30px]'>Faireness & Caring</div>
                 <div className='font-body text-lg font-normal leading-[22px] text-white'>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget eleifend nisi. Vestibulum euismod, augue at tempor.
                 </div>
               </div>
-              <div className='flex max-w-[340px] flex-col gap-4'>
+              <div className='flex w-full flex-col gap-4 md:max-w-[340px]'>
                 <div className='font-heading text-[26px] font-medium md:text-[30px]'>Generous Listening</div>
                 <div className='font-body text-lg font-normal leading-[22px] text-white'>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget eleifend nisi. Vestibulum euismod, augue at tempor.
@@ -118,19 +118,19 @@ export function AboutUsCoreValueComponent() {
                   Healthy community relations are supported via our comprehensive Code of Conduct.
                 </div>
               </div>
-              <div className='flex max-w-[340px] flex-col gap-4'>
+              <div className='flex w-full flex-col gap-4 md:max-w-[340px]'>
                 <div className='font-heading text-[26px] font-medium md:text-[30px]'>Trust & Respect</div>
                 <div className='font-body text-lg font-normal leading-[22px] text-white'>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget eleifend nisi. Vestibulum euismod, augue at tempor.
                 </div>
               </div>
-              <div className='flex max-w-[340px] flex-col gap-4'>
+              <div className='flex w-full flex-col gap-4 md:max-w-[340px]'>
                 <div className='font-heading text-[26px] font-medium md:text-[30px]'>Straight Talk</div>
                 <div className='font-body text-lg font-normal leading-[22px] text-white'>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget eleifend nisi. Vestibulum euismod, augue at tempor.
                 </div>
               </div>
-              <div className='flex max-w-[380px] '>
+              <div className='flex w-full md:max-w-[380px] '>
                 <div className='font-inter text-base font-normal leading-[22px] text-white'>Healthy community relations are supported via our comprehensive Code of Conduct.</div>
               </div>
             </div>

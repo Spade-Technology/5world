@@ -116,10 +116,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                     dropDown
                   />
 
-                  <div
-                    style={{ transition: '0.2s ease-in', height: dropDownOn ? '120px' : '0px' }}
-                    className={`float-right mx-auto mt-1 flex max-w-[1130px]  flex-col justify-end gap-[1px] overflow-hidden`}
-                  >
+                  <div className={`float-right mx-auto mt-1 flex max-w-[1130px] flex-col ${dropDownOn ? 'h-[120px]' : 'h-[0px]'} justify-end gap-[1px] overflow-hidden duration-500`}>
                     <DropdownPrimaryButton text='Vote for proposal' className='w-full hover:bg-green-200' onClick={() => votesHandler('for')} icon={LikedIcon} />
                     <DropdownPrimaryButton text='Vote against proposal' className='w-full hover:bg-green-200' icon={DisLikedIcon} onClick={() => votesHandler('against')} />
                     <DropdownPrimaryButton text='Abstain' className='w-full hover:bg-green-200' icon={AbstainIcon} onClick={() => votesHandler('abstain')} />
