@@ -6,8 +6,8 @@ import { api } from '~/utils/api'
 import { InferArgs, InferReturn } from '~/utils/type'
 
 import VDAOImplementation from '~/abi/VDAOImplementation.json'
-import { currentContracts } from '~/config/contracts'
-import { writeContract } from '@wagmi/core'
+import { currentChainId, currentContracts } from '~/config/contracts'
+import { waitForTransaction, writeContract } from '@wagmi/core'
 import { notification } from 'antd'
 import { useState } from 'react'
 /* Proposal schema */
@@ -39,20 +39,40 @@ export function useProposal(id: number, ids: number[], include: ProposalInclude 
 }
 
 export function useProposalAction(id: number) {
+  const [isLoading, setIsLoading] = useState(false)
+
   // @param support The support value for the vote. 0=against, 1=for, 2=abstain
-  const castVote = async (support: number) =>
-    await writeContract({
+  const castVote = async (support: number) => {
+    setIsLoading(true)
+    const tx = await writeContract({
       address: currentContracts.proxiedVDao as Address,
       abi: VDAOImplementation,
       functionName: 'castVote',
+      chainId: currentChainId,
       args: [id, support],
+    }).catch(error => {
+      notification.error({
+        message: 'Error casting vote',
+        description: error.shortMessage,
+      })
     })
+
+    if (tx) {
+      await waitForTransaction({ hash: tx.hash, timeout: 10000, chainId: currentChainId, confirmations: 1 })
+      notification.success({
+        message: 'Vote cast',
+        description: 'Your vote has been cast',
+      })
+    }
+
+    setIsLoading(false)
+  }
 
   const voteFor = async () => await castVote(1)
   const voteAgainst = async () => await castVote(0)
   const voteAbstain = async () => await castVote(2)
 
-  return { voteFor, voteAgainst, voteAbstain }
+  return { voteFor, voteAgainst, voteAbstain, isLoading }
 }
 
 export function useCreateProposal() {

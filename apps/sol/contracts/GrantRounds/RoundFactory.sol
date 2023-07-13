@@ -21,65 +21,63 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
  *
  */
 contract RoundFactory is OwnableUpgradeable {
+    // -- Storage --
 
-  // -- Storage --
+    address public roundContract;
 
-  address public roundContract;
+    address public latestRoundContract;
 
-  address public latestRoundContract;
+    // --- Event ---
 
-  // --- Event ---
+    /// @notice Emitted when a Round contract is updated
+    event RoundContractUpdated(address roundAddress);
 
-  /// @notice Emitted when a Round contract is updated
-  event RoundContractUpdated(address roundAddress);
-
-  /// @notice Emitted when a new Round is created
-  event RoundCreated(address indexed roundAddress, address indexed roundImplementation);
-
-
-  /// @notice initialize function which ensure caller is set as owner
-  /// to be called by timelock.
-  function initialize() external initializer {
-    __Context_init_unchained();
-    __Ownable_init_unchained();
-  }
-
-  // --- Core methods ---
-
-  /**
-   * @notice Allows the owner to update the RoundImplementation.
-   * This provides us the flexibility to upgrade RoundImplementation
-   * contract while relying on the same RoundFactory to get the list of
-   * rounds.
-   * @param newRoundContract New RoundImplementation contract address
-   */
-  function updateRoundContract(address newRoundContract) external onlyOwner {
-    require(newRoundContract != address(0), "roundContract is 0x"); 
-
-    roundContract = newRoundContract;
-    emit RoundContractUpdated(newRoundContract);
-  }
-
-  /**
-   * @notice Clones RoundImp a new round and emits event
-   *
-   * @param encodedParameters Encoded parameters for creating a round
-   */
-  function create(
-    bytes calldata encodedParameters
-  ) external onlyOwner returns (address) {
-    require(roundContract != address(0), "roundContract is 0x");
-
-    address clone = ClonesUpgradeable.clone(roundContract);
-    latestRoundContract = clone;
-
-    emit RoundCreated(clone, roundContract);
-
-    RoundImplementation(payable(clone)).initialize(
-      encodedParameters
+    /// @notice Emitted when a new Round is created
+    event RoundCreated(
+        address indexed roundAddress,
+        address indexed roundImplementation
     );
 
-    return clone;
-  }
+    /// @notice initialize function which ensure caller is set as owner
+    /// to be called by timelock.
+    function initialize() external initializer {
+        __Context_init_unchained();
+        __Ownable_init_unchained();
+    }
 
+    // --- Core methods ---
+
+    /**
+     * @notice Allows the owner to update the RoundImplementation.
+     * This provides us the flexibility to upgrade RoundImplementation
+     * contract while relying on the same RoundFactory to get the list of
+     * rounds.
+     * @param newRoundContract New RoundImplementation contract address
+     */
+    function updateRoundContract(address newRoundContract) external onlyOwner {
+        require(newRoundContract != address(0), "roundContract is 0x");
+
+        roundContract = newRoundContract;
+        emit RoundContractUpdated(newRoundContract);
+    }
+
+    /**
+     * @notice Clones RoundImp a new round and emits event
+     *
+     * @param encodedParameters Encoded parameters for creating a round
+     */
+    function create(
+        bytes calldata encodedParameters
+    ) external onlyOwner returns (address) {
+        require(roundContract != address(0), "roundContract is 0x");
+
+        address clone = ClonesUpgradeable.clone(roundContract);
+        latestRoundContract = clone;
+
+        emit RoundCreated(clone, roundContract);
+
+        RoundImplementation(payable(clone)).initialize(encodedParameters);
+
+        return clone;
+    }
 }

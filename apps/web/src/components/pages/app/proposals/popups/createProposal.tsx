@@ -7,7 +7,7 @@ import { useAccount } from 'wagmi'
 import { useCreateProposal } from '~/hooks/web3/useProposal'
 import { useEtherscan } from '~/hooks/web3/useEtherscan'
 import { abiItem } from '~/server/api/routers/etherscan'
-import { encodeAbiParameters } from 'viem'
+import { encodeAbiParameters, encodeFunctionData } from 'viem'
 
 type CreateProposalProps = {
   show: boolean
@@ -59,7 +59,7 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
         })
 
         // const callData = types && encodeAbiParameters(types, Object.values(args))
-        const callData = types && encodeAbiParameters(types, valuesArr)
+        const callData = types && encodeFunctionData({ abi: spell?.abi, args: valuesArr, functionName: spell.name })
 
         // Construct calldatas, targets, values
         cds.push(callData)
@@ -69,6 +69,15 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
     }
   }
 
+  if (spells[0]) {
+    try {
+      console.log(Object.values(spells[0]?.calldata))
+      console.log(spells[0]?.abi.find((item: abiItem) => item.name === spells[0]?.name))
+      console.log(encodeFunctionData({ abi: spells[0]?.abi, args: Object.values(spells[0]?.calldata), functionName: spells[0]?.name }))
+    } catch (e) {
+      console.log(e)
+    }
+  }
   const setShowPreview = (preview: boolean) => {
     _setShowPreview(preview)
     preview && handlePreviews()

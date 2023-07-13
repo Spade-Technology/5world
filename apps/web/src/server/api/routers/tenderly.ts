@@ -21,10 +21,6 @@ export const tenderlyRouter = createTRPCRouter({
 
       const { simulation } = proposal
 
-      // if (simulation[spell] && (simulation[spell] as any).createdAt.getTime() > Date.now() - (!!TENDERLY_TTL ? parseInt(TENDERLY_TTL) : 3600) * 1000) return simulation[spell]?.url
-
-      console.log('Simulating proposal', id, 'spell', spell)
-
       const resp = await fetch(
         `https://api.tenderly.co/api/v1/account/${TENDERLY_USER}/project/${TENDERLY_PROJECT}/simulate`,
         // the transaction
@@ -41,12 +37,12 @@ export const tenderlyRouter = createTRPCRouter({
             network_id: currentChainId, // network to simulate on
 
             /* Standard EVM Transaction object */
-            from: currentContracts.proxiedVDao,
-            to: currentContracts.timelock,
+            from: currentContracts.timelock,
+            to: proposal.spells[spell],
             input: proposal.spellCalldatas[spell],
             gas: 8000000,
             gas_price: 0,
-            value: 0,
+            value: proposal.spellValues[spell]?.toString(),
           }),
         },
       )
