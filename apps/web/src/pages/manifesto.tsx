@@ -31,6 +31,7 @@ dayjs.extend(relativeTime)
 const Home: NextPage<any> = () => {
   const signModuleRef = useRef<HTMLDivElement>(null)
   const [signatures, setSignatures] = useState({ total: 0, list: [], loading: true })
+  const [signed, setSigned] = useState<boolean>(false)
 
   useEffect(() => {
     fetchSignatures()
@@ -84,6 +85,7 @@ const Home: NextPage<any> = () => {
 
           duration: 150,
         })
+        setSigned(true)
       })
     },
   })
@@ -134,13 +136,13 @@ const Home: NextPage<any> = () => {
                   </Skeleton>{' '}
                   Signatures
                 </div>
-                <PrimaryButton text='Sign Manifesto' className='pointer-events-auto md:ml-[35px]' onClick={signManifesto} />
+                <PrimaryButton disabled={signed} text='Sign Manifesto' className='pointer-events-auto md:ml-[35px]' onClick={signManifesto} />
               </div>
             </div>
           </div>
           <SectionTwo />
 
-          <Signing signatures={signatures} signModuleRef={signModuleRef} step={step} signManifesto={signManifesto} list={list} />
+          <Signing disabled={signed} signatures={signatures} signModuleRef={signModuleRef} step={step} signManifesto={signManifesto} list={list} />
         </div>
         <FooterManifesto signatures={signatures.total} signModuleRef={signModuleRef} loading={signatures.loading} />
       </main>
@@ -156,12 +158,14 @@ function Signing({
   step,
   signManifesto,
   list,
+  disabled,
 }: {
   signatures: { total: number; list: any[]; loading: boolean }
   signModuleRef: RefObject<HTMLDivElement>
   step: number
   signManifesto: () => void
   list: any[]
+  disabled: boolean
 }) {
   return (
     <section>
@@ -206,7 +210,7 @@ function Signing({
               {/* step 2 */}
               <VDAOConnectButton
                 className={`!h-10 w-fit !font-roboto !text-sm font-medium ${step < 2 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : '!border-vdao-light !text-vdao-light'}`}
-                disabled={step != 2}
+                disabled={step != 2 || disabled}
                 onClickOverride={signManifesto}
                 messageOverrides={{ verified: 'Sign Manifesto', verify: 'Sign Manifesto', register: 'Sign Manifesto', walletselect: 'Sign Manifesto' }}
                 web2

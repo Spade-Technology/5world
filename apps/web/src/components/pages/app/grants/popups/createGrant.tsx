@@ -20,6 +20,8 @@ import FormOne from '../../proposals/popups/formOne'
 import { currentContracts } from '~/config/contracts'
 import RoundFactoryAbi from '~/abi/RoundFactory.json'
 import { encodeFunctionData } from 'viem'
+import { writeContract } from '@wagmi/core'
+import VDAOImplementation from '~/abi/VDAOImplementation.json'
 
 type CreateGrantProps = {
   show: boolean
@@ -183,7 +185,12 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
 
     const callData = encodeFunctionData({ abi, args, functionName: signature })
 
-    createGrantProposal
+    await writeContract({
+      abi: VDAOImplementation,
+      address: spell as Address,
+      method: signature,
+      args: args,
+    })
   }
 
   return (

@@ -162,7 +162,6 @@ contract RoundImplementationStorageV1 is RoundProxyStorage {
     }
 
     struct InitRoles {
-        address[] adminRoles; // Addresses to be granted DEFAULT_ADMIN_ROLE
         address[] roundOperators; // Addresses to be granted ROUND_OPERATOR_ROLE
     }
 
