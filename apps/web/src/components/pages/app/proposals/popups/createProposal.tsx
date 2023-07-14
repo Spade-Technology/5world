@@ -32,6 +32,7 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
 
   const [spells, setSpells] = useState<Spell[]>([])
   const [callDatas, setCallDatas] = useState<string[]>([])
+  const [signatures, setSignatures] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
 
   const handlePreviews = () => {
@@ -108,7 +109,7 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
         <FormTwo setNextForm={setNextForm} setShowPreview={setShowPreview} spells={spells} setSpells={setSpells} />
       ) : (
         <Preview loading={loading} spells={spells} setNextForm={setNextForm} setShowPreview={setShowPreview} title={title} description={description} callDatas={callDatas} submit={submit} />
-      )}{' '}
+      )}
     </CustomModal>
   )
 }

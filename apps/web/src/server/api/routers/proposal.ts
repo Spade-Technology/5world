@@ -198,7 +198,7 @@ export const proposalRouter = createTRPCRouter({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: process.env.PINATA_PRIVATE_KEY || '',
+          Authorization: 'Bearer ' + process.env.PINATA_API_JWT,
         },
         body: JSON.stringify({
           content: {
@@ -217,7 +217,7 @@ export const proposalRouter = createTRPCRouter({
           },
         }),
       })
-
+      console.log('ipfs', ipfs)
       console.log('ipfs', await ipfs.json())
 
       return ipfs
