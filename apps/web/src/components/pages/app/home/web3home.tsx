@@ -349,11 +349,12 @@ export function WelcomeComponent() {
 
 export function SelfDelegate({ data }: SelfDelegateProps) {
   const { delegate } = useDelegate()
+  const { data: siwe } = useSession()
   return (
     <Section className='mx-auto max-w-[937px]  px-6 pb-6'>
       <div className='my-auto mt-5 flex flex-col justify-between gap-5 rounded-[20px] bg-vdao-dark px-6 py-5 text-lg font-light text-white md:flex-row md:px-12'>
         <div className='max-w-[523px]'>To be able to interact with the dao, you need to have delegates, you can also self-delegate your VDAO tokens.</div>
-        <PrimaryButton text='Self delegate' className='my-auto' onClick={() => delegate({ delegatee: data?.address })} disabled={data?.address ? true : false} />
+        <PrimaryButton text='Self delegate' className='my-auto' onClick={() => delegate({ delegatee: data?.address })} disabled={siwe ? false : true} />
       </div>
     </Section>
   )
