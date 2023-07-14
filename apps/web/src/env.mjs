@@ -28,6 +28,9 @@ const server = z.object({
   TENDERLY_TTL: z.string().regex(/^\d+$/).optional(),
 
   PINATA_PRIVATE_KEY: z.string().min(1),
+  PINATA_API_SECRET: z.string().min(1),
+  PINATA_API_JWT: z.string().min(1),
+  PINATA_API_KEY: z.string().min(1),
 })
 
 /**
@@ -62,6 +65,9 @@ const processEnv = {
   TENDERLY_TTL: process.env.TENDERLY_TTL,
 
   PINATA_PRIVATE_KEY: process.env.PINATA_PRIVATE_KEY,
+  PINATA_API_SECRET: process.env.PINATA_API_SECRET,
+  PINATA_API_JWT: process.env.PINATA_API_JWT,
+  PINATA_API_KEY: process.env.PINATA_API_KEY,
 }
 
 // Don't touch the part below

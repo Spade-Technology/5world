@@ -8,6 +8,7 @@ let contracts = {
     donationSBT: '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707',
     roundImplementation: '0x0165878A594ca255338adfa4d48449f69242Eb8F',
     roundFactory: '0xa513E6E4b8f2a923D98304ec87F64353C4D5C853',
+    blockTime: 12.08,
   },
   sepolia: {
     timelock: '0x22fE38bbc26360A82D4182239B390A2604614Fad',
@@ -18,6 +19,8 @@ let contracts = {
     donationSBT: '0x7153DC1E9cE74e736f5599B06460DC9C5AF2E1E1',
     roundImplementation: '0x0dd47B3061090DD574f1E591BA5d55f6C901359E',
     roundFactory: '0x3F493aF8567BD4502F90a76066C968781A9dcCb3',
+    // 22 seconds
+    blockTime: 22,
   },
 }
 
