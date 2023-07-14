@@ -128,7 +128,7 @@ export const Card = ({ proposal, setViewProposal, setProposalID }: CardProps) =>
       <div className='flex flex-col md:flex-row'>
         <div className='w-2/3 flex-1'>
           <div className='text-lg font-semibold'>
-            {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()] + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
+            {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()]?.name + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
           </div>
           <div className='overflow-hidden overflow-ellipsis pt-[10px] text-3xl font-medium'>{proposal?.title}</div>
 

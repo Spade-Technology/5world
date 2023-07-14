@@ -1,18 +1,130 @@
 import { Button } from 'antd'
+import { setDay } from 'date-fns'
 import { useSession } from 'next-auth/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Section } from '~/components/layout/section'
 import Description from '~/components/misc/description'
 import HowItWorks from '~/components/misc/howItWorks'
 import { useApplyToBeSteward } from '~/hooks/web3/useStewards'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
+import { monthNames } from '~/utils/date'
 
 const StewardElection = () => {
   const { applyToBeSteward, isLoading } = useApplyToBeSteward()
   const { data: siwe } = useSession()
-  const [days, setDays] = useState(['2', '2'])
-  const [hours, setHours] = useState(['2', '2'])
-  const [minutes, setMinutes] = useState(['2', '2'])
+  const [days, setDays] = useState<Number[]>([0, 0])
+  const [hours, setHours] = useState<Number[]>([0, 0])
+  const [minutes, setMinutes] = useState<Number[]>([0, 0])
+
+  let minutesForDev = 0
+  const timerForDevEnv = () => {
+    if (minutesForDev > 5) {
+      return
+    } else {
+      const remainingMinutes = 5 - minutesForDev
+      const remainingMinutesToString = remainingMinutes.toString()
+      let minutesInArr: Number[] = []
+
+      for (let i = 0; i < remainingMinutesToString.length; i++) {
+        if (remainingMinutesToString.length === 1) {
+          minutesInArr.push(0)
+        }
+        minutesInArr.push(parseFloat(remainingMinutesToString?.charAt(i)!))
+      }
+      setDays([0, 0])
+      setHours([0, 0])
+      setMinutes(minutesInArr)
+
+      minutesForDev = minutesForDev + 1
+    }
+  }
+  const dateHandler = (devEnv?: boolean) => {
+    const currentDate = new Date()
+    const currentMonth = currentDate.getMonth()
+    const hours = currentDate.getHours()
+    const todayDate = currentDate.getDate()
+    const minutes = currentDate.getMinutes()
+
+    if (devEnv) {
+      let minutesForDev = 0
+      const timerInterval = 3 * 1000
+      const interval = setInterval(() => {
+        timerForDevEnv()
+      }, timerInterval)
+
+      if (minutesForDev >= 5) {
+        clearInterval(interval)
+      }
+    } else {
+      let daysInArr: Number[] = []
+      let hoursInArr: Number[] = []
+      let minutesInArr: Number[] = []
+      const remainigHours = 24 - hours
+      const remainingMinutes = 60 - minutes
+
+      const remainigHoursToString = remainigHours.toString()
+      const remainingMinutesToString = remainingMinutes.toString()
+
+      for (let i = 0; i < remainigHoursToString.length; i++) {
+        if (remainigHoursToString.length === 1) {
+          hoursInArr.push(0)
+        }
+        hoursInArr.push(parseFloat(remainigHoursToString?.charAt(i)!))
+      }
+
+      for (let i = 0; i < remainingMinutesToString.length; i++) {
+        if (remainingMinutesToString.length === 1) {
+          minutesInArr.push(0)
+        }
+        minutesInArr.push(parseFloat(remainingMinutesToString?.charAt(i)!))
+      }
+
+      setHours(hoursInArr)
+      setMinutes(minutesInArr)
+
+      if (currentMonth % 6 === 0) {
+        // Time for Election
+        const remainigdays = monthNames[currentDate.getUTCMonth()]?.days! - todayDate
+        const remainigdaysToString = remainigdays.toString()
+
+        for (let i = 0; i < remainigdaysToString.length; i++) {
+          daysInArr.push(parseFloat(remainigdaysToString?.charAt(i)!))
+        }
+
+        setDays(daysInArr)
+      } else {
+        // Time for No Election
+        let totalDaysLeft = 0
+        for (let i = 0; i < monthNames.length; i++) {
+          if ((i + 1) % currentMonth === 0) {
+            break
+          } else if (i + 1 + 1 > currentMonth) {
+            totalDaysLeft = totalDaysLeft + monthNames[i]?.days
+          }
+        }
+
+        const remainigDays = totalDaysLeft > todayDate ? totalDaysLeft - todayDate : '00'
+
+        const remainigdaysToString = remainigDays.toString()
+
+        for (let i = 0; i < remainigdaysToString.length; i++) {
+          if (remainigdaysToString.length === 1) {
+            daysInArr.push(0)
+          }
+          daysInArr.push(parseFloat(remainigdaysToString?.charAt(i)!))
+        }
+        setDays(daysInArr)
+      }
+    }
+  }
+
+  useEffect(() => {
+    const intervalTime = 1 * 10 * 1000
+    dateHandler()
+    setInterval(() => {
+      dateHandler()
+    }, intervalTime)
+  }, [])
 
   return (
     <Section className='w-screen bg-vdao-deep'>
@@ -58,12 +170,12 @@ const StewardElection = () => {
                 )
               })}
             </div>
-            <div className='text-lg text-left'>days</div>
+            <div className='text-left text-lg'>days</div>
           </div>
           <div className='p-1 text-[32px]'>:</div>
           <div>
             <div className='flex gap-1'>
-              {days.map((number: string, idx: number) => {
+              {hours.map((number: string, idx: number) => {
                 return (
                   <div key={idx} className='rounded-[10px] bg-[#19444A] p-1 text-[32px]'>
                     {number}
@@ -71,12 +183,12 @@ const StewardElection = () => {
                 )
               })}
             </div>
-            <div className='text-lg text-left'>hours</div>
+            <div className='text-left text-lg'>hours</div>
           </div>
           <div className='p-1 text-[32px]'>:</div>
           <div>
             <div className='flex gap-1'>
-              {days.map((number: string, idx: number) => {
+              {minutes.map((number: string, idx: number) => {
                 return (
                   <div key={idx} className='rounded-[10px] bg-[#19444A] p-1 text-[32px]'>
                     {number}
@@ -84,7 +196,7 @@ const StewardElection = () => {
                 )
               })}
             </div>
-            <div className='text-lg text-left'>minutes</div>
+            <div className='text-left text-lg'>minutes</div>
           </div>
         </div>
 
