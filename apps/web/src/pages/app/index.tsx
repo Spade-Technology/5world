@@ -32,7 +32,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Page>
-        <SelfDelegate />
+        <SelfDelegate data={data} />
         <WelcomeComponent />
 
         <EnforceAuth>

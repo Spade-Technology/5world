@@ -112,7 +112,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
       ) : (
         <div className='pb-[30px] font-body text-lg font-normal text-vdao-dark'>
           <div className='font-bold'>
-            {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()] + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
+            {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()]?.name + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
           </div>
 
           <div className='grid grid-cols-1 gap-[73px] py-[10px] md:py-5 lg:grid-cols-3'>

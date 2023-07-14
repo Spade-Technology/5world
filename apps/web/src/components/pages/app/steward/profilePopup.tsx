@@ -36,7 +36,7 @@ const ProfilePopup = ({ profile, close }: PopupProps) => {
                   <div className='flex flex-col font-body text-lg lg:flex-row lg:gap-5'>
                     <div className='font-medium md:text-[22px]'>{profile?.address ? shortenAddress(profile?.address!) : shortenAddress(Null_Address)}</div>
                     <div className='font-bold'>
-                      {profile?.JoinedAt ? 'Joined ' + monthNames[profile.JoinedAt.getUTCMonth()] + ' ' + profile.JoinedAt.getDate() + ', ' + profile.JoinedAt.getFullYear() : 'at Unavailable'}
+                      {profile?.JoinedAt ? 'Joined ' + monthNames[profile.JoinedAt.getUTCMonth()]?.name + ' ' + profile.JoinedAt.getDate() + ', ' + profile.JoinedAt.getFullYear() : 'at Unavailable'}
                     </div>
                   </div>
                 </div>

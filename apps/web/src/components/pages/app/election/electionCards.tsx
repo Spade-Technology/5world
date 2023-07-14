@@ -86,7 +86,7 @@ export const Card = ({ data, setOpenProfile, setOpenVotesNscores }: CardProps) =
               <div className='font-semibold'>
                 {
                   // JoinedAtFormat(data?.JoinedAt ? data?.JoinedAt : "")
-                  data?.JoinedAt ? 'Joined ' + monthNames[data.JoinedAt.getUTCMonth()] + ' ' + data.JoinedAt.getDate() + ', ' + data.JoinedAt.getFullYear() : 'at Unavailable'
+                  data?.JoinedAt ? 'Joined ' + monthNames[data.JoinedAt.getUTCMonth()]?.name + ' ' + data.JoinedAt.getDate() + ', ' + data.JoinedAt.getFullYear() : 'at Unavailable'
                 }
               </div>
             </div>

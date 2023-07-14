@@ -76,7 +76,7 @@ const ProfilePopup = ({ show, close, setEditProfile }: PopupProps) => {
                 <div className='flex flex-col font-body text-lg md:flex-row md:gap-5'>
                   <div className='font-medium md:text-[22px]'>{data?.address ? shortenAddress(data?.address!) : shortenAddress(Null_Address)}</div>
                   <div className='font-bold'>
-                    {data?.JoinedAt ? 'Joined ' + monthNames[data.JoinedAt.getUTCMonth()] + ' ' + data.JoinedAt.getDate() + ', ' + data.JoinedAt.getFullYear() : 'at Unavailable'}
+                    {data?.JoinedAt ? 'Joined ' + monthNames[data.JoinedAt.getUTCMonth()]?.name + ' ' + data.JoinedAt.getDate() + ', ' + data.JoinedAt.getFullYear() : 'at Unavailable'}
                   </div>
                 </div>
               </div>
