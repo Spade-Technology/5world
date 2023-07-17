@@ -64,7 +64,7 @@ const VotesNscores = ({ show, close }: Props) => {
   }, [pageCount, delegated, VotesInfo])
 
   return (
-    <CustomModal show={show} close={close}>
+    <CustomModal show={show} close={close} externalStyle='w-full md:w-fit'>
       <div className='w-[431px] font-body text-lg font-normal'>
         <div className='flex gap-5 border-b-[1px] border-b-vdao-dark pb-2 font-semibold'>
           <div onClick={() => setDelegated(true)} className={` cursor-pointer ${delegated ? 'text-vdao-light' : ''}`}>

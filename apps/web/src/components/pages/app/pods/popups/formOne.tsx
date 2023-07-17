@@ -28,7 +28,7 @@ const FormOne = ({ podName, description, podImage, setPodImage, setNextForm, set
 
   const nextHandler = () => {
     if (podName && description && podImage.image) {
-    setNextForm(true)
+      setNextForm(true)
     } else {
       setError(true)
       setTimeout(() => {
@@ -54,14 +54,15 @@ const FormOne = ({ podName, description, podImage, setPodImage, setNextForm, set
   }
 
   return (
-    <div className='grid grid-cols-1 gap-[30px] pt-[30px] pb-[14px] font-body text-lg font-normal text-vdao-dark md:max-h-[760px] md:grid-cols-2 md:gap-[106px] md:pb-[34px] md:pt-10'>
+    <div className='grid grid-cols-1 gap-[30px] pt-[30px] pb-[14px] font-body text-lg font-normal text-vdao-dark md:max-h-[760px] md:grid-cols-2 md:pb-[34px] md:pt-10 lg:gap-[106px]'>
       <div>
         <div className='text-[22px] font-bold'>Pod Name</div>
 
         <div className='pt-[5px]'>You cannot change it after this step.</div>
         <input
-          className={`mt-[17px] h-10 w-full max-w-[424px] rounded-[10px] border-[1px]  px-5 font-body outline-none md:mt-5
-                      ${error && !podName ? 'border-red-600 placeholder:text-red-400' : 'border-vdao-dark'}`}
+          className={`mt-[22px] flex h-10 w-full items-center rounded-[5px] border-[1px] border-vdao-dark pl-5  font-body text-base font-normal text-vdao-dark duration-500 placeholder:text-vdao-dark placeholder:opacity-50 ${
+            error && !podName ? 'border-red-600 placeholder:text-red-400' : 'border-vdao-dark'
+          }`}
           placeholder={`${error && !podName ? '*Required' : 'Enter pod name'}`}
           onChange={evt => setPodName(evt.target.value)}
           value={podName}
@@ -110,7 +111,7 @@ const FormOne = ({ podName, description, podImage, setPodImage, setNextForm, set
         <div className='pt-[5px]'>Your pod description goes here.</div>
 
         <textarea
-          className={`mt-5 h-[373px] w-full max-w-[510px] rounded-[10px] border-[1px] p-[30px] outline-none placeholder:text-opacity-80
+          className={`mt-5 h-[373px] w-full rounded-[10px]  border-[1px] border-vdao-dark p-[30px] font-body text-base font-normal text-vdao-dark outline-none placeholder:text-vdao-dark placeholder:text-opacity-80 placeholder:opacity-50 md:max-w-[510px]
           ${error && !description ? 'border-red-600 placeholder:text-red-400' : 'border-vdao-dark'}`}
           placeholder={`${
             error && !description

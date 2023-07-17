@@ -3,6 +3,7 @@ type Props = {
   description?: JSX.Element
   invertColors?: boolean
   propsClass?: string
+  propsTextClass?: string
 }
 
 const Description = (props: Props) => {
@@ -20,7 +21,7 @@ const Description = (props: Props) => {
       }`}
     >
       <div className={`${titleClass} font-heading font-medium text-vdao-dark md:text-[80px] ${props.invertColors ? 'text-vdao-light' : ''}`}>{props.title}</div>
-      <div className={`${descriptionClass} md:pt-24`}> {props.description} </div>
+      <div className={`${descriptionClass} ${props.propsTextClass} md:pt-24`}> {props.description} </div>
     </div>
   )
 }

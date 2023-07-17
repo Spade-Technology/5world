@@ -19,18 +19,18 @@ const PodsProfile = ({ setOpenCreatePod }: Props) => {
   const router = useRouter()
 
   return (
-    <Section className='w-screen bg-vdao-deep'>
+    <Section className='w-full bg-vdao-deep'>
       <Description
         invertColors={true}
-        propsClass={'!max-w-[1132px] !md:gap-5'}
+        propsClass={'!max-w-[1132px] md:!flex-col lg:!flex-row md:!gap-5'}
+        propsTextClass='md:!pt-0 lg:!mt-24'
         title={
-          <div className='w-[342px] flex-col font-heading text-[44px] font-medium leading-[48px] text-vdao-light md:!w-[280px] md:text-[60px] md:leading-[60px] lg:w-[553px] lg:text-[80px]  lg:leading-[95px] '>
-            <div className=''>Pods</div>
-            <div className=''>Profile</div>
+          <div className='w-[342px] font-heading text-[44px] font-medium leading-[48px] text-vdao-light md:!w-full md:text-[60px] md:leading-[60px] lg:w-[553px] lg:text-[80px]  lg:leading-[95px]'>
+            Pods Profile
           </div>
         }
         description={
-          <div className='w-full font-body text-[26px] font-medium leading-[30px] md:w-full md:max-w-[557px]'>
+          <div className='w-full font-body text-[26px] font-medium leading-[30px] md:w-full lg:max-w-[557px]'>
             As the smallest units of organisation within the DAO, Pods form around specific focus areas to achieve specific outcomes. These are spaces for discussion, collaboration and advancement of
             specific areas of work.
             <br />
@@ -42,8 +42,8 @@ const PodsProfile = ({ setOpenCreatePod }: Props) => {
       />
 
       <div className='flex flex-col md:flex-row '>
-        <div className='flex-1'></div>
-        <div className='mt-[30px] flex flex-1 flex-col gap-5 pl-6 md:mt-0 md:flex-row md:pl-16'>
+        <div className='lg:flex-1'></div>
+        <div className='mt-[30px] flex flex-1 flex-col gap-5 pl-6 md:mt-0 md:flex-row lg:pl-16'>
           <PrimaryButton text='Create Pods' onClick={() => (siwe ? setOpenCreatePod(true) : router.push('/app/pods/#restrictedContent'))} className='py-[5px] px-[35px] text-xl' />
           <div className='w-fit cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] font-heading text-xl text-white'>
             <Link href={siwe ? '/app/pods/#currentPods' : '/app/pods/#restrictedContent'}>See all Pods </Link>
@@ -51,7 +51,7 @@ const PodsProfile = ({ setOpenCreatePod }: Props) => {
         </div>
       </div>
 
-      <div className={`mx-auto flex  max-w-[767px] flex-col gap-10 bg-vdao-deep px-6 py-16 text-white md:flex-row md:gap-[67px] md:py-20 md:pt-[140px] md:pb-[70px] `}>
+      <div className={`mx-auto flex  max-w-[767px] flex-col gap-10 bg-vdao-deep px-6 py-16 text-white md:flex-row md:gap-[67px] md:py-[140px]`}>
         <div className='md:w-[243px]'>
           <span className='mr-5 font-heading text-3xl font-medium underline underline-offset-8 md:text-4xl'>Four Stages of Pods</span>
         </div>

@@ -64,7 +64,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
     }
   }
   return (
-    <CustomModal show={show} close={close} externalStyle={'w-full custom-scrollbar md:mx-20 lg:mx-10 xl:mx-auto '}>
+    <CustomModal show={show} close={close} externalStyle={'w-full custom-scrollbar md:mx-10 xl:mx-auto '}>
       {!proposal ? (
         <div className='pb-[30px] font-body text-lg font-normal text-vdao-dark'>
           <Skeleton className=' h-4 w-[200px]' />
@@ -115,7 +115,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
             {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()]?.name + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
           </div>
 
-          <div className='grid grid-cols-1 gap-[73px] py-[10px] md:py-5 lg:grid-cols-3'>
+          <div className='grid grid-cols-1 gap-[73px] py-[10px] md:py-5 lg:grid-cols-3 lg:gap-4'>
             <div className='col-span-2'>
               <div className='font-heading text-[26px] font-medium leading-9 md:text-[30px]'>{proposal?.title ? shortenText(proposal.title) : 'No title'}</div>
               <div className='grid grid-cols-2 pt-[10px] md:grid-cols-3 md:pt-5'>
@@ -166,8 +166,9 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                     />
 
                     <div
-                      style={{ transition: '0.2s ease-in', height: dropDownOn ? '120px' : '0px' }}
-                      className={`float-right mx-auto mt-1 flex max-w-[1130px]  flex-col justify-end gap-[1px] overflow-hidden`}
+                      className={`float-right mx-auto mt-1 flex max-w-[1130px] flex-col  justify-end gap-[1px] overflow-hidden duration-200 ${
+                        dropDownOn ? 'h-[120px] opacity-100' : 'h-[0px] opacity-0'
+                      } `}
                     >
                       <DropdownPrimaryButton text='Vote for proposal' className='w-full hover:bg-green-200' onClick={() => votesHandler('for')} icon={LikedIcon} />
                       <DropdownPrimaryButton text='Vote against proposal' className='w-full hover:bg-green-200' icon={DisLikedIcon} onClick={() => votesHandler('against')} />

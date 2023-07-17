@@ -31,7 +31,7 @@ const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
       <div className='flex flex-col justify-between md:flex-row'>
         <div className='max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:text-[46px]'>Candidates</div>
 
-        <div className='mt-5 flex h-[43px] w-full max-w-[409px] items-center gap-[18px] overflow-hidden rounded-xl bg-vdao-dark px-3 '>
+        <div className='mt-5 flex h-[43px] w-full items-center gap-[18px] overflow-hidden rounded-xl bg-vdao-dark px-3 md:max-w-[409px] '>
           <div className='h-7 w-7 bg-[url(/icons/stewards/search.svg)] bg-contain bg-center bg-no-repeat '></div>{' '}
           <input type='text' className='h-full w-full bg-transparent  font-body text-lg font-medium text-vdao-light outline-none ' placeholder='Search username' />
         </div>

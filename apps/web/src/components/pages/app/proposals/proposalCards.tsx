@@ -52,6 +52,7 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
       setUpdatedData(data)
     }
   }, [data, proposalsType])
+
   /** The following two useEffects are for Pagenation functionality. */
   useEffect(() => {
     if (updatedData) {
@@ -102,7 +103,7 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
             return (
               <div
                 onClick={() => setProposalsType(item)}
-                className={`relative cursor-pointer rounded-[100px] py-2 text-center font-medium ${proposalsType === item ? 'bg-vdao-light text-vdao-dark duration-300' : ''}`}
+                className={`relative cursor-pointer rounded-[100px]  py-2 text-center font-medium duration-300 ${proposalsType === item ? 'bg-vdao-light text-vdao-dark opacity-100' : ''}`}
               >
                 {item}
               </div>
@@ -116,7 +117,9 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
               return <Card proposal={proposal} key={idx} setViewProposal={setViewProposal} setProposalID={setProposalID} />
             })
           ) : (
-            <div className='p-10 text-3xl text-white'>No proposals available</div>
+            <div className=''>
+              <div className='text-3xl text-white'>No proposals available</div>
+            </div>
           )}
         </div>
 
@@ -132,7 +135,7 @@ export const Card = ({ proposal, setViewProposal, setProposalID }: CardProps) =>
   return (
     <div className='mt-[20px] overflow-hidden rounded-[20px] bg-white px-5 py-10 font-body text-vdao-dark md:mt-[30px] md:p-8 lg:p-[50px]'>
       <div className='flex flex-col justify-between md:flex-row'>
-        <div className='w-2/3 flex-1 md:max-w-[412px]'>
+        <div className='w-full flex-1 md:max-w-[412px]'>
           <div className='text-lg font-semibold'>
             {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()]?.name + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
           </div>
@@ -142,11 +145,12 @@ export const Card = ({ proposal, setViewProposal, setProposalID }: CardProps) =>
 
           <div className={`mt-[30px] w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-9 py-[5px] text-lg font-medium text-vdao-light`}>{proposalStatus}</div>
         </div>
-        <div className='w-1/3'>
+        <div className='md:w-1/3'>
           <div className='overflow-hidden overflow-ellipsis pt-7 text-lg font-normal md:pt-9'>{proposal.description}</div>
           <PrimaryButton
             text='View Detail'
-            className='mt-[30px] py-[5px] px-9 text-xl font-medium'
+            spanClass='!text-center !justify-center '
+            className='mt-[30px]'
             onClick={() => {
               setProposalID(proposal?.id)
               setViewProposal(proposal)

@@ -37,23 +37,22 @@ const OperationalProposals = ({ setOpenCreateProposal, setOpenCreateGrantProposa
       />
 
       <div className='mx-auto mt-[30px] flex max-w-[1130px] flex-1 flex-col justify-end gap-5 px-6 md:mt-0 md:flex-row'>
-        <div>
+        <div className=''>
           <DropdownPrimaryButton
             text='Create Proposal'
             // onClick={() => (siwe ? setOpenCreateProposal(true) : router.push('/app/proposals/#restrictedContent'))}
             onClick={() => (siwe ? setDropDownOn(!dropDownOn) : router.push('/app/proposals/#restrictedContent'))}
-            className='py-[5px] px-[35px] text-xl'
+            className='text-xl'
             icon={PolygonIcon}
             dropDown
           />
 
           <div
-            style={{ transition: '0.2s ease-in', height: dropDownOn ? '80px' : '0px' }}
-            className={`${''} float-right mx-auto mt-1 flex w-full max-w-[1130px]  flex-col justify-end gap-[1px] overflow-hidden`}
+            className={`${dropDownOn ? 'h-[80px] opacity-100' : 'h-[0px] opacity-0'} float-right mx-auto mt-1 flex w-full max-w-[1130px] flex-col  justify-end gap-[1px] overflow-hidden duration-200`}
           >
             <PrimaryButton
               text='Normal Proposal'
-              className='w-full'
+              className='!w-[280px]'
               onClick={() => {
                 setOpenCreateGrantProposal(false)
                 setDropDownOn(false)
@@ -62,7 +61,7 @@ const OperationalProposals = ({ setOpenCreateProposal, setOpenCreateGrantProposa
             />
             <PrimaryButton
               text='Grant Proposal'
-              className='w-full'
+              className='!w-[280px]'
               onClick={() => {
                 setOpenCreateProposal(false)
                 setDropDownOn(false)
