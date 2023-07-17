@@ -24,11 +24,11 @@ const PodCards = ({ setPod, setOpenedPod, data, isLoading }: PodCardProps) => {
   return (
     <div className='w-full bg-vdao-deep px-6'>
       <div className='mx-auto w-full max-w-[1140px] pb-[120px]'>
-        <div id='currentPods' className='mx-6 max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'>
+        <div id='currentPods' className='max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'>
           Current Pods
         </div>
 
-        <div className='mx-6 mt-5 grid grid-cols-1 gap-5 md:mx-0 md:grid-cols-2'>
+        <div className='mt-5 grid grid-cols-1 gap-5 md:grid-cols-2'>
           {isLoading ? (
             <>
               <Skeleton.Avatar shape='square' style={{ height: '400px', width: '100%' }} className='col-span-2' active />
@@ -50,7 +50,7 @@ const PodCards = ({ setPod, setOpenedPod, data, isLoading }: PodCardProps) => {
 
 export const Card = ({ setOpenedPod, pod, setPod }: CardProps) => {
   return (
-    <div className='rounded-[20px] bg-vdao-dark py-10 px-5 text-white lg:py-[50px] lg:px-10'>
+    <div id='#currentPods' className='rounded-[20px] bg-vdao-dark py-10 px-5 text-white lg:py-[50px] lg:px-10'>
       <div className='flex flex-col gap-[10px] md:flex-row lg:gap-[25px]'>
         <Image src={pod.picture ? pod.picture : PodImage} alt='' height={120} width={120} className='rounded-[5px] align-top' />
         <div>
