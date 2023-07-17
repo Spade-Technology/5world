@@ -92,7 +92,7 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
   }, [pageCount, updatedData])
 
   return (
-    <div className='mx-auto w-full bg-vdao-deep px-6 pt-[63px]'>
+    <div id='allProposals' className='mx-auto w-full bg-vdao-deep px-6 pt-[63px]'>
       <div className='mx-auto w-full max-w-[1140px] pb-[120px]'>
         <div id='allProposals' className='max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'>
           Proposals

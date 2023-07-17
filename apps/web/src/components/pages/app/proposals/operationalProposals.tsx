@@ -36,8 +36,8 @@ const OperationalProposals = ({ setOpenCreateProposal, setOpenCreateGrantProposa
         }
       />
 
-      <div className='mx-auto mt-[30px] flex max-w-[1130px] flex-1 flex-col justify-end gap-5 px-6 md:mt-0 md:flex-row'>
-        <div className=''>
+      <div className='mx-auto mt-[30px] flex max-w-[1130px] flex-1 flex-col justify-end gap-5 px-6 md:mt-0 md:flex-row md:gap-[11px]'>
+        <div className='relative'>
           <DropdownPrimaryButton
             text='Create Proposal'
             // onClick={() => (siwe ? setOpenCreateProposal(true) : router.push('/app/proposals/#restrictedContent'))}
@@ -48,7 +48,9 @@ const OperationalProposals = ({ setOpenCreateProposal, setOpenCreateGrantProposa
           />
 
           <div
-            className={`${dropDownOn ? 'h-[80px] opacity-100' : 'h-[0px] opacity-0'} float-right mx-auto mt-1 flex w-full max-w-[1130px] flex-col  justify-end gap-[1px] overflow-hidden duration-200`}
+            className={`${
+              dropDownOn ? 'visible mt-1 opacity-100' : 'invisible mt-5 opacity-0 '
+            } absolute top-[100%] left-0 float-right mx-auto flex w-fit max-w-[1130px]  flex-col justify-end gap-[1px] overflow-hidden duration-300`}
           >
             <PrimaryButton
               text='Normal Proposal'
@@ -70,8 +72,8 @@ const OperationalProposals = ({ setOpenCreateProposal, setOpenCreateGrantProposa
             />
           </div>
         </div>
-        <div className='h-fit w-fit  cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white'>
-          <Link href={siwe ? '/app/proposals/#allProposals' : '/app/proposals/#restrictedContent'}>See All Proposals</Link>
+        <div className='h-fit w-fit  cursor-pointer rounded-[5px] border-[1px] border-white py-[4px] px-[35px] font-body text-xl text-white'>
+          <a href={siwe ? '#allProposals' : '#restrictedContent'}>See All Proposals</a>
         </div>
       </div>
 

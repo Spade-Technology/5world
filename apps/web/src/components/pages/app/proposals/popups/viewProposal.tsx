@@ -115,7 +115,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
             {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()]?.name + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
           </div>
 
-          <div className='grid grid-cols-1 gap-[73px] py-[10px] md:py-5 lg:grid-cols-3 lg:gap-4'>
+          <div className='grid grid-cols-1 gap-[73px] py-[10px] md:py-5 lg:grid-cols-3 lg:gap-10 xl:gap-[100px]'>
             <div className='col-span-2'>
               <div className='font-heading text-[26px] font-medium leading-9 md:text-[30px]'>{proposal?.title ? shortenText(proposal.title) : 'No title'}</div>
               <div className='grid grid-cols-2 pt-[10px] md:grid-cols-3 md:pt-5'>
@@ -151,14 +151,12 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                 </div>
 
                 <div className={` mt-[25px] md:mt-11 `}>
-                  <div className='relative'>
+                  <div className='relative w-[280px]'>
                     <DropdownPrimaryButton
                       text={btnStatus}
-                      className='h-fit w-full text-center'
+                      className='h-fit w-full !px-2.5 text-center'
                       onClick={() => {
-                        // if (btnStatus === 'Votes') {
                         setDropDownOn(!dropDownOn)
-                        // }
                       }}
                       icon={btnStatus === 'Vote for proposal' ? LikedIcon : btnStatus === 'Vote against proposal' ? DisLikedIcon : btnStatus === 'Abstain' ? AbstainIcon : PolygonIcon}
                       dropDown
@@ -166,13 +164,13 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                     />
 
                     <div
-                      className={`float-right mx-auto mt-1 flex max-w-[1130px] flex-col  justify-end gap-[1px] overflow-hidden duration-200 ${
-                        dropDownOn ? 'h-[120px] opacity-100' : 'h-[0px] opacity-0'
-                      } `}
+                      className={`float-right mx-auto flex w-full flex-col  justify-end gap-[1px] overflow-hidden rounded-md bg-vdao-light duration-200 ${
+                        dropDownOn ? 'visible mt-1 opacity-100' : 'invisible mt-5 opacity-0 '
+                      }  absolute top-[100%] left-0 `}
                     >
-                      <DropdownPrimaryButton text='Vote for proposal' className='w-full hover:bg-green-200' onClick={() => votesHandler('for')} icon={LikedIcon} />
-                      <DropdownPrimaryButton text='Vote against proposal' className='w-full hover:bg-green-200' icon={DisLikedIcon} onClick={() => votesHandler('against')} />
-                      <DropdownPrimaryButton text='Abstain' className='w-full hover:bg-green-200' icon={AbstainIcon} onClick={() => votesHandler('abstain')} />
+                      <DropdownPrimaryButton text='Vote for proposal' className='w-full !px-2.5 hover:bg-green-200' onClick={() => votesHandler('for')} icon={LikedIcon} />
+                      <DropdownPrimaryButton text='Vote against proposal' className='w-full !px-2.5 hover:bg-green-200' icon={DisLikedIcon} onClick={() => votesHandler('against')} />
+                      <DropdownPrimaryButton text='Abstain' className='w-full !px-2.5 hover:bg-green-200' icon={AbstainIcon} onClick={() => votesHandler('abstain')} />
                     </div>
                   </div>
                 </div>
