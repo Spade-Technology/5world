@@ -30,7 +30,7 @@ export const VDAOConnectButton = ({
   disabled,
   messageOverrides,
   onClickOverride,
-  redirectDisabled
+  redirectDisabled,
 }: {
   className?: string
   web2?: boolean
@@ -60,7 +60,7 @@ export const VDAOConnectButton = ({
 
       const new_state: 'walletselect' | 'verify' | 'verified' | 'register' | 'loading' =
         isLoading && address ? 'loading' : address ? (data ? (siwe ? 'verified' : 'verify') : 'register') : 'walletselect'
-        console.log("new_state", new_state, address, data, siwe)
+      console.log('new_state', new_state, address, data, siwe)
       setModalState(new_state)
       setMessage(siwe?.address && !web2 ? shortenAddress(siwe.address) : messages[new_state])
     }
@@ -252,7 +252,6 @@ function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Se
       const signature = await signMessageAsync({
         message: message.prepareMessage(),
       })
-
       await mutateAsync(
         {
           address: address as Address,
@@ -264,6 +263,7 @@ function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Se
         },
         {
           onSuccess: async () => {
+            setOpenModal(false)
             notification.success({
               message: 'Success',
               description: 'You have successfully registered a Vdao Account.',
@@ -274,7 +274,6 @@ function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Se
               redirect: false,
               callbackUrl,
             })
-            setOpenModal(false)
           },
           onError: error => {
             const isNameAlreadyRegistered = JSON.stringify(error).includes('Unique constraint failed on the fields: (`name`)')
@@ -287,6 +286,9 @@ function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Se
       ).catch(error => {
         console.error(error)
       })
+
+      setOpenModal(false)
+      window.location.reload()
     } catch (error) {
       notification.error({
         message: 'Error',
