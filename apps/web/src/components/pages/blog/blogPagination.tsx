@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { blogDetails } from './blogDetails'
 import BlogCard from './blogCard'
-import Pagination from '~/components/misc/Pagination'
+// import Pagination from '~/components/misc/Pagination'
 
 const BlogPagination = () => {
   const [pageCount, setPageCount] = useState(1)
@@ -52,7 +52,7 @@ const BlogPagination = () => {
             return <BlogCard blog={blog} key={idx} showBorder={idx + 1 < updatedBlogs.length} id={idx} />
           })}
       </div>
-      <Pagination pageNumbers={pageNumbers} pageCount={pageCount} setPageCount={setPageCount} />
+      {/* <Pagination pageNumbers={pageNumbers} pageCount={pageCount} setPageCount={setPageCount} /> */}
     </>
   )
 }
