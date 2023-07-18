@@ -191,7 +191,7 @@ function Signing({
             <div className='d-none flex flex-col justify-between'>
               {/* step 0 */}
               <VDAOConnectButton
-                className='border-vdao-light bg-vdao-light font-roboto !text-sm font-medium text-vdao-dark outline-none'
+                className={`${step != 0 ? 'cursor-not-allowed' : ''} border-vdao-light bg-vdao-light font-roboto !text-sm font-medium text-vdao-dark outline-none`}
                 messageOverrides={{ register: 'Wallet Connected', verify: 'Wallet Connected', verified: 'Wallet Connected' }}
                 web2
                 redirectDisabled
@@ -199,7 +199,7 @@ function Signing({
               />
               {/* step 1 */}
               <VDAOConnectButton
-                className={`!h-10 w-fit font-roboto !text-sm font-medium ${
+                className={` ${step != 1 ? 'cursor-not-allowed' : ''} !h-10 w-fit font-roboto !text-sm font-medium ${
                   step < 1 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : step == 1 ? 'border-vdao-light !text-vdao-light' : 'border-vdao-light bg-vdao-light text-vdao-dark'
                 }`}
                 disabled={step != 1}
@@ -209,7 +209,10 @@ function Signing({
               />
               {/* step 2 */}
               <VDAOConnectButton
-                className={`!h-10 w-fit !font-roboto !text-sm font-medium ${step < 2 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : '!border-vdao-light !text-vdao-light'}`}
+                className={`${step != 2 ? 'cursor-not-allowed' : ''} !h-10 w-fit !font-roboto !text-sm font-medium ${
+                  // step == 2 ? 'border-vdao-light bg-vdao-light text-vdao-dark' :
+                  step < 2 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : '!border-vdao-light !text-vdao-light'
+                }`}
                 disabled={step != 2 || disabled}
                 onClickOverride={signManifesto}
                 messageOverrides={{ verified: 'Sign Manifesto', verify: 'Sign Manifesto', register: 'Sign Manifesto', walletselect: 'Sign Manifesto' }}
