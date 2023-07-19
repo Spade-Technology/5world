@@ -15,10 +15,7 @@ import AbstainIcon from 'public/icons/proposal/abstain.svg'
 import PolygonIcon from 'public/icons/stewards/polygon.svg'
 import TenderlyIcon from 'public/icons/proposal/tenderly.svg'
 import { api } from '~/utils/api'
-import { useRouter } from 'next/router'
 import PrimaryButton, { DropdownPrimaryButton } from '~/styles/shared/buttons/primaryButton'
-import Decimal from 'decimal.js'
-import { Spin } from 'antd'
 import { Skeleton } from '~/components/ui/skeleton'
 
 type ViewProposalProps = {

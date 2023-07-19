@@ -155,7 +155,7 @@ export function NewMembersComponent({ newMembersArr }: NewMembersProps) {
       <div className='lg:px-10'>
         <div className='flex items-center gap-2.5'>
           <div className='font-body text-[22px] font-bold text-white'>New Members</div>
-          <div className='font-body text-lg font-normal text-white'>{newMembersArr ? newMembersArr.length : 0}</div>
+          <div className='font-body text-lg font-normal text-white'>{newMembersArr ? newMembersArr?.length : 0}</div>
         </div>
         <div className=''>
           {newMembersArr?.map((member: any, index: number) => {
@@ -281,7 +281,7 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr, data }:
                     ...Read more
                   </span>
                 </div>
-              ) : data?.description.length < 250 ? (
+              ) : data?.description?.length < 250 ? (
                 data?.description
               ) : (
                 'No Description available'
@@ -307,7 +307,7 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr, data }:
             },
             {
               name: 'Proposals Created',
-              value: data?.proposals ? data.proposals.length : '0',
+              value: data?.proposals ? data.proposals?.length : '0',
             },
             {
               name: 'Praise Score',
@@ -349,11 +349,12 @@ export function WelcomeComponent() {
 
 export function SelfDelegate({ data }: SelfDelegateProps) {
   const { delegate } = useDelegate()
+  const { data: siwe } = useSession()
   return (
     <Section className='mx-auto max-w-[937px]  px-6 pb-6'>
       <div className='my-auto mt-5 flex flex-col justify-between gap-5 rounded-[20px] bg-vdao-dark px-6 py-5 text-lg font-light text-white md:flex-row md:px-12'>
         <div className='max-w-[523px]'>To be able to interact with the dao, you need to have delegates, you can also self-delegate your VDAO tokens.</div>
-        <PrimaryButton text='Self delegate' className='my-auto' onClick={() => delegate({ delegatee: data?.address })} disabled={data?.address ? true : false} />
+        <PrimaryButton text='Self delegate' className='my-auto' onClick={() => delegate({ delegatee: data?.address })} disabled={siwe ? false : true} />
       </div>
     </Section>
   )
