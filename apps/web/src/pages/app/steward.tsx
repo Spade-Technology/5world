@@ -20,7 +20,7 @@ const Steward = () => {
 
         <EnforceAuth>
           <StewardCards setOpenProfile={setOpenProfile} />
-          {openProfile && <ProfilePopup profile={openProfile} close={() => setOpenProfile(undefined)} />}
+          <ProfilePopup profile={openProfile || ''} close={() => setOpenProfile(undefined)} />
         </EnforceAuth>
       </Page>
     </div>
