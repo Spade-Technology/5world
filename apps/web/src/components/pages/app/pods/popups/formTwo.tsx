@@ -202,7 +202,7 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
               Previous
             </div>
           )}
-          <PrimaryButton text={pod ? 'Save' : 'Confirm'} className=' py-[5px] px-[35px] font-heading text-lg font-medium' onClick={() => createPodHanlder()} />
+          <PrimaryButton text={pod ? 'Save' : 'Confirm'} className='' onClick={() => createPodHanlder()} />
         </div>
       </div>
     </div>

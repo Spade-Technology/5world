@@ -123,7 +123,7 @@ const FormOne = ({ podName, description, podImage, setPodImage, setNextForm, set
         />
 
         <div className='pt-[20px] md:pt-[90px]'>
-          <PrimaryButton text='Next' className='float-right py-[5px] px-[35px] text-lg font-medium' onClick={nextHandler} />
+          <PrimaryButton text='Next' className='float-right' onClick={nextHandler} />
         </div>
       </div>
     </div>

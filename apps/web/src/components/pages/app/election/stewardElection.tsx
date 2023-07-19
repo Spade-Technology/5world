@@ -179,8 +179,9 @@ const StewardElection = () => {
         </Button>
       </div> */}
       <div className='px-6 md:px-0'>
-        <div className='mt-[60px] w-full rounded-2xl bg-vdao-dark px-10 py-6 text-center font-body text-white md:mx-auto md:mt-10 md:max-w-[306px] md:p-6'>
+        <div className='mx-auto mt-[60px] w-fit rounded-2xl bg-vdao-dark px-10 py-6 text-center font-body text-white md:mt-10 md:p-6'>
           <div className='text-[22px] font-medium leading-[30px] '>{electionTime ? 'Before the election closing' : 'Before the next election'}</div>
+
           <div className='mt-[13px] flex justify-center font-bold text-vdao-light md:justify-between'>
             <div>
               <div className='flex gap-1'>
@@ -226,15 +227,10 @@ const StewardElection = () => {
 
           <div className='py-4 font-body text-lg font-normal md:pt-[21px]'>OR</div>
 
-          <div className='px-4 font-body text-lg font-normal leading-[22px] '>Next Stewards anounced in X Days, X Hours, X minutes</div>
+          <div className='mx-auto max-w-[231px] px-4 font-body text-lg font-normal leading-[22px]'>
+            Next Stewards anounced in {daysLeft} Days, {hoursLeft} Hours, {minutesLeft} minutes
+          </div>
           {/* </div> */}
-        </div>
-
-        <div className='py-5 text-lg font-light'>OR</div>
-
-        <div className=' text-lg font-light'>
-          Next Stewards anounced in
-          <br /> {daysLeft} Days, {hoursLeft} Hours, {minutesLeft} minutes
         </div>
       </div>
 
