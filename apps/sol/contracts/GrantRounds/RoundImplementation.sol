@@ -91,7 +91,10 @@ contract RoundImplementation is
      *  - _adminRoles Addresses to be granted DEFAULT_ADMIN_ROLE
      *  - _roundOperators Addresses to be granted ROUND_OPERATOR_ROLE
      */
-    function initialize(bytes calldata encodedParameters) external initializer {
+    function initialize(
+        bytes calldata encodedParameters,
+        address[] calldata adminRoles
+    ) external initializer {
         // Decode _encodedParameters
         (
             InitRoundTime memory _initRoundTime,
@@ -242,16 +245,6 @@ contract RoundImplementation is
         applicationsEndBlock = newApplicationsEndBlock_;
         roundStartBlock = newRoundStartBlock_;
         roundEndBlock = newRoundEndBlock_;
-    }
-
-    /// @notice Update matchingAmount (only by ROUND_OPERATOR_ROLE)
-    /// @param newMatchingAmount_ new matchingAmount
-    function updateMatchingAmount(
-        uint256 newMatchingAmount_
-    ) external applicationHasNotEnded onlyRole(ROUND_OPERATOR_ROLE) {
-        emit MatchingAmountUpdated(matchingAmount, newMatchingAmount_);
-
-        matchingAmount = newMatchingAmount_;
     }
 
     /// @notice Update blacklist state of an Application (only by ROUND_OPERATOR_ROLE)
@@ -461,6 +454,16 @@ contract RoundImplementation is
             recepient_,
             IERC20(token_).balanceOf(address(this))
         );
+    }
+
+    /// @notice Update matchingAmount (only by ROUND_OPERATOR_ROLE)
+    /// @param newMatchingAmount_ new matchingAmount
+    function updateMatchingAmount(
+        uint256 newMatchingAmount_
+    ) external applicationHasNotEnded onlyRole(DEFAULT_ADMIN_ROLE) {
+        emit MatchingAmountUpdated(matchingAmount, newMatchingAmount_);
+
+        matchingAmount = newMatchingAmount_;
     }
 
     function _getTotalQuadraticVotes()
