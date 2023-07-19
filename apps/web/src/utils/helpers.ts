@@ -53,7 +53,24 @@ export const getCurrentUnixTimeStamp = () => {
 }
 
 export const JoinedAtFormat = (date: any) => {
-  const joinedAt = date && date.length > 0 ? 'Joined' + monthNames[date.getUTCMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear() : 'Joined at unavailable'
+  const joinedAt = date && date.length > 0 ? 'Joined' + monthNames[date.getUTCMonth()]?.name + ' ' + date.getDate() + ', ' + date.getFullYear() : 'Joined at unavailable'
 
   return joinedAt
+}
+
+export const imageToBase64String = (file: any) => {
+  return new Promise<string>((resolve, reject) => {
+    var reader = new FileReader()
+    console.log('tzazeaz')
+    reader.readAsDataURL(file)
+    reader.onload = function () {
+      console.log(reader.result)
+      if (reader.result) return resolve(reader.result.toString())
+      else return resolve('')
+    }
+    reader.onerror = function (error) {
+      console.error(error)
+      return resolve('')
+    }
+  })
 }

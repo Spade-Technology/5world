@@ -17,6 +17,7 @@ import { monthNames } from '~/utils/date'
 import { useSession } from 'next-auth/react'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { User } from '@prisma/client'
+import { useDelegate } from '~/hooks/web3/useStewards'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -25,8 +26,13 @@ type ProfileProps = {
   setNewMembersArr: any
   data: User
 }
+
 type NewMembersProps = {
   newMembersArr: any
+}
+
+type SelfDelegateProps = {
+  data: User
 }
 
 export function StatisticsHomeComponent() {
@@ -53,7 +59,7 @@ export function StatisticsHomeComponent() {
                   {period.value}
                 </div>
                 <FaChevronDown onClick={() => setPeriod({ ...period, state: !period.state })} className='text-[15px] text-vdao-light' />
-                <div className={`absolute  left-0 z-50 w-full overflow-hidden rounded-[10px] bg-white ease-[1s] ${period.state ? 'top-[110%] block opacity-100' : 'top-[130%] hidden opacity-0'}`}>
+                <div className={`ease-[1s]  absolute left-0 z-50 w-full overflow-hidden rounded-[10px] bg-white ${period.state ? 'top-[110%] block opacity-100' : 'top-[130%] hidden opacity-0'}`}>
                   {['week', 'month', 'year'].map((text, index) => {
                     return (
                       <div
@@ -149,7 +155,7 @@ export function NewMembersComponent({ newMembersArr }: NewMembersProps) {
       <div className='lg:px-10'>
         <div className='flex items-center gap-2.5'>
           <div className='font-body text-[22px] font-bold text-white'>New Members</div>
-          <div className='font-body text-lg font-normal text-white'>{newMembersArr ? newMembersArr.length : 0}</div>
+          <div className='font-body text-lg font-normal text-white'>{newMembersArr ? newMembersArr?.length : 0}</div>
         </div>
         <div className=''>
           {newMembersArr?.map((member: any, index: number) => {
@@ -164,7 +170,7 @@ export function NewMembersComponent({ newMembersArr }: NewMembersProps) {
                 </div>
                 <div className=''>
                   <div className='flex justify-end font-body text-sm font-bold leading-5 text-[#F8F2FF]'>
-                    {member?.JoinedAt ? monthNames[member.JoinedAt.getUTCMonth()] + ' ' + member.JoinedAt.getDate() + ', ' + member.JoinedAt.getFullYear() : 'Unavailable'}
+                    {member?.JoinedAt ? monthNames[member.JoinedAt.getUTCMonth()]?.name + ' ' + member.JoinedAt.getDate() + ', ' + member.JoinedAt.getFullYear() : 'Unavailable'}
                   </div>
                   <div className='flex justify-end font-body text-sm font-normal leading-5 text-[#F8F2FF]'>
                     {member?.JoinedAt
@@ -275,7 +281,7 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr, data }:
                     ...Read more
                   </span>
                 </div>
-              ) : data?.description.length < 250 ? (
+              ) : data?.description?.length < 250 ? (
                 data?.description
               ) : (
                 'No Description available'
@@ -301,7 +307,7 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr, data }:
             },
             {
               name: 'Proposals Created',
-              value: data?.proposals ? data.proposals.length : '0',
+              value: data?.proposals ? data.proposals?.length : '0',
             },
             {
               name: 'Praise Score',
@@ -341,12 +347,14 @@ export function WelcomeComponent() {
   )
 }
 
-export function SelfDelegate() {
+export function SelfDelegate({ data }: SelfDelegateProps) {
+  const { delegate } = useDelegate()
+  const { data: siwe } = useSession()
   return (
     <Section className='mx-auto max-w-[937px]  px-6 pb-6'>
       <div className='my-auto mt-5 flex flex-col justify-between gap-5 rounded-[20px] bg-vdao-dark px-6 py-5 text-lg font-light text-white md:flex-row md:px-12'>
         <div className='max-w-[523px]'>To be able to interact with the dao, you need to have delegates, you can also self-delegate your VDAO tokens.</div>
-        <PrimaryButton text='Self delegate' className='my-auto' />
+        <PrimaryButton text='Self delegate' className='my-auto' onClick={() => delegate({ delegatee: data?.address })} disabled={siwe ? false : true} />
       </div>
     </Section>
   )

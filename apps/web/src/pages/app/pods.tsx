@@ -38,21 +38,21 @@ const Pods = () => {
         <EnforceAuth>
           <PodCards setOpenedPod={setOpenedPod} setPod={setPod} data={data} isLoading={isLoading} />
 
-          {openCreatePod && <CreateNewPod show={openCreatePod} close={() => setOpenCreatePod(false)} refetch={refetch} />}
+          {<CreateNewPod show={openCreatePod} close={() => setOpenCreatePod(false)} refetch={refetch} />}
 
           {!!openedPod && <PodModal close={() => setOpenedPod(false)} pod={pod} setShowManageMembers={setShowManageMembers} />}
 
-          {showManageMembers && (
-            <ManageMembers
-              show={showManageMembers}
-              // managerAddr={managerAddr}
-              // memberAddr={memberAddr}
-              // setMemberAddr={setMemberAddr}
-              // setManagerAddr={setManagerAddr}
-              close={() => setShowManageMembers(false)}
-              pod={pod}
-            />
-          )}
+          {/* {showManageMembers && ( */}
+          <ManageMembers
+            show={showManageMembers}
+            // managerAddr={managerAddr}
+            // memberAddr={memberAddr}
+            // setMemberAddr={setMemberAddr}
+            // setManagerAddr={setManagerAddr}
+            close={() => setShowManageMembers(false)}
+            pod={pod}
+          />
+          {/* )} */}
         </EnforceAuth>
       </Page>
     </>

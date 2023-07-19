@@ -6,8 +6,8 @@ import { api } from '~/utils/api'
 import { InferArgs, InferReturn } from '~/utils/type'
 
 import VDAOImplementation from '~/abi/VDAOImplementation.json'
-import { currentContracts } from '~/config/contracts'
-import { writeContract } from '@wagmi/core'
+import { currentChainId, currentContracts } from '~/config/contracts'
+import { waitForTransaction, writeContract } from '@wagmi/core'
 import { notification } from 'antd'
 import { useState } from 'react'
 /* Proposal schema */
@@ -39,24 +39,48 @@ export function useProposal(id: number, ids: number[], include: ProposalInclude 
 }
 
 export function useProposalAction(id: number) {
+  const [isLoading, setIsLoading] = useState(false)
+
   // @param support The support value for the vote. 0=against, 1=for, 2=abstain
-  const castVote = async (support: number) =>
-    await writeContract({
+  const castVote = async (support: number) => {
+    setIsLoading(true)
+    const tx = await writeContract({
       address: currentContracts.proxiedVDao as Address,
       abi: VDAOImplementation,
-      functionName: 'vote',
+      functionName: 'castVote',
+      chainId: currentChainId,
       args: [id, support],
+    }).catch(error => {
+      notification.error({
+        message: 'Error casting vote',
+        description: error.shortMessage,
+      })
     })
+
+    if (tx) {
+      await waitForTransaction({ hash: tx.hash, timeout: 10000, chainId: currentChainId, confirmations: 1 })
+      notification.success({
+        message: 'Vote cast',
+        description: 'Your vote has been cast',
+      })
+    }
+
+    setIsLoading(false)
+  }
 
   const voteFor = async () => await castVote(1)
   const voteAgainst = async () => await castVote(0)
   const voteAbstain = async () => await castVote(2)
 
-  return { voteFor, voteAgainst, voteAbstain }
+  return { voteFor, voteAgainst, voteAbstain, isLoading }
 }
 
 export function useCreateProposal() {
-  const mutation = api.proposal.createProposal.useMutation()
+  const createProposalMutation = api.proposal.createProposal.useMutation()
+
+  const createGrantProposalMutation = api.proposal.createGrantProposal.useMutation()
+  const generateGrantIPFSHash = api.proposal.generateIPFSHash.useMutation()
+
   const [isLoading, setIsLoading] = useState(false)
 
   const createProposal = async ({
@@ -73,7 +97,7 @@ export function useCreateProposal() {
     description: string
     title: string
     authorAddress: string
-  }): Promise<({ data: Proposal & {} } & InferReturn<typeof mutation.mutate>) | void> => {
+  }): Promise<({ data: Proposal & {} } & InferReturn<typeof createProposalMutation.mutate>) | void> => {
     setIsLoading(true)
     // check that calldatas, targets, and values are all the same length
     if (calldatas.length !== targets.length || targets.length !== values.length) {
@@ -120,7 +144,7 @@ export function useCreateProposal() {
 
     setIsLoading(false)
 
-    return mutation.mutateAsync(...new_args).then(el => {
+    return createProposalMutation.mutateAsync(...new_args).then(el => {
       notification.success({
         message: 'Proposal created',
         description: 'Your proposal has been created',
@@ -129,5 +153,63 @@ export function useCreateProposal() {
     }) as any
   }
 
-  return { createProposal, mutation, isLoading: isLoading || mutation.isLoading }
+  const createGrantProposal = async ({
+    authorAddress,
+    description,
+    title,
+
+    grantTitle,
+    grantDescription,
+    grantRules,
+    grantAmount,
+    grantToken,
+    grantImage,
+    grantTheme,
+  }: {
+    authorAddress: string
+    description: string
+    title: string
+
+    grantTitle: string
+    grantDescription: string
+    grantRules: string
+    grantAmount: string
+    grantToken: string
+    grantImage: string
+    grantTheme: string
+  }) => {
+    setIsLoading(true)
+
+    const hash = await generateGrantIPFSHash
+      .mutateAsync({
+        name: grantTitle,
+        description: grantDescription,
+        rules: grantRules,
+        amount: grantAmount,
+        token: grantToken,
+        image: grantImage,
+        theme: grantTheme,
+        authorAddress,
+      })
+      .catch(e => {
+        setIsLoading(false)
+        console.error(e)
+        return notification.error({
+          message: 'Error creating proposal',
+          description: 'Failed to generate IPFS hash',
+        })
+      })
+
+    console.log(hash)
+
+    setIsLoading(false)
+  }
+
+  return {
+    createProposal,
+    createProposalMutation,
+    createGrantProposal,
+    generateGrantIPFSHash,
+    isLoading: isLoading || createProposalMutation.isLoading || createGrantProposalMutation.isLoading || generateGrantIPFSHash.isLoading,
+  }
 }

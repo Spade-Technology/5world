@@ -32,7 +32,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Page>
-        <SelfDelegate />
+        <SelfDelegate data={data} />
         <WelcomeComponent />
 
         <EnforceAuth>
@@ -45,7 +45,7 @@ const Home: NextPage = () => {
               <StatisticsHomeComponent />
             </Section>
           </div>
-          {openProfile && <ProfilePopup show={openProfile} close={() => setOpenProfile(false)} setEditProfile={setEditProfile} />}
+          <ProfilePopup show={openProfile} close={() => setOpenProfile(false)} setEditProfile={setEditProfile} />
           {editProfile && <EditProfile show={editProfile} close={() => setEditProfile(false)} setOpenProfile={setOpenProfile} refetch={refetch} />}
         </EnforceAuth>
       </Page>

@@ -22,10 +22,20 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
   const [pageCount, setPageCount] = useState(1)
   const [pageNumbers, setPageNumbers] = useState<any>([])
   const [updatedproposals, setUpdatedProposals] = useState<any>([])
-  const [proposalsType, setProposalsType] = useState('all')
+  const [proposalsType, setProposalsType] = useState('')
   const { data } = useProposalReads({ include: { author: true, pod: true } })
   const [updatedData, setUpdatedData] = useState<any>([])
   const itemsPerPage = 3
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setProposalsType('all')
+    }, 500)
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [])
 
   useEffect(() => {
     if (proposalsType === 'closed') {
@@ -41,7 +51,8 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
     } else {
       setUpdatedData(data)
     }
-  }, [proposalsType])
+  }, [data, proposalsType])
+
   /** The following two useEffects are for Pagenation functionality. */
   useEffect(() => {
     if (updatedData) {
@@ -81,37 +92,35 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
   }, [pageCount, updatedData])
 
   return (
-    <div className='mx-auto w-full bg-vdao-deep px-6 pt-[63px]'>
+    <div id='allProposals' className='mx-auto w-full bg-vdao-deep px-6 pt-[63px]'>
       <div className='mx-auto w-full max-w-[1140px] pb-[120px]'>
         <div id='allProposals' className='max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'>
           Proposals
         </div>
 
-        <div
-          className='mt-5 grid max-w-[450px] grid-cols-3 rounded-[100px] border-[1px] 
-                     border-vdao-light font-heading text-xl text-vdao-light'
-        >
-          <div onClick={() => setProposalsType('all')} className={`cursor-pointer rounded-[100px] py-2 text-center font-medium ${proposalsType === 'all' ? 'bg-vdao-light  text-vdao-dark' : ''}`}>
-            All
-          </div>
-          <div
-            onClick={() => setProposalsType('active')}
-            className={`cursor-pointer rounded-[100px] py-2 text-center font-medium ${proposalsType === 'active' ? 'bg-vdao-light  text-vdao-dark' : ''}`}
-          >
-            Active
-          </div>
-          <div
-            onClick={() => setProposalsType('closed')}
-            className={`cursor-pointer rounded-[100px] py-2 text-center font-medium ${proposalsType === 'closed' ? 'bg-vdao-light  text-vdao-dark' : ''}`}
-          >
-            Closed
-          </div>
+        <div className='mt-5 grid max-w-[450px] grid-cols-3 rounded-[100px] border-[1px] border-vdao-light font-heading text-xl text-vdao-light'>
+          {['all', 'active', 'closed'].map(item => {
+            return (
+              <div
+                onClick={() => setProposalsType(item)}
+                className={`relative cursor-pointer rounded-[100px]  py-2 text-center font-medium duration-300 ${proposalsType === item ? 'bg-vdao-light text-vdao-dark opacity-100' : ''}`}
+              >
+                {item}
+              </div>
+            )
+          })}
         </div>
 
         <div className='mt-[15px]  md:mx-0 '>
-          {updatedproposals && updatedproposals.length > 0 ? updatedproposals?.map((proposal: any, idx: number) => {
-            return <Card proposal={proposal} key={idx} setViewProposal={setViewProposal} setProposalID={setProposalID} />
-          }) : <div className='text-white p-10 text-3xl'>No proposals available</div>}
+          {updatedproposals && updatedproposals.length > 0 ? (
+            updatedproposals?.map((proposal: any, idx: number) => {
+              return <Card proposal={proposal} key={idx} setViewProposal={setViewProposal} setProposalID={setProposalID} />
+            })
+          ) : (
+            <div className=''>
+              <div className='text-3xl text-white'>No proposals available</div>
+            </div>
+          )}
         </div>
 
         <PageNation pageNumbers={pageNumbers} pageCount={pageCount} setPageCount={setPageCount} web3 />
@@ -125,22 +134,23 @@ export const Card = ({ proposal, setViewProposal, setProposalID }: CardProps) =>
 
   return (
     <div className='mt-[20px] overflow-hidden rounded-[20px] bg-white px-5 py-10 font-body text-vdao-dark md:mt-[30px] md:p-8 lg:p-[50px]'>
-      <div className='flex flex-col md:flex-row'>
-        <div className='w-2/3 flex-1'>
+      <div className='flex flex-col justify-between md:flex-row'>
+        <div className='w-full flex-1 md:max-w-[412px]'>
           <div className='text-lg font-semibold'>
-            {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()] + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
+            {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()]?.name + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
           </div>
-          <div className='overflow-hidden overflow-ellipsis pt-[10px] text-3xl font-medium'>{proposal?.title}</div>
+          <div className='overflow-hidden overflow-ellipsis break-all pt-[10px] text-3xl font-medium'>{proposal?.title}</div>
 
           <ProfileCard icon={proposal?.author?.picture ? proposal?.author?.picture : DummyIcon} name={proposal?.author?.name} address={proposal?.author?.address} />
 
           <div className={`mt-[30px] w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-9 py-[5px] text-lg font-medium text-vdao-light`}>{proposalStatus}</div>
         </div>
-        <div className='w-1/3'>
+        <div className='md:w-1/3'>
           <div className='overflow-hidden overflow-ellipsis pt-7 text-lg font-normal md:pt-9'>{proposal.description}</div>
           <PrimaryButton
             text='View Detail'
-            className='mt-[30px] py-[5px] px-9 text-xl font-medium'
+            spanClass='!text-center !justify-center '
+            className='mt-[30px]'
             onClick={() => {
               setProposalID(proposal?.id)
               setViewProposal(proposal)

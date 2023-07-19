@@ -96,7 +96,7 @@ export const Card = ({ setOpenProfile, user }: CardProps) => {
             <div className='flex flex-col font-body text-lg lg:flex-row lg:gap-5'>
               <div className='font-light'>{user && user.address ? shortenAddress(user.address) : shortenAddress(Null_Address)}</div>
               <div className='font-bold'>
-                {user?.JoinedAt ? 'Joined ' + monthNames[user.JoinedAt.getUTCMonth()] + ' ' + user.JoinedAt.getDate() + ', ' + user.JoinedAt.getFullYear() : 'at Unavailable'}
+                {user?.JoinedAt ? 'Joined ' + monthNames[user.JoinedAt.getUTCMonth()]?.name + ' ' + user.JoinedAt.getDate() + ', ' + user.JoinedAt.getFullYear() : 'at Unavailable'}
               </div>
             </div>
           </div>
@@ -133,7 +133,7 @@ export const Card = ({ setOpenProfile, user }: CardProps) => {
         </div>
 
         <div className='flex items-center gap-[30px] pt-[30px] md:pt-10'>
-          <PrimaryButton text='Delegate' className='py-[5px] text-xl' onClick={() => delegate({ delegatee: user.address })} />
+          <PrimaryButton text='Delegate' className='' onClick={() => delegate({ delegatee: user.address })} />
           <div className='font-heading text-xl font-medium'> Activity </div>
         </div>
       </div>

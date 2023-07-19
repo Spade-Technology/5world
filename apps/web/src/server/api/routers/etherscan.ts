@@ -29,7 +29,8 @@ export const etherscanRouter = createTRPCRouter({
     )
     .query(async ({ input: { contractAddress } }) => {
       const etherscanAPIKey = process.env.ETHERSCAN_API_KEY
-      const addr = `https://api${process.env.VERCEL_ENV === 'production' ? '' : '-sepolia'}.etherscan.io/api?module=contract&action=getabi&address=${contractAddress}&apikey=${etherscanAPIKey}`
+      // const addr = `https://api${process.env.VERCEL_ENV === 'production' ? '' : '-sepolia'}.etherscan.io/api?module=contract&action=getabi&address=${contractAddress}&apikey=${etherscanAPIKey}`
+      const addr = `https://api-sepolia.etherscan.io/api?module=contract&action=getabi&address=${contractAddress}&apikey=${etherscanAPIKey}`
 
       const response = await fetch(addr)
 
