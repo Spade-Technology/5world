@@ -146,7 +146,7 @@ export const proposalRouter = createTRPCRouter({
         if ((txEvent.args as any).description !== description) throw new TRPCError({ code: 'BAD_REQUEST', message: 'Description does not match' })
         if (
           !Object.values(currentContracts)
-            .map(el => el.toLowerCase())
+            .map(el => el.toString().toLowerCase())
             .includes(transaction.to?.toLowerCase() as Address)
         )
           throw new TRPCError({ code: 'BAD_REQUEST', message: 'Transaction not sent to VDAO' })
@@ -266,7 +266,7 @@ export const proposalRouter = createTRPCRouter({
         if ((txEvent.args as any).description !== description) throw new TRPCError({ code: 'BAD_REQUEST', message: 'Description does not match' })
         if (
           !Object.values(currentContracts)
-            .map(el => el.toLowerCase())
+            .map(el => el.toString().toLowerCase())
             .includes(transaction.to?.toLowerCase() as Address)
         )
           throw new TRPCError({ code: 'BAD_REQUEST', message: 'Transaction not sent to VDAO' })
