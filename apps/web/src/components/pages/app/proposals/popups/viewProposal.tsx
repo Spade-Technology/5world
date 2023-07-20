@@ -17,6 +17,8 @@ import TenderlyIcon from 'public/icons/proposal/tenderly.svg'
 import { api } from '~/utils/api'
 import PrimaryButton, { DropdownPrimaryButton } from '~/styles/shared/buttons/primaryButton'
 import { Skeleton } from '~/components/ui/skeleton'
+import { useBlockNumber } from 'wagmi'
+import { encodeFunctionData, encodePacked } from 'viem'
 
 type ViewProposalProps = {
   show: boolean
@@ -32,6 +34,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   const { voteFor, voteAgainst, voteAbstain, isLoading } = useProposalAction(proposalID)
 
   const proposalStatus = proposal?.canceled ? 'Canceled' : proposal?.executed ? 'Executed' : proposal?.vetoed ? 'Vetoed' : 'Active'
+  const { data: block } = useBlockNumber()
 
   const votesHandler = (type: string) => {
     if (type === 'for') {
@@ -60,6 +63,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
       }
     }
   }
+
   return (
     <CustomModal show={show} close={close} externalStyle={'w-full custom-scrollbar md:mx-20 lg:mx-10 xl:mx-auto '}>
       {!proposal ? (
@@ -110,6 +114,15 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
         <div className='pb-[30px] font-body text-lg font-normal text-vdao-dark'>
           <div className='font-bold'>
             {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()]?.name + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
+            <div>
+              {proposal && block
+                ? block > proposal?.startBlock
+                  ? block < proposal?.endBlock
+                    ? 'ends in ' + (proposal?.endBlock - block).toString() + ' blocks'
+                    : 'ended ' + (block - proposal?.endBlock).toString() + ' blocks ago'
+                  : 'will start in ' + (proposal?.startBlock - block).toString() + ' blocks'
+                : ''}
+            </div>
           </div>
 
           <div className='grid grid-cols-1 gap-[73px] py-[10px] md:py-5 lg:grid-cols-3'>
@@ -173,7 +186,6 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                   </div>
                 </div>
               </div>
-
               <div className=' flex gap-10 border-b-[1px] border-b-vdao-dark pb-2 pt-10 font-body font-bold'>
                 <div className={` ${!actions && 'text-vdao-light'} cursor-pointer justify-start`} onClick={() => setActions(false)}>
                   Proposal Detail
@@ -182,7 +194,6 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                   Actions
                 </div>
               </div>
-
               {actions ? <ActionDetails proposal={proposal} /> : <ProposalDetails proposal={proposal} />}
             </div>
 

@@ -76,7 +76,13 @@ contract RoundFactory is OwnableUpgradeable {
 
         emit RoundCreated(clone, roundContract);
 
-        RoundImplementation(payable(clone)).initialize(encodedParameters);
+        address[] memory admins = new address[](1);
+        admins[0] = msg.sender;
+
+        RoundImplementation(payable(clone)).initialize(
+            encodedParameters,
+            admins
+        );
 
         return clone;
     }

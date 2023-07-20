@@ -29,7 +29,6 @@ export const DropdownPrimaryButton = ({ text, className, onClick, icon, dropDown
 }
 
 const PrimaryButton = ({ text, className, onClick, icon, dropDown, disabled, loading }: ButtonProps) => {
-  console.log('Delegarte', disabled)
   return (
     <div className={` !w-fit rounded-md ${disabled ? 'bg-white' : 'cursor-pointer bg-vdao-light'} hover:bg-white ${className} `} onClick={() => onClick && !disabled && !loading && onClick()}>
       <span

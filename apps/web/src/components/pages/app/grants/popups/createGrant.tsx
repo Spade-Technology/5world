@@ -19,7 +19,7 @@ import { imageToBase64String } from '~/utils/helpers'
 import FormOne from '../../proposals/popups/formOne'
 import { currentContracts } from '~/config/contracts'
 import RoundFactoryAbi from '~/abi/RoundFactory.json'
-import { encodeFunctionData } from 'viem'
+import { encodeAbiParameters, encodeFunctionData } from 'viem'
 import { writeContract } from '@wagmi/core'
 import VDAOImplementation from '~/abi/VDAOImplementation.json'
 
@@ -41,8 +41,6 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
   const [date, setDate] = useState<Date>()
   const [tokenAddress, setTokenAddress] = useState<string>('0x9E873b3A125040B2295FbED16aF22Ed9b101e470')
   const [matchingAmount, setMatchingAmount] = useState<string>('')
-  const [IPFSHash, setIPFSHash] = useState<string>('')
-  const { data, isError, isLoading } = useBlockNumber()
 
   const dropzoneParams: DropzoneOptions = { accept: { 'image/*': [] }, multiple: false, maxSize: 4194304 }
   const {
@@ -94,102 +92,20 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
     )
   }
 
-  // const handlePreviews = () => {
-  //   let cds: string[] = []
-  //   if (address && spells.length > 0) {
-  //     // Encode arguments using ethers.js or a similar library
-  //     spells.map(async (spell, idx) => {
-  //       type typing = {
-  //         name: string
-  //         type: string
-  //       }
-
-  //       const types: typing[] = spell?.abi
-  //         ?.filter((item: abiItem) => item.name === spell.name)[0]
-  //         .inputs.map((item: abiItem) => {
-  //           return {
-  //             name: item.name,
-  //             type: item.type,
-  //           }
-  //         })
-
-  //       const valuesArr: any = []
-  //       types.map(type => {
-  //         valuesArr.push(spell.calldata[type.name])
-  //       })
-
-  //       // const callData = types && encodeAbiParameters(types, Object.values(args))
-  //       const callData = types && encodeFunctionData({ abi: spell?.abi, args: valuesArr, functionName: spell.name })
-
-  //       // Construct calldatas, targets, values
-  //       cds.push(callData)
-  //     })
-
-  //     setCallDatas(cds)
-  //   }
-  // }
   const submitProposal = async () => {
-    if (!date) return notification.error({ message: 'Error', description: 'Please select a date', placement: 'bottomRight' })
+    createGrantProposal({
+      title,
+      description,
+      authorAddress: address as Address,
 
-    const spell = currentContracts?.roundFactory
-    const abi = RoundFactoryAbi
-    const signature = 'create'
-
-    const currentBlockTimeToNextBlock = currentContracts.blockTime
-    const currentBlock = data
-
-    const startApplicationBlock = (date?.getTime() / 1000 - Date.now() / 1000) / currentBlockTimeToNextBlock + Number(currentBlock)
-    const endApplicationBlock = startApplicationBlock + (7 * 24 * 60 * 60) / currentBlockTimeToNextBlock
-    const startRoundBlock = endApplicationBlock
-    const endRoundBlock = startRoundBlock + (14 * 24 * 60 * 60) / currentBlockTimeToNextBlock
-
-    // [
-    // uint256 applicationsStartBlock; // block number from when round can accept applications
-    // uint256 applicationsEndBlock; // block number from when round stops accepting applications
-    // uint256 roundStartBlock; // block number of the start of the round
-    // uint256 roundEndBlock; // block number of the end of the round]
-    // ],
-    // address _vDAO,
-    // address _donationSBT,
-    // address _token,
-    // uint256 _matchingAmount,
-    // [
-    //   [ // Round Meta
-    //     // uint256 protocol;
-    //     // string pointer;
-    //   ],
-
-    //   [  // MetaPtr to the application form schema
-    //   // uint256 protocol;
-    //   // // Pointer to fetch metadata for the specified protocol
-    //   // string pointer;
-    //   ]
-    // ],
-    // [
-    // address[] adminRoles; // Addresses to be granted DEFAULT_ADMIN_ROLE
-    // address[] roundOperators
-    // ]
-
-    const args = [
-      [startApplicationBlock, endApplicationBlock, startRoundBlock, endRoundBlock],
-      currentContracts.vDao,
-      currentContracts.donationSBT,
-      tokenAddress,
-      matchingAmount,
-      [
-        [0, IPFSHash],
-        [0, IPFSHash],
-      ],
-      [[address], [address]],
-    ]
-
-    const callData = encodeFunctionData({ abi, args, functionName: signature })
-
-    await writeContract({
-      abi: VDAOImplementation,
-      address: spell as Address,
-      method: signature,
-      args: args,
+      grantTitle: grantName,
+      grantDescription,
+      grantRules: grantDescription,
+      grantDate: date as Date,
+      grantToken: tokenAddress,
+      grantAmount: matchingAmount,
+      grantImage: await imageToBase64String(logo),
+      grantTheme: await imageToBase64String(theme),
     })
   }
 

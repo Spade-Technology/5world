@@ -1,13 +1,12 @@
+import { useState } from 'react'
+import { encodeFunctionData } from 'viem'
+import { useAccount } from 'wagmi'
 import CustomModal from '~/components/misc/customModal'
+import { useCreateProposal } from '~/hooks/web3/useProposal'
+import { abiItem } from '~/server/api/routers/etherscan'
 import FormOne from './formOne'
-import { useEffect, useState } from 'react'
 import FormTwo from './formTwo'
 import Preview from './preview'
-import { useAccount } from 'wagmi'
-import { useCreateProposal } from '~/hooks/web3/useProposal'
-import { useEtherscan } from '~/hooks/web3/useEtherscan'
-import { abiItem } from '~/server/api/routers/etherscan'
-import { encodeAbiParameters, encodeFunctionData } from 'viem'
 
 type CreateProposalProps = {
   show: boolean
