@@ -3,7 +3,7 @@ import { Skeleton } from 'antd'
 import Image from 'next/image'
 import ProfilePic from 'public/icons/blog/createdByLogo.svg'
 import InfoIcon from 'public/icons/stewards/infoIcon.svg'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { useElectionReads, useVote } from '~/hooks/web3/useStewards'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
@@ -25,6 +25,37 @@ type CardProps = {
 const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
   const { address } = useAccount()
   const { data, isLoading } = useElectionReads({})
+  const [searchField, setSearchField] = useState("");
+  const [searchShow, setSearchShow] = useState(false); 
+  const [finalData, setFinalData] = useState(data)
+
+  const filteredData = data?.filter(
+    steward => {
+      return (
+        steward.name?.toLowerCase().includes(searchField.toLowerCase()) ||
+        steward.address.toLowerCase().includes(searchField.toLowerCase())
+      );
+    }
+  );
+
+  useEffect(() => {
+    if(filteredData?.length > 0) {
+      setFinalData(filteredData)
+    } else {
+      setFinalData(data)
+    }
+  }, [data, filteredData])
+
+
+  const handleChange = (e:any) => {
+    setSearchField(e.target.value);
+    if(e.target.value===""){
+      setSearchShow(false);
+    }
+    else {
+      setSearchShow(true);
+    }
+  };
 
   return (
     <div className='mx-auto w-screen bg-vdao-deep'>
@@ -39,7 +70,10 @@ const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
 
           <div className='mt-5 flex h-[43px] w-full max-w-[409px] items-center gap-[18px] overflow-hidden rounded-xl bg-vdao-dark px-3 '>
             <div className='h-7 w-7 bg-[url(/icons/stewards/search.svg)] bg-contain bg-center bg-no-repeat '></div>{' '}
-            <input type='text' className='h-full w-full bg-transparent  font-body text-lg font-medium text-vdao-light outline-none ' placeholder='Search username' />
+            <input type='text' className='h-full w-full bg-transparent  font-body text-lg font-medium text-white outline-none ' 
+            placeholder='Search by username or address'
+            onChange = {handleChange} />
+
           </div>
         </div>
 
@@ -51,7 +85,7 @@ const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
               <Skeleton.Avatar shape='square' style={{ height: '400px', width: '100%' }} className='col-span-2' active />
             </>
           ) : (
-            data && data.length > 0 && data?.map(steward => <Card data={steward} setOpenProfile={setOpenProfile} setOpenVotesNscores={setOpenVotesNscores} />)
+            finalData && finalData.length > 0 && finalData?.map(steward => <Card data={steward} setOpenProfile={setOpenProfile} setOpenVotesNscores={setOpenVotesNscores} />)
           )}
         </div>
       </div>
