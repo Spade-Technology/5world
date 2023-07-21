@@ -8,6 +8,8 @@ import { TRPCError } from '@trpc/server'
 import { currentContracts } from '~/config/contracts'
 import { log } from 'console'
 
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
 const includeZod = z
   .object({
     pod: z.boolean().optional(),

@@ -128,11 +128,12 @@ contract RoundImplementation is
             "initialize: application end block should be after application start block"
         );
 
-        require(
-            _initRoundTime.roundStartBlock >=
-                _initRoundTime.applicationsEndBlock + 50400, // 1 week Application review period (1 block = 12 sec)
-            "initialize: application end block should be 1 week before round start block"
-        );
+        // REMOVE BEFORE PROD
+        // require(
+        //     _initRoundTime.roundStartBlock >=
+        //         _initRoundTime.applicationsEndBlock + 50400, // 1 week Application review period (1 block = 12 sec)
+        //     "initialize: application end block should be 1 week before round start block"
+        // );
         require(
             _initRoundTime.roundEndBlock > _initRoundTime.roundStartBlock,
             "initialize: end block should be after start block"
@@ -163,8 +164,8 @@ contract RoundImplementation is
         );
 
         // Assigning default admin role
-        for (uint256 i = 0; i < _initRoles.adminRoles.length; ++i) {
-            _grantRole(DEFAULT_ADMIN_ROLE, _initRoles.adminRoles[i]);
+        for (uint256 i = 0; i < adminRoles.length; ++i) {
+            _grantRole(DEFAULT_ADMIN_ROLE, adminRoles[i]);
         }
 
         // Assigning round operators

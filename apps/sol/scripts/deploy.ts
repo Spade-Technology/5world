@@ -55,8 +55,8 @@ async function main() {
     owner.address,
     owner.address,
     vDAOImplementation.address,
-    7200,
-    1,
+    50,
+    3,
     '1000000000000000000000'
   );
   await vDAOProxy.deployed();
@@ -77,7 +77,14 @@ async function main() {
     // push evm forward by 10 seconds if hardhat network is hardhat or localhost
     progressBar.tick({ status: 'Waiting for timelock tx to be accepted.' });
     if (hre.network.name === 'hardhat' || hre.network.name === 'localhost') await hre.network.provider.send('evm_increaseTime', [1]);
-    else await sleep(25000);
+    else {
+      console.log("Waiting 30 seconds for timelock to accept transaction")
+      await sleep(10000);
+      console.log("Waiting 20 seconds for timelock to accept transaction")
+      await sleep(10000);
+      console.log("Waiting 10 seconds for timelock to accept transaction")
+      await sleep(10000);    
+    }
 
     // execute transaction
     await timelock.executeTransaction(target, value, signature, data, eta);
