@@ -36,8 +36,8 @@ const PrimaryButton = ({ text, className, spanClass, onClick, icon, dropDown, di
       onClick={() => onClick && !disabled && !loading && onClick()}
     >
       <span
-        className={`mx-auto ${spanClass} flex w-full gap-1 px-9 py-1.5 font-heading text-xl font-medium !text-vdao-dark md:py-[5px] md:px-[35px] ${
-          dropDown ? 'flex-row-reverse justify-between' : '' + loading ? 'opacity-80' : ''
+        className={`mx-auto ${spanClass} flex w-full gap-1 px-9 py-1.5 font-heading text-xl font-medium !text-vdao-dark md:py-[5px] md:px-[35px] justify-center ${
+          dropDown ? 'flex-row-reverse !justify-between' : '' + loading ? 'opacity-80' : ''
         }`}
       >
         {loading && <Spin className='!mr-3 !mt-1' spinning={true} />}

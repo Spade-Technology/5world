@@ -167,12 +167,12 @@ export const Card = ({ data, setOpenProfile, setOpenVotesNscores }: CardProps) =
             </div>
           </div>
         </div>
-        <div className='flex flex-col justify-between gap-5 pt-[30px] md:flex-row md:items-center md:gap-0 md:pt-10'>
+        <div className='flex flex-col justify-between gap-5 pt-[30px] lg:flex-row lg:items-center lg:gap-0 lg:pt-10'>
           <div className='text-start text-xl font-medium md:w-2/3'>Delegate your vote</div>
           <div className='flex w-full gap-[10px]'>
             <input
               placeholder='60'
-              className='max-h-10 w-[100px] rounded-md border-none px-7 text-center font-heading text-xl font-medium text-vdao-dark outline-none md:w-full'
+              className='max-h-10 w-[100px] rounded-md border-none px-2 text-center font-heading text-xl font-medium text-vdao-dark outline-none lg:w-full'
               value={votes}
               onChange={evt => setVotes(evt.target.value)}
             />
