@@ -1,6 +1,7 @@
 import { User } from '@prisma/client'
 import { Skeleton } from 'antd'
 import Image from 'next/image'
+import { useEffect } from 'react'
 import ProfilePic from 'public/icons/blog/createdByLogo.svg'
 import InfoIcon from 'public/icons/stewards/infoIcon.svg'
 import { Dispatch, SetStateAction, useState } from 'react'
@@ -23,8 +24,31 @@ type CardProps = {
 }
 
 const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
+  const [debouncedInput, setDebouncedInput] = useState('')
+  const [searchValue, setSearchValue] = useState('')
+  const [searchedCandidates, setSearchedCandidates] = useState([])
   const { address } = useAccount()
   const { data, isLoading } = useElectionReads({})
+
+  // USEFFECT FOR SEARCHING CANDIDATES
+  useEffect(() => {
+    const filteredCards: any = data?.filter(item => {
+      return [searchValue]?.some(el => Object.values(item).join('').toLowerCase().includes(el.toLocaleLowerCase()))
+    })
+    setSearchedCandidates(filteredCards)
+    console.log(String(searchValue)?.split(''))
+  }, [debouncedInput])
+
+  // USEFFECT THAT DELAYS SEACH FUNCTION
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedInput(searchValue)
+    }, 500)
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [searchValue, 500])
 
   return (
     <div className='mx-auto w-full max-w-[1188px] px-6 pb-[120px] md:px-10 xl:px-6'>
@@ -33,7 +57,13 @@ const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
 
         <div className='mt-5 flex h-[43px] w-full items-center gap-[18px] overflow-hidden rounded-xl bg-vdao-dark px-3 md:max-w-[409px] '>
           <div className='h-7 w-7 bg-[url(/icons/stewards/search.svg)] bg-contain bg-center bg-no-repeat '></div>{' '}
-          <input type='text' className='h-full w-full bg-transparent  font-body text-lg font-medium text-vdao-light outline-none ' placeholder='Search username' />
+          <input
+            type='text'
+            value={searchValue}
+            onChange={e => setSearchValue(e.target.value)}
+            className='h-full w-full bg-transparent  font-body text-lg font-medium text-vdao-light outline-none '
+            placeholder='Search username'
+          />
         </div>
       </div>
 
@@ -44,10 +74,22 @@ const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
             <Skeleton.Avatar shape='square' style={{ height: '400px', width: '100%' }} className='col-span-2' active />
             <Skeleton.Avatar shape='square' style={{ height: '400px', width: '100%' }} className='col-span-2' active />
           </>
+        ) : data && !debouncedInput ? (
+          data.length > 0 && !debouncedInput && data?.map(steward => <Card data={steward} setOpenProfile={setOpenProfile} setOpenVotesNscores={setOpenVotesNscores} />)
         ) : (
-          data && data.length > 0 && data?.map(steward => <Card data={steward} setOpenProfile={setOpenProfile} setOpenVotesNscores={setOpenVotesNscores} />)
+          debouncedInput && searchedCandidates?.map(steward => <Card data={steward} setOpenProfile={setOpenProfile} setOpenVotesNscores={setOpenVotesNscores} />)
         )}
       </div>
+
+      {/* RESULT NOT FOUND */}
+      {debouncedInput && searchedCandidates.length === 0 ?
+      <section className='my-10 w-full'>
+        <img src='/logo/svg/notFound.svg' className='bg-no-repeate mx-auto w-full max-w-[377px] md:h-[380px]' />
+
+        <div className='mt-5 text-center font-heading text-[68px] leading-[75px] text-vdao-light md:mt-0 '>No Results Found</div>
+        <div className='mx-auto max-w-[399px] text-center font-body text-[24px] text-white '>We couldn’t find what you searched for. Try searching again.</div>
+      </section> : ''
+      }
     </div>
   )
 }
