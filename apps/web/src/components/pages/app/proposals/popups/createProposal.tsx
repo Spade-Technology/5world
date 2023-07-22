@@ -101,7 +101,14 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
   }
 
   return (
-    <CustomModal show={show} close={close} heading={` ${showPreview ? '' : 'Create New Proposal'}`} modalMarginTop='my-[40px]' canExit={!loading}>
+    <CustomModal
+      show={show}
+      close={close}
+      externalStyle={'w-full custom-scrollbar md:mx-10 xl:mx-auto md:!px-5 lg:!px-10'}
+      heading={` ${showPreview ? '' : 'Create New Proposal'}`}
+      modalMarginTop='my-[40px]'
+      canExit={!loading}
+    >
       {!nextFrom && !showPreview ? (
         <FormOne setNextForm={setNextForm} title={title} setTitle={setTitle} description={description} setDescription={setDescription} />
       ) : nextFrom ? (

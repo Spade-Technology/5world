@@ -5,9 +5,9 @@ import { type } from 'os'
 
 const Recommends = () => {
   return (
-    <div className='mt-20'>
-      <h2 className='mb-8 font-heading text-[32px] font-medium leading-[38px] md:mx-7 md:mb-[45px] md:px-6 md:text-[46px] md:leading-[52px]'>Recommended Reading</h2>
-      <div className='justify-between gap-6 md:mx-7 md:grid md:grid-cols-12 md:px-6 lg:gap-20'>
+    <div className='mx-auto mt-20 max-w-[1140px]'>
+      <h2 className='mb-8 font-heading text-[32px] font-medium leading-[38px] md:mb-[45px] md:px-6 md:text-[46px] md:leading-[52px]'>Recommended Reading</h2>
+      <div className='justify-between gap-6 md:mx-7 md:grid md:grid-cols-12 lg:gap-20'>
         <div className='md:col-span-6'>
           <RecommendedCard blog={blogDetails[0]} />
         </div>

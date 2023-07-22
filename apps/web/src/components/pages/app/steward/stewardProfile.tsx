@@ -4,7 +4,7 @@ import HowItWorks from '~/components/misc/howItWorks'
 
 const StewardProfile = () => {
   return (
-    <Section className='w-screen bg-vdao-deep'>
+    <Section className='w-full bg-vdao-deep'>
       <Description
         invertColors={true}
         propsClass={'md:!gap-0 md:!px-0 md:w-fit'}
@@ -19,7 +19,6 @@ const StewardProfile = () => {
           </div>
         }
       />
-
       <HowItWorks
         contents={[
           {

@@ -36,7 +36,7 @@ const ManageMembers = ({ show, close, pod }: ManageMembersProps) => {
     }
   }
   return (
-    <CustomModal show={show} close={close} heading='Manage Members' modalMarginTop='my-[40px]'>
+    <CustomModal show={show} close={close} externalStyle={'w-full custom-scrollbar lg:!px-10 md:!px-5 md:mx-10 xl:mx-auto '} heading='Manage Members' modalMarginTop='my-[40px]'>
       <FormTwo managerAddr={managerAddr} setManagerAddr={setManagerAddr} membersInfo={membersInfo} setMembersInfo={setMembersInfo} createPodHanlder={editPodHanlder} pod={pod} />
     </CustomModal>
   )

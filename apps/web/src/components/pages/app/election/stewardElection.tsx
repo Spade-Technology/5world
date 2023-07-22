@@ -151,18 +151,17 @@ const StewardElection = () => {
   }, [])
 
   return (
-    <Section className='w-screen bg-vdao-deep'>
+    <Section className='w-full bg-vdao-deep'>
       <Description
         invertColors={true}
+        propsClass={'!max-w-[1055px] md:!gap-[27px]'}
         title={
-          <div>
-            Steward
-            <br />
-            Election
+          <div className='w-[342px] font-heading text-[44px] font-medium leading-[48px] text-vdao-light md:w-[400px] md:text-[60px] md:leading-[60px] lg:w-[553px] lg:text-[80px] lg:leading-[95px]'>
+            Steward Election
           </div>
         }
         description={
-          <div className='font-body text-[26px] font-medium'>
+          <div className='w-full font-body text-[26px] font-medium leading-[30px] md:w-full md:max-w-[557px]'>
             This page displays all the members who have put themselves forward to be Stewards for the next term, along with a link to their Steward Profile page.
           </div>
         }
@@ -179,60 +178,59 @@ const StewardElection = () => {
           Apply to be a Steward
         </Button>
       </div> */}
+      <div className='px-6 md:px-0'>
+        <div className='mx-auto mt-[60px] w-fit rounded-2xl bg-vdao-dark px-10 py-6 text-center font-body text-white md:mt-10 md:p-6'>
+          <div className='text-[22px] font-medium leading-[30px] '>{electionTime ? 'Before the election closing' : 'Before the next election'}</div>
 
-      <div className='mx-auto mt-5 max-w-[306px] rounded-2xl bg-vdao-dark p-6 text-center text-white'>
-        <div className='font-mediums font-body text-[22px] '>{electionTime ? 'Before the election closing' : 'Before the next election'}</div>
-
-        <div className='mt-2 flex justify-between font-bold text-vdao-light'>
-          <div>
-            <div className='flex gap-1'>
-              {days.map((number: string, idx: number) => {
-                return (
-                  <div key={idx} className='rounded-[10px] bg-[#19444A] p-1 text-[32px]'>
-                    {number}
-                  </div>
-                )
-              })}
+          <div className='mt-[13px] flex justify-center font-bold text-vdao-light md:justify-between'>
+            <div>
+              <div className='flex gap-1'>
+                {days.map((number: string, idx: number) => {
+                  return (
+                    <div key={idx} className='rounded-[10px] bg-[#19444A] py-4 px-2 text-[32px]'>
+                      {number}
+                    </div>
+                  )
+                })}
+              </div>
+              <div className='text-left text-lg'>days</div>
             </div>
-            <div className='text-left text-lg'>days</div>
-          </div>
-          <div className='p-1 text-[32px]'>:</div>
-          <div>
-            <div className='flex gap-1'>
-              {hours.map((number: string, idx: number) => {
-                return (
-                  <div key={idx} className='rounded-[10px] bg-[#19444A] p-1 text-[32px]'>
-                    {number}
-                  </div>
-                )
-              })}
+            <div className='p-1 text-[32px]'>:</div>
+            <div>
+              <div className='flex gap-1'>
+                {hours.map((number: string, idx: number) => {
+                  return (
+                    <div key={idx} className='rounded-[10px] bg-[#19444A] py-4 px-2 text-[32px]'>
+                      {number}
+                    </div>
+                  )
+                })}
+              </div>
+              <div className='text-left text-lg'>hours</div>
             </div>
-            <div className='text-left text-lg'>hours</div>
-          </div>
-          <div className='p-1 text-[32px]'>:</div>
-          <div>
-            <div className='flex gap-1'>
-              {minutes.map((number: string, idx: number) => {
-                return (
-                  <div key={idx} className='rounded-[10px] bg-[#19444A] p-1 text-[32px]'>
-                    {number}
-                  </div>
-                )
-              })}
+            <div className='p-1 text-[32px]'>:</div>
+            <div>
+              <div className='flex gap-1'>
+                {minutes.map((number: string, idx: number) => {
+                  return (
+                    <div key={idx} className='rounded-[10px] bg-[#19444A] py-4 px-2 text-[32px]'>
+                      {number}
+                    </div>
+                  )
+                })}
+              </div>
+              <div className='text-left text-lg'>minutes</div>
             </div>
-            <div className='text-left text-lg'>minutes</div>
           </div>
-        </div>
 
-        <div className='mt-5 w-full max-w-[258px] cursor-pointer rounded-md border-none bg-vdao-light py-1 px-5 font-heading text-xl !text-black' onClick={() => applyToBeSteward()}>
-          Apply to be a Steward
-        </div>
+          <PrimaryButton text={'Apply to be a Steward'} spanClass='md:!px-5' className='mx-auto mt-10 md:!w-full' onClick={() => applyToBeSteward()} />
 
-        <div className='py-5 text-lg font-light'>OR</div>
+          <div className='py-4 font-body text-lg font-normal md:pt-[21px]'>OR</div>
 
-        <div className=' text-lg font-light'>
-          Next Stewards anounced in
-          <br /> {daysLeft} Days, {hoursLeft} Hours, {minutesLeft} minutes
+          <div className='mx-auto max-w-[231px] px-4 font-body text-lg font-normal leading-[22px]'>
+            Next Stewards anounced in {daysLeft} Days, {hoursLeft} Hours, {minutesLeft} minutes
+          </div>
+          {/* </div> */}
         </div>
       </div>
 

@@ -4,6 +4,7 @@ import Image from 'next/image'
 type ButtonProps = {
   text: string
   className?: string
+  spanClass?: string
   onClick?: any
   icon?: any
   dropDown?: boolean
@@ -28,12 +29,15 @@ export const DropdownPrimaryButton = ({ text, className, onClick, icon, dropDown
   )
 }
 
-const PrimaryButton = ({ text, className, onClick, icon, dropDown, disabled, loading }: ButtonProps) => {
+const PrimaryButton = ({ text, className, spanClass, onClick, icon, dropDown, disabled, loading }: ButtonProps) => {
   return (
-    <div className={` !w-fit rounded-md ${disabled ? 'bg-white' : 'cursor-pointer bg-vdao-light'} hover:bg-white ${className} `} onClick={() => onClick && !disabled && !loading && onClick()}>
+    <div
+      className={` !w-fit rounded-md ${disabled ? 'bg-white' : 'cursor-pointer bg-vdao-light'} btnShadow duration-300 hover:scale-95 ${className} `}
+      onClick={() => onClick && !disabled && !loading && onClick()}
+    >
       <span
-        className={`mx-auto flex w-full gap-1 px-9 py-1.5 font-heading text-xl font-medium !text-vdao-dark md:py-[5px] md:px-[35px] ${
-          dropDown ? 'flex-row-reverse justify-between' : '' + loading ? 'opacity-80' : ''
+        className={`mx-auto ${spanClass} flex w-full gap-1 px-9 py-1.5 font-heading text-xl font-medium !text-vdao-dark md:py-[5px] md:px-[35px] justify-center ${
+          dropDown ? 'flex-row-reverse !justify-between' : '' + loading ? 'opacity-80' : ''
         }`}
       >
         {loading && <Spin className='!mr-3 !mt-1' spinning={true} />}

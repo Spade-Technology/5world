@@ -133,7 +133,7 @@ export const Card = ({ setOpenProfile, user }: CardProps) => {
         </div>
 
         <div className='flex items-center gap-[30px] pt-[30px] md:pt-10'>
-          <PrimaryButton text='Delegate' className='py-[5px] text-xl' onClick={() => delegate({ delegatee: user.address })} />
+          <PrimaryButton text='Delegate' className='' onClick={() => delegate({ delegatee: user.address })} />
           <div className='font-heading text-xl font-medium'> Activity </div>
         </div>
       </div>

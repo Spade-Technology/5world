@@ -25,10 +25,9 @@ const ProfileCard = ({ icon, name, address, edit, nameLength }: CardProps) => {
   return (
     <div className={`${edit && 'cursor-pointer'} flex w-full pt-[14px]`} onClick={() => edit && setSelected(!selected)}>
       {edit && (
-        <div
-          className={`my-auto mx-3 h-6 w-6 cursor-pointer rounded-full border-[1px] border-vdao-dark px-3
-                      ${selected ? 'bg-vdao-light' : ''}`}
-        ></div>
+        <div className={`relative my-auto mx-3 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border-[1px] border-vdao-dark px-3`}>
+          <div className={`absolute top-[-1px] left-0 z-10 h-6 w-6 scale-0 rounded-full border-[1px] border-vdao-dark bg-vdao-light duration-200 ${selected ? '!scale-100 ' : ''}`}></div>
+        </div>
       )}
 
       <div className='my-auto'>

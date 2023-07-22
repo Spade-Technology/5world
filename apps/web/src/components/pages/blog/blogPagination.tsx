@@ -46,7 +46,7 @@ const BlogPagination = () => {
 
   return (
     <>
-      <div className='px-6 md:mt-16'>
+      <div className='mt-10 md:mt-16'>
         {updatedBlogs &&
           updatedBlogs.map((blog: any, idx: number) => {
             return <BlogCard blog={blog} key={idx} showBorder={idx + 1 < updatedBlogs.length} id={idx} />

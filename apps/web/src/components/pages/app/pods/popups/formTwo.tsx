@@ -119,11 +119,11 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
     setRemoveOn(false)
   }
   return (
-    <div className='grid grid-cols-1 gap-11 pt-10 font-body text-lg font-normal text-vdao-dark md:grid-cols-2 md:gap-[106px]'>
+    <div className='grid grid-cols-1 gap-11 pt-10 font-body text-lg font-normal text-vdao-dark md:grid-cols-2 lg:gap-[106px]'>
       <div>
         <div className='text-[22px] font-bold'>Assign Pod Manager</div>
 
-        <div className='pt-[5px]'>Add manager address below.</div>
+        <div className='pb-[22px]'>Add manager address below.</div>
 
         <Select style={{ width: '100%' }} placeholder='Enter Address' onChange={handleChange} options={options} className='antd-stop-propagation w-full' />
 
@@ -136,7 +136,7 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
 
         <div className='pt-11 text-[22px] font-bold'>Add Pod Members</div>
 
-        <div className='pt-[5px]'>Add member address below.</div>
+        <div className='pb-[22px]'>Add member address below.</div>
 
         {/* <input className='mt-5 h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none' onChange={evt => setMemberAddr(evt.target.value)} value={memberAddr} /> */}
         <Select mode='tags' style={{ width: '100%' }} placeholder='Enter Address' onChange={handleMemebers} options={options} className='antd-stop-propagation w-full' />
@@ -164,7 +164,7 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
           <div className='text-[22px] font-bold'>Members</div>
           <div className='text-lg font-normal'>{membersInfo ? membersInfo.length : 0}</div>
           {!removeOn && (
-            <div className='my-auto text-sm font-bold underline' onClick={() => membersInfo?.length > 0 && setRemoveOn(true)}>
+            <div className='my-auto cursor-pointer text-sm font-bold underline' onClick={() => membersInfo?.length > 0 && setRemoveOn(true)}>
               Remove Members
             </div>
           )}
@@ -202,7 +202,7 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
               Previous
             </div>
           )}
-          <PrimaryButton text={pod ? 'Save' : 'Confirm'} className=' py-[5px] px-[35px] font-heading text-lg font-medium' onClick={() => createPodHanlder()} />
+          <PrimaryButton text={pod ? 'Save' : 'Confirm'} className='' onClick={() => createPodHanlder()} />
         </div>
       </div>
     </div>

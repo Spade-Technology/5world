@@ -14,15 +14,15 @@ type PodModalProps = {
 }
 
 const PodModal = ({ pod, close, setShowManageMembers }: PodModalProps) => {
-  console.log("pod", pod)
+  console.log('pod', pod)
   return (
-    <CustomModal show={!!pod} close={close} heading={pod?.name} modalMarginTop='my-[50px]'>
-      <div className='grid grid-cols-1 gap-10 py-[30px] font-body text-lg font-normal text-vdao-dark md:grid-cols-2 md:gap-[106px] md:py-10'>
+    <CustomModal show={!!pod} close={close} heading={pod?.name} externalStyle={'w-full custom-scrollbar md:mx-10 xl:mx-auto '} modalMarginTop='my-[50px]'>
+      <div className='grid grid-cols-1 gap-10 py-[30px] font-body text-lg font-normal text-vdao-dark lg:grid-cols-2 lg:py-10 xl:gap-[106px]'>
         <div>
-          <div className='flex flex-col justify-between gap-5 md:flex-row md:gap-7'>
+          <div className='flex flex-col gap-5 md:flex-row md:gap-7 lg:justify-between'>
             <Image src={pod?.picture ? pod.picture : PodImage} height={120} width={120} alt='PodImage' className='my-auto align-top' />
 
-            <div className='text-lg font-normal'>
+            <div className='text-lg font-normal leading-[22px] '>
               {pod
                 ? pod.description
                 : `Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet elementum urna, in volutpat risus.
@@ -32,7 +32,7 @@ const PodModal = ({ pod, close, setShowManageMembers }: PodModalProps) => {
           </div>
           <div className='pt-[27px] md:pt-0'>
             <PodInfoBox
-              invertColors={false}
+              invertColors={true}
               proposals={pod && pod.proposals ? pod.proposals.length : 0}
               discussions={pod && pod.discussions ? pod.discussions.length : 0}
               members={pod && pod.members ? pod.members.length : 0}
