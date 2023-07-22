@@ -52,7 +52,7 @@ const Home: NextPage<any> = () => {
   const { mutateAsync } = api.manifesto.sign.useMutation()
 
   const [notificationApi, contextHolder] = notification.useNotification()
-  const { status } = useSession()
+  const { data: siwe, status } = useSession()
 
   const { data, error, isLoading, signMessage } = useSignMessage({
     onSuccess: async (data, variables) => {
@@ -210,8 +210,7 @@ function Signing({
               {/* step 2 */}
               <VDAOConnectButton
                 className={`${step != 2 ? 'cursor-not-allowed' : ''} !h-10 w-fit !font-roboto !text-sm font-medium ${
-                  // step == 2 ? 'border-vdao-light bg-vdao-light text-vdao-dark' :
-                  step < 2 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : '!border-vdao-light !text-vdao-light'
+                  disabled ? 'border-vdao-light bg-vdao-light text-vdao-dark' : step < 2 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : '!border-vdao-light !text-vdao-light'
                 }`}
                 disabled={step != 2 || disabled}
                 onClickOverride={signManifesto}

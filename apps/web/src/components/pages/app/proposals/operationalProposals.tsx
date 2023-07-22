@@ -54,7 +54,7 @@ const OperationalProposals = ({ setOpenCreateProposal, setOpenCreateGrantProposa
           >
             <PrimaryButton
               text='Normal Proposal'
-              className='!w-[280px]'
+              className='w-full hover:bg-white'
               onClick={() => {
                 setOpenCreateGrantProposal(false)
                 setDropDownOn(false)
@@ -63,7 +63,7 @@ const OperationalProposals = ({ setOpenCreateProposal, setOpenCreateGrantProposa
             />
             <PrimaryButton
               text='Grant Proposal'
-              className='!w-[280px]'
+              className='w-full hover:bg-white'
               onClick={() => {
                 setOpenCreateProposal(false)
                 setDropDownOn(false)
