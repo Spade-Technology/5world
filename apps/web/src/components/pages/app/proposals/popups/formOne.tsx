@@ -37,7 +37,7 @@ const FormOne = ({ title, setTitle, description, setDescription, setNextForm }: 
       <div>
         <EllipseComponent className='text-[22px] font-medium md:text-[26px]' text={address ? 'Wallet Connected' : 'Connect to your wallet'} />
         <EllipseComponent className='pt-5 text-[22px] font-medium md:text-[26px]' text={chain?.id === 11155111 ? 'Correct chain selected' : 'Switch to supported network from below'} />
-        <EllipseComponent className='pt-5 text-[22px] font-medium md:text-[26px]' text='You have 217 voting power' />
+        {/* <EllipseComponent className='pt-5 text-[22px] font-medium md:text-[26px]' text='You have 217 voting power' /> */}
 
         <div
           className={`mt-5 w-fit cursor-pointer rounded-[5px]  py-[5px] px-[35px] font-heading text-xl font-medium md:mt-[30px] ${

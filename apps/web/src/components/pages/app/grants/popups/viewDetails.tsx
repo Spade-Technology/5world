@@ -4,19 +4,66 @@ import LinkIcon from 'public/icons/grants/linkIcon.svg'
 import TwitterIcon from 'public/icons/grants/twitterIcon.svg'
 import GitCoinImage from 'public/illustrations/grants/gitCoing.svg'
 import Image1 from 'public/illustrations/grants/stretchedImage1.svg'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CustomModal from '~/components/misc/customModal'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
-import WhiteButton from '~/styles/shared/buttons/whiteButton'
 import { TeamDetails } from './team'
+import { useVote } from '~/hooks/web3/useStewards'
+import { useAccount } from 'wagmi'
+import { useRouter } from 'next/router'
+import { GrantDetails } from '../cardDetails'
 
 type Props = {
   show: boolean
   close: any
+  requestId: number
 }
-const GrantDetails = ({ show, close }: Props) => {
+const ViewDetails = ({ show, close, requestId }: Props) => {
   const [showActivity, setShowActivity] = useState(false)
+  // const estimatedAmount = (quadrativVotes/total Votes) * matching amount
+  const [votes, setVotes] = useState('')
+  const { vote } = useVote()
+  const { address } = useAccount()
+  const [grant, setGrant] = useState({})
+  const router = useRouter()
+  const [estimatedAmt, setEstimatedAmt] = useState(0)
 
+  console.log('requestId', grant, requestId)
+  const votesHandler = () => {
+    const candidateAddress = ''
+    if (votes && address && candidateAddress) {
+      vote({ voterAddress: address, candidateAddress: candidateAddress, amount: parseFloat(votes), message: '' })
+    }
+  }
+
+  useEffect(() => {
+    if (router.query.id) {
+      const id: number = parseFloat(router.query.id)
+      const details = GrantDetails.filter(grant => {
+        return id === grant.id
+      })
+      console.log('requestId d', details)
+      setGrant(details[0])
+
+      const estimatedAmount = (parseFloat(details[0]?.quadraticVotes) / parseFloat(details[0]?.totalVotes)) * parseFloat(details[0]?.matchingAmount)
+      setEstimatedAmt(estimatedAmount)
+    } else {
+      setGrant('')
+    }
+  }, [router.query.id, GrantDetails, requestId])
+
+  // useEffect(() => {
+  //   if (router.query.id) {
+  //     const id: number = parseFloat(router.query.id)
+  //     const details = GrantDetails.filter(grant => {
+  //       return id === grant.id
+  //     })
+  //     setGrant(details[0])
+  //   } else {
+  //     setGrant('')
+  //   }
+  // }, [router, GrantDetails])
+  console.log('requestId d', grant)
   return (
     <CustomModal show={show} close={close} padding='p-0' removeCloseIcon>
       <Image src={Image1} alt='Image1' />
@@ -25,30 +72,36 @@ const GrantDetails = ({ show, close }: Props) => {
         <div className='col-span-2'>
           <div className=' border-b-[1px] border-b-vdao-dark pb-5 font-heading text-[26px] font-medium md:text-[30px]'>Grant Title Goes Here</div>
 
-          <div className='grid grid-cols-1 gap-5 pt-5 font-medium md:grid-cols-2 md:gap-0 md:pt-10'>
-            <div className='flex gap-[10px] '>
-              <Image src={LinkIcon} alt='link' />
-              <div>http://grantexample.world</div>
+          {grant?.requests && (
+            <div className='grid grid-cols-1 gap-5 pt-5 font-medium md:grid-cols-2 md:gap-0 md:pt-10'>
+              <div className='flex gap-[10px] '>
+                <Image src={LinkIcon} alt='link' />
+                <div>{grant?.requests[requestId]?.website}</div>
+              </div>
+              <div className='flex gap-[10px]'>
+                <Image src={ETHIcon} alt='eth' />
+                <div>{grant?.requests[requestId]?.address}</div>
+              </div>
+              <div className='flex gap-[10px] md:pt-5'>
+                <Image src={TwitterIcon} alt='twitter' />
+                <div> {grant?.requests[requestId]?.twitter}</div>
+              </div>
             </div>
-            <div className='flex gap-[10px]'>
-              <Image src={ETHIcon} alt='eth' />
-              <div>0xd12512....92C</div>
-            </div>
-            <div className='flex gap-[10px] md:pt-5'>
-              <Image src={TwitterIcon} alt='twitter' />
-              <div> @grantexample</div>
-            </div>
-          </div>
+          )}
 
           <div className='pt-10 text-[22px] font-bold'>Estimated funding received</div>
-          <div className='pt-[10px] text-[22px] font-medium text-vdao-light md:text-[26px] '>$42,000</div>
+          <div className='pt-[10px] text-[22px] font-medium text-vdao-light md:text-[26px] '>${estimatedAmt ? estimatedAmt : '0.00'}</div>
 
           <div className='pt-[30px] text-[22px] font-bold md:pt-10'>Delegate your vote</div>
 
           <div className='flex gap-5 pt-[22px]'>
-            <WhiteButton text='60' className='border-[1px] border-vdao-dark py-[9px] px-[27px] font-heading text-xl font-medium' />
-
-            <PrimaryButton text='Vote' className='py-[9\px] font-heading text-xl font-medium' />
+            <input
+              placeholder='60'
+              className='max-h-10 w-[82px] rounded-md border-[1px] border-vdao-dark px-2 text-center font-heading text-xl font-medium text-vdao-dark outline-none'
+              value={votes}
+              onChange={evt => setVotes(evt.target.value)}
+            />
+            <PrimaryButton text='Vote' onClick={votesHandler} className='font-heading text-xl font-medium' />
           </div>
 
           <div className='pt-[30px] md:pt-[60px]'>
@@ -146,4 +199,4 @@ const GrantDetails = ({ show, close }: Props) => {
   )
 }
 
-export default GrantDetails
+export default ViewDetails
