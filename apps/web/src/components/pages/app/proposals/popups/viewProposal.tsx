@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { SupporterDetails } from './details'
 import { useProposalRead, useProposalAction } from '~/hooks/web3/useProposal'
 import { monthNames } from '~/utils/date'
-import { shortenText } from '~/utils/helpers'
+import { shortenAddress, shortenText } from '~/utils/helpers'
 import DummyIcon from 'public/icons/pods/icon1.svg'
 
 import ViewsIcon from 'public/icons/proposal/viewsIcon.svg'
@@ -18,13 +18,16 @@ import { api } from '~/utils/api'
 import PrimaryButton, { DropdownPrimaryButton } from '~/styles/shared/buttons/primaryButton'
 import { Skeleton } from '~/components/ui/skeleton'
 import { useBlockNumber } from 'wagmi'
-import { encodeFunctionData, encodePacked } from 'viem'
+import { Address, encodeFunctionData, encodePacked } from 'viem'
+import VDAOImplementation from '~/abi/VDAOImplementation.json'
 
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { currentContracts } from '~/config/contracts'
+import { currentChainId, currentContracts } from '~/config/contracts'
+import { getPublicClient } from '@wagmi/core'
 
 dayjs.extend(relativeTime)
+const formatter = Intl.NumberFormat('en', { notation: 'compact' })
 
 type ViewProposalProps = {
   show: boolean
@@ -38,6 +41,9 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   const [dropDownOn, setDropDownOn] = useState(false)
   const [btnStatus, setBtnStatus] = useState('Votes')
   const { voteFor, voteAgainst, voteAbstain, isLoading } = useProposalAction(proposalID)
+
+  const [supporters_raw, setSupporters] = useState<any[]>([])
+  const { data: supporters } = api.user.getUsers.useQuery({ addresses: supporters_raw.map(el => el.voter) }, { enabled: !!supporters_raw.length })
 
   const { data: block } = useBlockNumber()
   const proposalStatus = proposal?.canceled
@@ -79,6 +85,32 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
       }
     }
   }
+
+  async function updateSupporters() {
+    const publicClient = getPublicClient({ chainId: currentChainId })
+
+    const args = {
+      proposalId: proposalID,
+    } as any
+
+    const filter = await publicClient.createContractEventFilter({
+      abi: VDAOImplementation,
+      address: currentContracts.proxiedVDao as Address,
+      eventName: 'VoteCast',
+      args,
+      fromBlock: proposal.startBlock,
+    })
+
+    console.log(filter)
+
+    const logs = await publicClient.getFilterLogs({ filter }).catch(() => [])
+
+    setSupporters(logs.map(log => (log as any).args))
+  }
+
+  useEffect(() => {
+    if (proposal) updateSupporters()
+  }, [proposal])
 
   return (
     <CustomModal show={show} close={close} externalStyle={'w-full custom-scrollbar md:mx-10 xl:mx-auto '}>
@@ -138,15 +170,22 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                 ? block > proposal?.startBlock
                   ? block < proposal?.endBlock
                     ? 'ends ' + dayjs(dayjs().valueOf() + currentContracts.blockTime * Number(proposal?.endBlock - block) * 1000).fromNow() + ' (' + (proposal?.endBlock - block) + ' blocks left)'
-                    : 'ended ' + dayjs(dayjs().valueOf() - currentContracts.blockTime * Number(block - proposal?.endBlock) * 1000).fromNow()
-                  : 'will start ' + dayjs(dayjs().valueOf() + currentContracts.blockTime * Number(proposal?.startBlock - block) * 1000).fromNow()
+                    : 'ended ' + dayjs(dayjs().valueOf() - currentContracts.blockTime * Number(block - proposal?.endBlock) * 1000).fromNow() + ' (' + (block - proposal?.endBlock) + ' blocks ago)'
+                  : 'will start ' +
+                    dayjs(dayjs().valueOf() + currentContracts.blockTime * Number(proposal?.startBlock - block) * 1000).fromNow() +
+                    ' (' +
+                    (proposal?.startBlock - block) +
+                    ' blocks left)'
                 : ''}
             </div>
           </div>
 
           <div className='grid grid-cols-1 gap-[73px] py-[10px] md:py-5 lg:grid-cols-3 lg:gap-10 xl:gap-[100px]'>
-            <div className='col-span-2'>
-              <div className='font-heading text-[26px] font-medium leading-9 md:text-[30px]'>{proposal?.title ? shortenText(proposal.title) : 'No title'}</div>
+            <div className={supporters_raw.length > 0 ? 'col-span-2' : 'col-span-3'}>
+              <div className='flex items-center gap-5'>
+                <div className='font-heading text-[26px] font-medium leading-9 md:text-[30px]'>{proposal?.title ? shortenText(proposal.title) : 'No title'}</div>
+                {proposal.grant && <div className={`h-fit cursor-pointer text-lg font-medium text-vdao-light`}>grant proposal</div>}
+              </div>
               <div className='grid grid-cols-2 pt-[10px] md:grid-cols-3 md:pt-5'>
                 <ProfileCard icon={proposal ? proposal.picture : DummyIcon} name={proposal ? proposal?.author?.name : 'Unnamed'} address={proposal?.authorId} />
                 <div className={`mt-6 h-fit w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-7 text-lg  font-medium text-vdao-light lg:ml-5`}>{proposalStatus}</div>
@@ -216,22 +255,36 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
               {actions ? <ActionDetails proposal={proposal} /> : <ProposalDetails proposal={proposal} />}
             </div>
 
-            <div>
-              <div className='text-xl font-bold'>Supporters</div>
-              <div className='pt-5 pr-[60px]'>
-                {SupporterDetails.map((details, idx) => {
-                  return (
-                    <div className='flex justify-between pt-5' key={idx}>
-                      <div className='flex gap-3'>
-                        <Image src={details.icon} height={40} width={40} alt='icon' />
-                        <div className='my-auto text-sm'>{details.name}</div>
+            {supporters_raw.length > 0 && (
+              <div>
+                <div className='text-xl font-bold'>Supporters</div>
+                <div className='pt-5 pr-[60px]'>
+                  {supporters_raw.map((el, idx) => {
+                    el = {
+                      ...el,
+                      ...supporters?.find(supporter => supporter.address === el.voter),
+                    }
+
+                    const supportColor = el.support === 1 ? 'text-green-500' : el.support === 2 ? 'text-red-500' : 'text-gray-500'
+                    const supportText = el.support === 1 ? 'is for the proposal' : el.support === 2 ? 'is against the proposal' : 'abstained'
+
+                    return (
+                      <div className='flex justify-between pt-5' key={idx}>
+                        <div className='flex'>
+                          <Image src={el?.picture || DummyIcon} height={40} width={40} alt='icon' />
+                        </div>
+                        <div className='flex flex-col'>
+                          <div className='ml-auto text-sm'>
+                            {el?.name || shortenAddress(el?.voter)} <span className={'text-sm ' + supportColor}>{supportText}</span>
+                          </div>
+                          <div className='my-auto ml-auto text-xs font-bold'>{formatter.format(el.votes)}</div>
+                        </div>
                       </div>
-                      <div className='my-auto text-sm font-bold'>{details.percentage}</div>
-                    </div>
-                  )
-                })}
+                    )
+                  })}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       )}

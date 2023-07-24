@@ -114,6 +114,44 @@ export const grantRouter = createTRPCRouter({
         ...grantData[0],
       }
     }),
+
+  generateIPFSHash: protectedProcedure
+    .input(
+      z.object({
+        authorAddress: z.string(),
+        name: z.string(),
+        description: z.string(),
+        address: z.string(),
+
+        image: z.string(),
+        theme: z.string(),
+
+        socials: z.object({
+          twitter: z.string().optional(),
+          telegram: z.string().optional(),
+          discord: z.string().optional(),
+          github: z.string().optional(),
+          website: z.string().optional(),
+        }),
+      }),
+    )
+    .mutation(async ({ input, ctx: { prisma } }) => {
+      const ipfs = await fetch('https://api.pinata.cloud/pinning/pinJSONToIPFS', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + process.env.PINATA_API_JWT,
+        },
+        body: JSON.stringify({
+          content: {
+            external_url: 'https://vdao.app',
+            ...input,
+          },
+        }),
+      })
+
+      return ipfs.json()
+    }),
 })
 
 function parseGrantMetata(savedGrantsMetaDataUnparsed: ({ error?: Error; result?: undefined; status?: 'failure' } | { error?: undefined; result?: unknown[]; status?: 'success' })[]) {

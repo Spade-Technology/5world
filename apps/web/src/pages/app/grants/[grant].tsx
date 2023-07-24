@@ -7,9 +7,10 @@ import { EnforceAuth } from '~/components/misc/enforceAuth'
 import GrantItem from '~/components/pages/app/grants/grantItem'
 import GrantsRound from '~/components/pages/app/grants/grantsRound'
 import CreateGrant from '~/components/pages/app/grants/popups/createGrant'
-import GrantDetails from '~/components/pages/app/grants/popups/grantDetails'
+import ViewDetails from '~/components/pages/app/grants/popups/viewDetails'
 import { api } from '~/utils/api'
 import RoundImplementation from '~/abi/RoundImplementation.json'
+import CreateProject from '~/components/pages/app/grants/popups/createRequest'
 
 const Grants = ({ id }: { id: Number }) => {
   const [createRequest, setCreateRequest] = useState(false)
@@ -36,8 +37,8 @@ const Grants = ({ id }: { id: Number }) => {
         {grant && (
           <>
             <GrantItem setViewDetails={setViewDetails} grant={grant} votingPowerEnabled={votingPowerEnabled} votingPower={votingPower} />
-            {createRequest && <CreateGrant show={createRequest} close={() => setCreateRequest(false)} />}
-            {viewDetails && <GrantDetails show={viewDetails} close={() => setViewDetails(false)} />}
+            {createRequest && <CreateProject show={createRequest} close={() => setCreateRequest(false)} grant={grant} />}
+            {viewDetails && <ViewDetails show={viewDetails} close={() => setViewDetails(false)} grant={grant} requestId={0} />}
           </>
         )}
       </EnforceAuth>
@@ -46,7 +47,7 @@ const Grants = ({ id }: { id: Number }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-  const id = Number(ctx.params?.index)
+  const id = Number(ctx.params?.grant)
 
   return {
     props: {

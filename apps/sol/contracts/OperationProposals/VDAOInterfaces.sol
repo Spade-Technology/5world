@@ -30,7 +30,7 @@ contract VDAOEvents {
     /// @param reason The reason given for the vote by the voter
     event VoteCast(
         address indexed voter,
-        uint proposalId,
+        uint indexed proposalId,
         uint8 support,
         uint votes,
         string reason

@@ -1,69 +1,39 @@
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import ETHIcon from 'public/icons/grants/ethIcon.svg'
 import LinkIcon from 'public/icons/grants/linkIcon.svg'
 import TwitterIcon from 'public/icons/grants/twitterIcon.svg'
 import GitCoinImage from 'public/illustrations/grants/gitCoing.svg'
 import Image1 from 'public/illustrations/grants/stretchedImage1.svg'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useAccount } from 'wagmi'
 import CustomModal from '~/components/misc/customModal'
+import { useVote } from '~/hooks/web3/useStewards'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { TeamDetails } from './team'
-import { useVote } from '~/hooks/web3/useStewards'
-import { useAccount } from 'wagmi'
-import { useRouter } from 'next/router'
-import { GrantDetails } from '../cardDetails'
 
 type Props = {
   show: boolean
   close: any
   requestId: number
+  grant: any
 }
-const ViewDetails = ({ show, close, requestId }: Props) => {
+const ViewDetails = ({ show, close, requestId, grant }: Props) => {
   const [showActivity, setShowActivity] = useState(false)
   // const estimatedAmount = (quadrativVotes/total Votes) * matching amount
   const [votes, setVotes] = useState('')
   const { vote } = useVote()
   const { address } = useAccount()
-  const [grant, setGrant] = useState({})
+
   const router = useRouter()
   const [estimatedAmt, setEstimatedAmt] = useState(0)
 
-  console.log('requestId', grant, requestId)
   const votesHandler = () => {
     const candidateAddress = ''
     if (votes && address && candidateAddress) {
-      vote({ voterAddress: address, candidateAddress: candidateAddress, amount: parseFloat(votes), message: '' })
     }
   }
 
-  useEffect(() => {
-    if (router.query.id) {
-      const id: number = parseFloat(router.query.id)
-      const details = GrantDetails.filter(grant => {
-        return id === grant.id
-      })
-      console.log('requestId d', details)
-      setGrant(details[0])
-
-      const estimatedAmount = (parseFloat(details[0]?.quadraticVotes) / parseFloat(details[0]?.totalVotes)) * parseFloat(details[0]?.matchingAmount)
-      setEstimatedAmt(estimatedAmount)
-    } else {
-      setGrant('')
-    }
-  }, [router.query.id, GrantDetails, requestId])
-
-  // useEffect(() => {
-  //   if (router.query.id) {
-  //     const id: number = parseFloat(router.query.id)
-  //     const details = GrantDetails.filter(grant => {
-  //       return id === grant.id
-  //     })
-  //     setGrant(details[0])
-  //   } else {
-  //     setGrant('')
-  //   }
-  // }, [router, GrantDetails])
-  console.log('requestId d', grant)
   return (
     <CustomModal show={show} close={close} padding='p-0' removeCloseIcon>
       <Image src={Image1} alt='Image1' />
@@ -136,10 +106,6 @@ const ViewDetails = ({ show, close, requestId }: Props) => {
           </div>
 
           <div className='pt-[68px]'>
-            {/* <div className="font-bold text-vdao-light underline underline-offset-8">
-              {" "}
-              Activity{" "}
-            </div> */}
             <div className='flex gap-[30px] border-b-[1px] border-b-vdao-dark pb-5 pt-[44px] font-body text-[22px] font-bold'>
               <div className={` ${!showActivity && 'text-vdao-light'} cursor-pointer justify-start`} onClick={() => setShowActivity(false)}>
                 Detail
@@ -147,14 +113,7 @@ const ViewDetails = ({ show, close, requestId }: Props) => {
               <div className={` ${showActivity && 'text-vdao-light'} cursor-pointer justify-start`} onClick={() => setShowActivity(true)}>
                 Activity
               </div>
-              <div
-                // className={` ${
-                //   showActivity && "text-vdao-light"
-                // } cursor-pointer justify-start`}
-                onClick={() => setShowActivity(true)}
-              >
-                Team
-              </div>
+              <div onClick={() => setShowActivity(true)}>Team</div>
             </div>
 
             <div className='pt-7'>

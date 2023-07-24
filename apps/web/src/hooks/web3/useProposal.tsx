@@ -322,18 +322,18 @@ export function useCreateProposal() {
 
             authorAddress: authorAddress,
             transactionHash,
+            grant: true,
           },
         ]
 
         return createProposalMutation.mutateAsync(...new_args).then(el => {
+          setIsLoading(false)
           notification.success({
             message: 'Grant Proposal created',
             description: 'Your grant proposal has been created',
           })
           return el
         }) as any
-
-        setIsLoading(false)
       })
       .catch(err => {
         console.error(err)

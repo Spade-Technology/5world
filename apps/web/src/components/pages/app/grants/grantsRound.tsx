@@ -1,3 +1,4 @@
+import { notification } from 'antd'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
@@ -9,24 +10,12 @@ import { api } from '~/utils/api'
 
 type Props = {
   setCreateGrant: Dispatch<SetStateAction<boolean>>
-  grant: any
+  grant?: any
 }
 
 const GrantsRound = ({ setCreateGrant, grant }: Props) => {
   const router = useRouter()
   const [disableBtn, setDisableBtn] = useState(false)
-  const currentTimeStamp = Math.floor(Date.now() / 1000)
-
-  useEffect(() => {
-    const grant = GrantDetails[Number(router.query.id)]
-    if (grant && currentTimeStamp > grant?.applicationStartBlock! && currentTimeStamp < grant?.applicationEndBlock!) {
-      setDisableBtn(false)
-    } else if (!router.query.id && Number(router.query.id) !== 0) {
-      setDisableBtn(false)
-    } else {
-      setDisableBtn(true)
-    }
-  }, [currentTimeStamp, GrantDetails])
 
   return (
     <Section className='w-screen bg-vdao-deep'>
@@ -51,7 +40,11 @@ const GrantsRound = ({ setCreateGrant, grant }: Props) => {
       <div className='flex flex-col md:flex-row '>
         <div className='flex-1'></div>
         <div className='mt-[30px] flex flex-1 flex-col gap-5 pl-6 md:mt-0 md:flex-row md:pl-16'>
-          <PrimaryButton text={grant ? 'Request' : 'Create Grant'} onClick={() => (grant ? setCreateGrant(true) : setCreateGrant(true))} className='py-[5px] px-[35px] text-xl' />
+          <PrimaryButton
+            text={grant ? 'Request' : 'Create Grant'}
+            onClick={() => (grant ? (grant.status === 1 ? setCreateGrant(true) : notification.info({ message: 'Grant applications are closed' })) : setCreateGrant(true))}
+            className='py-[5px] px-[35px] text-xl'
+          />
           {grant && (
             <div className='w-fit  cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white'>
               <Link href={'/app/grants/'}>See All Grants</Link>
