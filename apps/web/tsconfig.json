@@ -24,6 +24,17 @@
       "~/*": ["./src/*"]
     }
   },
-  "include": [".eslintrc.cjs", "next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs", "src/utils/web3context.tss", "src/utils/web3context.tss"],
+  "include": [
+    ".eslintrc.cjs",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs",
+    "src/utils/web3context.tss",
+    "src/utils/web3context.tss",
+    "src/components/pages/app/grants/grantSearch.tsx",
+    "src/components/pages/app/grants/grantSearch"
+  ],
   "exclude": ["node_modules"]
 }

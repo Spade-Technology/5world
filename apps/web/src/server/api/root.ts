@@ -6,6 +6,7 @@ import { proposalRouter } from './routers/proposal'
 import { stewardRouter } from './routers/stewards'
 import { etherscanRouter } from './routers/etherscan'
 import { tenderlyRouter } from './routers/tenderly'
+import { grantRouter } from './routers/grant'
 
 /**
  * This is the primary router for your server.
@@ -20,6 +21,7 @@ export const appRouter = createTRPCRouter({
   steward: stewardRouter,
   etherscan: etherscanRouter,
   tenderly: tenderlyRouter,
+  grant: grantRouter,
 })
 
 // export type definition of API

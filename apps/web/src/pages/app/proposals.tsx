@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import Footer from '~/components/layout/footer'
-import Header from '~/components/layout/header'
+
 import Page from '~/components/layout/page'
 import { EnforceAuth } from '~/components/misc/enforceAuth'
 import CreateGrant from '~/components/pages/app/grants/popups/createGrant'

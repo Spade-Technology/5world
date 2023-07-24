@@ -219,10 +219,8 @@ export const proposalRouter = createTRPCRouter({
           },
         }),
       })
-      console.log('ipfs', ipfs)
-      console.log('ipfs', await ipfs.json())
 
-      return ipfs
+      return ipfs.json()
     }),
 
   createProposal: protectedProcedure

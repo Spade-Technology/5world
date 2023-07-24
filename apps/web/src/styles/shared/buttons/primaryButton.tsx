@@ -12,13 +12,13 @@ type ButtonProps = {
   loading?: boolean
 }
 
-export const DropdownPrimaryButton = ({ text, className, onClick, icon, dropDown, loading = false }: ButtonProps) => {
+export const DropdownPrimaryButton = ({ text, className, onClick, icon, dropDown, loading = false, disabled }: ButtonProps) => {
   return (
     <div
       className={` w-fit cursor-pointer rounded-md bg-vdao-light px-9 py-1.5 font-heading text-xl font-medium text-vdao-dark md:py-[5px] md:px-[35px] ${
-        loading && 'cursor-not-allowed opacity-80'
+        (loading || disabled) && 'cursor-not-allowed opacity-80'
       } ${className}`}
-      onClick={() => onClick && !loading && onClick()}
+      onClick={() => onClick && !loading && !disabled && onClick()}
     >
       <div className={`mx-auto flex gap-1 ${dropDown ? 'flex-row-reverse justify-between' : ''}`}>
         {icon && <Image src={icon} alt='icon' className={dropDown ? 'my-auto h-4 w-4' : ''} />}

@@ -6,7 +6,7 @@ import { api } from '~/utils/api'
 import { InferArgs, InferReturn } from '~/utils/type'
 
 import VDAOImplementation from '~/abi/VDAOImplementation.json'
-import { currentChainId, currentContracts } from '~/config/contracts'
+import { currentChain, currentChainId, currentContracts } from '~/config/contracts'
 import { waitForTransaction, writeContract } from '@wagmi/core'
 import { notification } from 'antd'
 import { useState } from 'react'
@@ -61,7 +61,7 @@ export function useProposalAction(id: number) {
     })
 
     if (tx) {
-      await waitForTransaction({ hash: tx.hash, timeout: 10000, chainId: currentChainId, confirmations: 1 })
+      await waitForTransaction({ hash: tx.hash, timeout: currentContracts.blockTime * 1000 + 3000, chainId: currentChainId, confirmations: 1 })
       notification.success({
         message: 'Vote cast',
         description: 'Your vote has been cast',
@@ -230,8 +230,8 @@ export function useCreateProposal() {
       grantToken,
       grantAmount,
       [
-        [0, IPFSHash],
-        [0, IPFSHash],
+        [0, IPFSHash.IpfsHash],
+        [0, ''],
       ],
       [[address]],
     ]
@@ -301,9 +301,16 @@ export function useCreateProposal() {
       functionName: 'propose',
       args: [[currentContracts.roundFactory], [0], [signature], [callData], description],
     })
-      .then(res => {
+      .then(async res => {
         // just being typesafe, quite painful to look at.
         const transactionHash = res.hash as string
+
+        console.log('Waiting for transaction to be confirmed')
+
+        await waitForTransaction({ hash: res.hash, timeout: 10000, chainId: currentChainId, confirmations: 1 }).catch(err => {
+          console.error("Couldn't confirm transaction", err)
+        })
+
         const new_args: InferArgs<typeof createProposalMutation.mutate> = [
           {
             title,

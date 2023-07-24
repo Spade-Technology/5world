@@ -6,8 +6,12 @@ import { publicProvider } from 'wagmi/providers/public'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { infuraProvider } from 'wagmi/providers/infura'
 
-const { chains, publicClient } = configureChains([process.env.NODE_ENV === 'production' ? mainnet : sepolia], [publicProvider()])
+const { chains, publicClient } = configureChains(
+  [process.env.NODE_ENV === 'production' ? mainnet : sepolia],
+  [process.env.NEXT_PUBLIC_INFURA_ID ? infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_ID }) : publicProvider()],
+)
 
 export const connectors = [
   new MetaMaskConnector({

@@ -492,4 +492,36 @@ contract RoundImplementation is
 
     // Function to receive Ether. msg.data must be empty
     receive() external payable {}
+
+    function RoundInformation()
+        external
+        view
+        returns (
+            uint256,
+            uint256,
+            uint256,
+            uint256,
+            uint256,
+            address,
+            uint256,
+            uint256,
+            uint256,
+            MetaPtr memory,
+            MetaPtr memory
+        )
+    {
+        return (
+            applicationsStartBlock,
+            applicationsEndBlock,
+            roundStartBlock,
+            roundEndBlock,
+            proposalCount,
+            token,
+            matchingAmount,
+            totalQuadraticVotes,
+            uint256(state()),
+            roundMetaPtr,
+            applicationMetaPtr
+        );
+    }
 }

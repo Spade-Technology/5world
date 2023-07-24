@@ -361,7 +361,6 @@ contract VDAOImplementation is
      */
     //  TODO: upadte quorum votes
     function state(uint proposalId) public view returns (ProposalState) {
-        require(proposalCount > proposalId, "VDAO::state: invalid proposal id");
         Proposal storage proposal = proposals[proposalId];
         if (proposal.vetoed) {
             return ProposalState.Vetoed;

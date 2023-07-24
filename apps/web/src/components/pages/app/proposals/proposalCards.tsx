@@ -6,6 +6,12 @@ import ProfileCard from '~/components/misc/profileCard'
 import { useProposalReads } from '~/hooks/web3/useProposal'
 import { monthNames } from '~/utils/date'
 import DummyIcon from 'public/icons/pods/icon1.svg'
+import { useBlockNumber } from 'wagmi'
+import { currentChain, currentContracts } from '~/config/contracts'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+dayjs.extend(relativeTime)
 
 type ProposalProps = {
   setViewProposal: Dispatch<SetStateAction<boolean>>
@@ -27,9 +33,11 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
   const [updatedData, setUpdatedData] = useState<any>([])
   const itemsPerPage = 3
 
+  const { data: block } = useBlockNumber()
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      setProposalsType('all')
+      setProposalsType('active')
     }, 500)
 
     return () => {
@@ -45,7 +53,7 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
       setUpdatedData(newData)
     } else if (proposalsType === 'active') {
       const newData = data?.filter((proposal: any, idx: any) => {
-        return !proposal?.canceled && !proposal?.executed && !proposal?.vetoed
+        return !proposal?.canceled && !proposal?.executed && !proposal?.vetoed && proposal?.endBlock > (block || 0) && proposal?.startBlock < (block || 0)
       })
       setUpdatedData(newData)
     } else {
@@ -99,7 +107,7 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
         </div>
 
         <div className='mt-5 grid max-w-[450px] grid-cols-3 rounded-[100px] border-[1px] border-vdao-light font-heading text-xl text-vdao-light'>
-          {['all', 'active', 'closed'].map(item => {
+          {['active', 'all', 'closed'].map(item => {
             return (
               <div
                 onClick={() => setProposalsType(item)}
@@ -130,14 +138,43 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
 }
 
 export const Card = ({ proposal, setViewProposal, setProposalID }: CardProps) => {
-  const proposalStatus = proposal?.canceled ? 'Canceled' : proposal?.executed ? 'Executed' : proposal?.vetoed ? 'Vetoed' : 'Active'
+  const { data: block } = useBlockNumber()
+  const proposalStatus = proposal?.canceled
+    ? 'Canceled'
+    : proposal?.executed
+    ? 'Executed'
+    : proposal?.vetoed
+    ? 'Vetoed'
+    : proposal?.endBlock < (block || 0)
+    ? 'Ended'
+    : proposal?.startBlock > (block || 0)
+    ? 'Pending'
+    : 'Active'
 
   return (
     <div className='mt-[20px] overflow-hidden rounded-[20px] bg-white px-5 py-10 font-body text-vdao-dark md:mt-[30px] md:p-8 lg:p-[50px]'>
       <div className='flex flex-col justify-between md:flex-row'>
         <div className='w-full flex-1 md:max-w-[412px]'>
-          <div className='text-lg font-semibold'>
+          <div className='font-bold'>
             {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()]?.name + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
+            <div>
+              {proposal && block
+                ? block > proposal?.startBlock
+                  ? block < proposal?.endBlock
+                    ? 'ends ' +
+                      dayjs()
+                        .add(currentContracts.blockTime * Number(proposal?.endBlock - block), 'second')
+                        .fromNow()
+                    : 'ended ' +
+                      dayjs()
+                        .subtract(currentContracts.blockTime * Number(block - proposal?.endBlock), 'second')
+                        .fromNow()
+                  : 'will start ' +
+                    dayjs()
+                      .add(currentContracts.blockTime * Number(proposal?.startBlock - block), 'second')
+                      .fromNow()
+                : ''}
+            </div>
           </div>
           <div className='overflow-hidden overflow-ellipsis break-all pt-[10px] text-3xl font-medium'>{proposal?.title}</div>
 

@@ -20,6 +20,12 @@ import { Skeleton } from '~/components/ui/skeleton'
 import { useBlockNumber } from 'wagmi'
 import { encodeFunctionData, encodePacked } from 'viem'
 
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import { currentContracts } from '~/config/contracts'
+
+dayjs.extend(relativeTime)
+
 type ViewProposalProps = {
   show: boolean
   close: any
@@ -33,8 +39,18 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   const [btnStatus, setBtnStatus] = useState('Votes')
   const { voteFor, voteAgainst, voteAbstain, isLoading } = useProposalAction(proposalID)
 
-  const proposalStatus = proposal?.canceled ? 'Canceled' : proposal?.executed ? 'Executed' : proposal?.vetoed ? 'Vetoed' : 'Active'
   const { data: block } = useBlockNumber()
+  const proposalStatus = proposal?.canceled
+    ? 'Canceled'
+    : proposal?.executed
+    ? 'Executed'
+    : proposal?.vetoed
+    ? 'Vetoed'
+    : proposal?.endBlock < (block || 0)
+    ? 'Ended'
+    : proposal?.startBlock > (block || 0)
+    ? 'Pending'
+    : 'Active'
 
   const votesHandler = (type: string) => {
     if (type === 'for') {
@@ -113,14 +129,17 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
       ) : (
         <div className='pb-[30px] font-body text-lg font-normal text-vdao-dark'>
           <div className='font-bold'>
-            {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()]?.name + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}
+            <div className='flex gap-5'>
+              {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()]?.name + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}{' '}
+              <div className='font-bold text-black opacity-30'>#{proposal?.id}</div>
+            </div>
             <div>
               {proposal && block
                 ? block > proposal?.startBlock
                   ? block < proposal?.endBlock
-                    ? 'ends in ' + (proposal?.endBlock - block).toString() + ' blocks'
-                    : 'ended ' + (block - proposal?.endBlock).toString() + ' blocks ago'
-                  : 'will start in ' + (proposal?.startBlock - block).toString() + ' blocks'
+                    ? 'ends ' + dayjs(dayjs().valueOf() + currentContracts.blockTime * Number(proposal?.endBlock - block) * 1000).fromNow() + ' (' + (proposal?.endBlock - block) + ' blocks left)'
+                    : 'ended ' + dayjs(dayjs().valueOf() - currentContracts.blockTime * Number(block - proposal?.endBlock) * 1000).fromNow()
+                  : 'will start ' + dayjs(dayjs().valueOf() + currentContracts.blockTime * Number(proposal?.startBlock - block) * 1000).fromNow()
                 : ''}
             </div>
           </div>
@@ -168,6 +187,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                       onClick={() => {
                         setDropDownOn(!dropDownOn)
                       }}
+                      disabled={proposalStatus !== 'Active'}
                       icon={btnStatus === 'Vote for proposal' ? LikedIcon : btnStatus === 'Vote against proposal' ? DisLikedIcon : btnStatus === 'Abstain' ? AbstainIcon : PolygonIcon}
                       dropDown
                       loading={isLoading}

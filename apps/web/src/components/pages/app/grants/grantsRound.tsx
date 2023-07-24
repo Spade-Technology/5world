@@ -5,12 +5,14 @@ import { Section } from '~/components/layout/section'
 import Description from '~/components/misc/description'
 import HowItWorks from '~/components/misc/howItWorks'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
+import { api } from '~/utils/api'
 
 type Props = {
   setCreateGrant: Dispatch<SetStateAction<boolean>>
+  grant: any
 }
 
-const GrantsRound = ({ setCreateGrant }: Props) => {
+const GrantsRound = ({ setCreateGrant, grant }: Props) => {
   const router = useRouter()
 
   return (
@@ -36,10 +38,12 @@ const GrantsRound = ({ setCreateGrant }: Props) => {
       <div className='flex flex-col md:flex-row '>
         <div className='flex-1'></div>
         <div className='mt-[30px] flex flex-1 flex-col gap-5 pl-6 md:mt-0 md:flex-row md:pl-16'>
-          <PrimaryButton text={router.query.id ? 'Request' : 'Create Grant'} onClick={() => setCreateGrant(true)} className='py-[5px] px-[35px] text-xl' />
-          <div className='w-fit  cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white'>
-            <Link href={'/app/grants/#currentGrants'}>See All Grant</Link>
-          </div>
+          <PrimaryButton text={grant ? 'Request' : 'Create Grant'} onClick={() => (grant ? setCreateGrant(true) : setCreateGrant(true))} className='py-[5px] px-[35px] text-xl' />
+          {grant && (
+            <div className='w-fit  cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white'>
+              <Link href={'/app/grants/'}>See All Grants</Link>
+            </div>
+          )}
         </div>
       </div>
 

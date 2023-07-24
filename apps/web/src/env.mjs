@@ -31,6 +31,8 @@ const server = z.object({
   PINATA_API_SECRET: z.string().min(1),
   PINATA_API_JWT: z.string().min(1),
   PINATA_API_KEY: z.string().min(1),
+
+  NEXT_PUBLIC_INFURA_ID: z.string().min(1).optional(),
 })
 
 /**
@@ -68,6 +70,8 @@ const processEnv = {
   PINATA_API_SECRET: process.env.PINATA_API_SECRET,
   PINATA_API_JWT: process.env.PINATA_API_JWT,
   PINATA_API_KEY: process.env.PINATA_API_KEY,
+
+  NEXT_PUBLIC_INFURA_ID: process.env.NEXT_PUBLIC_INFURA_ID,
 }
 
 // Don't touch the part below

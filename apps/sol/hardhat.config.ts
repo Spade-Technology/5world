@@ -2,8 +2,10 @@
 import { HardhatUserConfig } from 'hardhat/types';
 
 import '@nomiclabs/hardhat-ethers';
-import '@nomiclabs/hardhat-etherscan';
 import '@nomicfoundation/hardhat-chai-matchers';
+
+import '@nomiclabs/hardhat-etherscan';
+
 import 'hardhat-gas-reporter';
 import 'hardhat-abi-exporter';
 
@@ -62,7 +64,7 @@ const config: ExtendedHardhatUserConfig = {
     },
     
     sepolia: {
-      url: 'https://rpc.sepolia.org',
+      url: `https://sepolia.infura.io/v3/${process.env.INFURA_KEY}`,
       accounts: [...((process.env.ETHEREUM_PRIVATE_KEY?.split(',') as string[]) || '')],
       chainId: 11155111,
     },

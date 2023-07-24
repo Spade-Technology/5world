@@ -144,26 +144,22 @@ model GrantProject {
 }
 
 model Grant {
-    id Int @id
+    id      Int    @id @default(autoincrement())
+    address String @unique
 
-    status String @default("proposed")
+    applicationsPtr String?
+    roundPtr        String?
 
-    // Media
-    title       String
-    description String
-    rules       String
+    title       String?
+    description String?
+    rules       String?
 
-    amount BigInt
-    token  String
+    token  String?
+    amount BigInt?
 
-    logo  String @default("")
-    theme String @default("")
+    logo  String? @default("")
+    theme String? @default("")
 
-    url String @default("")
-
-    Proposal Proposal[]
-
-    // Meta
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
@@ -183,6 +179,8 @@ model Proposal {
     spellCalldatas  String[]
     spellSignatures String[]
 
+    grant Boolean @default(false)
+
     // Relations
     pod      Pod?   @relation(fields: [podId], references: [id])
     podId    Int?
@@ -196,7 +194,4 @@ model Proposal {
     updatedById String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @default(now()) @updatedAt
-
-    grant   Grant? @relation(fields: [grantId], references: [id])
-    grantId Int?
 }
