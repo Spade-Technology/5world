@@ -68,15 +68,17 @@ export const Card = ({ details, setViewDetails }: CardProps) => {
     }
   }
 
+  console.log(details)
+
   return (
     <div className='rounded-[20px] bg-white'>
-      <Image src={details.image} width={700} alt='image' />
+      <Image src={details.image} height={300} width={700} alt='image' />
       <div className='px-[50px] py-10'>
         <div className='font-heading text-[30px] font-medium'>{details.title}</div>
 
         <div className='flex justify-between'>
           <div>
-            <ProfileCard />
+            <ProfileCard address={details.user.address} name={details.user.name} icon={details.user.picture} />
           </div>
           {details?.lastUpdated && <div className='my-auto text-lg font-bold'>Last Update: {new Date(details?.lastUpdated * 1000).toDateString()}</div>}
 

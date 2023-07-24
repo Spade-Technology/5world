@@ -42,7 +42,7 @@ const GrantsRound = ({ setCreateGrant, grant }: Props) => {
         <div className='mt-[30px] flex flex-1 flex-col gap-5 pl-6 md:mt-0 md:flex-row md:pl-16'>
           <PrimaryButton
             text={grant ? 'Request' : 'Create Grant'}
-            onClick={() => (grant ? (grant.status === 1 ? setCreateGrant(true) : notification.info({ message: 'Grant applications are closed' })) : setCreateGrant(true))}
+            onClick={() => (grant ? (grant.state === 1n ? setCreateGrant(true) : notification.info({ message: 'Grant applications are closed' })) : setCreateGrant(true))}
             className='py-[5px] px-[35px] text-xl'
           />
           {grant && (

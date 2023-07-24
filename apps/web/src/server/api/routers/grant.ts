@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { createTRPCRouter, publicProcedure, protectedProcedure } from '~/server/api/trpc'
 import RoundFactory from '~/abi/RoundFactory.json'
 import RoundImplementation from '~/abi/RoundImplementation.json'
-import { fetchTransaction, readContract, readContracts, waitForTransaction } from '@wagmi/core'
+import { fetchTransaction, getPublicClient, readContract, readContracts, waitForTransaction } from '@wagmi/core'
 import { Address, decodeEventLog } from 'viem'
 import { TRPCError } from '@trpc/server'
 import { currentChainId, currentContracts } from '~/config/contracts'
@@ -97,21 +97,54 @@ export const grantRouter = createTRPCRouter({
 
       const grantDataUnParsed = await readContract({
         abi: RoundImplementation as any,
-        address: grant.address as any,
+        address: grant.address as Address,
         chainId: currentChainId,
         functionName: 'RoundInformation',
         args: [],
       })
 
       const grantData = parseGrantMetata([{ result: grantDataUnParsed }])
+      if (!grantData[0]) throw new TRPCError({ code: 'NOT_FOUND', message: 'Grant not found' })
 
       const RoundIPFS = await fetch('https://gateway.pinata.cloud/ipfs/' + (grantDataUnParsed[9] as any).pointer)
       const roundIpfs = (await RoundIPFS.json()).content
+
+      const publicClient = getPublicClient()
+
+      const filter = await publicClient.createContractEventFilter({
+        abi: RoundImplementation,
+        address: grant.address as Address,
+        eventName: 'NewProjectApplication',
+        fromBlock: grantData[0].applicationsStartBlock,
+        toBlock: grantData[0].applicationsEndBlock,
+      })
+      const events = await publicClient.getFilterLogs({ filter })
+      let decodedEvents = await Promise.all(
+        events.map(async event => {
+          try {
+            return { ...(event as any).args, ...(await (await fetch('https://gateway.pinata.cloud/ipfs/' + (event as any).args.applicationMetaPtr.pointer)).json()).content }
+          } catch (e) {
+            return { ...(event as any).args }
+          }
+        }),
+      )
+
+      const user = await prisma.user.findMany({
+        where: {
+          address: { in: (decodedEvents as any).map((event: any) => event.owner) },
+        },
+      })
+
+      decodedEvents = decodedEvents.map(event => ({
+        ...event,
+        user: user.find((user: any) => user.address === event.owner),
+      }))
 
       return {
         ...grant,
         ...roundIpfs,
         ...grantData[0],
+        requests: decodedEvents,
       }
     }),
 

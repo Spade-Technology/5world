@@ -101,8 +101,6 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
       fromBlock: proposal.startBlock,
     })
 
-    console.log(filter)
-
     const logs = await publicClient.getFilterLogs({ filter }).catch(() => [])
 
     setSupporters(logs.map(log => (log as any).args))
