@@ -15,6 +15,7 @@ import CreateProject from '~/components/pages/app/grants/popups/createRequest'
 const Grants = ({ id }: { id: Number }) => {
   const [createRequest, setCreateRequest] = useState(false)
   const [viewDetails, setViewDetails] = useState(false)
+  const [requestId, setRequestId] = useState(0)
 
   const { address } = useAccount()
   const { data: grant } = api.grant.getGrant.useQuery({ id: Number(id) })
@@ -36,9 +37,9 @@ const Grants = ({ id }: { id: Number }) => {
       <EnforceAuth>
         {grant && (
           <>
-            <GrantItem setViewDetails={setViewDetails} grant={grant} votingPowerEnabled={votingPowerEnabled} votingPower={votingPower} />
+            <GrantItem setViewDetails={setViewDetails} grant={grant} votingPowerEnabled={votingPowerEnabled} votingPower={votingPower} setRequestId={setRequestId} />
             {createRequest && <CreateProject show={createRequest} close={() => setCreateRequest(false)} grant={grant} />}
-            {viewDetails && <ViewDetails show={viewDetails} close={() => setViewDetails(false)} grant={grant} requestId={0} />}
+            {viewDetails && <ViewDetails show={viewDetails} close={() => setViewDetails(false)} grant={grant} requestId={requestId} />}
           </>
         )}
       </EnforceAuth>

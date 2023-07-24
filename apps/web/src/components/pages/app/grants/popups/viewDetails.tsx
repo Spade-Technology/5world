@@ -1,20 +1,18 @@
+import { writeContract } from '@wagmi/core'
+import { notification } from 'antd'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
 import ETHIcon from 'public/icons/grants/ethIcon.svg'
 import LinkIcon from 'public/icons/grants/linkIcon.svg'
 import TwitterIcon from 'public/icons/grants/twitterIcon.svg'
-import GitCoinImage from 'public/illustrations/grants/gitCoing.svg'
 import Image1 from 'public/illustrations/grants/stretchedImage1.svg'
-import RoundImplementation from '~/abi/RoundImplementation.json'
 import { useState } from 'react'
-import { useAccount } from 'wagmi'
-import CustomModal from '~/components/misc/customModal'
-import { useVote } from '~/hooks/web3/useStewards'
-import PrimaryButton from '~/styles/shared/buttons/primaryButton'
-import { TeamDetails } from './team'
-import { shortenAddress } from '~/utils/helpers'
-import { writeContract } from '@wagmi/core'
 import { encodePacked } from 'viem'
+import { useAccount } from 'wagmi'
+import RoundImplementation from '~/abi/RoundImplementation.json'
+import CustomModal from '~/components/misc/customModal'
+import PrimaryButton from '~/styles/shared/buttons/primaryButton'
+import { shortenAddress } from '~/utils/helpers'
+import { TeamDetails } from './team'
 
 type Props = {
   show: boolean
@@ -38,6 +36,12 @@ const ViewDetails = ({ show, close, requestId, grant }: Props) => {
         address: grant?.address,
         functionName: 'vote',
         args: [[encodePacked(['uint256', 'uint256'], [BigInt(requestId), BigInt(votes)])]],
+      }).catch(err => {
+        notification.error({
+          message: 'Error',
+          description: err.shortMessage || err.message,
+          placement: 'bottomRight',
+        })
       })
     }
   }
