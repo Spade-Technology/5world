@@ -1,5 +1,5 @@
 import { writeContract } from '@wagmi/core'
-import { notification } from 'antd'
+import { Tooltip, notification } from 'antd'
 import Image from 'next/image'
 import ETHIcon from 'public/icons/grants/ethIcon.svg'
 import LinkIcon from 'public/icons/grants/linkIcon.svg'
@@ -13,6 +13,7 @@ import CustomModal from '~/components/misc/customModal'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { shortenAddress } from '~/utils/helpers'
 import { TeamDetails } from './team'
+import Details from '~/components/pages/blog/details'
 
 type Props = {
   show: boolean
@@ -86,7 +87,15 @@ const ViewDetails = ({ show, close, requestId, grant }: Props) => {
               value={votes}
               onChange={evt => setVotes(evt.target.value)}
             />
-            <PrimaryButton text='Vote' onClick={votesHandler} className='font-heading text-xl font-medium' />
+            <Tooltip
+              color='white'
+              title={<div className='text-black'>{grant.state !== 3n ? 'voting is only enabled during the review phase (after the application phase)' : 'Vote now !'}</div>}
+              placement='top'
+            >
+              <div>
+                <PrimaryButton text='Vote' disabled={grant.state !== 3n} onClick={votesHandler} className='font-heading text-xl font-medium' />
+              </div>
+            </Tooltip>
           </div>
 
           <div className='pt-[30px] md:pt-[60px]'>{grant?.requests[requestId]?.description}</div>

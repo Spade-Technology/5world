@@ -218,10 +218,17 @@ export function useCreateProposal() {
     const currentBlockTimeToNextBlock = currentContracts.blockTime
     const currentBlock = data
 
+    // prod
+    // const startApplicationBlock = (grantDate?.getTime() / 1000 - Date.now() / 1000) / currentBlockTimeToNextBlock + Number(currentBlock)
+    // const endApplicationBlock = startApplicationBlock + (7 * 24 * 60 * 60) / currentBlockTimeToNextBlock
+    // const startRoundBlock = endApplicationBlock
+    // const endRoundBlock = startRoundBlock + (14 * 24 * 60 * 60) / currentBlockTimeToNextBlock
+
+    // dev
     const startApplicationBlock = (grantDate?.getTime() / 1000 - Date.now() / 1000) / currentBlockTimeToNextBlock + Number(currentBlock)
-    const endApplicationBlock = startApplicationBlock + (7 * 24 * 60 * 60) / currentBlockTimeToNextBlock
+    const endApplicationBlock = startApplicationBlock + (20 * 60) / currentBlockTimeToNextBlock
     const startRoundBlock = endApplicationBlock
-    const endRoundBlock = startRoundBlock + (14 * 24 * 60 * 60) / currentBlockTimeToNextBlock
+    const endRoundBlock = startRoundBlock + (20 * 60) / currentBlockTimeToNextBlock
 
     const args = [
       [startApplicationBlock.toFixed(), endApplicationBlock.toFixed(), startRoundBlock.toFixed(), endRoundBlock.toFixed()],

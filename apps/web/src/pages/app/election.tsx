@@ -1,14 +1,12 @@
 import { User } from '@prisma/client'
-import { useState } from 'react'
 import { useSession } from 'next-auth/react'
-import Footer from '~/components/layout/footer'
-import Header from '~/components/layout/header'
+import { useState } from 'react'
 import Page from '~/components/layout/page'
-import LoginPromptComponent, { EnforceAuth } from '~/components/misc/enforceAuth'
+import { EnforceAuth } from '~/components/misc/enforceAuth'
 import ElectionCards from '~/components/pages/app/election/electionCards'
+import VotesNscores from '~/components/pages/app/election/popups/votesNscores'
 import StewardElection from '~/components/pages/app/election/stewardElection'
 import ProfilePopup from '~/components/pages/app/steward/profilePopup'
-import VotesNscores from '~/components/pages/app/election/popups/votesNscores'
 
 const Election = () => {
   const [openProfile, setOpenProfile] = useState<User | undefined>(undefined)

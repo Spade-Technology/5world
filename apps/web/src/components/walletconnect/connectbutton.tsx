@@ -61,6 +61,7 @@ export const VDAOConnectButton = ({
 
       const new_state: 'walletselect' | 'verify' | 'verified' | 'register' | 'loading' =
         isLoading && address ? 'loading' : address ? (data ? (siwe ? 'verified' : 'verify') : 'register') : 'walletselect'
+      setModalState(new_state)
       setMessage(siwe?.address && !web2 ? shortenAddress(siwe.address) : messages[new_state])
     }
   }, [address, siwe, data, status, disabled, isLoading])

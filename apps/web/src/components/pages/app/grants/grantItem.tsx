@@ -9,6 +9,7 @@ import { CurrentRound } from './grantSearch'
 import { writeContract } from '@wagmi/core'
 import { encodePacked } from 'viem'
 import RoundImplementation from '~/abi/RoundImplementation.json'
+import { Tooltip } from 'antd'
 
 type CardProps = {
   details: any
@@ -62,7 +63,6 @@ const GrantItem = ({ setViewDetails, grant, votingPowerEnabled, votingPower, set
 }
 
 export const Card = ({ details, setViewDetails, setRequestId }: CardProps) => {
-  const [disableBtn, setDisableBtn] = useState(false)
   const [votes, setVotes] = useState('')
   const { address } = useAccount()
 
@@ -108,13 +108,20 @@ export const Card = ({ details, setViewDetails, setRequestId }: CardProps) => {
             value={votes}
             onChange={evt => setVotes(evt.target.value)}
           />
-
-          <PrimaryButton
-            text='Vote'
-            disabled={disableBtn}
-            className={`font-heading text-xl`}
-            //  onClick={votesHandler}
-          />
+          <Tooltip
+            color='white'
+            title={<div className='text-black'>{details.state !== 2n ? 'voting is only enabled during the review phase (after the application phase)' : 'Vote now !'}</div>}
+            placement='top'
+          >
+            <div>
+              <PrimaryButton
+                text='Vote'
+                className={`font-heading text-xl`}
+                disabled={details.state !== 2n}
+                //  onClick={votesHandler}
+              />
+            </div>
+          </Tooltip>
         </div>
 
         <PrimaryButton

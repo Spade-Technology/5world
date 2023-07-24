@@ -35,7 +35,7 @@ export const grantRouter = createTRPCRouter({
         args: [],
       })
 
-      const RoundIPFS = await fetch('https://gateway.pinata.cloud/ipfs/' + (latestGrantData[9] as any).pointer)
+      const RoundIPFS = await fetch('https://apricot-philosophical-leopard-714.mypinata.cloud/ipfs/' + (latestGrantData[9] as any).pointer)
       const roundIpfs = (await RoundIPFS.json()).content
 
       const new_el = await prisma.grant.create({
@@ -104,9 +104,10 @@ export const grantRouter = createTRPCRouter({
       })
 
       const grantData = parseGrantMetata([{ result: grantDataUnParsed }])
+
       if (!grantData[0]) throw new TRPCError({ code: 'NOT_FOUND', message: 'Grant not found' })
 
-      const RoundIPFS = await fetch('https://gateway.pinata.cloud/ipfs/' + (grantDataUnParsed[9] as any).pointer)
+      const RoundIPFS = await fetch('https://apricot-philosophical-leopard-714.mypinata.cloud/ipfs/' + (grantDataUnParsed[9] as any).pointer)
       const roundIpfs = (await RoundIPFS.json()).content
 
       const publicClient = getPublicClient()
@@ -119,10 +120,14 @@ export const grantRouter = createTRPCRouter({
         toBlock: grantData[0].applicationsEndBlock,
       })
       const events = await publicClient.getFilterLogs({ filter })
+      console.log('first')
       let decodedEvents = await Promise.all(
         events.map(async event => {
           try {
-            return { ...(event as any).args, ...(await (await fetch('https://gateway.pinata.cloud/ipfs/' + (event as any).args.applicationMetaPtr.pointer)).json()).content }
+            return {
+              ...(event as any).args,
+              ...(await (await fetch('https://apricot-philosophical-leopard-714.mypinata.cloud/ipfs/' + (event as any).args.applicationMetaPtr.pointer)).json()).content,
+            }
           } catch (e) {
             return { ...(event as any).args }
           }

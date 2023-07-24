@@ -1,7 +1,7 @@
 import { User } from '@prisma/client'
 import { Skeleton } from 'antd'
 import Image from 'next/image'
-import { useEffect } from 'react'
+
 import ProfilePic from 'public/icons/blog/createdByLogo.svg'
 import InfoIcon from 'public/icons/stewards/infoIcon.svg'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'

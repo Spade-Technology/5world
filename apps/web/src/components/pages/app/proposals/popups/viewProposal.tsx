@@ -263,8 +263,8 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                       ...supporters?.find(supporter => supporter.address === el.voter),
                     }
 
-                    const supportColor = el.support === 1 ? 'text-green-500' : el.support === 2 ? 'text-red-500' : 'text-gray-500'
-                    const supportText = el.support === 1 ? 'is for the proposal' : el.support === 2 ? 'is against the proposal' : 'abstained'
+                    const supportColor = el.support === 1 ? 'text-green-500' : el.support === 0 ? 'text-red-500' : 'text-gray-500'
+                    const supportText = el.support === 1 ? 'is for the proposal' : el.support === 0 ? 'is against the proposal' : 'abstained'
 
                     return (
                       <div className='flex justify-between pt-5' key={idx}>
