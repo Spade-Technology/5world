@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Section } from '~/components/layout/section'
 import Description from '~/components/misc/description'
 import HowItWorks from '~/components/misc/howItWorks'
@@ -14,6 +14,19 @@ type Props = {
 
 const GrantsRound = ({ setCreateGrant, grant }: Props) => {
   const router = useRouter()
+  const [disableBtn, setDisableBtn] = useState(false)
+  const currentTimeStamp = Math.floor(Date.now() / 1000)
+
+  useEffect(() => {
+    const grant = GrantDetails[Number(router.query.id)]
+    if (grant && currentTimeStamp > grant?.applicationStartBlock! && currentTimeStamp < grant?.applicationEndBlock!) {
+      setDisableBtn(false)
+    } else if (!router.query.id && Number(router.query.id) !== 0) {
+      setDisableBtn(false)
+    } else {
+      setDisableBtn(true)
+    }
+  }, [currentTimeStamp, GrantDetails])
 
   return (
     <Section className='w-screen bg-vdao-deep'>

@@ -1,11 +1,12 @@
 import Image from 'next/image'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import ProfileCard from '~/components/misc/profileCard'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import WhiteButton from '~/styles/shared/buttons/whiteButton'
 import { CurrentRound } from './grantSearch'
 import { api } from '~/utils/api'
 import { useRouter } from 'next/router'
+import { useAccount } from 'wagmi'
 
 type CardProps = {
   details: any
@@ -57,6 +58,16 @@ const GrantItem = ({ setViewDetails, grant, votingPowerEnabled, votingPower }: P
 }
 
 export const Card = ({ details, setViewDetails }: CardProps) => {
+  const [disableBtn, setDisableBtn] = useState(false)
+  const [votes, setVotes] = useState('')
+  const { address } = useAccount()
+
+  const votesHandler = () => {
+    const candidateAddress = ''
+    if (votes && address && candidateAddress) {
+    }
+  }
+
   return (
     <div className='rounded-[20px] bg-white'>
       <Image src={details.image} width={700} alt='image' />
@@ -67,6 +78,7 @@ export const Card = ({ details, setViewDetails }: CardProps) => {
           <div>
             <ProfileCard />
           </div>
+          {details?.lastUpdated && <div className='my-auto text-lg font-bold'>Last Update: {new Date(details?.lastUpdated * 1000).toDateString()}</div>}
 
           <div className='my-auto text-lg font-bold'>Last Update: {details.lastUpdated}</div>
         </div>
@@ -78,9 +90,14 @@ export const Card = ({ details, setViewDetails }: CardProps) => {
         <div className='pt-11 text-xl font-medium'>Delegate your vote</div>
 
         <div className='flex gap-[10px] pt-[18px] pb-[14px]'>
-          <WhiteButton text='60' className='border-[1px] border-vdao-dark py-[5px] font-heading text-xl' />
+          <input
+            placeholder='60'
+            className='max-h-10 w-[82px] rounded-md border-[1px] border-vdao-dark px-2 text-center font-heading text-xl font-medium text-vdao-dark outline-none'
+            value={votes}
+            onChange={evt => setVotes(evt.target.value)}
+          />
 
-          <PrimaryButton text='Vote' className='py-[5px] font-heading text-xl' />
+          <PrimaryButton text='Vote' disabled={disableBtn} className={`font-heading text-xl`} onClick={votesHandler} />
         </div>
       </div>
     </div>

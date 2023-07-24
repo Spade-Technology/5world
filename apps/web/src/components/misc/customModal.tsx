@@ -22,7 +22,7 @@ const CustomModal = ({ show, close, children, heading, modalMarginTop, padding, 
       <div
         className={`${modalMarginTop ? modalMarginTop : 'md:my-[100px]'} ${externalStyle} ${
           padding ? padding : 'p-6 md:p-[30px] md:pl-[50px]'
-        } hide-scrollbar mount h-full overflow-auto bg-white  md:max-h-[80vh] md:max-w-[1140px] md:rounded-[20px]`}
+        } mount h-full overflow-auto bg-white  md:max-h-[80vh] md:max-w-[1140px] md:rounded-[20px]`}
       >
         <div className='flex justify-between'>
           <div>{heading && <div className='pt-5 font-heading text-[26px] font-medium text-vdao-dark md:text-3xl'>{heading}</div>}</div>
