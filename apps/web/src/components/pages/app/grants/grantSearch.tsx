@@ -84,6 +84,8 @@ export const CurrentRound = ({ grant }: GrantProps) => {
     )
   }
 
+  // const { data } = useToken({ chainId: currentChainId, address: grant?.tokenAddress })
+
   return (
     <div className=' mt-10 w-full rounded-[40px] bg-vdao-dark pl-10 pt-10 pr-5 text-white'>
       <div className='flex gap-3 font-heading text-3xl font-medium'>
@@ -103,6 +105,7 @@ export const CurrentRound = ({ grant }: GrantProps) => {
             <div className='mt-5 flex gap-1 text-lg'>
               Proposed by <span className='font-medium text-vdao-light underline underline-offset-2'>Brieyla</span>
             </div>
+            <div className='mt-5 flex gap-1 text-lg'>Matching Amount: {grant?.amount ? grant?.amount : '0.00'}</div>
           </div>
         </div>
         <Image src={grantImage} alt='grantImage' />
