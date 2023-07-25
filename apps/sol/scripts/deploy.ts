@@ -102,17 +102,6 @@ async function main() {
   if (timelock instanceof Contract) await proxiedVDao._initiate();
   progressBar.tick();
 
-  progressBar.tick({ status: 'Deploying Treasury' });
-  const Treasury = await ethers.getContractFactory('Treasury');
-  const treasury = await Treasury.deploy(vDao.address, timelock.address, 0);
-  await treasury.deployed();
-  progressBar.tick();
-
-  progressBar.tick({ status: 'Deploying VDonations' });
-  const DonationSBT = await ethers.getContractFactory('VDonations');
-  const donationSBT = await DonationSBT.deploy(timelock.address, treasury.address, [500, 1000, 2000, 5000], 'api.VDAO/DonationSBT/');
-  await donationSBT.deployed();
-  progressBar.tick();
 
   progressBar.tick({ status: 'Deploying RoundImplementation' });
   const RoundImplementation = await ethers.getContractFactory('RoundImplementation');
@@ -134,6 +123,18 @@ async function main() {
   progressBar.tick();
 
   await roundFactory.transferOwnership(timelock.address);
+  progressBar.tick();
+
+  progressBar.tick({ status: 'Deploying Treasury' });
+  const Treasury = await ethers.getContractFactory('Treasury');
+  const treasury = await Treasury.deploy(vDao.address, timelock.address, 0, roundFactory.address);
+  await treasury.deployed();
+  progressBar.tick();
+
+  progressBar.tick({ status: 'Deploying VDonations' });
+  const DonationSBT = await ethers.getContractFactory('VDonations');
+  const donationSBT = await DonationSBT.deploy(timelock.address, treasury.address, [500, 1000, 2000, 5000], 'api.VDAO/DonationSBT/');
+  await donationSBT.deployed();
   progressBar.tick();
  
   const contracts = {
@@ -194,7 +195,7 @@ async function main() {
   progressBar.tick({ status: 'Verifying Treasury' });
   await hre.run('verify:verify', {
     address: treasury.address,
-    constructorArguments: [vDao.address, timelock.address, 0],
+    constructorArguments: [vDao.address, timelock.address, 0, roundFactory.address],
   });
 
   progressBar.tick({ status: 'Verifying VDonations' });

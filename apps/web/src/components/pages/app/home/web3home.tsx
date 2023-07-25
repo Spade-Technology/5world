@@ -59,7 +59,7 @@ export function StatisticsHomeComponent() {
                   {period.value}
                 </div>
                 <FaChevronDown onClick={() => setPeriod({ ...period, state: !period.state })} className='text-[15px] text-vdao-light' />
-                <div className={`ease-[1s]  absolute left-0 z-50 w-full overflow-hidden rounded-[10px] bg-white ${period.state ? 'top-[110%] block opacity-100' : 'top-[130%] hidden opacity-0'}`}>
+                <div className={`absolute left-0 z-50 w-full overflow-hidden rounded-[10px] bg-white ${period.state ? 'top-[110%] block opacity-100' : 'top-[130%] hidden opacity-0'}`}>
                   {['week', 'month', 'year'].map((text, index) => {
                     return (
                       <div

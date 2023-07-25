@@ -15,6 +15,8 @@ type CardProps = {
   details: any
   setViewDetails: Dispatch<SetStateAction<boolean>>
   setRequestId: Dispatch<SetStateAction<number>>
+  votesHandler: Function
+  state: bigint
 }
 
 type Props = {
@@ -23,13 +25,14 @@ type Props = {
   votingPowerEnabled: boolean
   votingPower: any
   setRequestId: Dispatch<SetStateAction<number>>
+  votesHandler: Function
 }
 
 type GrantProps = {
   grant: any
 }
 
-const GrantItem = ({ setViewDetails, grant, votingPowerEnabled, votingPower, setRequestId }: Props) => {
+const GrantItem = ({ setViewDetails, grant, votingPowerEnabled, votingPower, setRequestId, votesHandler }: Props) => {
   const router = useRouter()
 
   return (
@@ -49,7 +52,7 @@ const GrantItem = ({ setViewDetails, grant, votingPowerEnabled, votingPower, set
             <div className='mx-6 mt-5 grid grid-cols-1 gap-5 md:mx-0 md:grid-cols-2'>
               {grant?.requests && grant?.requests.length > 0 ? (
                 grant?.requests?.map((details: any, idx: number) => {
-                  return <Card details={details} setViewDetails={setViewDetails} key={idx} setRequestId={setRequestId} />
+                  return <Card details={details} setViewDetails={setViewDetails} key={idx} setRequestId={setRequestId} votesHandler={votesHandler} state={grant.state} />
                 })
               ) : (
                 <div className='w-full text-center text-xl font-medium text-vdao-light md:col-span-2'>No requests</div>
@@ -62,20 +65,9 @@ const GrantItem = ({ setViewDetails, grant, votingPowerEnabled, votingPower, set
   )
 }
 
-export const Card = ({ details, setViewDetails, setRequestId }: CardProps) => {
-  const [votes, setVotes] = useState('')
+export const Card = ({ details, setViewDetails, setRequestId, votesHandler, state }: CardProps) => {
   const { address } = useAccount()
-
-  // const votesHandler = async () => {
-  //   if (votes && address) {
-  //     await writeContract({
-  //       abi: RoundImplementation,
-  //       address: details?.address,
-  //       functionName: 'vote',
-  //       args: [[encodePacked(['uint256', 'uint256'], [BigInt(details.proposalId), BigInt(votes)])]],
-  //     })
-  //   }
-  // }
+  const [votes, setVotes] = useState('')
 
   return (
     <div className='rounded-[20px] bg-white'>
@@ -110,16 +102,11 @@ export const Card = ({ details, setViewDetails, setRequestId }: CardProps) => {
           />
           <Tooltip
             color='white'
-            title={<div className='text-black'>{details.state !== 2n ? 'voting is only enabled during the review phase (after the application phase)' : 'Vote now !'}</div>}
+            title={<div className='text-black'>{state !== 3n ? 'voting is only enabled during the review phase (after the application phase)' : 'Vote now !'}</div>}
             placement='top'
           >
             <div>
-              <PrimaryButton
-                text='Vote'
-                className={`font-heading text-xl`}
-                disabled={details.state !== 2n}
-                //  onClick={votesHandler}
-              />
+              <PrimaryButton text='Vote' className={`font-heading text-xl`} disabled={state !== 3n} onClick={() => votesHandler(votes, Number(details.proposalId))} />
             </div>
           </Tooltip>
         </div>
@@ -128,7 +115,7 @@ export const Card = ({ details, setViewDetails, setRequestId }: CardProps) => {
           text='View Detail'
           className='] w-full py-[5px] px-[35px] text-xl font-medium'
           onClick={() => {
-            setRequestId(Number(details.proposalId) - 1)
+            setRequestId(Number(details.proposalId))
             setViewDetails(true)
           }}
         />

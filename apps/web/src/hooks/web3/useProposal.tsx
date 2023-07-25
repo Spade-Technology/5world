@@ -11,7 +11,7 @@ import { waitForTransaction, writeContract } from '@wagmi/core'
 import { notification } from 'antd'
 import { useState } from 'react'
 import RoundFactoryAbi from '~/abi/RoundFactory.json'
-import { encodeAbiParameters, encodeFunctionData, getContract, parseAbi } from 'viem'
+import { encodeAbiParameters, encodeFunctionData, encodePacked, getContract, parseAbi } from 'viem'
 
 /* Proposal schema */
 interface ProposalInclude {
@@ -91,6 +91,7 @@ export function useCreateProposal() {
   const createProposal = async ({
     calldatas,
     targets,
+    signatures,
     values,
     authorAddress,
     description,
@@ -98,6 +99,7 @@ export function useCreateProposal() {
   }: {
     calldatas: string[]
     targets: string[]
+    signatures: string[]
     values: bigint[]
     description: string
     title: string
@@ -140,6 +142,7 @@ export function useCreateProposal() {
 
         spells: targets,
         spellValues: values,
+        spellSignatures: signatures,
         spellCalldatas: calldatas,
 
         authorAddress: authorAddress,
@@ -214,6 +217,7 @@ export function useCreateProposal() {
 
     const functionName = 'create'
     const signature = 'create(bytes)'
+    const signature_proposal = 'fundGrantRound(address,uint256)'
 
     const currentBlockTimeToNextBlock = currentContracts.blockTime
     const currentBlock = data
@@ -306,7 +310,31 @@ export function useCreateProposal() {
       abi: VDAOImplementation,
       address: currentContracts.proxiedVDao as Address,
       functionName: 'propose',
-      args: [[currentContracts.roundFactory], [0], [signature], [callData], description],
+      args: [
+        [currentContracts.roundFactory, currentContracts.treasury],
+        [0, 0],
+        [signature, signature_proposal],
+        [
+          callData,
+
+          encodeAbiParameters(
+            [
+              {
+                internalType: 'address',
+                name: 'token_',
+                type: 'address',
+              },
+              {
+                internalType: 'uint256',
+                name: 'amount_',
+                type: 'uint256',
+              },
+            ],
+            [grantToken as Address, BigInt(grantAmount)],
+          ),
+        ],
+        description,
+      ],
     })
       .then(async res => {
         // just being typesafe, quite painful to look at.
@@ -323,9 +351,10 @@ export function useCreateProposal() {
             title,
             description,
 
-            spells: [currentContracts.roundFactory],
-            spellValues: [0n],
-            spellCalldatas: [callData],
+            spells: [currentContracts.roundFactory, currentContracts.treasury],
+            spellValues: [0n, 0n],
+            spellSignatures: [signature, signature_proposal],
+            spellCalldatas: [callData, encodePacked(['address', 'uint256'], [grantToken as Address, BigInt(grantAmount)])],
 
             authorAddress: authorAddress,
             transactionHash,

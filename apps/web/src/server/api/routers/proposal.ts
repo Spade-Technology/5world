@@ -72,6 +72,7 @@ export const proposalRouter = createTRPCRouter({
         ...(ids && { where: { id: { in: ids } } }),
         include: include,
         take: 10,
+        orderBy: { createdAt: 'desc' },
       })
 
       const proposalValues = await readContracts({
@@ -237,12 +238,13 @@ export const proposalRouter = createTRPCRouter({
         spells: z.array(z.string()).max(10, 'Too many spells'),
         spellValues: z.array(z.bigint()).max(10, 'Too many spell values'),
         spellCalldatas: z.array(z.string()).max(10, 'Too many spell calldatas'),
+        spellSignatures: z.array(z.string()).max(10, 'Too many spell signatures'),
         grant: z.boolean().optional(),
       }),
     )
     .mutation(
       async ({
-        input: { podId, authorAddress, transactionHash, include, title, description, picture, spells, spellValues, spellCalldatas, grant },
+        input: { podId, authorAddress, transactionHash, include, title, description, picture, spells, spellValues, spellCalldatas, spellSignatures, grant },
         ctx: {
           prisma,
           session: { address },
@@ -283,7 +285,7 @@ export const proposalRouter = createTRPCRouter({
             spells,
             spellValues,
             spellCalldatas,
-            spellSignatures: (txEvent.args as any).spellSignatures,
+            spellSignatures,
 
             ...(podId && { pod: { connect: { id: podId } } }),
 

@@ -707,6 +707,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "getTotalQuadraticVotes",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "totalQuadraticVotes",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",

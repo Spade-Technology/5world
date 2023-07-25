@@ -439,7 +439,7 @@ contract RoundImplementation is
             revert InvalidState();
         }
 
-        totalQuadraticVotes = _getTotalQuadraticVotes();
+        totalQuadraticVotes = getTotalQuadraticVotes();
     }
 
     /// @notice Withdraws unsupported tokens from the contract and sends them to the specified recipient
@@ -467,8 +467,8 @@ contract RoundImplementation is
         matchingAmount = newMatchingAmount_;
     }
 
-    function _getTotalQuadraticVotes()
-        internal
+    function getTotalQuadraticVotes()
+        public
         view
         returns (uint256 totalQuadraticVotes)
     {

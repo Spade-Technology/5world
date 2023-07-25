@@ -17,7 +17,7 @@ import TenderlyIcon from 'public/icons/proposal/tenderly.svg'
 import { api } from '~/utils/api'
 import PrimaryButton, { DropdownPrimaryButton } from '~/styles/shared/buttons/primaryButton'
 import { Skeleton } from '~/components/ui/skeleton'
-import { useBlockNumber } from 'wagmi'
+import { useBlockNumber, useNetwork } from 'wagmi'
 import { Address, encodeFunctionData, encodePacked } from 'viem'
 import VDAOImplementation from '~/abi/VDAOImplementation.json'
 
@@ -25,6 +25,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { currentChainId, currentContracts } from '~/config/contracts'
 import { getPublicClient } from '@wagmi/core'
+import Link from 'next/link'
 
 dayjs.extend(relativeTime)
 const formatter = Intl.NumberFormat('en', { notation: 'compact' })
@@ -45,7 +46,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   const [supporters_raw, setSupporters] = useState<any[]>([])
   const { data: supporters } = api.user.getUsers.useQuery({ addresses: supporters_raw.map(el => el.voter) }, { enabled: !!supporters_raw.length })
 
-  const { data: block } = useBlockNumber()
+  const { data: block } = useBlockNumber({ watch: true })
   const proposalStatus = proposal?.canceled
     ? 'Canceled'
     : proposal?.executed
@@ -57,6 +58,8 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
     : proposal?.startBlock > (block || 0)
     ? 'Pending'
     : 'Active'
+
+  const { chain } = useNetwork()
 
   const votesHandler = (type: string) => {
     if (type === 'for') {
@@ -161,7 +164,9 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
           <div className='font-bold'>
             <div className='flex gap-5'>
               {proposal?.createdAt ? 'Posted ' + monthNames[proposal.createdAt.getUTCMonth()]?.name + ' ' + proposal.createdAt.getDate() + ', ' + proposal.createdAt.getFullYear() : 'at Unavailable'}{' '}
-              <div className='font-bold text-black opacity-30'>#{proposal?.id}</div>
+              <Link href={chain?.blockExplorers?.default.url + '/address/' + currentContracts.proxiedVDao + '#writeProxyContract'} passHref target='_blank'>
+                <div className='font-bold text-black opacity-30'>#{proposal?.id}</div>
+              </Link>
             </div>
             <div>
               {proposal && block
@@ -170,7 +175,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                     ? 'ends ' + dayjs(dayjs().valueOf() + currentContracts.blockTime * Number(proposal?.endBlock - block) * 1000).fromNow() + ' (' + (proposal?.endBlock - block) + ' blocks left)'
                     : 'ended ' + dayjs(dayjs().valueOf() - currentContracts.blockTime * Number(block - proposal?.endBlock) * 1000).fromNow() + ' (' + (block - proposal?.endBlock) + ' blocks ago)'
                   : 'will start ' +
-                    dayjs(dayjs().valueOf() + currentContracts.blockTime * Number(proposal?.startBlock - block) * 1000).fromNow() +
+                    dayjs(dayjs().valueOf() + currentContracts.blockTime * Number(proposal?.startBlock - block) * 1000 + 1).fromNow() +
                     ' (' +
                     (proposal?.startBlock - block) +
                     ' blocks left)'

@@ -10,12 +10,14 @@ import { useBlockNumber } from 'wagmi'
 import { currentChain, currentContracts } from '~/config/contracts'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import { RefreshCwIcon } from 'lucide-react'
 
 dayjs.extend(relativeTime)
 
 type ProposalProps = {
   setViewProposal: Dispatch<SetStateAction<boolean>>
   setProposalID: Dispatch<SetStateAction<number>>
+  setRefetchFunc: Dispatch<SetStateAction<Function>>
 }
 
 type CardProps = {
@@ -24,12 +26,12 @@ type CardProps = {
   setProposalID: Dispatch<SetStateAction<number>>
 }
 
-const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
+const ProposalCards = ({ setProposalID, setViewProposal, setRefetchFunc }: ProposalProps) => {
   const [pageCount, setPageCount] = useState(1)
   const [pageNumbers, setPageNumbers] = useState<any>([])
   const [updatedproposals, setUpdatedProposals] = useState<any>([])
   const [proposalsType, setProposalsType] = useState('')
-  const { data } = useProposalReads({ include: { author: true, pod: true } })
+  const { data, refetch, isFetching } = useProposalReads({ include: { author: true, pod: true } })
   const [updatedData, setUpdatedData] = useState<any>([])
   const itemsPerPage = 3
 
@@ -40,6 +42,7 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
       setProposalsType('active')
     }, 500)
 
+    setRefetchFunc(refetch)
     return () => {
       clearTimeout(timer)
     }
@@ -106,17 +109,20 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
           Proposals
         </div>
 
-        <div className='mt-5 grid max-w-[450px] grid-cols-3 rounded-[100px] border-[1px] border-vdao-light font-heading text-xl text-vdao-light'>
-          {['active', 'all', 'closed'].map(item => {
-            return (
-              <div
-                onClick={() => setProposalsType(item)}
-                className={`relative cursor-pointer rounded-[100px]  py-2 text-center font-medium duration-300 ${proposalsType === item ? 'bg-vdao-light text-vdao-dark opacity-100' : ''}`}
-              >
-                {item}
-              </div>
-            )
-          })}
+        <div className='flex w-full items-center gap-5'>
+          <div className='mt-5 grid w-full max-w-[450px] grid-cols-3 rounded-[100px] border-[1px] border-vdao-light font-heading text-xl text-vdao-light'>
+            {['active', 'all', 'closed'].map(item => {
+              return (
+                <div
+                  onClick={() => setProposalsType(item)}
+                  className={`relative cursor-pointer rounded-[100px]  py-2 text-center font-medium duration-300 ${proposalsType === item ? 'bg-vdao-light text-vdao-dark opacity-100' : ''}`}
+                >
+                  {item}
+                </div>
+              )
+            })}
+          </div>
+          <RefreshCwIcon className={'my-auto ml-auto cursor-pointer text-vdao-light ' + (isFetching && 'animate-spin')} onClick={() => refetch()} />
         </div>
 
         <div className='mt-[15px]  md:mx-0 '>

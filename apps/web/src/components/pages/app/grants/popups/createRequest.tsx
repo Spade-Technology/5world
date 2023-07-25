@@ -11,8 +11,9 @@ import { useCreateProposal } from '~/hooks/web3/useProposal'
 import { api } from '~/utils/api'
 import { notification } from 'antd'
 import { imageToBase64String } from '~/utils/helpers'
-import { writeContract } from '@wagmi/core'
+import { waitForTransaction, writeContract } from '@wagmi/core'
 import RoundImplementation from '~/abi/RoundImplementation.json'
+import { currentChainId } from '~/config/contracts'
 
 type CreateProjectProps = {
   show: boolean
@@ -88,13 +89,23 @@ const CreateProject = ({ show, close, grant }: CreateProjectProps) => {
       address: grant.address,
       functionName: 'applyToRound',
       args: [[0n, hash], address],
-    }).catch(e => {
-      notification.error({
-        message: 'Error',
-        description: e.shortMessage || e.message,
-        placement: 'bottomRight',
-      })
     })
+      .then(async e => {
+        await waitForTransaction({ hash: e.hash, timeout: 10000, chainId: currentChainId })
+        notification.success({
+          message: 'Success',
+          description: 'Successfully submitted request',
+          placement: 'bottomRight',
+        })
+        close()
+      })
+      .catch(e => {
+        notification.error({
+          message: 'Error',
+          description: e.shortMessage || e.message,
+          placement: 'bottomRight',
+        })
+      })
   }
 
   return (

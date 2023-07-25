@@ -120,7 +120,7 @@ export const grantRouter = createTRPCRouter({
         toBlock: grantData[0].applicationsEndBlock,
       })
       const events = await publicClient.getFilterLogs({ filter })
-      console.log('first')
+
       let decodedEvents = await Promise.all(
         events.map(async event => {
           try {

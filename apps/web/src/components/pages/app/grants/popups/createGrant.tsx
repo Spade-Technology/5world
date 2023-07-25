@@ -22,9 +22,10 @@ import dayjs from 'dayjs'
 type CreateGrantProps = {
   show: boolean
   close: any
+  refetchFunc?: Function
 }
 
-const CreateGrant = ({ show, close }: CreateGrantProps) => {
+const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
   const { createGrantProposal, generateGrantIPFSHash } = useCreateProposal()
   const { address } = useAccount()
   const [state, setState] = useState<'proposalMeta' | 'grantMeta' | 'confirm'>('proposalMeta')
@@ -102,6 +103,8 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
       grantAmount: matchingAmount,
       grantImage: await imageToBase64String(logo),
       grantTheme: await imageToBase64String(theme),
+    }).then(() => {
+      refetchFunc && refetchFunc?.()
     })
   }
 
@@ -130,12 +133,18 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
                   <div className='text-[22px] font-bold'>Token Address*</div>
                   {/* <div className='text-vdao-light'>*Required</div> */}
                 </div>
-                <input
-                  className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none placeholder:py-2 md:mt-5'
-                  placeholder='What’s the token address ?'
-                  onChange={e => setTokenAddress(e.target.value)}
-                  defaultValue={'0x9E873b3A125040B2295FbED16aF22Ed9b101e470'}
-                />
+                <div className='flex items-end gap-4'>
+                  <input
+                    className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none placeholder:py-2 md:mt-5'
+                    placeholder='What’s the token address ?'
+                    onChange={e => setTokenAddress(e.target.value)}
+                    value={tokenAddress}
+                    defaultValue={'0x9E873b3A125040B2295FbED16aF22Ed9b101e470'}
+                  />
+                  <Button className='w-1/2' onClick={e => setTokenAddress('0x0000000000000000000000000000000000000000')}>
+                    send ETH
+                  </Button>
+                </div>
               </div>
 
               <div className='pt-10'>
@@ -172,18 +181,24 @@ const CreateGrant = ({ show, close }: CreateGrantProps) => {
                   defaultValue={dayjs().add(1, 'day')}
                   showTime={{ defaultValue: dayjs().add(1, 'day') }}
                   onChange={e => setDate(e?.toDate())}
+                  disabledDate={current => current && current < dayjs()}
+                  disabledTime={current => dayjs().add(10, 'minute').isAfter(current) as any}
+                  showNow={false}
+                  presets={[
+                    {
+                      label: 'in 10 minutes',
+                      value: dayjs().add(10, 'minute'),
+                    },
+                    {
+                      label: 'in 15 minutes',
+                      value: dayjs().add(15, 'minute'),
+                    },
+                    {
+                      label: 'in 30 minutes',
+                      value: dayjs().add(30, 'minute'),
+                    },
+                  ]}
                 />
-                {/* <Popover>
-                  <PopoverTrigger asChild>
-                    <Button variant={'outline'} className={cn('mt-[17px] w-full justify-start text-left font-normal', !date && 'text-muted-foreground')}>
-                      <CalendarIcon className='mr-2 h-4 w-4 ' />
-                      {date ? format(date, 'PPP') : <div>Pick a date</div>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className='w-auto p-0'>
-                    <Calendar mode='single' selected={date} onSelect={setDate} initialFocus />
-                  </PopoverContent>
-                </Popover> */}
               </div>
             </div>
 
