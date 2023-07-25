@@ -336,7 +336,7 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr, data }:
 export function WelcomeComponent() {
   return (
     <Section className='relative mx-auto flex max-w-[1680px] flex-col-reverse items-center overflow-hidden md:h-auto md:flex-col md:pt-16'>
-      <Image src={MainHero} alt='VDAO Web3 Hero' className='mb-24 translate-x-[40%] scale-[200%] md:mb-0 md:-translate-x-0 md:scale-100' />
+      <Image src={MainHero} alt='VDAO Web3 Hero' className='-mt-12 max-w-[1280px] translate-x-[40%] scale-[200%] md:mb-0 md:-translate-x-0 md:scale-100' />
       <div
         className='z-10 w-[342px] text-center font-heading text-[44px] font-medium leading-[48px]
                      text-white md:absolute md:w-[702px] md:text-[80px] md:leading-[95px]'
