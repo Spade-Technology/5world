@@ -192,7 +192,7 @@ const FormTwo = ({ setNextForm, setShowPreview, spells, setSpells }: FormProps) 
         {error && <div className='text-red-500'>Required*: Please Add and verify the valid address, actions and arguments</div>}
         <div className='float-right flex gap-5 pt-6 md:pt-48 '>
           <div
-            className='cursor-pointer rounded-[5px] border-[1px] border-vdao-dark pt-[5px] px-[35px] font-heading text-lg font-medium'
+            className='cursor-pointer rounded-[5px] border-[1px] border-vdao-dark px-[35px] pt-[5px] font-heading text-lg font-medium'
             onClick={() => {
               setNextForm(false)
             }}

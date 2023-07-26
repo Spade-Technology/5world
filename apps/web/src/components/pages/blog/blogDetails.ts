@@ -13,8 +13,7 @@ export const blogDetails = [
     createdByProfile: createdByLogo,
     createdBy: 'Kris Millar',
     features: ['Fundraising', 'Governance'],
-    about:
-      'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
+    about: 'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
     fullDescription: [
       {
         header: 'AI-Generated Cross-Chain NFTs',
@@ -42,8 +41,7 @@ export const blogDetails = [
     createdByProfile: createdByLogo,
     createdBy: 'Kris Millar',
     features: ['Fundraising', 'Governance'],
-    about:
-      'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
+    about: 'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
     fullDescription: [
       {
         header: 'AI-Generated Cross-Chain NFTs',
@@ -71,8 +69,7 @@ export const blogDetails = [
     createdByProfile: createdByLogo,
     createdBy: 'Kris Millar',
     features: ['Fundraising', 'Governance'],
-    about:
-      'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
+    about: 'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
   },
   {
     id: 3,
@@ -82,8 +79,7 @@ export const blogDetails = [
     createdByProfile: createdByLogo,
     createdBy: 'Kris Millar',
     features: ['Fundraising', 'Governance'],
-    about:
-      'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
+    about: 'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
   },
   {
     id: 4,
@@ -93,8 +89,7 @@ export const blogDetails = [
     createdByProfile: createdByLogo,
     createdBy: 'Kris Millar',
     features: ['Fundraising', 'Governance'],
-    about:
-      'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
+    about: 'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
   },
   {
     id: 5,
@@ -104,8 +99,7 @@ export const blogDetails = [
     createdByProfile: createdByLogo,
     createdBy: 'Kris Millar',
     features: ['Fundraising', 'Governance'],
-    about:
-      'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
+    about: 'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
   },
   {
     id: 6,
@@ -115,8 +109,7 @@ export const blogDetails = [
     createdByProfile: createdByLogo,
     createdBy: 'Kris Millar',
     features: ['Fundraising', 'Governance'],
-    about:
-      'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
+    about: 'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
   },
   {
     id: 7,
@@ -126,8 +119,7 @@ export const blogDetails = [
     createdByProfile: createdByLogo,
     createdBy: 'Kris Millar',
     features: ['Fundraising', 'Governance'],
-    about:
-      'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
+    about: 'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
   },
   {
     id: 8,
@@ -137,8 +129,7 @@ export const blogDetails = [
     createdByProfile: createdByLogo,
     createdBy: 'Kris Millar',
     features: ['Fundraising', 'Governance'],
-    about:
-      'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
+    about: 'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
   },
   {
     id: 9,
@@ -148,8 +139,7 @@ export const blogDetails = [
     createdByProfile: createdByLogo,
     createdBy: 'Kris Millar',
     features: ['Fundraising', 'Governance'],
-    about:
-      'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
+    about: 'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
   },
   {
     id: 10,
@@ -159,7 +149,6 @@ export const blogDetails = [
     createdByProfile: createdByLogo,
     createdBy: 'Kris Millar',
     features: ['Fundraising', 'Governance'],
-    about:
-      'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
+    about: 'Aliquam erat volutpat. Cras dapibus eros nec pretium lacinia. Sed rhoncus dictum convallis. In suscipit massa at neque molestie vestibulum.',
   },
 ]

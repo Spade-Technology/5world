@@ -1,4 +1,4 @@
-// Import Hardhat dependencies and plugins
+// import Hardhat dependencies and plugins
 import { HardhatUserConfig } from 'hardhat/types';
 
 import '@nomiclabs/hardhat-ethers';

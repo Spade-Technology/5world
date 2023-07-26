@@ -66,7 +66,7 @@ const RecentProposals = () => {
           />
         </div>
       </div>
-      
+
       {/* {sortby && ( */}
       <div className={`absolute top-0 left-0 bottom-0 flex h-[100vh] w-[100vw] items-center justify-center transition-all ease-in-out ${sortby ? 'visible z-50 opacity-100' : 'invisible opacity-0'}`}>
         <div className={`absolute -z-10 h-full w-full bg-opacity-60 backdrop-opacity-0 transition-all`} onClick={() => setSortBy(false)} />
