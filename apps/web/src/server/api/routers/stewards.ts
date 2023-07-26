@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-import { Sql, sqltag } from '@prisma/client/runtime'
 import { Address, fetchBlockNumber, readContract } from '@wagmi/core'
 import { verifyMessage } from 'viem'
 import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc'
@@ -12,45 +11,39 @@ import { TRPCError } from '@trpc/server'
 import contracts from '~/config/contracts'
 import { Prisma, User } from '@prisma/client'
 import dayjs from 'dayjs'
+import { ApplicationTime, StewardUnit, TotalCycleTime } from '~/utils/stewardsConfig'
 
 const VOTE_THRESHOLD = 1
 const PAST_MONTHS = '6 MONTH'
 
 export const stewardRouter = createTRPCRouter({
   getStewards: protectedProcedure.input(z.object({ search: z.string().optional() })).query(async ({ input: { search }, ctx: { prisma } }) => {
-    const searchQuery = search ? `${search}` : ''
+    const users = await prisma.user.findMany({
+      where: {
+        stewardApplicationDate: {
+          gte: dayjs().subtract(6, 'month').toDate(),
+        },
+        stewardVotesAsCandidate: {
+          some: {
+            createdAt: {
+              gte: dayjs().subtract(6, 'month').toDate(),
+            },
+          },
+        },
+      },
+      include: {
+        stewardVotesAsCandidate: { where: { createdAt: { gte: dayjs().subtract(6, 'month').toDate() } }, select: { tokenAmount: true } },
+      },
+    })
 
-    let stewards
-
-    if (search) {
-      stewards = await prisma.$queryRaw`
-          SELECT "User".* 
-          FROM "User" 
-          -- include Guild
-          LEFT JOIN "StewardVote" 
-          ON "User".address = "StewardVote"."candidateAddress" 
-          WHERE ( 
-            "User".address LIKE ${search} OR 
-            "User".name LIKE ${search} OR 
-            "User".description LIKE ${search}
-          ) 
-          AND "StewardVote"."createdAt" >= (NOW() - INTERVAL '${PAST_MONTHS}')
-          GROUP BY "User".address 
-          LIMIT 6
-          `
-    } else {
-      stewards = await prisma.$queryRaw`
-          SELECT "User".* 
-          FROM "User" 
-          LEFT JOIN "StewardVote" 
-          ON "User".address = "StewardVote"."candidateAddress"
-          AND "StewardVote"."createdAt" >= (NOW() - INTERVAL '${PAST_MONTHS}')
-          GROUP BY "User".address 
-          LIMIT 6
-          `
-    }
-
-    return stewards as User[]
+    // get the 6 users with the most votes
+    return users
+      .map(_user => {
+        const { stewardVotesAsCandidate, ...user } = _user
+        return { ...user, stewardVotesAsCandidate, votes: stewardVotesAsCandidate.reduce((acc, vote) => acc + vote.tokenAmount, 0n) }
+      })
+      .sort((a, b) => Number(b.votes) - Number(a.votes))
+      .slice(0, 6) as User[]
   }),
 
   getSteward: protectedProcedure.input(z.object({ address: z.string() })).query(async ({ input: { address }, ctx: { prisma } }) => {
@@ -111,8 +104,17 @@ export const stewardRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input: { voterAddress, candidateAddress, signature, message }, ctx: { prisma } }) => {
+      const now = dayjs()
+
+      const sinceStart = now.diff(dayjs().startOf('year'), StewardUnit)
+      const cycle = sinceStart % TotalCycleTime.as(StewardUnit)
+
+      if (cycle < ApplicationTime.as(StewardUnit)) {
+        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'voting is not open yet' })
+      }
+
       // check if the message is valid
-      if (!message.includes(`${voterAddress} is voting for ${candidateAddress} as a steward.`)) throw new Error('Invalid message')
+      if (!message.includes(voterAddress) || !message.includes(candidateAddress)) throw new Error('Invalid message')
 
       // check if the signature is valid
       try {
@@ -121,6 +123,18 @@ export const stewardRouter = createTRPCRouter({
       } catch (error) {
         throw new Error('Invalid signature')
       }
+
+      // get other votes from the same voter for this cycle and candidate
+      const votes = await prisma.stewardVote.findMany({
+        where: {
+          voter: { address: voterAddress },
+          candidate: { address: candidateAddress },
+          createdAt: { gte: dayjs().subtract(6, 'month').toDate() },
+        },
+      })
+
+      const newVoteAmount = BigInt(JSON.parse('{' + message.split('{')[1]).amount)
+      const totalVoted = votes.reduce((acc, vote) => acc + vote.tokenAmount, 0n)
 
       // get closest block to current time
       const applyBlock = (await prisma.user.findUnique({ where: { address: candidateAddress } }))?.stewardApplicationBlock
@@ -142,11 +156,24 @@ export const stewardRouter = createTRPCRouter({
 
       if (typeof tokenAmountAtApplicationBlock !== 'bigint') return new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'invalid token amount' })
 
+      if (totalVoted + newVoteAmount > tokenAmountAtApplicationBlock)
+        return new TRPCError({
+          code: 'UNAUTHORIZED',
+          message:
+            "you cannot vote more than you hold, you've already voted " +
+            totalVoted +
+            ' (+' +
+            newVoteAmount +
+            ') but you only held ' +
+            tokenAmountAtApplicationBlock +
+            ' at the time of the candidate application',
+        })
+
       const vote = await prisma.stewardVote.create({
         data: {
           voter: { connect: { address: voterAddress } },
           candidate: { connect: { address: candidateAddress } },
-          tokenAmount: 1000n,
+          tokenAmount: BigInt(JSON.parse('{' + message.split('{')[1]).amount),
         },
       })
 

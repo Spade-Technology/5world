@@ -101,7 +101,6 @@ const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
 }
 
 export const Card = ({ data, setOpenProfile, setOpenVotesNscores }: CardProps) => {
-  console.log({ data })
   const [votes, setVotes] = useState('')
   const { vote } = useVote()
   const { address } = useAccount()
@@ -133,7 +132,7 @@ export const Card = ({ data, setOpenProfile, setOpenVotesNscores }: CardProps) =
             </div>
           </div>
         </div>
-        {data.guild && <div className='mt-[18px] w-fit rounded-3xl border-[3px] py-[7px] px-[25px] text-xl font-medium'>{data.guild.name}</div>}
+        {data.guild && <div className='mt-a w-fit rounded-3xl border-[3px] py-[7px] px-[25px] text-xl font-medium'>{data.guild.name}</div>}
         <div className='w-full pt-5 font-body text-lg font-normal leading-[26p] md:pt-[32px] md:text-[22px]'>
           {/* {data?.description ? data.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultrice ullamcorper.'} */}
           {data?.description?.length > 130 ? (
@@ -149,7 +148,7 @@ export const Card = ({ data, setOpenProfile, setOpenVotesNscores }: CardProps) =
             data?.description.length < 130 && data?.description
           )}
         </div>
-        {console.log(data?.description)}
+
         <div className='relative mt-[25px] flex justify-between rounded-[20px] bg-white px-5 py-8 md:mt-11 md:px-10'>
           <Image src={InfoIcon} alt='InfoIcon' className='absolute right-4 top-4 cursor-pointer' onClick={() => setOpenVotesNscores(true)} />
           <div>
@@ -174,7 +173,7 @@ export const Card = ({ data, setOpenProfile, setOpenVotesNscores }: CardProps) =
           </div>
         </div>
         <div className='flex flex-col justify-between gap-5 pt-[30px] lg:flex-row lg:items-center lg:gap-0 lg:pt-10'>
-          <div className='text-start text-xl font-medium md:w-2/3'>Delegate your vote</div>
+          <div className='text-start text-xl font-medium md:w-2/3'>Vote for this user</div>
           <div className='flex w-full gap-[10px]'>
             <input
               placeholder='60'

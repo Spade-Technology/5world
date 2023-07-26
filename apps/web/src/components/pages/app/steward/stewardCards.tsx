@@ -105,7 +105,7 @@ export const Card = ({ setOpenProfile, user }: CardProps) => {
         <div className='mt-[18px] w-fit rounded-3xl border-[3px] py-[7px] px-[25px] text-xl font-medium'>DAO Operation Guild</div>
 
         <div onClick={() => setReadMore(!readMore)} className=' cursor-default  pt-5 text-lg font-normal leading-[22px] md:pt-[30px]'>
-          {user.description?.length > 150 ? (
+          {user.description && user.description.length > 150 ? (
             <div className=''>
               {user.description.substring(0, 150)}{' '}
               <span onClick={() => setOpenProfile(user)} className=' cursor-pointer text-base text-gray-200 '>
@@ -119,7 +119,7 @@ export const Card = ({ setOpenProfile, user }: CardProps) => {
 
         <div className='mt-[25px] flex justify-between rounded-[20px] bg-white px-5 py-8 md:mt-11 lg:px-10'>
           {[
-            { num: '0', text: ' Delegated Votes' },
+            { num: '0', text: 'Delegated Votes' },
             { num: '0%', text: 'Voting  Weight' },
             { num: `${praiseScore ? praiseScore : '0'}`, text: 'Praise Score' },
           ].map(({ num, text }) => {
