@@ -60,7 +60,6 @@ const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
       return [searchValue]?.some(el => Object.values(item).join('').toLowerCase().includes(el.toLocaleLowerCase()))
     })
     setSearchedCandidates(filteredCards)
-    console.log(String(searchValue)?.split(''))
   }, [debouncedInput])
 
   // USEFFECT THAT DELAYS SEACH FUNCTION

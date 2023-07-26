@@ -44,7 +44,6 @@ export const convertToUnixTimeStampToTime = (unixTimestamp: number) => {
   const dateObj = new Date(unixTimestamp * 1000) // convert to milliseconds by multiplying with 1000
   const date = dateObj.toDateString() // get date in format "Thu Mar 10 2022"
   const time = dateObj.toLocaleTimeString() // get time in format "8:08:20 AM"
-  // console.log(date + " " + time); // output: "Thu Mar 10 2022 8:08:20 AM"
   return date + ' ' + time
 }
 
@@ -61,10 +60,9 @@ export const JoinedAtFormat = (date: any) => {
 export const imageToBase64String = (file: any) => {
   return new Promise<string>((resolve, reject) => {
     var reader = new FileReader()
-    console.log('tzazeaz')
+
     reader.readAsDataURL(file)
     reader.onload = function () {
-      console.log(reader.result)
       if (reader.result) return resolve(reader.result.toString())
       else return resolve('')
     }

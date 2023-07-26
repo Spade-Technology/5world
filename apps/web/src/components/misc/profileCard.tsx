@@ -13,9 +13,6 @@ type CardProps = {
 
 const ProfileCard = ({ icon, name, address, edit, nameLength }: CardProps) => {
   const [selected, setSelected] = useState(false)
-  const handleOnchange = (evt: any) => {
-    console.log('handleOnchange', evt.target.value)
-  }
 
   useEffect(() => {
     if (!edit) {

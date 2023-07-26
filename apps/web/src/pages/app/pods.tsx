@@ -27,9 +27,6 @@ const Pods = () => {
   const { data: balance } = useBalance({})
   const { data: siwe } = useSession()
 
-  console.log('pods data: ', data)
-  console.log('pods show', openedPod, showManageMembers)
-
   return (
     <>
       <Page>

@@ -22,8 +22,6 @@ type CardProps = {
 const StewardCards = ({ setOpenProfile }: Props) => {
   const { data: users, isLoading } = useStewardReads({})
 
-  console.log('stewards data', users)
-
   return (
     <div className='mx-auto w-full bg-vdao-deep px-6 md:px-0'>
       <div className='mx-auto w-full max-w-[1140px] pb-[120px]  pt-[0px] md:w-11/12'>
