@@ -7,10 +7,10 @@ import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc'
 // src/abi/VDaoToken.json
 import VDaoToken from '~/abi/VDaoToken.json'
 
+import { User } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
-import contracts from '~/config/contracts'
-import { Prisma, User } from '@prisma/client'
 import dayjs from 'dayjs'
+import contracts, { currentChainId } from '~/config/contracts'
 import { ApplicationTime, StewardUnit, TotalCycleTime } from '~/utils/stewardsConfig'
 
 const VOTE_THRESHOLD = 1
@@ -76,7 +76,9 @@ export const stewardRouter = createTRPCRouter({
     }) => {
       if (!user || !address) throw new TRPCError({ code: 'UNAUTHORIZED', message: 'user not found' })
 
-      const currentBlock = await fetchBlockNumber()
+      const currentBlock = await fetchBlockNumber({
+        chainId: currentChainId,
+      })
 
       if (!currentBlock) {
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'could not fetch current block' })
