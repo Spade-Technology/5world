@@ -1,17 +1,21 @@
 // import Hardhat dependencies and plugins
 import { HardhatUserConfig } from 'hardhat/types';
 
-import '@nomiclabs/hardhat-ethers';
 import '@nomicfoundation/hardhat-chai-matchers';
+import '@nomiclabs/hardhat-ethers';
 
 import '@nomiclabs/hardhat-etherscan';
 
-import 'hardhat-gas-reporter';
 import 'hardhat-abi-exporter';
+import 'hardhat-gas-reporter';
 
 // Load environment variables
 import * as dotenv from 'dotenv';
 dotenv.config();
+
+// Initialize hardhat-tenderly plugin for automatic contract verification
+var tdly = require("@tenderly/hardhat-tenderly");
+tdly.setup({ automaticVerifications: true });
 
 // Extend the HardhatUserConfig interface to include the etherscan, and gasReporter properties
 
@@ -31,6 +35,11 @@ interface ExtendedHardhatUserConfig extends HardhatUserConfig {
     only?: string[];
     spacing?: number;
     runOnCompile?: boolean;
+  };
+  tenderly?: {
+    project?: string;
+    username?: string;
+    privateVerification?: boolean;
   };
 }
 
@@ -88,6 +97,15 @@ const config: ExtendedHardhatUserConfig = {
     runOnCompile: true,
     clear: true,
     flat: true,
+  },
+
+  tenderly: {
+    // Replace with project slug in Tenderly
+    project: "vdao",
+    // Replace with your Tenderly username
+    username: "Brieyla",
+    // Perform contract verification in private mode
+    privateVerification: true,
   },
 };
 
