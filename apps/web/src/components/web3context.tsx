@@ -1,6 +1,5 @@
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
-import { mainnet, sepolia } from 'wagmi/chains'
-import merge from 'lodash.merge'
+import { sepolia } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
@@ -9,7 +8,8 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { infuraProvider } from 'wagmi/providers/infura'
 
 const { chains, publicClient } = configureChains(
-  [process.env.NODE_ENV === 'production' ? mainnet : sepolia],
+  [sepolia],
+  // TODO: for production [process.env.NODE_ENV === 'production' ? mainnet : sepolia],
   [process.env.NEXT_PUBLIC_INFURA_ID ? infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_ID }) : publicProvider()],
 )
 
