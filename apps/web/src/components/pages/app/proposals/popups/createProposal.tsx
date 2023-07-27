@@ -93,6 +93,10 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
         calldatas: callDatas,
         targets: spells.map(spell => spell.target),
         values: spells.map(spell => BigInt(spell.value)),
+        signatures: spells.map(spell => spell.name),
+        callback: successful => {
+          successful && close()
+        },
       }).then(el => {
         el && close()
       })

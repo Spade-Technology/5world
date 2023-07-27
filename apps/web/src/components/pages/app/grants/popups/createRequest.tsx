@@ -54,14 +54,12 @@ const CreateProject = ({ show, close, grant }: CreateProjectProps) => {
       return notification.error({
         message: 'Error',
         description: `Fields cannot be empty: ${emptyFields.join(', ')}`,
-        placement: 'bottomRight',
       })
 
     if (projectAddress.match(/0x[a-fA-F0-9]{40}/) === null)
       return notification.error({
         message: 'Error',
         description: 'Invalid project address',
-        placement: 'bottomRight',
       })
 
     const hash = generateGrantIPFSHash.mutate(
@@ -95,7 +93,6 @@ const CreateProject = ({ show, close, grant }: CreateProjectProps) => {
         notification.success({
           message: 'Success',
           description: 'Successfully submitted request',
-          placement: 'bottomRight',
         })
         close()
       })
@@ -103,7 +100,6 @@ const CreateProject = ({ show, close, grant }: CreateProjectProps) => {
         notification.error({
           message: 'Error',
           description: e.shortMessage || e.message,
-          placement: 'bottomRight',
         })
       })
   }

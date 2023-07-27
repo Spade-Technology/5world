@@ -44,7 +44,6 @@ const Grants = ({ id }: { id: Number }) => {
         notification.error({
           message: 'Error',
           description: err.shortMessage || err.message,
-          placement: 'bottomRight',
         })
       })
     }
