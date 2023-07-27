@@ -138,10 +138,9 @@ contract VDAOImplementation is
 
         uint latestProposalId = latestProposalIds[msg.sender];
         if (latestProposalId != 0) {
-            ProposalState proposersLatestProposalState = state(
-                latestProposalId
-            );
-
+            // ProposalState proposersLatestProposalState = state(
+            //     latestProposalId
+            // );
             // REMOVE IF PROD
             // require(
             //     proposersLatestProposalState != ProposalState.Active,

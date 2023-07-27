@@ -14,8 +14,8 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 // Initialize hardhat-tenderly plugin for automatic contract verification
-var tdly = require("@tenderly/hardhat-tenderly");
-tdly.setup({ automaticVerifications: true });
+// var tdly = require("@tenderly/hardhat-tenderly");
+// tdly.setup({ automaticVerifications: true });
 
 // Extend the HardhatUserConfig interface to include the etherscan, and gasReporter properties
 
