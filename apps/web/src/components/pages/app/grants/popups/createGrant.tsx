@@ -35,6 +35,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
   const [tokenAddress, setTokenAddress] = useState<string>('0x9E873b3A125040B2295FbED16aF22Ed9b101e470')
   const [matchingAmount, setMatchingAmount] = useState<string>('')
 
+  const [loader, setLoader] = useState(false)
   const dropzoneParams: DropzoneOptions = { accept: { 'image/*': [] }, multiple: false, maxSize: 4194304 }
   const {
     getRootProps: getLogoRootProps,
@@ -86,11 +87,11 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
   }
 
   const submitProposal = async () => {
+    setLoader(true)
     createGrantProposal({
       title,
       description,
       authorAddress: address as Address,
-
       grantTitle: grantName,
       grantDescription,
       grantRules: grantDescription,
@@ -99,9 +100,13 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
       grantAmount: matchingAmount,
       grantImage: await imageToBase64String(logo),
       grantTheme: await imageToBase64String(theme),
-    }).then(() => {
-      refetchFunc && refetchFunc?.()
     })
+      .then(() => {
+        refetchFunc && refetchFunc?.()
+      })
+      .finally(() => {
+        setLoader(false)
+      })
   }
 
   return (
@@ -266,7 +271,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
         <div className='pt-10 pb-[24px] font-body text-lg font-normal md:pt-[60px]'>
           UI IS TODO
           <div className='pt-[20px] md:pt-10'>
-            <PrimaryButton text='Submit' className='float-right py-[5px] px-[35px] text-xl font-medium' onClick={submitProposal} />
+            <PrimaryButton text='Submit' loading={loader} className='float-right py-[5px] px-[35px] text-xl font-medium' onClick={submitProposal} />
           </div>
         </div>
       )}
