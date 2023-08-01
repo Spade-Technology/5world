@@ -1,17 +1,17 @@
 import { Proposal } from '@prisma/client'
-import { Address, useAccount, useBlockNumber, useContractWrite } from 'wagmi'
+import { Address, useAccount, useBlockNumber } from 'wagmi'
 import { z } from 'zod'
 
 import { api } from '~/utils/api'
 import { InferArgs, InferReturn } from '~/utils/type'
 
-import VDAOImplementation from '~/abi/VDAOImplementation.json'
-import { currentChain, currentChainId, currentContracts } from '~/config/contracts'
 import { waitForTransaction, writeContract } from '@wagmi/core'
 import { notification } from 'antd'
 import { useState } from 'react'
+import { encodeAbiParameters, encodePacked } from 'viem'
 import RoundFactoryAbi from '~/abi/RoundFactory.json'
-import { encodeAbiParameters, encodeFunctionData, encodePacked, getContract, parseAbi } from 'viem'
+import VDAOImplementation from '~/abi/VDAOImplementation.json'
+import { currentChainId, currentContracts } from '~/config/contracts'
 
 /* Proposal schema */
 interface ProposalInclude {
@@ -310,6 +310,7 @@ export function useCreateProposal() {
       abi: VDAOImplementation,
       address: currentContracts.proxiedVDao as Address,
       functionName: 'propose',
+      chainId: currentChainId,
       args: [
         [currentContracts.roundFactory, currentContracts.treasury],
         [0, 0],
