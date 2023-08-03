@@ -93,9 +93,9 @@ const Header = (props: Props) => {
   }, [])
 
   return (
-    <header className={!props.dark ? 'overflow-hidden bg-white' : 'w-full overflow-hidden bg-vdao-deep'}>
+    <header className={!props.dark && router.pathname !== '/app/support' ? 'overflow-hidden bg-white' : 'w-full overflow-hidden bg-vdao-deep'}>
       {/* Desktop */}
-      <div className='z-50 mx-auto hidden h-[100px] max-w-[1140px] items-center justify-center px-6 md:flex xl:px-0'>
+      <div className={`z-50 mx-auto hidden h-[100px] max-w-[1140px] items-center justify-center px-6 md:flex xl:px-0`}>
         <Link href='/'>
           <Image src={logo} alt='VDAO' height={30} />
         </Link>
@@ -154,10 +154,13 @@ const Header = (props: Props) => {
 
         <div className='hidden gap-[30px] md:flex'>
           <Link href='https://vdao.discourse.group' target='_blank' rel='noopener noreferrer' className='flex items-center'>
-            <Image src={!props.dark ? discourse : darkDiscourse} alt='VDAO' width={30} height={30} className='hidden md:block' />
+            <Image src={!props.dark && router.pathname !== '/app/support' ? discourse : darkDiscourse} alt='VDAO' width={30} height={30} className='hidden md:block' />
           </Link>
-          <Image src={!props.dark ? discordCircle : darkDiscord} alt='VDAO' width={30} height={30} className='hidden md:block' />
-          <VDAOConnectButton web2={props.web2} className={!props.dark ? 'border-vdao-dark text-xl font-medium text-vdao-dark' : 'border-vdao-light text-vdao-light'} />
+          <Image src={!props.dark && router.pathname !== '/app/support' ? discordCircle : darkDiscord} alt='VDAO' width={30} height={30} className='hidden md:block' />
+          <VDAOConnectButton
+            web2={props.web2}
+            className={!props.dark && router.pathname !== '/app/support' ? 'border-vdao-dark text-xl font-medium text-vdao-dark' : 'border-vdao-light text-vdao-light'}
+          />
         </div>
       </div>
 

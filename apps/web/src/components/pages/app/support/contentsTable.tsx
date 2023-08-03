@@ -25,8 +25,9 @@ const ContentsTable = () => {
   /* Method that will fix header after a specific scrollable */
   const isSticky = (e: any) => {
     const scrollTop = window.scrollY
+    const viewWidth = window?.innerWidth < 1000 ? 4100 : 3600
 
-    if (window.screen.availWidth > 390 && scrollTop >= 400 && scrollTop <= 4200) {
+    if (window.screen.availWidth > 390 && scrollTop >= 400 && scrollTop <= viewWidth) {
       setSticky(true)
     } else {
       setSticky(false)
@@ -38,7 +39,7 @@ const ContentsTable = () => {
       <div className=' mx-auto grid max-w-[1056px] grid-cols-1 md:grid-cols-3 md:gap-[68px]'>
         <div
           className={`flex h-fit max-w-[319px] flex-col gap-5 rounded-[20px] bg-vdao-dark p-10 font-body text-[22px] font-normal text-vdao-light
-           ${sticky ? 'fixed top-5 pr-14' : ''} `}
+           ${sticky ? 'top-5 md:fixed md:pr-14' : ''} `}
           id='tableOfContents'
         >
           {links.map(({ text, url }) => {
