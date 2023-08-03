@@ -179,14 +179,14 @@ export function HomeGetInvolvedComponent() {
 
         <div className='max-w-[438px] font-body text-lg font-normal'>
           <div className='py-5 md:py-10'>
-            <div className='inline font-heading text-[26px] font-semibold md:text-3xl'>1 | Apply</div> by reviewing our manifesto and completing the form here on our site.  
+            <div className='inline font-heading text-[26px] font-medium md:text-3xl'>1 | Apply</div> by reviewing our manifesto and completing the form here on our site.  
           </div>
           <div className='py-5 md:py-10'>
-            <div className='inline font-heading text-[26px] font-semibold md:text-3xl'>2 | Interview</div> with a member of our community to find answers to your questions and make sure our values
+            <div className='inline font-heading text-[26px] font-medium md:text-3xl'>2 | Interview</div> with a member of our community to find answers to your questions and make sure our values
             align.
           </div>
           <div className='py-5 md:py-10'>
-            <div className='inline font-heading text-[26px] font-semibold md:text-3xl'>3 | Choose a Guild</div> where you feel you can best contribute to the mission of VDAO. Our four guilds include
+            <div className='inline font-heading text-[26px] font-medium md:text-3xl'>3 | Choose a Guild</div> where you feel you can best contribute to the mission of VDAO. Our four guilds include
             Creative, Research, Fundraising, and DAO Operations. 
           </div>
           <PrimaryButton text='Apply Now' />
