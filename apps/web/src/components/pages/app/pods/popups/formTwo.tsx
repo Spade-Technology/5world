@@ -125,7 +125,7 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
 
         <div className='pb-[22px]'>Add manager address below.</div>
 
-        <Select style={{ width: '100%' }} placeholder='Enter Address' onChange={handleChange} options={options} className='antd-stop-propagation w-full' />
+        <Select mode='tags' style={{ width: '100%' }} placeholder='Enter Address' onChange={handleChange} options={options} className='antd-stop-propagation w-full' />
 
         <div
           className={` ${managerAddr ? 'bg-vdao-pink' : 'border-[1px] border-vdao-pink'} mt-5 w-fit cursor-pointer rounded-[5px]  py-[5px] px-[35px] font-heading text-xl font-medium`}
@@ -174,7 +174,7 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
           {membersInfo
             ? membersInfo.map((member: any, idx: any) => {
                 return (
-                  <div className='flex' onClick={() => removeMemberHandler(member?.address)}>
+                  <div className='flex' key={idx} onClick={() => removeMemberHandler(member?.address)}>
                     <ProfileCard key={idx} icon={member?.picture} name={member?.name} address={member?.address} edit={removeOn} nameLength={8} />
                   </div>
                 )

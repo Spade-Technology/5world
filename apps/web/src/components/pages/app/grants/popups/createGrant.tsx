@@ -103,6 +103,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
     })
       .then(() => {
         refetchFunc && refetchFunc?.()
+        close()
       })
       .finally(() => {
         setLoader(false)
@@ -126,6 +127,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
                   className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none placeholder:py-2 md:mt-5'
                   placeholder='What’s the round name?'
                   onChange={e => setGrantName(e.target.value)}
+                  value={grantName}
                 />
               </div>
 
@@ -137,12 +139,14 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
                 <div className='flex items-end gap-4'>
                   <input
                     className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none placeholder:py-2 md:mt-5'
-                    placeholder='What’s the token address ?'
+                    placeholder='Token address ?'
                     onChange={e => setTokenAddress(e.target.value)}
                     value={tokenAddress}
-                    defaultValue={'0x9E873b3A125040B2295FbED16aF22Ed9b101e470'}
+                    // defaultValue={'0x9E873b3A125040B2295FbED16aF22Ed9b101e470'}
                   />
-                  <Button className='w-1/2' onClick={e => setTokenAddress('0x0000000000000000000000000000000000000000')}>
+                  <Button className='w-full' 
+                  // onClick={e => setTokenAddress('0x0000000000000000000000000000000000000000')}
+                  >
                     send ETH
                   </Button>
                 </div>
@@ -157,6 +161,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
                   placeholder='How much should the grant be financed'
                   type='number'
                   onChange={e => setMatchingAmount(e.target.value)}
+                  value={matchingAmount}
                 />
               </div>
 
@@ -179,7 +184,8 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
                 <DatePicker
                   className={cn('!mt-[17px] !h-10 w-full justify-start !rounded-[10px] !border-vdao-dark text-left font-normal', !date && 'text-muted-foreground')}
                   format='YYYY-MM-DD HH:mm:ss'
-                  defaultValue={dayjs().add(1, 'day')}
+                  // defaultValue={dayjs().add(1, 'day')}
+              
                   showTime={{ defaultValue: dayjs().add(1, 'day') }}
                   onChange={e => setDate(e?.toDate())}
                   disabledDate={current => current && current < dayjs()}
@@ -248,6 +254,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
               className='mt-5 w-full rounded-[10px] border-[1px] border-vdao-deep p-5 outline-none '
               rows={10}
               onChange={e => setGrantDescription(e.target.value)}
+              value={grantDescription}
               placeholder='The Governance Facilitator(s) and the Protocol Engineering Core Unit have placed an urgent out-of-schedule executive proposal into the voting system. MKR Holders should vote for this proposal if they support the following alterations to the Maker Protocol.
 
             If you are new to voting in the Maker Protocol, please see the voting guide to learn how voting works, and this wallet setup guide to set up your wallet to vote.
@@ -261,8 +268,16 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
             />
           </div>
 
-          <div className='pt-[20px] md:pt-10'>
-            <PrimaryButton text='Submit' className='float-right py-[5px] px-[35px] text-xl font-medium' onClick={submitIPFS} />
+          <div className='float-right flex gap-5 py-6 md:pt-10 '>
+          <div
+            className='cursor-pointer rounded-[5px] border-[1px] border-vdao-dark px-[35px] pt-[5px] font-heading text-lg font-medium'
+            onClick={() => {
+              setState('proposalMeta')
+            }}
+          >
+            Previous
+          </div>
+            <PrimaryButton text='Submit' className='float-right text-xl font-medium' onClick={submitIPFS} />
           </div>
         </div>
       )}
@@ -270,8 +285,18 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
       {state === 'confirm' && (
         <div className='pt-10 pb-[24px] font-body text-lg font-normal md:pt-[60px]'>
           UI IS TODO
-          <div className='pt-[20px] md:pt-10'>
-            <PrimaryButton text='Submit' loading={loader} className='float-right py-[5px] px-[35px] text-xl font-medium' onClick={submitProposal} />
+          <div className='float-right flex gap-5 pt-6 md:pt-48 '>
+          <div
+            className='cursor-pointer rounded-[5px] border-[1px] border-vdao-dark px-[35px] pt-[5px] font-heading text-lg font-medium'
+            onClick={() => {
+              setGrantName(grantName)
+              setState('grantMeta')
+            }}
+          >
+            Previous
+          </div>
+          <PrimaryButton text='Submit' loading={loader} className='float-right text-xl font-medium' onClick={submitProposal} />
+
           </div>
         </div>
       )}
