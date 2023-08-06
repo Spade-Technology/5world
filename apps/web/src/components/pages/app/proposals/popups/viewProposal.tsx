@@ -40,6 +40,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   const [actions, setActions] = useState(false)
   const { data: proposal, isLoading: isProposalLoading } = useProposalRead(proposalID, { author: true })
   const [dropDownOn, setDropDownOn] = useState(false)
+
   const [btnStatus, setBtnStatus] = useState('Votes')
   const { voteFor, voteAgainst, voteAbstain, isLoading } = useProposalAction(proposalID)
 
@@ -58,6 +59,8 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
     : proposal?.startBlock > (block || 0)
     ? 'Pending'
     : 'Active'
+
+    console.log({proposal} , "dropDownOn ", dropDownOn, proposalStatus)
 
   const { chain } = useNetwork()
 
@@ -227,6 +230,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                       text={btnStatus}
                       className='h-fit w-full !px-2.5 text-center'
                       onClick={() => {
+                        console.log("proposal kjb")
                         setDropDownOn(!dropDownOn)
                       }}
                       disabled={proposalStatus !== 'Active'}
