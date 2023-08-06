@@ -56,14 +56,12 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
       return notification.error({
         message: 'Error',
         description: `Fields cannot be empty: ${emptyFields.join(', ')}`,
-        placement: 'bottomRight',
       })
 
     if (tokenAddress.match(/0x[a-fA-F0-9]{40}/) === null)
       return notification.error({
         message: 'Error',
         description: 'Invalid token address',
-        placement: 'bottomRight',
       })
 
     const hash = await generateGrantIPFSHash.mutateAsync(
@@ -100,14 +98,15 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
       grantAmount: matchingAmount,
       grantImage: await imageToBase64String(logo),
       grantTheme: await imageToBase64String(theme),
+      callback: successful => {
+        if (successful) {
+          refetchFunc && refetchFunc?.()
+          close()
+        }
+      },
+    }).finally(() => {
+      setLoader(false)
     })
-      .then(() => {
-        refetchFunc && refetchFunc?.()
-        close()
-      })
-      .finally(() => {
-        setLoader(false)
-      })
   }
 
   return (
