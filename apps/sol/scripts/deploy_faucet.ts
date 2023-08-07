@@ -14,7 +14,7 @@ async function main() {
 
   const [owner] = await ethers.getSigners();
 
-  const token = await ethers.getContractAt('VDaoToken', '0x50a899d3eE5d8c6688ED867b141EAD298bf6c228');
+  const token = await ethers.getContractAt('VDaoToken', '0xA95b8F7A87a190B8059706A76012Aea9cA317BaE');
 
 
   const Faucet = await ethers.getContractFactory('Faucet');
