@@ -100,7 +100,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
       grantTheme: await imageToBase64String(theme),
       callback: successful => {
         if (successful) {
-          refetchFunc && refetchFunc?.()
+          refetchFunc && refetchFunc()
           close()
         }
       },
@@ -144,7 +144,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
                     // defaultValue={'0x9E873b3A125040B2295FbED16aF22Ed9b101e470'}
                   />
                   <Button className='w-full' 
-                  // onClick={e => setTokenAddress('0x0000000000000000000000000000000000000000')}
+                  onClick={e => setTokenAddress('0x0000000000000000000000000000000000000000')}
                   >
                     send ETH
                   </Button>
