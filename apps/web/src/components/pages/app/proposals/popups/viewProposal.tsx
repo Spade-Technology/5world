@@ -18,6 +18,7 @@ import { api } from '~/utils/api'
 import PrimaryButton, { DropdownPrimaryButton } from '~/styles/shared/buttons/primaryButton'
 import { Skeleton } from '~/components/ui/skeleton'
 import { useAccount, useBlockNumber, useNetwork } from 'wagmi'
+import { useBlockNumber, useContractRead, useNetwork } from 'wagmi'
 import { Address, encodeFunctionData, encodePacked } from 'viem'
 import VDAOImplementation from '~/abi/VDAOImplementation.json'
 
@@ -53,6 +54,16 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
 
   console.log({ supporters_raw })
   const { data: block } = useBlockNumber({ watch: true })
+
+  const { data: proposalState } = useContractRead({
+    abi: VDAOImplementation,
+    address: currentContracts.proxiedVDao as Address,
+    functionName: 'state',
+    args: [proposalID],
+  })
+
+  console.log(proposalState)
+
   const proposalStatus = proposal?.canceled
     ? 'Canceled'
     : proposal?.executed
