@@ -40,7 +40,7 @@ const Preview = ({ title, description, callDatas, setNextForm, setShowPreview, s
 
           <div className='float-right flex gap-5 pt-5 md:pt-[77px]'>
             <div
-              className='cursor-pointer rounded-[5px] border-[1px] border-vdao-dark py-[5px] px-[35px] font-heading text-lg font-medium'
+              className='flex cursor-pointer items-center rounded-[5px] border-[1px] border-vdao-dark py-[5px] px-[35px] font-heading text-xl font-medium'
               onClick={() => {
                 setNextForm(true)
                 setShowPreview(false)
@@ -48,7 +48,7 @@ const Preview = ({ title, description, callDatas, setNextForm, setShowPreview, s
             >
               Previous
             </div>
-            <PrimaryButton loading={loading} text='Submit' className=' py-[5px] px-[35px] font-heading text-lg font-medium' onClick={submit} />
+            <PrimaryButton loading={loading} text='Submit' className='' onClick={submit} />
           </div>
         </div>
       </div>

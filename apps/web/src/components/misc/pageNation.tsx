@@ -15,7 +15,7 @@ type PaginationProps = {
 
 const Pagination = ({ pageNumbers, pageCount, setPageCount, web3, outerClass, innerClass }: PaginationProps) => {
   return (
-    <div className={`flex w-full px-6 ${outerClass ? outerClass : "justify-end"} ${pageNumbers.length > 1 ? 'none' : "hidden"}`}>
+    <div className={`flex w-full px-6 ${outerClass ? outerClass : 'justify-end'} ${pageNumbers.length > 1 ? 'none' : 'hidden'}`}>
       <div className={`flex justify-center md:justify-end ${innerClass ? '' : 'py-11 md:py-14 '} `}>
         <Image src={web3 ? DarkLeftAroow : LeftArrow} alt='Left Arrow' height={10.61} width={10.61} className='mr-5 cursor-pointer' onClick={() => pageCount > 1 && setPageCount(pageCount - 1)} />
         {pageNumbers.length &&

@@ -21,6 +21,7 @@ interface ApplyToBeStewardSchema {
 interface VoteSchema {
   voterAddress: string
   candidateAddress: string
+  amount: number
 }
 
 interface DelegateSchema {
@@ -70,7 +71,7 @@ export function useVote() {
     voterAddress: z.string(),
     candidateAddress: z.string(),
     message: z.string(),
-    amount: z.number().optional(),
+    amount: z.number(),
   })
 
   const mutation = api.steward.vote.useMutation()
@@ -79,12 +80,31 @@ export function useVote() {
     .function()
     .args(voteSchema)
     .parse(async (values: VoteSchema) => {
-      const message = `${values.voterAddress} is voting for ${values.candidateAddress} as a steward.`
+      const message = `${values.voterAddress} is voting using ${values.amount}V for ${values.candidateAddress} as a steward. 
+      
+      
+      
+      
+Metadata:${JSON.stringify({ voter: values.voterAddress, candidate: values.candidateAddress, amount: values.amount, date: new Date().toDateString() })}`
+
       const signature = await signMessage({
         message,
       })
 
-      mutation.mutate({ ...values, signature, message })
+      mutation
+        .mutateAsync({ ...values, signature, message })
+        .then(() => {
+          notification.success({
+            message: 'Success',
+            description: 'You have successfully voted.',
+          })
+        })
+        .catch(error => {
+          notification.error({
+            message: 'Error',
+            description: error.message,
+          })
+        })
     })
 
   return { vote, mutation }

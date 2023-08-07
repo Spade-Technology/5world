@@ -68,7 +68,7 @@ contract RoundFactory is OwnableUpgradeable {
      */
     function create(
         bytes calldata encodedParameters
-    ) external onlyOwner returns (address) {
+    ) external payable onlyOwner returns (address) {
         require(roundContract != address(0), "roundContract is 0x");
 
         address clone = ClonesUpgradeable.clone(roundContract);
@@ -76,7 +76,13 @@ contract RoundFactory is OwnableUpgradeable {
 
         emit RoundCreated(clone, roundContract);
 
-        RoundImplementation(payable(clone)).initialize(encodedParameters);
+        address[] memory admins = new address[](1);
+        admins[0] = msg.sender;
+
+        RoundImplementation(payable(clone)).initialize(
+            encodedParameters,
+            admins
+        );
 
         return clone;
     }

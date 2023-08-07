@@ -15,6 +15,7 @@ import { Address } from 'viem'
 import { BsFillInfoCircleFill } from 'react-icons/bs'
 import { shortenAddress, shortenText } from '~/utils/helpers'
 import { useRouter } from 'next/router'
+import { DatePicker, Space } from 'antd'
 
 type ButtonMessages = {
   verified: string
@@ -60,7 +61,6 @@ export const VDAOConnectButton = ({
 
       const new_state: 'walletselect' | 'verify' | 'verified' | 'register' | 'loading' =
         isLoading && address ? 'loading' : address ? (data ? (siwe ? 'verified' : 'verify') : 'register') : 'walletselect'
-      console.log('new_state', new_state, address, data, siwe)
       setModalState(new_state)
       setMessage(siwe?.address && !web2 ? shortenAddress(siwe.address) : messages[new_state])
     }

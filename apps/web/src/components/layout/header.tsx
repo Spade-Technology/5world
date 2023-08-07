@@ -93,9 +93,9 @@ const Header = (props: Props) => {
   }, [])
 
   return (
-    <header className={!props.dark ? 'overflow-hidden bg-white' : 'bg-vdao-deep w-full overflow-hidden'}>
+    <header className={!props.dark && router.pathname !== '/app/support' ? 'overflow-hidden bg-white' : 'w-full overflow-hidden bg-vdao-deep'}>
       {/* Desktop */}
-      <div className='z-50 mx-auto hidden h-[100px] max-w-[1140px] items-center justify-center px-6 md:flex xl:px-0'>
+      <div className={`z-50 mx-auto hidden h-[100px] max-w-[1140px] items-center justify-center px-6 md:flex xl:px-0`}>
         <Link href='/'>
           <Image src={logo} alt='VDAO' height={30} />
         </Link>
@@ -154,10 +154,13 @@ const Header = (props: Props) => {
 
         <div className='hidden gap-[30px] md:flex'>
           <Link href='https://vdao.discourse.group' target='_blank' rel='noopener noreferrer' className='flex items-center'>
-            <Image src={!props.dark ? discourse : darkDiscourse} alt='VDAO' width={30} height={30} className='hidden md:block' />
+            <Image src={!props.dark && router.pathname !== '/app/support' ? discourse : darkDiscourse} alt='VDAO' width={30} height={30} className='hidden md:block' />
           </Link>
-          <Image src={!props.dark ? discordCircle : darkDiscord} alt='VDAO' width={30} height={30} className='hidden md:block' />
-          <VDAOConnectButton web2={props.web2} className={!props.dark ? 'border-vdao-dark text-vdao-dark text-xl font-medium' : 'border-vdao-light text-vdao-light'} />
+          <Image src={!props.dark && router.pathname !== '/app/support' ? discordCircle : darkDiscord} alt='VDAO' width={30} height={30} className='hidden md:block' />
+          <VDAOConnectButton
+            web2={props.web2}
+            className={!props.dark && router.pathname !== '/app/support' ? 'border-vdao-dark text-xl font-medium text-vdao-dark' : 'border-vdao-light text-vdao-light'}
+          />
         </div>
       </div>
 
@@ -168,7 +171,7 @@ const Header = (props: Props) => {
         </Link>
         <button
           onClick={toggleMobileMenu}
-          className={`text-white-dark focus:ring-vdao-dark rounded-md px-2 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+          className={`text-white-dark rounded-md px-2 transition-all focus:outline-none focus:ring-2 focus:ring-vdao-dark focus:ring-offset-2 ${
             !props.dark ? '' : '!text-vdao-light focus:ring-vdao-light '
           }`}
         >
@@ -193,7 +196,7 @@ const Header = (props: Props) => {
           </Link>
           <button
             onClick={toggleMobileMenu}
-            className={`text-white-dark focus:ring-vdao-dark rounded-md px-2 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+            className={`text-white-dark rounded-md px-2 transition-all focus:outline-none focus:ring-2 focus:ring-vdao-dark focus:ring-offset-2 ${
               !props.dark ? '' : '!text-vdao-light focus:ring-vdao-light '
             }`}
           >
@@ -250,7 +253,7 @@ const MobileSubmenu = (props: {
         {element.name}
         {hasChildren && (
           <svg
-            className={`text-vdao-light h-10 w-10 transform transition duration-300 ${isChildOpen ? 'rotate-180' : ''}`}
+            className={`h-10 w-10 transform text-vdao-light transition duration-300 ${isChildOpen ? 'rotate-180' : ''}`}
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
             viewBox='0 0 24 24'
@@ -280,7 +283,7 @@ const MobileSubmenu = (props: {
 
 const HeaderManifesto = (props: Props) => {
   return (
-    <div className='bg-vdao-deep mx-auto flex w-full items-center justify-between px-4 py-11 lg:max-w-[1140px]'>
+    <div className='mx-auto flex w-full items-center justify-between bg-vdao-deep px-4 py-11 lg:max-w-[1140px]'>
       <Image src={logo} alt='VDAO' className='my-auto h-[17.74px] w-[76px] md:h-[30px]  md:w-[130px]' />
       <div className='flex items-center gap-[56px]'>
         <section className='hidden items-center justify-between gap-[35px] lg:flex'>
@@ -315,7 +318,7 @@ const HeaderManifesto = (props: Props) => {
           <Image src={twitter} alt='VDAO' width={30} height={30} className='max-[350px]:hidden' />
           <Image src={discord} alt='VDAO' width={30} height={30} className='max-[350px]:hidden' />
 
-          <VDAOConnectButton className='border-vdao-light text-vdao-light !mx-0 flex items-center justify-center !px-[23px] !py-[11px] text-sm' />
+          <VDAOConnectButton className='!mx-0 flex items-center justify-center border-vdao-light !px-[23px] !py-[11px] text-sm text-vdao-light' />
         </div>
       </div>
     </div>

@@ -128,11 +128,12 @@ contract RoundImplementation is
             "initialize: application end block should be after application start block"
         );
 
-        require(
-            _initRoundTime.roundStartBlock >=
-                _initRoundTime.applicationsEndBlock + 50400, // 1 week Application review period (1 block = 12 sec)
-            "initialize: application end block should be 1 week before round start block"
-        );
+        // REMOVE BEFORE PROD
+        // require(
+        //     _initRoundTime.roundStartBlock >=
+        //         _initRoundTime.applicationsEndBlock + 50400, // 1 week Application review period (1 block = 12 sec)
+        //     "initialize: application end block should be 1 week before round start block"
+        // );
         require(
             _initRoundTime.roundEndBlock > _initRoundTime.roundStartBlock,
             "initialize: end block should be after start block"
@@ -163,8 +164,8 @@ contract RoundImplementation is
         );
 
         // Assigning default admin role
-        for (uint256 i = 0; i < _initRoles.adminRoles.length; ++i) {
-            _grantRole(DEFAULT_ADMIN_ROLE, _initRoles.adminRoles[i]);
+        for (uint256 i = 0; i < adminRoles.length; ++i) {
+            _grantRole(DEFAULT_ADMIN_ROLE, adminRoles[i]);
         }
 
         // Assigning round operators
@@ -438,7 +439,7 @@ contract RoundImplementation is
             revert InvalidState();
         }
 
-        totalQuadraticVotes = _getTotalQuadraticVotes();
+        totalQuadraticVotes = getTotalQuadraticVotes();
     }
 
     /// @notice Withdraws unsupported tokens from the contract and sends them to the specified recipient
@@ -466,8 +467,8 @@ contract RoundImplementation is
         matchingAmount = newMatchingAmount_;
     }
 
-    function _getTotalQuadraticVotes()
-        internal
+    function getTotalQuadraticVotes()
+        public
         view
         returns (uint256 totalQuadraticVotes)
     {
@@ -491,4 +492,36 @@ contract RoundImplementation is
 
     // Function to receive Ether. msg.data must be empty
     receive() external payable {}
+
+    function RoundInformation()
+        external
+        view
+        returns (
+            uint256,
+            uint256,
+            uint256,
+            uint256,
+            uint256,
+            address,
+            uint256,
+            uint256,
+            uint256,
+            MetaPtr memory,
+            MetaPtr memory
+        )
+    {
+        return (
+            applicationsStartBlock,
+            applicationsEndBlock,
+            roundStartBlock,
+            roundEndBlock,
+            proposalCount,
+            token,
+            matchingAmount,
+            totalQuadraticVotes,
+            uint256(state()),
+            roundMetaPtr,
+            applicationMetaPtr
+        );
+    }
 }

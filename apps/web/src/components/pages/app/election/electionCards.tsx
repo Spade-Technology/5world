@@ -1,9 +1,10 @@
 import { User } from '@prisma/client'
 import { Skeleton } from 'antd'
 import Image from 'next/image'
+
 import ProfilePic from 'public/icons/blog/createdByLogo.svg'
 import InfoIcon from 'public/icons/stewards/infoIcon.svg'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { useElectionReads, useVote } from '~/hooks/web3/useStewards'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
@@ -23,21 +24,67 @@ type CardProps = {
 }
 
 const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
+  const [debouncedInput, setDebouncedInput] = useState('')
+  const [searchValue, setSearchValue] = useState('')
+  const [searchedCandidates, setSearchedCandidates] = useState([])
   const { address } = useAccount()
   const { data, isLoading } = useElectionReads({})
+  const [searchField, setSearchField] = useState('')
+  const [searchShow, setSearchShow] = useState(false)
+  const [finalData, setFinalData] = useState(data)
+
+  const filteredData = data?.filter(steward => {
+    return steward.name?.toLowerCase().includes(searchField.toLowerCase()) || steward.address.toLowerCase().includes(searchField.toLowerCase())
+  })
+
+  useEffect(() => {
+    if (filteredData?.length > 0) {
+      setFinalData(filteredData)
+    } else {
+      setFinalData(data)
+    }
+  }, [data, filteredData])
+
+  const handleChange = (e: any) => {
+    setSearchField(e.target.value)
+    if (e.target.value === '') {
+      setSearchShow(false)
+    } else {
+      setSearchShow(true)
+    }
+  }
+
+  // USEFFECT FOR SEARCHING CANDIDATES
+  useEffect(() => {
+    const filteredCards: any = data?.filter(item => {
+      return [searchValue]?.some(el => Object.values(item).join('').toLowerCase().includes(el.toLocaleLowerCase()))
+    })
+    setSearchedCandidates(filteredCards)
+  }, [debouncedInput])
+
+  // USEFFECT THAT DELAYS SEACH FUNCTION
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedInput(searchValue)
+    }, 500)
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [searchValue, 500])
 
   return (
     <div className='mx-auto w-full max-w-[1188px] px-6 pb-[120px] md:px-10 xl:px-6'>
       <div className='flex flex-col justify-between md:flex-row'>
         <div className='max-w-[1280px] font-heading text-[32px] font-medium text-vdao-light md:text-[46px]'>Candidates</div>
 
-        <div className='mt-5 flex h-[43px] w-full items-center gap-[18px] overflow-hidden rounded-xl bg-vdao-dark px-3 md:max-w-[409px] '>
+        <div className='mt-5 flex h-[43px] w-full max-w-[409px] items-center gap-[18px] overflow-hidden rounded-xl bg-vdao-dark px-3 '>
           <div className='h-7 w-7 bg-[url(/icons/stewards/search.svg)] bg-contain bg-center bg-no-repeat '></div>{' '}
-          <input type='text' className='h-full w-full bg-transparent  font-body text-lg font-medium text-vdao-light outline-none ' placeholder='Search username' />
+          <input type='text' className='h-full w-full bg-transparent  font-body text-lg font-medium text-white outline-none ' placeholder='Search by username or address' onChange={handleChange} />
         </div>
       </div>
 
-      <div className='mt-5 grid grid-cols-1 gap-5 md:grid-cols-2'>
+      <div className='mx-6 mt-5 grid grid-cols-1 gap-5 md:mx-0 md:grid-cols-2'>
         {isLoading ? (
           <>
             <Skeleton.Avatar shape='square' style={{ height: '400px', width: '100%' }} className='col-span-2' active />
@@ -45,7 +92,7 @@ const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
             <Skeleton.Avatar shape='square' style={{ height: '400px', width: '100%' }} className='col-span-2' active />
           </>
         ) : (
-          data && data.length > 0 && data?.map(steward => <Card data={steward} setOpenProfile={setOpenProfile} setOpenVotesNscores={setOpenVotesNscores} />)
+          finalData && finalData.length > 0 && finalData?.map(steward => <Card data={steward} setOpenProfile={setOpenProfile} setOpenVotesNscores={setOpenVotesNscores} />)
         )}
       </div>
     </div>
@@ -53,7 +100,6 @@ const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
 }
 
 export const Card = ({ data, setOpenProfile, setOpenVotesNscores }: CardProps) => {
-  console.log({ data })
   const [votes, setVotes] = useState('')
   const { vote } = useVote()
   const { address } = useAccount()
@@ -85,7 +131,7 @@ export const Card = ({ data, setOpenProfile, setOpenVotesNscores }: CardProps) =
             </div>
           </div>
         </div>
-        {data.guild && <div className='mt-[18px] w-fit rounded-3xl border-[3px] py-[7px] px-[25px] text-xl font-medium'>{data.guild.name}</div>}
+        {data.guild && <div className='mt-a w-fit rounded-3xl border-[3px] py-[7px] px-[25px] text-xl font-medium'>{data.guild.name}</div>}
         <div className='w-full pt-5 font-body text-lg font-normal leading-[26p] md:pt-[32px] md:text-[22px]'>
           {/* {data?.description ? data.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultrice ullamcorper.'} */}
           {data?.description?.length > 130 ? (
@@ -101,7 +147,7 @@ export const Card = ({ data, setOpenProfile, setOpenVotesNscores }: CardProps) =
             data?.description.length < 130 && data?.description
           )}
         </div>
-        {console.log(data?.description)}
+
         <div className='relative mt-[25px] flex justify-between rounded-[20px] bg-white px-5 py-8 md:mt-11 md:px-10'>
           <Image src={InfoIcon} alt='InfoIcon' className='absolute right-4 top-4 cursor-pointer' onClick={() => setOpenVotesNscores(true)} />
           <div>
@@ -125,12 +171,12 @@ export const Card = ({ data, setOpenProfile, setOpenVotesNscores }: CardProps) =
             </div>
           </div>
         </div>
-        <div className='flex flex-col justify-between gap-5 pt-[30px] md:flex-row md:items-center md:gap-0 md:pt-10'>
-          <div className='text-start text-xl font-medium md:w-2/3'>Delegate your vote</div>
+        <div className='flex flex-col justify-between gap-5 pt-[30px] lg:flex-row lg:items-center lg:gap-0 lg:pt-10'>
+          <div className='text-start text-xl font-medium md:w-2/3'>Vote for this user</div>
           <div className='flex w-full gap-[10px]'>
             <input
               placeholder='60'
-              className='max-h-10 w-[100px] rounded-md border-none px-7 text-center font-heading text-xl font-medium text-vdao-dark outline-none md:w-full'
+              className='max-h-10 w-[100px] rounded-md border-none px-2 text-center font-heading text-xl font-medium text-vdao-dark outline-none lg:w-full'
               value={votes}
               onChange={evt => setVotes(evt.target.value)}
             />

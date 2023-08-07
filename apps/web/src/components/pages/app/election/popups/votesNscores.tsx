@@ -25,8 +25,6 @@ const VotesNscores = ({ show, close }: Props) => {
     },
   })
 
-  console.log('data', data)
-
   /** The following two useEffects are for Pagination functionality. */
   useEffect(() => {
     const info = delegated ? VotesInfo : PraiseInfo

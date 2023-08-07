@@ -20,7 +20,7 @@ contract VDAOImplementation is
     uint public constant MAX_PROPOSAL_THRESHOLD = 100_000e18; //100,000 V
 
     /// @notice The minimum setable voting period
-    uint public constant MIN_VOTING_PERIOD = 7_200; // About 24 hours (1 BLock = 12 sec)
+    uint public constant MIN_VOTING_PERIOD = 1; // 7_200 is About 24 hours (1 BLock = 12 sec)
     // uint public constant MIN_VOTING_PERIOD = 1; // for Demo
 
     /// @notice The max setable voting period
@@ -141,14 +141,17 @@ contract VDAOImplementation is
             ProposalState proposersLatestProposalState = state(
                 latestProposalId
             );
-            require(
-                proposersLatestProposalState != ProposalState.Active,
-                "VDAO::propose: one live proposal per proposer, found an already active proposal"
-            );
-            require(
-                proposersLatestProposalState != ProposalState.Pending,
-                "VDAO::propose: one live proposal per proposer, found an already pending proposal"
-            );
+
+            // REMOVE IF PROD
+            // require(
+            //     proposersLatestProposalState != ProposalState.Active,
+            //     "VDAO::propose: one live proposal per proposer, found an already active proposal"
+            // );
+            // require(
+            //     proposersLatestProposalState != ProposalState.Pending,
+            //     "VDAO::propose: one live proposal per proposer, found an already pending proposal"
+            // );
+            // REMOVE IF PROD
         }
 
         uint startBlock = block.number + votingDelay;
@@ -358,10 +361,6 @@ contract VDAOImplementation is
      */
     //  TODO: upadte quorum votes
     function state(uint proposalId) public view returns (ProposalState) {
-        require(
-            proposalCount >= proposalId,
-            "VDAO::state: invalid proposal id"
-        );
         Proposal storage proposal = proposals[proposalId];
         if (proposal.vetoed) {
             return ProposalState.Vetoed;

@@ -11,16 +11,16 @@ let contracts = {
     blockTime: 12.08,
   },
   sepolia: {
-    timelock: '0x22fE38bbc26360A82D4182239B390A2604614Fad',
-    vDao: '0x9E873b3A125040B2295FbED16aF22Ed9b101e470',
-    vDAOImplementation: '0x877093cC4D74AfA133C17d025dfB1d21489667f8',
-    proxiedVDao: '0x52C46675B987Ee5374A0A5Ccc89b2DBA6810d44f',
-    treasury: '0xC1Df339af6E7f77B3ED7Abd479E1a43062B7dc0b',
-    donationSBT: '0x7153DC1E9cE74e736f5599B06460DC9C5AF2E1E1',
-    roundImplementation: '0x0dd47B3061090DD574f1E591BA5d55f6C901359E',
-    roundFactory: '0x3F493aF8567BD4502F90a76066C968781A9dcCb3',
-    // 22 seconds
-    blockTime: 22,
+    timelock: '0x022430a9a4dD6DbA94631C01D3dc8745d3aa7A6A',
+    vDao: '0x50a899d3eE5d8c6688ED867b141EAD298bf6c228',
+    vDAOImplementation: '0x3C733b31cD4a9c41B57E711af07C02f468db99f2',
+    proxiedVDao: '0x4a38e4861fDb8787b3B9DC4f9855136bc4dF3A41',
+    treasury: '0x1D65DB880d1c78bD11986283970D2187759902BB',
+    donationSBT: '0x35f66ba2653b55Bb990DeCb6Ce823d7B7745B048',
+    roundImplementation: '0x76b0a8D4Af81b82030405C88D0cc58DF57aE0767',
+    roundFactory: '0x233c4FDD4379ce1cF263Ead102f3011226039E0B',
+    // 15 seconds
+    blockTime: 15,
   },
 }
 

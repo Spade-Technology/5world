@@ -7,11 +7,11 @@ const HowItWorks = () => {
     <div className='mx-auto flex w-full  max-w-[1068px] bg-vdao-deep px-6 py-20 text-white md:px-10 md:py-[140px]'>
       <div className='ml-auto flex max-w-[865px] flex-col gap-10 md:flex-row md:gap-[22px]'>
         <div className=''>
-          <span className=' font-heading text-[32px] md:text-4xl font-medium underline underline-offset-8'>How it works</span>
+          <span className=' font-heading text-[32px] font-medium underline underline-offset-8 md:text-4xl'>How it works</span>
         </div>
         <div className='w-full md:w-[580px]'>
           <Image src={groupImage} alt='group-image' className='' />
-          <div className='pt-5 md:pt-[30px] font-body text-lg font-normal'>
+          <div className='pt-5 font-body text-lg font-normal md:pt-[30px]'>
             Participating in a VDAO NFT auction is not only a chance to show your financial support for this mission, but also gives exclusive access to the wider VDAO ecosystem, including real-world
             learning opportunities and events.
           </div>

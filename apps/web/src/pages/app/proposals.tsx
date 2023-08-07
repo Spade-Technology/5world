@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import Footer from '~/components/layout/footer'
-import Header from '~/components/layout/header'
+
 import Page from '~/components/layout/page'
 import { EnforceAuth } from '~/components/misc/enforceAuth'
 import CreateGrant from '~/components/pages/app/grants/popups/createGrant'
@@ -14,6 +13,7 @@ const Proposals = () => {
   const [openCreateProposal, setOpenCreateProposal] = useState(false)
   const [openCreateGrantProposal, setOpenCreateGrantProposal] = useState(false)
   const [viewProposal, setViewProposal] = useState(false)
+  const [refetchFunc, setRefetchFunc] = useState<Function>()
   const [proposalID, setProposalID] = useState(0)
 
   return (
@@ -22,14 +22,14 @@ const Proposals = () => {
         <OperationalProposals {...{ setOpenCreateProposal, setOpenCreateGrantProposal }} />
 
         <EnforceAuth>
-          <ProposalCards setViewProposal={setViewProposal} setProposalID={setProposalID} />
+          <ProposalCards setViewProposal={setViewProposal} setProposalID={setProposalID} setRefetchFunc={setRefetchFunc} />
 
           <div className='px-6 md:px-10 xl:px-0'>
             <Insights />
           </div>
 
           {openCreateProposal && <CreateNewProposal show={openCreateProposal} close={() => setOpenCreateProposal(false)} />}
-          {openCreateGrantProposal && <CreateGrant show={openCreateGrantProposal} close={() => setOpenCreateGrantProposal(false)} />}
+          {openCreateGrantProposal && <CreateGrant show={openCreateGrantProposal} close={() => setOpenCreateGrantProposal(false)} refetchFunc={refetchFunc} />}
           {viewProposal && <ViewProposal show={viewProposal} proposalID={proposalID} close={() => setViewProposal(false)} />}
         </EnforceAuth>
       </div>

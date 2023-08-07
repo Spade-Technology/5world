@@ -1,9 +1,8 @@
-import { sqltag } from '@prisma/client/runtime'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '~/server/db'
 
 export default async function getManifestoData(req: NextApiRequest, res: NextApiResponse) {
-  const data: any[] = await prisma.$queryRaw(sqltag`
+  const data: any[] = await prisma.$queryRaw`
         SELECT 
           (SELECT COUNT(*) FROM "Signatures") as total,
           t."eoa", 
@@ -15,7 +14,7 @@ export default async function getManifestoData(req: NextApiRequest, res: NextApi
           ORDER BY "createdAt" DESC
           LIMIT 10
         ) as t
-      `)
+      `
 
   if (!data) return { notFound: true }
 

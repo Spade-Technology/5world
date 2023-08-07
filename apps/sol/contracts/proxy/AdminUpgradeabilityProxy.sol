@@ -9,5 +9,9 @@ import "@openzeppelin/contracts/proxy/transparent/ProxyAdmin.sol";
 
 // Kept for backwards compatibility with older versions of Hardhat and Truffle plugins.
 contract AdminUpgradeabilityProxy is TransparentUpgradeableProxy {
-    constructor(address logic, address admin, bytes memory data) payable TransparentUpgradeableProxy(logic, admin, data) {}
+    constructor(
+        address logic,
+        address admin,
+        bytes memory data
+    ) payable TransparentUpgradeableProxy(logic, admin, data) {}
 }

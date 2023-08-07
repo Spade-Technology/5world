@@ -23,6 +23,7 @@
     "@nomiclabs/hardhat-waffle": "^2.0.5",
     "@openzeppelin/contracts": "^4.8.3",
     "@openzeppelin/contracts-upgradeable": "^4.8.3",
+    "@openzeppelin/hardhat-upgrades": "^2.0.1",
     "@types/mocha": "^10.0.1",
     "@types/node": "^20.1.0",
     "dotenv": "^16.0.3",

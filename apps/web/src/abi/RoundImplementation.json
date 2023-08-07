@@ -401,6 +401,93 @@
   },
   {
     "inputs": [],
+    "name": "RoundInformation",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "protocol",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "pointer",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct MetaPtr",
+        "name": "",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "protocol",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "pointer",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct MetaPtr",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "SBT_VOTING_CREDIT",
     "outputs": [
       {
@@ -620,6 +707,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "getTotalQuadraticVotes",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "totalQuadraticVotes",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -699,6 +799,11 @@
         "internalType": "bytes",
         "name": "encodedParameters",
         "type": "bytes"
+      },
+      {
+        "internalType": "address[]",
+        "name": "adminRoles",
+        "type": "address[]"
       }
     ],
     "name": "initialize",

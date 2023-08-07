@@ -1,14 +1,13 @@
 import { useSession } from 'next-auth/react'
-import { use, useState } from 'react'
+import { useState } from 'react'
 import { useAccount, useBalance } from 'wagmi'
 import Page from '~/components/layout/page'
-import LoginPromptComponent, { EnforceAuth } from '~/components/misc/enforceAuth'
+import { EnforceAuth } from '~/components/misc/enforceAuth'
 import PodCards from '~/components/pages/app/pods/podCards'
 import PodsProfile from '~/components/pages/app/pods/podsProfile'
 import CreateNewPod from '~/components/pages/app/pods/popups/createNewPod'
 import ManageMembers from '~/components/pages/app/pods/popups/manageMembers'
 import PodModal from '~/components/pages/app/pods/popups/regenPod'
-import RegenPod from '~/components/pages/app/pods/popups/regenPod'
 import { pod_type, usePodReads } from '~/hooks/web3/usePod'
 
 const Pods = () => {
@@ -26,9 +25,6 @@ const Pods = () => {
   })
   const { data: balance } = useBalance({})
   const { data: siwe } = useSession()
-
-  console.log('pods data: ', data)
-  console.log('pods show', openedPod, showManageMembers)
 
   return (
     <>

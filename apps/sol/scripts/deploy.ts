@@ -1,10 +1,13 @@
 import { ethers } from 'hardhat';
+
+
 import ProgressBar from 'progress';
 import hre from 'hardhat';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { Contract } from 'ethers';
 
 const dev = true;
+const hardhatnetwork = hre.network.name === 'hardhat' || hre.network.name === 'localhost'
 
 async function sleep(ms) {
   return new Promise((resolve) => {
@@ -19,6 +22,8 @@ async function getBlockTime() {
 
 // azeazeazeaze
 async function main() {
+  let res;
+
   const [owner] = await ethers.getSigners();
 
   const progressBar = new ProgressBar('Deploying contracts [:bar] :percent :etas || :status', {
@@ -55,8 +60,8 @@ async function main() {
     owner.address,
     owner.address,
     vDAOImplementation.address,
-    7200,
-    1,
+    50,
+    3,
     '1000000000000000000000'
   );
   await vDAOProxy.deployed();
@@ -69,37 +74,34 @@ async function main() {
     const value = 0;
     const signature = "enableTrading()"; // function signature
     const data = ethers.utils.arrayify(0); // No arguments to pass, so data is 0
-    const eta = Math.floor(await getBlockTime() + 20); // set ETA to now
+    const eta = Math.floor(await getBlockTime() + (hardhatnetwork ? 1 : 30)); // set ETA to now
 
-
-    await timelock.queueTransaction(target, value, signature, data, eta);
+    res = await timelock.queueTransaction(target, value, signature, data, eta);
     
     // push evm forward by 10 seconds if hardhat network is hardhat or localhost
     progressBar.tick({ status: 'Waiting for timelock tx to be accepted.' });
-    if (hre.network.name === 'hardhat' || hre.network.name === 'localhost') await hre.network.provider.send('evm_increaseTime', [1]);
-    else await sleep(25000);
+    if (hardhatnetwork) await hre.network.provider.send('evm_increaseTime', [10]);
+    else await res.wait(5);  
+    
 
     // execute transaction
-    await timelock.executeTransaction(target, value, signature, data, eta);
+    progressBar.tick({ status: 'Executing timelock tx.' });
+    res = await timelock.executeTransaction(target, value, signature, data, eta); 
 
-    await timelock.setPendingAdmin(vDAOProxy.address);
+
+    progressBar.tick({ status: 'Setting pending admin.' });
+    res = await timelock.setPendingAdmin(vDAOProxy.address)
   }
 
+  console.log("waiting for the mempool to clear") // this shouldn't be necessary, but it is for some reason... timelock::accept admin will fail.
+  await res.wait(1);
+  await sleep(10000);
+
+  progressBar.tick({ status: 'Deploying vdao proxy' });
   const proxiedVDao = await VDAOImplementation.attach(vDAOProxy.address);
   if (timelock instanceof Contract) await proxiedVDao._initiate();
   progressBar.tick();
 
-  progressBar.tick({ status: 'Deploying Treasury' });
-  const Treasury = await ethers.getContractFactory('Treasury');
-  const treasury = await Treasury.deploy(vDao.address, timelock.address, 0);
-  await treasury.deployed();
-  progressBar.tick();
-
-  progressBar.tick({ status: 'Deploying VDonations' });
-  const DonationSBT = await ethers.getContractFactory('VDonations');
-  const donationSBT = await DonationSBT.deploy(timelock.address, treasury.address, [500, 1000, 2000, 5000], 'api.VDAO/DonationSBT/');
-  await donationSBT.deployed();
-  progressBar.tick();
 
   progressBar.tick({ status: 'Deploying RoundImplementation' });
   const RoundImplementation = await ethers.getContractFactory('RoundImplementation');
@@ -114,12 +116,27 @@ async function main() {
   progressBar.tick();
 
   progressBar.tick({ status: 'Updating RoundFactory' });
-  await roundFactory.initialize();
+  res = await roundFactory.initialize()
+  await res.wait(1);
+  
   await roundFactory.updateRoundContract(roundImplementation.address);
   progressBar.tick();
 
- 
+  await roundFactory.transferOwnership(timelock.address);
+  progressBar.tick();
 
+  progressBar.tick({ status: 'Deploying Treasury' });
+  const Treasury = await ethers.getContractFactory('Treasury');
+  const treasury = await Treasury.deploy(vDao.address, timelock.address, 0, roundFactory.address);
+  await treasury.deployed();
+  progressBar.tick();
+
+  progressBar.tick({ status: 'Deploying VDonations' });
+  const DonationSBT = await ethers.getContractFactory('VDonations');
+  const donationSBT = await DonationSBT.deploy(timelock.address, treasury.address, [500, 1000, 2000, 5000], 'api.VDAO/DonationSBT/');
+  await donationSBT.deployed();
+  progressBar.tick();
+ 
   const contracts = {
     timelock: timelock.address,
     vDao: vDao.address,
@@ -178,7 +195,7 @@ async function main() {
   progressBar.tick({ status: 'Verifying Treasury' });
   await hre.run('verify:verify', {
     address: treasury.address,
-    constructorArguments: [vDao.address, timelock.address, 0],
+    constructorArguments: [vDao.address, timelock.address, 0, roundFactory.address],
   });
 
   progressBar.tick({ status: 'Verifying VDonations' });

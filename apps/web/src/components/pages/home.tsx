@@ -186,7 +186,7 @@ export function HomeGetInvolvedComponent() {
             align.
           </div>
           <div className='py-5 md:py-10'>
-            <div className='inline font-heading text-[26px] font-medium md:text-3xl'>3 | Choose</div> a Guild where you feel you can best contribute to the mission of VDAO. Our four guilds include
+            <div className='inline font-heading text-[26px] font-medium md:text-3xl'>3 | Choose a Guild</div> where you feel you can best contribute to the mission of VDAO. Our four guilds include
             Creative, Research, Fundraising, and DAO Operations. 
           </div>
           <PrimaryButton text='Apply Now' />
@@ -363,14 +363,23 @@ export function HomeWelcomeComponent() {
         <div className='mx-auto w-full max-w-[1124px] px-[33px] text-center font-heading text-[44px] font-medium leading-[48px] text-vdao-dark md:w-auto md:px-5 md:text-[50px] md:leading-[75px] lg:px-0 lg:text-[70px] lg:leading-[95px]'>
           Help build new pathways to planetary regeneration.
         </div>
-        <div className='mx-[45px] mt-5 max-w-[818px] text-center font-body text-lg font-medium leading-[26px] text-vdao-dark md:mx-auto md:w-full md:px-6 md:text-xl lg:px-0'>
+        <div className='mx-[45px] mt-5 max-w-[818px] text-center font-body text-lg font-medium leading-[26px] text-vdao-dark md:mx-auto md:hidden md:w-full md:px-6 md:text-xl lg:px-0'>
           Join our DAO’s mission to realize the promise and potential of regenerative agriculture. Inspire new ideas, fund research, and help create scalable solutions for global change. 
         </div>
       </div>
-      <PrimaryButton text='Join Us' className='!mx-auto mt-10' />
-      <Image src={WelcomeHeroMobile} alt='VDAO' className='md:max-w-100 -z-10 mt-5 w-full md:hidden' />
 
-      <Image src={WelcomeHero} alt='VDAO' className=' relative -z-10 mt-5 hidden w-full md:mt-[20px] md:block' />
+      <main className='relative left-[-43.333vw] mx-auto h-[86.154vw] w-[190.769vw] bg-[url(/illustrations/home/PNG/VDAO-home-hero.png)] bg-cover bg-top bg-no-repeat pt-[23px] md:hidden '>
+        <PrimaryButton text='Join Us' className='relative left-[-5vw] !mx-auto mt-10 ' />
+      </main>
+
+      <main className='relative hidden h-[50.139vw] w-full md:block '>
+        <div className='mx-[45px] max-w-[818px] text-center font-body text-lg font-medium leading-[26px] text-vdao-dark md:mx-auto md:w-full md:px-6 md:text-xl lg:px-0'>
+          Join our DAO’s mission to realize the promise and potential of regenerative agriculture. Inspire new ideas, fund research, and help create scalable solutions for global change. 
+        </div>
+        <PrimaryButton text='Join Us' className='z-50 !mx-auto mt-10' />
+
+        <div className='absolute left-[-4.583vw] z-[-1] h-full w-[110.903vw] bg-[url(/illustrations/home/PNG/VDAO-home-hero.png)] bg-cover bg-top bg-no-repeat md:top-[0px] lg:top-[-30px]'></div>
+      </main>
     </Section>
   )
 }
