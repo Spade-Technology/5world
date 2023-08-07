@@ -47,14 +47,15 @@ const CreateNewPod = ({ show, close, refetch }: CreatePodProps) => {
           onSuccess(data, variables, context) {
             notification.success({
               message: 'Sucessful',
-              description: 'Created a new pod...!',
+              description: 'Created a new pod !',
             })
             refetch()
           },
-          onError() {
+          onError(e) {
+            console.error(e)
             notification.error({
               message: 'Failed',
-              description: 'Try again! Failed to create a new pod.',
+              description: 'Failed to create a new pod.',
             })
           },
         },
@@ -66,9 +67,7 @@ const CreateNewPod = ({ show, close, refetch }: CreatePodProps) => {
   }
 
   return (
-    <CustomModal show={show} close={close}
-     externalStyle={'w-full custom-scrollbar lg:!px-10 md:!px-5 md:mx-10 xl:mx-auto '} 
-     heading='Create New Pod' modalMarginTop='my-[40px]'>
+    <CustomModal show={show} close={close} externalStyle={'w-full custom-scrollbar lg:!px-10 md:!px-5 md:mx-10 xl:mx-auto '} heading='Create New Pod' modalMarginTop='my-[40px]'>
       {!nextFrom ? (
         <FormOne setNextForm={setNextForm} podName={podName} setPodName={setPodName} description={description} setDescription={setDescription} podImage={podImage} setPodImage={setPodImage} />
       ) : (
