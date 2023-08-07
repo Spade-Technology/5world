@@ -41,6 +41,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   const { address } = useAccount()
   const { data: proposal, isLoading: isProposalLoading } = useProposalRead(proposalID, { author: true })
   const [dropDownOn, setDropDownOn] = useState(false)
+  const [disableVoting, setDisableVoting] = useState(false)
 
   const [btnStatus, setBtnStatus] = useState('Votes')
   const { voteFor, voteAgainst, voteAbstain, isLoading } = useProposalAction(proposalID)
@@ -73,6 +74,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
     const isSupporter = supporters_raw.find(supporter => supporter.voter === address)
     console.log(supporters_raw, { isSupporter })
     if (isSupporter) {
+      setDisableVoting(true)
       supporters_raw.map(supporter => {
         if (supporter.support === 1) {
           setBtnStatus('Voted for proposal')
@@ -84,6 +86,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
       })
     } else {
       setBtnStatus('Votes')
+      setDisableVoting(false)
     }
   }, [isProposalLoading, supporters_raw])
 
@@ -117,6 +120,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
 
   async function updateSupporters() {
     setBtnStatus('Loading...')
+    setDisableVoting(true)
     const publicClient = getPublicClient({ chainId: currentChainId })
 
     const args = {
@@ -259,7 +263,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                         console.log('proposal kjb')
                         setDropDownOn(!dropDownOn)
                       }}
-                      disabled={proposalStatus !== 'Active'}
+                      disabled={proposalStatus !== 'Active' || disableVoting}
                       icon={btnStatus === 'Vote for proposal' ? LikedIcon : btnStatus === 'Vote against proposal' ? DisLikedIcon : btnStatus === 'Abstain' ? AbstainIcon : PolygonIcon}
                       dropDown
                       loading={isLoading}
