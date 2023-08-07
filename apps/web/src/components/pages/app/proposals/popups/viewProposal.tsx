@@ -1,31 +1,30 @@
+import Image from 'next/image'
+import DummyIcon from 'public/icons/pods/icon1.svg'
 import { useEffect, useState } from 'react'
 import CustomModal from '~/components/misc/customModal'
 import ProfileCard from '~/components/misc/profileCard'
-import Image from 'next/image'
-import { SupporterDetails } from './details'
-import { useProposalRead, useProposalAction } from '~/hooks/web3/useProposal'
+import { useProposalAction, useProposalRead } from '~/hooks/web3/useProposal'
 import { monthNames } from '~/utils/date'
 import { shortenAddress, shortenText } from '~/utils/helpers'
-import DummyIcon from 'public/icons/pods/icon1.svg'
 
-import ViewsIcon from 'public/icons/proposal/viewsIcon.svg'
-import LikedIcon from 'public/icons/proposal/liked.svg'
-import DisLikedIcon from 'public/icons/proposal/disLiked.svg'
 import AbstainIcon from 'public/icons/proposal/abstain.svg'
-import PolygonIcon from 'public/icons/stewards/polygon.svg'
+import DisLikedIcon from 'public/icons/proposal/disLiked.svg'
+import LikedIcon from 'public/icons/proposal/liked.svg'
 import TenderlyIcon from 'public/icons/proposal/tenderly.svg'
-import { api } from '~/utils/api'
-import PrimaryButton, { DropdownPrimaryButton } from '~/styles/shared/buttons/primaryButton'
-import { Skeleton } from '~/components/ui/skeleton'
-import { useAccount, useBlockNumber, useNetwork } from 'wagmi'
-import { Address, encodeFunctionData, encodePacked } from 'viem'
+import ViewsIcon from 'public/icons/proposal/viewsIcon.svg'
+import PolygonIcon from 'public/icons/stewards/polygon.svg'
+import { Address } from 'viem'
+import { useAccount, useBlockNumber, useContractRead, useNetwork } from 'wagmi'
 import VDAOImplementation from '~/abi/VDAOImplementation.json'
+import { Skeleton } from '~/components/ui/skeleton'
+import { DropdownPrimaryButton } from '~/styles/shared/buttons/primaryButton'
+import { api } from '~/utils/api'
 
+import { getPublicClient } from '@wagmi/core'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { currentChainId, currentContracts } from '~/config/contracts'
-import { getPublicClient } from '@wagmi/core'
 import Link from 'next/link'
+import { currentChainId, currentContracts } from '~/config/contracts'
 
 dayjs.extend(relativeTime)
 const formatter = Intl.NumberFormat('en', { notation: 'compact' })
@@ -54,17 +53,27 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
 
   console.log({ supporters_raw })
   const { data: block } = useBlockNumber({ watch: true })
-  const proposalStatus = proposal?.canceled
-    ? 'Canceled'
-    : proposal?.executed
-    ? 'Executed'
-    : proposal?.vetoed
-    ? 'Vetoed'
-    : proposal?.endBlock < (block || 0)
-    ? 'Ended'
-    : proposal?.startBlock > (block || 0)
-    ? 'Pending'
-    : 'Active'
+
+  const { data: proposalState } = useContractRead({
+    abi: VDAOImplementation,
+    address: currentContracts.proxiedVDao as Address,
+    functionName: 'state',
+    args: [proposalID],
+  })
+
+  enum ProposalState {
+    Pending,
+    Active,
+    Canceled,
+    Vetoed,
+    Defeated,
+    Succeeded,
+    Queued,
+    Expired,
+    Executed,
+  }
+
+  const proposalStatus = ProposalState[proposalState as number]
 
   console.log({ proposal }, 'dropDownOn ', dropDownOn, proposalStatus)
 
@@ -222,9 +231,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
               </div>
               <div className='grid grid-cols-2 pt-[10px] md:grid-cols-3 md:pt-5'>
                 <ProfileCard icon={proposal ? proposal.picture : DummyIcon} name={proposal ? proposal?.author?.name : 'Unnamed'} address={proposal?.authorId} />
-                <div className={`mt-6 h-fit w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-7 text-lg  font-medium text-vdao-light lg:ml-5`}>
-                  {proposalStatus}
-                  </div>
+                <div className={`mt-6 h-fit w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-7 text-lg  font-medium text-vdao-light lg:ml-5`}>{proposalStatus}</div>
               </div>
 
               <div className='flex justify-between'>
