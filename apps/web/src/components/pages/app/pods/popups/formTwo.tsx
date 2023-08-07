@@ -176,7 +176,7 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
         <div className='pb-[22px]'>Add member address below.</div>
 
         {/* <input className='mt-5 h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none' onChange={evt => setMemberAddr(evt.target.value)} value={memberAddr} /> */}
-        <Select mode='tags' style={{ width: '100%' }} placeholder='Enter Address' onChange={handleMembers} options={options} className='antd-stop-propagation w-full' />
+        <Select style={{ width: '100%' }} placeholder='Enter Address' onChange={handleMembers} options={options} className='antd-stop-propagation w-full' />
 
         <div
           className={` ${selectedOptions?.length > 0 ? 'bg-vdao-pink' : 'border-[1px] border-vdao-pink'} mt-5 w-fit cursor-pointer rounded-[5px] py-[5px] px-[35px] font-heading text-xl font-medium`}
