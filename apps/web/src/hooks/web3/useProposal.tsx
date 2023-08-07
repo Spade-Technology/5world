@@ -68,6 +68,8 @@ export function useProposalAction(id: number) {
           message: 'Error casting vote',
           description: error.shortMessage,
         })
+      }).finally(() => {
+        setIsLoading(false)
       })
 
     if (tx) {

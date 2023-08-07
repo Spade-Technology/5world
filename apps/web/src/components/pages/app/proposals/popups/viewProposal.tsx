@@ -17,7 +17,7 @@ import TenderlyIcon from 'public/icons/proposal/tenderly.svg'
 import { api } from '~/utils/api'
 import PrimaryButton, { DropdownPrimaryButton } from '~/styles/shared/buttons/primaryButton'
 import { Skeleton } from '~/components/ui/skeleton'
-import { useBlockNumber, useNetwork } from 'wagmi'
+import { useAccount, useBlockNumber, useNetwork } from 'wagmi'
 import { Address, encodeFunctionData, encodePacked } from 'viem'
 import VDAOImplementation from '~/abi/VDAOImplementation.json'
 
@@ -38,15 +38,20 @@ type ViewProposalProps = {
 
 const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   const [actions, setActions] = useState(false)
+  const { address } = useAccount()
   const { data: proposal, isLoading: isProposalLoading } = useProposalRead(proposalID, { author: true })
   const [dropDownOn, setDropDownOn] = useState(false)
 
   const [btnStatus, setBtnStatus] = useState('Votes')
   const { voteFor, voteAgainst, voteAbstain, isLoading } = useProposalAction(proposalID)
+  {
+    console.log({ isLoading })
+  }
 
   const [supporters_raw, setSupporters] = useState<any[]>([])
   const { data: supporters } = api.user.getUsers.useQuery({ addresses: supporters_raw.map(el => el.voter) }, { enabled: !!supporters_raw.length })
 
+  console.log({ supporters_raw })
   const { data: block } = useBlockNumber({ watch: true })
   const proposalStatus = proposal?.canceled
     ? 'Canceled'
@@ -60,9 +65,27 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
     ? 'Pending'
     : 'Active'
 
-    console.log({proposal} , "dropDownOn ", dropDownOn, proposalStatus)
+  console.log({ proposal }, 'dropDownOn ', dropDownOn, proposalStatus)
 
   const { chain } = useNetwork()
+
+  useEffect(() => {
+    const isSupporter = supporters_raw.find(supporter => supporter.voter === address)
+    console.log(supporters_raw, { isSupporter })
+    if (isSupporter) {
+      supporters_raw.map(supporter => {
+        if (supporter.support === 1) {
+          setBtnStatus('Voted for proposal')
+        } else if (supporter.support === 0) {
+          setBtnStatus('Voted against proposal')
+        } else {
+          setBtnStatus('Voted for abstain')
+        }
+      })
+    } else {
+      setBtnStatus('Votes')
+    }
+  }, [isProposalLoading, supporters_raw])
 
   const votesHandler = (type: string) => {
     if (type === 'for') {
@@ -93,6 +116,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   }
 
   async function updateSupporters() {
+    setBtnStatus('Loading...')
     const publicClient = getPublicClient({ chainId: currentChainId })
 
     const args = {
@@ -194,7 +218,9 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
               </div>
               <div className='grid grid-cols-2 pt-[10px] md:grid-cols-3 md:pt-5'>
                 <ProfileCard icon={proposal ? proposal.picture : DummyIcon} name={proposal ? proposal?.author?.name : 'Unnamed'} address={proposal?.authorId} />
-                <div className={`mt-6 h-fit w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-7 text-lg  font-medium text-vdao-light lg:ml-5`}>{proposalStatus}</div>
+                <div className={`mt-6 h-fit w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-7 text-lg  font-medium text-vdao-light lg:ml-5`}>
+                  {proposalStatus}
+                  </div>
               </div>
 
               <div className='flex justify-between'>
@@ -230,7 +256,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                       text={btnStatus}
                       className='h-fit w-full !px-2.5 text-center'
                       onClick={() => {
-                        console.log("proposal kjb")
+                        console.log('proposal kjb')
                         setDropDownOn(!dropDownOn)
                       }}
                       disabled={proposalStatus !== 'Active'}
