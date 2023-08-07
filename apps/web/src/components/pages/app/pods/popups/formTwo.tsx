@@ -4,6 +4,10 @@ import ProfileCard from '~/components/misc/profileCard'
 import { pod_type } from '~/hooks/web3/usePod'
 import { useUserReads } from '~/hooks/web3/useUser'
 import { Select } from 'antd'
+import { useAccount } from 'wagmi'
+import { useSession } from 'next-auth/react'
+import { set } from 'date-fns'
+import { User } from '@prisma/client'
 
 type FormProps = {
   setNextForm?: Dispatch<SetStateAction<boolean>>
@@ -22,6 +26,8 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
   const [managerInfo, setManagerInfo] = useState<any>('')
   const [removeInfo, setRemoveInfo] = useState<any>([])
   const [selectedOptions, setSelectedOptions] = useState<any>([])
+  const { address } = useAccount()
+  const { data } = useSession()
 
   useEffect(() => {
     if (pod) {
@@ -29,14 +35,33 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
       setMembersInfo(pod?.members)
     }
   }, [pod])
+
   useEffect(() => {
     if (allUsersInfo) {
-      for (let i = 0; i < allUsersInfo.length; i++) {
-        const option = {
-          value: allUsersInfo[i]?.address,
-          label: allUsersInfo[i]?.name!,
-        }
-        setOptions((prev: any) => [...prev, option])
+      setOptions([
+        ...allUsersInfo.map((info: any) => ({
+          value: info.address,
+          label: info.name!,
+        })),
+        {
+          value: address,
+          label: data?.user?.name,
+        },
+      ])
+      if (address) {
+        setManagerAddr(address)
+        addManager(address, {
+          name: data?.user?.name || '',
+          address: address,
+          description: data?.user?.description || '',
+          picture: data?.user?.picture || '',
+          role: 'MEMBER',
+          guildId: 0,
+          JoinedAt: new Date(),
+          UpdatedAt: new Date(),
+          stewardApplicationBlock: 0n,
+          stewardApplicationDate: new Date(),
+        })
       }
     } else {
       setOptions([])
@@ -49,9 +74,13 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
     }
   }
 
-  const addManager = (address: string) => {
+  const addManager = (address: string, userOverride?: User) => {
     if (address) {
-      const info = allUsersInfo?.filter(info => {
+      if (userOverride) {
+        setManagerInfo(userOverride)
+        return
+      }
+      const info = allUsersInfo?.filter((info: any) => {
         return info.address === address
       })
       setManagerInfo(info[0])
@@ -60,13 +89,13 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
     }
   }
 
-  const handleMemebers = (value: string[]) => {
+  const handleMembers = (value: string[]) => {
     if (value) {
       setSelectedOptions(value)
     }
   }
 
-  const addMemebers = (addresses: string[]) => {
+  const addMembers = (addresses: string[]) => {
     if (addresses && addresses.length > 0) {
       setMembersInfo([])
       setRemoveInfo([])
@@ -118,6 +147,7 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
     setRemoveInfo([])
     setRemoveOn(false)
   }
+
   return (
     <div className='grid grid-cols-1 gap-11 pt-10 font-body text-lg font-normal text-vdao-dark md:grid-cols-2 lg:gap-[106px]'>
       <div>
@@ -125,7 +155,14 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
 
         <div className='pb-[22px]'>Add manager address below.</div>
 
-        <Select style={{ width: '100%' }} placeholder='Enter Address' onChange={handleChange} options={options} className='antd-stop-propagation w-full' />
+        <Select
+          style={{ width: '100%' }}
+          placeholder='Enter Address'
+          onChange={handleChange}
+          options={options}
+          className='antd-stop-propagation w-full'
+          value={managerAddr ? managerAddr : undefined}
+        />
 
         <div
           className={` ${managerAddr ? 'bg-vdao-pink' : 'border-[1px] border-vdao-pink'} mt-5 w-fit cursor-pointer rounded-[5px]  py-[5px] px-[35px] font-heading text-xl font-medium`}
@@ -139,11 +176,11 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
         <div className='pb-[22px]'>Add member address below.</div>
 
         {/* <input className='mt-5 h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none' onChange={evt => setMemberAddr(evt.target.value)} value={memberAddr} /> */}
-        <Select mode='tags' style={{ width: '100%' }} placeholder='Enter Address' onChange={handleMemebers} options={options} className='antd-stop-propagation w-full' />
+        <Select mode='tags' style={{ width: '100%' }} placeholder='Enter Address' onChange={handleMembers} options={options} className='antd-stop-propagation w-full' />
 
         <div
           className={` ${selectedOptions?.length > 0 ? 'bg-vdao-pink' : 'border-[1px] border-vdao-pink'} mt-5 w-fit cursor-pointer rounded-[5px] py-[5px] px-[35px] font-heading text-xl font-medium`}
-          onClick={() => addMemebers(selectedOptions)}
+          onClick={() => addMembers(selectedOptions)}
         >
           Add Member
         </div>

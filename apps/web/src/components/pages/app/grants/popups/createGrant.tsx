@@ -5,19 +5,15 @@ import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 // import Calendar from 'react-calendar'
 import { cn } from '@/lib/utils'
 import { DatePicker, Tooltip, notification } from 'antd'
-import { format } from 'date-fns'
-import { CalendarIcon } from 'lucide-react'
+import dayjs from 'dayjs'
 import { useState } from 'react'
 import { DropzoneOptions, useDropzone } from 'react-dropzone'
+import { BsFillInfoCircleFill } from 'react-icons/bs'
+import { Address, useAccount } from 'wagmi'
 import { Button } from '~/components/ui/button'
-import { Calendar } from '~/components/ui/calendar'
-import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
 import { useCreateProposal } from '~/hooks/web3/useProposal'
-import { Address, useAccount, useBlockNumber } from 'wagmi'
 import { imageToBase64String } from '~/utils/helpers'
 import FormOne from '../../proposals/popups/formOne'
-import { BsFillInfoCircleFill } from 'react-icons/bs'
-import dayjs from 'dayjs'
 
 type CreateGrantProps = {
   show: boolean
@@ -39,6 +35,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
   const [tokenAddress, setTokenAddress] = useState<string>('0x9E873b3A125040B2295FbED16aF22Ed9b101e470')
   const [matchingAmount, setMatchingAmount] = useState<string>('')
 
+  const [loader, setLoader] = useState(false)
   const dropzoneParams: DropzoneOptions = { accept: { 'image/*': [] }, multiple: false, maxSize: 4194304 }
   const {
     getRootProps: getLogoRootProps,
@@ -59,14 +56,12 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
       return notification.error({
         message: 'Error',
         description: `Fields cannot be empty: ${emptyFields.join(', ')}`,
-        placement: 'bottomRight',
       })
 
     if (tokenAddress.match(/0x[a-fA-F0-9]{40}/) === null)
       return notification.error({
         message: 'Error',
         description: 'Invalid token address',
-        placement: 'bottomRight',
       })
 
     const hash = await generateGrantIPFSHash.mutateAsync(
@@ -90,11 +85,11 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
   }
 
   const submitProposal = async () => {
+    setLoader(true)
     createGrantProposal({
       title,
       description,
       authorAddress: address as Address,
-
       grantTitle: grantName,
       grantDescription,
       grantRules: grantDescription,
@@ -103,8 +98,14 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
       grantAmount: matchingAmount,
       grantImage: await imageToBase64String(logo),
       grantTheme: await imageToBase64String(theme),
-    }).then(() => {
-      refetchFunc && refetchFunc?.()
+      callback: successful => {
+        if (successful) {
+          refetchFunc && refetchFunc?.()
+          close()
+        }
+      },
+    }).finally(() => {
+      setLoader(false)
     })
   }
 
@@ -149,7 +150,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
 
               <div className='pt-10'>
                 <div className='flex justify-between'>
-                  <div className='text-[22px] font-bold'>Matching amount*</div>
+                  <div className='text-[22px] font-bold'>Matching Amount*</div>
                 </div>
                 <input
                   className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none placeholder:py-2 md:mt-5'
@@ -161,7 +162,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
 
               <div className='pt-10'>
                 <div className='flex justify-between'>
-                  <div className='text-[22px] font-bold'>Startup time*</div>
+                  <div className='text-[22px] font-bold'>Startup Time*</div>
                   <Tooltip
                     placement='bottomLeft'
                     color='white'
@@ -270,7 +271,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
         <div className='pt-10 pb-[24px] font-body text-lg font-normal md:pt-[60px]'>
           UI IS TODO
           <div className='pt-[20px] md:pt-10'>
-            <PrimaryButton text='Submit' className='float-right py-[5px] px-[35px] text-xl font-medium' onClick={submitProposal} />
+            <PrimaryButton text='Submit' loading={loader} className='float-right py-[5px] px-[35px] text-xl font-medium' onClick={submitProposal} />
           </div>
         </div>
       )}

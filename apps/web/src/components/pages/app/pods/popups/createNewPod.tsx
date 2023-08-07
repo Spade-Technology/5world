@@ -47,14 +47,15 @@ const CreateNewPod = ({ show, close, refetch }: CreatePodProps) => {
           onSuccess(data, variables, context) {
             notification.success({
               message: 'Sucessful',
-              description: 'Created a new pod...!',
+              description: 'Created a new pod !',
             })
             refetch()
           },
-          onError() {
+          onError(e) {
+            console.error(e)
             notification.error({
               message: 'Failed',
-              description: 'Try again! Failed to create a new pod.',
+              description: 'Failed to create a new pod.',
             })
           },
         },

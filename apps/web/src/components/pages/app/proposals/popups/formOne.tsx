@@ -1,9 +1,10 @@
-import PodImage from 'public/illustrations/pods/podImage.svg'
-import Image from 'next/image'
-import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { Dispatch, SetStateAction, useState } from 'react'
+import { Address, useAccount, useContractReads, useNetwork, useSwitchNetwork } from 'wagmi'
 import EllipseComponent from '~/components/misc/ellipseLine'
-import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
+import PrimaryButton from '~/styles/shared/buttons/primaryButton'
+import VDAOImplementation from '~/abi/VDAOImplementation.json'
+import { currentContracts } from '~/config/contracts'
+import VDaoToken from '~/abi/VDaoToken.json'
 
 type FormProps = {
   setNextForm: Dispatch<SetStateAction<boolean>>
@@ -20,7 +21,28 @@ const FormOne = ({ title, setTitle, description, setDescription, setNextForm }: 
   const { chain } = useNetwork()
   const { chains, error, isLoading, pendingChainId, switchNetwork } = useSwitchNetwork()
 
-  console.log('switchNEtwork', chain, chains, error, isLoading, pendingChainId, switchNetwork)
+  // proposalThreshold
+  const { data } = useContractReads({
+    contracts: [
+      {
+        abi: VDAOImplementation as any,
+        address: currentContracts.proxiedVDao as Address,
+        functionName: 'proposalThreshold',
+        args: [],
+      },
+      {
+        abi: VDaoToken as any,
+        address: currentContracts.vDao as Address,
+        functionName: 'balanceOf',
+        args: [address as Address],
+      },
+    ],
+    enabled: !!address,
+  })
+
+  const proposalThreshold = data?.[0].result
+  const balanceOf = data?.[1]?.result
+  const canCreateProposal = balanceOf && proposalThreshold && balanceOf >= proposalThreshold
 
   const nextHandler = () => {
     if (title && description) {
@@ -75,7 +97,13 @@ const FormOne = ({ title, setTitle, description, setDescription, setNextForm }: 
         />
 
         <div className='pt-5 pb-1 md:pt-[35px]'>
-          <PrimaryButton text='Next' className='float-right text-lg font-medium' onClick={nextHandler} />
+          <PrimaryButton text='Next' className='float-right text-lg font-medium' onClick={nextHandler} disabled={!canCreateProposal} />
+          {!canCreateProposal && (
+            <span className='text-red-500'>
+              Insufficient voting power, you need {(BigInt((proposalThreshold as any) || 0n) / 10n ** 18n).toString()} VDAO to create a proposal, you have{' '}
+              {(BigInt((balanceOf as any) || 0n) / 10n ** 18n).toString()} VDAO.
+            </span>
+          )}
         </div>
       </div>
     </div>

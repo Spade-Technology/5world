@@ -48,7 +48,7 @@ const Preview = ({ title, description, callDatas, setNextForm, setShowPreview, s
             >
               Previous
             </div>
-            <PrimaryButton loading={loading} text='Submit' className='' onClick={submit} />
+            <PrimaryButton loading={loading} text='Submit' className='px-[35px] font-heading text-lg font-medium' onClick={submit} />
           </div>
         </div>
       </div>

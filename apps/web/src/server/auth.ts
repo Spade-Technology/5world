@@ -1,12 +1,10 @@
+import { IncomingMessage } from 'http'
 import { type GetServerSidePropsContext } from 'next'
-import { getServerSession, type NextAuthOptions, type DefaultSession } from 'next-auth'
+import { getServerSession, type DefaultSession, type NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import { env } from '~/env.mjs'
+import { getCsrfToken } from 'next-auth/react'
 import { SiweMessage } from 'siwe'
 import { prisma } from '~/server/db'
-import { getCsrfToken } from 'next-auth/react'
-import { IncomingMessage } from 'http'
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
