@@ -20,7 +20,6 @@ type FormProps = {
 }
 
 const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, setNextForm, createPodHanlder, pod }: FormProps) => {
-  const { data: allUsersInfo } = useUserReads({})
   const [removeOn, setRemoveOn] = useState(false)
   const [managerOptions, setManagerOptions] = useState<any>([])
   const [memberOptions, setMemberOptions] = useState<any>([])
@@ -29,7 +28,12 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
   const [selectedOptions, setSelectedOptions] = useState<any>([])
   const { address } = useAccount()
   const { data } = useSession()
+
   const [searchVal, setSearch] = useState('')
+  const { data: allUsersInfo } = useUserReads({ search: 'bh' })
+
+  console.log(allUsersInfo)
+
   useEffect(() => {
     if (pod) {
       setManagerInfo(pod.admins ? pod.admins[0] : '')
