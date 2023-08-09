@@ -20,7 +20,7 @@ let contracts = {
     roundImplementation: '0x79C3a02cBABDc2276f31B4EEdda873D5509fb7F0',
     roundFactory: '0x6DDD8655dcf26b69647fE65b5D4821871d4181Ca',
     // 15 seconds
-    blockTime: 15,
+    blockTime: 12,
   },
 }
 

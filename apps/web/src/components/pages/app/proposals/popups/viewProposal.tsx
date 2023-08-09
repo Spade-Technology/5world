@@ -43,9 +43,6 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
 
   const [btnStatus, setBtnStatus] = useState('Votes')
   const { voteFor, voteAgainst, voteAbstain, isLoading } = useProposalAction(proposalID)
-  {
-    console.log({ isLoading })
-  }
 
   const [supporters_raw, setSupporters] = useState<any[]>([])
   const { data: supporters } = api.user.getUsers.useQuery({ addresses: supporters_raw.map(el => el.voter) }, { enabled: !!supporters_raw.length })
@@ -74,13 +71,10 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
 
   const proposalStatus = ProposalState[proposalState as number]
 
-  console.log({ proposal }, 'dropDownOn ', dropDownOn, proposalStatus)
-
   const { chain } = useNetwork()
 
   useEffect(() => {
     const isSupporter = supporters_raw.find(supporter => supporter.voter === address)
-    console.log(supporters_raw, { isSupporter })
     if (isSupporter) {
       supporters_raw.map(supporter => {
         if (supporter.support === 1) {
