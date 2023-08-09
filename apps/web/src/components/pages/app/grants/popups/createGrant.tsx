@@ -110,7 +110,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
   }
 
   return (
-    <CustomModal show={show} close={close} heading='Create Grant Operational Proposal'>
+    <CustomModal show={show} close={close} heading='Create Grant Operational Proposal' externalStyle={'w-full custom-scrollbar md:mx-10 xl:mx-auto md:!px-5 lg:!px-10'}>
       {state === 'proposalMeta' && <FormOne description={description} setDescription={setDescription} title={title} setTitle={setTitle} setNextForm={() => setState('grantMeta')} />}
 
       {state === 'grantMeta' && (

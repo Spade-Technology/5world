@@ -36,7 +36,7 @@ type SelfDelegateProps = {
 }
 
 export function StatisticsHomeComponent() {
-  const [period, setPeriod] = useState({ value: 'week', state: false })
+  const [period, setPeriod] = useState({ value: '7d', label: 'week', state: false })
   return (
     <Section className=' col-span-12 mb-28 w-[100%] rounded-2xl bg-vdao-dark py-10 lg:py-12 lg:pr-16 lg:pl-12'>
       <div className='pr-5 lg:pr-10'>
@@ -56,25 +56,29 @@ export function StatisticsHomeComponent() {
               </div>
               <div className='relative flex h-fit cursor-pointer items-center gap-2.5 rounded-[10px] bg-white py-[6px] px-[15px]'>
                 <div onClick={() => setPeriod({ ...period, state: !period.state })} className='font-body  font-bold capitalize  text-vdao-dark md:text-sm'>
-                  {period.value}
+                  {period.label}
                 </div>
                 <FaChevronDown onClick={() => setPeriod({ ...period, state: !period.state })} className='text-[15px] text-vdao-light' />
                 <div className={`absolute left-0 z-50 w-full overflow-hidden rounded-[10px] bg-white ${period.state ? 'top-[110%] block opacity-100' : 'top-[130%] hidden opacity-0'}`}>
-                  {['week', 'month', 'year'].map((text, index) => {
+                  {[
+                    { val: '7d', label: 'week' },
+                    { val: '1m', label: 'month' },
+                    { val: '1y', label: 'year' },
+                  ].map(({ label, val }, index) => {
                     return (
                       <div
-                        onClick={() => setPeriod({ value: text, state: false })}
+                        onClick={() => setPeriod({ label: label, value: val, state: false })}
                         key={index}
                         className='py-[6px] px-[15px] font-body text-sm font-bold capitalize  text-vdao-dark ease-in  hover:bg-[rgba(0,0,0,.1)]'
                       >
-                        {text}
+                        {label}
                       </div>
                     )
                   })}
                 </div>
               </div>
             </div>
-            <Chart options={LinearChart.options} series={LinearChart.series} type='line' width={'100%'} height={'333px'} />
+            <Chart options={LinearChart(period.value).options} series={LinearChart(period.value).series} type='line' width={'100%'} height={'333px'} />
           </div>
           <div className='pl-5 lg:pl-0'>
             <div className='mt-[60px] font-body text-[22px] font-bold text-white md:mt-0 md:text-2xl'>Latest</div>
