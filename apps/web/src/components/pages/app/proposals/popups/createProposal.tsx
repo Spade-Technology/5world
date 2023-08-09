@@ -34,6 +34,16 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
   const [signatures, setSignatures] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
 
+  const reset = () => {
+    setNextForm(false)
+    setTitle('')
+    setTitle('')
+    setDescription('')
+    setSpells([])
+    setCallDatas([])
+    setLoading(false)
+  }
+
   const handlePreviews = () => {
     let cds: string[] = []
     if (address && spells.length > 0) {
@@ -104,10 +114,15 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
     }
   }
 
+  const closeAndReset = () => {
+    reset()
+    close()
+  }
+
   return (
     <CustomModal
       show={show}
-      close={close}
+      close={closeAndReset}
       externalStyle={'w-full custom-scrollbar md:mx-10 xl:mx-auto md:!px-5 lg:!px-10'}
       heading={` ${showPreview ? '' : 'Create New Proposal'}`}
       modalMarginTop='my-[40px]'

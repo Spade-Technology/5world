@@ -128,7 +128,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   }
 
   async function updateSupporters() {
-    setBtnStatus('Loading...')
+    setBtnStatus('Votes...')
     setDisableVoting(true)
     const publicClient = getPublicClient({ chainId: currentChainId })
 

@@ -14,13 +14,26 @@ type CreatePodProps = {
 
 const CreateNewPod = ({ show, close, refetch }: CreatePodProps) => {
   const [nextFrom, setNextForm] = useState(false)
-  console.log({ nextFrom })
   const [podName, setPodName] = useState('')
   const [podImage, setPodImage] = useState({ image: '', name: '' })
   const [description, setDescription] = useState('')
   const [managerAddr, setManagerAddr] = useState('')
   const [membersInfo, setMembersInfo] = useState<any>('')
   const [error, setError] = useState(false)
+
+  const reset = () => {
+    setNextForm(false)
+    setPodName('')
+    setPodImage({ image: '', name: '' })
+    setDescription('')
+    setManagerAddr('')
+    setMembersInfo('')
+  }
+
+  const resetAndClose = () => {
+    reset()
+    close()
+  }
 
   /** Here !, tell TypeScript that even though something looks like it could be null, it can trust you that it's not */
   // const data = useUserRead(address?.toString()!, { podsAsAdmin: true })
@@ -61,18 +74,14 @@ const CreateNewPod = ({ show, close, refetch }: CreatePodProps) => {
           },
         },
       )
-      setPodName('')
-      setDescription('')
-      setPodImage({ image: '', name: '' })
-      setNextForm(false)
-      close()
+      resetAndClose()
     } else {
       setError(true)
     }
   }
 
   return (
-    <CustomModal show={show} close={close} externalStyle={'w-full custom-scrollbar lg:!px-10 md:!px-5 md:mx-10 xl:mx-auto '} heading='Create New Pod' modalMarginTop='my-[40px]'>
+    <CustomModal show={show} close={resetAndClose} externalStyle={'w-full custom-scrollbar lg:!px-10 md:!px-5 md:mx-10 xl:mx-auto '} heading='Create New Pod' modalMarginTop='my-[40px]'>
       {!nextFrom ? (
         <FormOne setNextForm={setNextForm} podName={podName} setPodName={setPodName} description={description} setDescription={setDescription} podImage={podImage} setPodImage={setPodImage} />
       ) : (
