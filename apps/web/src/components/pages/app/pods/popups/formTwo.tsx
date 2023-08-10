@@ -20,16 +20,18 @@ type FormProps = {
 }
 
 const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, setNextForm, createPodHanlder, pod }: FormProps) => {
-  const { data: allUsersInfo } = useUserReads({})
   const [removeOn, setRemoveOn] = useState(false)
-  const [managerOptions, setManagerOptions] = useState<any>([])
-  const [memberOptions, setMemberOptions] = useState<any>([])
+  const [options, setOptions] = useState<any>([])
+  // const [memberOptions, setMemberOptions] = useState<any>([])
   const [managerInfo, setManagerInfo] = useState<any>('')
   const [removeInfo, setRemoveInfo] = useState<any>([])
   const [selectedOptions, setSelectedOptions] = useState<any>([])
   const { address } = useAccount()
   const { data } = useSession()
-  const [searchVal, setSearch] = useState('')
+  const [searchVal, setSearchVal] = useState<string>('')
+  const { data: allUsersInfo } = useUserReads({ search: searchVal })
+  console.log('allUsersInfo',searchVal,  allUsersInfo)
+
   useEffect(() => {
     if (pod) {
       setManagerInfo(pod.admins ? pod.admins[0] : '')
@@ -51,35 +53,35 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
       ]
     }
   }
-  const handleManagerOptions = () => {
-    const options = handleOptions()
-    setManagerOptions(options)
-    if (address) {
-      setManagerAddr(address)
-      addManager(address, {
-        name: data?.user?.name || '',
-        address: address,
-        description: data?.user?.description || '',
-        picture: data?.user?.picture || '',
-        role: 'MEMBER',
-        guildId: 0,
-        JoinedAt: new Date(),
-        UpdatedAt: new Date(),
-        stewardApplicationBlock: 0n,
-        stewardApplicationDate: new Date(),
-      })
-    }
-  }
+  // const handleManagerOptions = () => {
+  //   const options = handleOptions()
+  //   setOptions(options)
+  //   if (address) {
+  //     setManagerAddr(address)
+  //     addManager(address, {
+  //       name: data?.user?.name || '',
+  //       address: address,
+  //       description: data?.user?.description || '',
+  //       picture: data?.user?.picture || '',
+  //       role: 'MEMBER',
+  //       guildId: 0,
+  //       JoinedAt: new Date(),
+  //       UpdatedAt: new Date(),
+  //       stewardApplicationBlock: 0n,
+  //       stewardApplicationDate: new Date(),
+  //     })
+  //   }
+  // }
 
-  const handleMembersOptions = () => {
-    const options = handleOptions()
-    setMemberOptions(options)
-  }
+  // const handleMembersOptions = () => {
+  //   const options = handleOptions()
+  //   setMemberOptions(options)
+  // }
 
-  useEffect(() => {
-    handleManagerOptions()
-    handleMembersOptions()
-  }, [allUsersInfo?.length])
+  // useEffect(() => {
+  //   handleManagerOptions()
+  //   handleMembersOptions()
+  // }, [allUsersInfo?.length])
 
   const handleChange = (value: any) => {
     if (value) {
@@ -165,36 +167,70 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
   //   return steward.name?.toLowerCase().includes(searchField.toLowerCase()) || steward.address.toLowerCase().includes(searchField.toLowerCase())
   // })
 
-  const searchFunction = (value: string) => {
-    const result = allUsersInfo?.filter((info: any) => {
-      console.log('newOptions name', info.address, info.name, info.name?.toLocaleLowerCase().includes(value.toLocaleLowerCase()))
+  // const searchFunction = (value: string) => {
+  //   const result = allUsersInfo?.filter((info: any) => {
+  //     console.log('newOptions name', info.address, info.name, info.name?.toLocaleLowerCase().includes(value.toLocaleLowerCase()))
 
-      return info.address?.toLowerCase().includes(value.toLowerCase()) || info.name?.toLowerCase().includes(value.toLowerCase())
-    })
-    console.log('newOptions result', result)
-    return result
-  }
-  const handleManageSearch = (value: string) => {
-    console.log('newOptions value', value)
-    if (value.length > 0) {
-      const newOptions = searchFunction(value)
-      setManagerOptions(newOptions)
-    } else {
-      handleManagerOptions()
-    }
-  }
+  //     return info.address?.toLowerCase().includes(value.toLowerCase()) || info.name?.toLowerCase().includes(value.toLowerCase())
+  //   })
+  //   console.log('newOptions result', result)
+  //   return result
+  // }
+  // const handleManageSearch = (value: string) => {
+  //   console.log('newOptions value', value)
+  //   if (value.length > 0) {
+  //     setSearch(value)
+  //     const newOptions = searchFunction(value)
+  //     setOptions(newOptions)
+  //   } else {
+  //     handleManagerOptions()
+  //   }
+  // }
 
-  const handleMemberSearch = (value: string) => {
-    console.log('newOptions value', value)
-    if (value.length > 0) {
-      const newOptions = searchFunction(value)
-      console.log('newOptions newOptions', newOptions)
-      setMemberOptions(newOptions)
-    } else {
-      handleMembersOptions()
+  // const handleMemberSearch = (value: string) => {
+  //   console.log('newOptions value', value)
+  //   // if (value.length > 0) {
+  //     setSearch(value)
+  //     // const newOptions = searchFunction(value)
+  //     // console.log('newOptions newOptions', newOptions)
+  //     // setMemberOptions(newOptions)
+  //   // } else {
+  //   //   handleMembersOptions()
+  //   // }
+  // }
+
+  useEffect(() => {
+    if (allUsersInfo && allUsersInfo.length > 0) {
+      const newOptions = [
+        ...allUsersInfo.map((info: any) => ({
+          value: info.address,
+          label: info.name!,
+        })),
+        {
+          value: address,
+          label: data?.user?.name,
+        },
+      ]
+      setOptions(newOptions)
+      if (address) {
+        setManagerAddr(address)
+        addManager(address, {
+          name: data?.user?.name || '',
+          address: address,
+          description: data?.user?.description || '',
+          picture: data?.user?.picture || '',
+          role: 'MEMBER',
+          guildId: 0,
+          JoinedAt: new Date(),
+          UpdatedAt: new Date(),
+          stewardApplicationBlock: 0n,
+          stewardApplicationDate: new Date(),
+        })
+      }
     }
-  }
-  console.log('managerOptions', managerOptions, '????', 'memberOptions', memberOptions)
+  }, [allUsersInfo?.length])
+  // console.log('options', options, '????', 'memberOptions', memberOptions)
+
   return (
     <div className='grid grid-cols-1 gap-11 pt-10 font-body text-lg font-normal text-vdao-dark md:grid-cols-2 lg:gap-[106px]'>
       <div>
@@ -205,11 +241,11 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
           style={{ width: '100%' }}
           placeholder='Enter Address'
           onChange={handleChange}
-          options={managerOptions}
+          options={options}
           className='antd-stop-propagation w-full'
           value={managerAddr ? managerAddr : undefined}
           showSearch
-          onSearch={handleManageSearch}
+          onSearch={val => setSearchVal(val)}
         />
 
         <div
@@ -229,10 +265,10 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
           style={{ width: '100%' }}
           placeholder='Enter Address'
           onChange={handleMembers}
-          options={memberOptions}
+          options={options}
           className='antd-stop-propagation w-full'
           showSearch
-          onSearch={handleMemberSearch}
+          onSearch={val => setSearchVal(val)}
         />
 
         <div
