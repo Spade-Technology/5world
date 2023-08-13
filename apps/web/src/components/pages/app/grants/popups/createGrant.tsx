@@ -14,6 +14,7 @@ import { Button } from '~/components/ui/button'
 import { useCreateProposal } from '~/hooks/web3/useProposal'
 import { imageToBase64String } from '~/utils/helpers'
 import FormOne from '../../proposals/popups/formOne'
+import PreviewProposal from './previewProposal'
 
 type CreateGrantProps = {
   show: boolean
@@ -110,7 +111,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
   }
 
   return (
-    <CustomModal show={show} close={close} heading='Create Grant Operational Proposal'>
+    <CustomModal show={show} close={close} heading={state === 'confirm' ? 'Preview your proposal' : '  Create Grant Operational Proposal'}>
       {state === 'proposalMeta' && <FormOne description={description} setDescription={setDescription} title={title} setTitle={setTitle} setNextForm={() => setState('grantMeta')} />}
 
       {state === 'grantMeta' && (
@@ -205,6 +206,8 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
                     },
                   ]}
                 />
+
+                <div>Time will be around {date ?  `${date.getHours() + " : " + date.getMinutes() + " : " + date.getSeconds()}` : "00:00"} UTC, imprecisions could be caused by inconsistent block times</div>
               </div>
             </div>
 
@@ -282,22 +285,15 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
       )}
 
       {state === 'confirm' && (
-        <div className='pt-10 pb-[24px] font-body text-lg font-normal md:pt-[60px]'>
-          UI IS TODO
-          <div className='float-right flex gap-5 pt-6 md:pt-48 '>
-          <div
-            className='cursor-pointer rounded-[5px] border-[1px] border-vdao-dark px-[35px] pt-[5px] font-heading text-lg font-medium'
-            onClick={() => {
-              setGrantName(grantName)
-              setState('grantMeta')
-            }}
-          >
-            Previous
-          </div>
-          <PrimaryButton text='Submit' loading={loader} className='float-right text-xl font-medium' onClick={submitProposal} />
-
-          </div>
-        </div>
+        <PreviewProposal  setState={setState} loader={loader} submitProposal={submitProposal}
+        grantName={grantName}
+        tokenAddress={tokenAddress}
+        matchingAmount={matchingAmount}
+        selectedDate = {date}
+        logo={logo}
+        theme={theme}
+        grantDescription={grantDescription}
+         />
       )}
     </CustomModal>
   )

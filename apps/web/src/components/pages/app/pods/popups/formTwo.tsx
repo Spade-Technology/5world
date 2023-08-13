@@ -39,20 +39,20 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
     }
   }, [pod])
 
-  const handleOptions = () => {
-    if (allUsersInfo && allUsersInfo.length > 0) {
-      return [
-        ...allUsersInfo.map((info: any) => ({
-          value: info.address,
-          label: info.name!,
-        })),
-        {
-          value: address,
-          label: data?.user?.name,
-        },
-      ]
-    }
-  }
+  // const handleOptions = () => {
+  //   if (allUsersInfo && allUsersInfo.length > 0) {
+  //     return [
+  //       ...allUsersInfo.map((info: any) => ({
+  //         value: info.address,
+  //         label: info.name!,
+  //       })),
+  //       {
+  //         value: address,
+  //         label: data?.user?.name,
+  //       },
+  //     ]
+  //   }
+  // }
   // const handleManagerOptions = () => {
   //   const options = handleOptions()
   //   setOptions(options)
@@ -228,15 +228,16 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
         })
       }
     }
-  }, [allUsersInfo?.length])
+  }, [allUsersInfo?.length, searchVal])
   // console.log('options', options, '????', 'memberOptions', memberOptions)
-
+  {console.log("options",allUsersInfo, searchVal, options)}
   return (
     <div className='grid grid-cols-1 gap-11 pt-10 font-body text-lg font-normal text-vdao-dark md:grid-cols-2 lg:gap-[106px]'>
       <div>
         <div className='text-[22px] font-bold'>Assign Pod Manager</div>
 
         <div className='pb-[22px]'>Add manager address below.</div>
+ 
         <Select
           style={{ width: '100%' }}
           placeholder='Enter Address'
@@ -268,7 +269,9 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
           options={options}
           className='antd-stop-propagation w-full'
           showSearch
-          onSearch={val => setSearchVal(val)}
+          onSearch={val => {
+            console.log("options serahc" , val)
+            setSearchVal(val)}}
         />
 
         <div
