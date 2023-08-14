@@ -120,7 +120,6 @@ const PreviewProposal = ({ grantName, tokenAddress, matchingAmount, selectedDate
       <div className='mt-10'>
             <div className='flex justify-between'>
               <div className='text-[22px] font-bold'>Grant Round Description*</div>
-              {/* <div className='text-vdao-light'>*Required</div> */}
             </div>
 
             <textarea
