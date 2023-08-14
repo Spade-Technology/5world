@@ -21,6 +21,32 @@ type CardProps = {
 
 const StewardCards = ({ setOpenProfile }: Props) => {
   const { data: users, isLoading } = useStewardReads({})
+  const [searchField, setSearchField] = useState('')
+  const [searchShow, setSearchShow] = useState(false)
+  const [finalData, setFinalData] = useState(users)
+
+  const filteredData = users?.filter(steward => {
+    return steward.name?.toLowerCase().includes(searchField.toLowerCase()) || steward.address.toLowerCase().includes(searchField.toLowerCase())
+  })
+
+
+  const handleChange = (e: any) => {
+    setSearchField(e.target.value)
+    if (e.target.value === '') {
+      setSearchShow(false)
+    } else {
+      setSearchShow(true)
+    }
+  }
+
+  useEffect(() => {
+    if (filteredData && filteredData?.length > 0) {
+      setFinalData(filteredData)
+    } else {
+      setFinalData(users)
+    }
+  }, [users, filteredData])
+
 
   return (
     <div className='mx-auto w-full bg-vdao-deep px-6 md:px-0'>
@@ -30,7 +56,9 @@ const StewardCards = ({ setOpenProfile }: Props) => {
 
           <div className='mt-5 flex h-[43px] w-full items-center gap-[18px] overflow-hidden rounded-xl bg-vdao-dark px-3 md:max-w-[409px] '>
             <div className='h-7 w-7 bg-[url(/icons/stewards/search.svg)] bg-contain bg-center bg-no-repeat '></div>{' '}
-            <input type='text' className='h-full w-full bg-transparent  font-body text-lg font-medium text-vdao-light outline-none ' placeholder='Search username' />
+            <input type='text' className='h-full w-full bg-transparent  font-body text-lg font-medium text-vdao-light outline-none ' 
+            placeholder='Search by username or address' onChange={handleChange}
+             />
           </div>
         </div>
         <div className=' mt-5 grid grid-cols-1 gap-5 md:mt-[35px] md:grid-cols-2'>
@@ -41,7 +69,7 @@ const StewardCards = ({ setOpenProfile }: Props) => {
               <Skeleton.Avatar shape='square' style={{ height: '400px', width: '100%' }} className='col-span-2' active />
             </>
           ) : (
-            users && users.map(user => <Card setOpenProfile={setOpenProfile} user={user} />)
+            finalData && finalData.length > 0 && finalData?.map(user => <Card setOpenProfile={setOpenProfile} user={user} />)
           )}
         </div>
       </div>

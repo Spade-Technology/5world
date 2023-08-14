@@ -13,7 +13,7 @@ contract VDaoToken {
     // uint8 public constant decimals = 1; // for testing
 
     /// @notice Total number of tokens in circulation
-    uint public totalSupply = 10_000_000e18; // 10 million V
+    uint public totalSupply = 1_000_000_000e18; // 10 million V
     // uint public totalSupply = 10_000_000; // for testing
 
     /// @notice Address which may change distributor address
