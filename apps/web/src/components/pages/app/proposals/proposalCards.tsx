@@ -39,7 +39,7 @@ const ProposalCards = ({ setProposalID, setViewProposal, setRefetchFunc }: Propo
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setProposalsType('active')
+      setProposalsType('all')
     }, 500)
 
     setRefetchFunc(refetch)
@@ -111,7 +111,7 @@ const ProposalCards = ({ setProposalID, setViewProposal, setRefetchFunc }: Propo
 
         <div className='flex w-full items-center gap-5'>
           <div className='mt-5 grid w-full max-w-[450px] grid-cols-3 rounded-[100px] border-[1px] border-vdao-light font-heading text-xl text-vdao-light'>
-            {['active', 'all', 'closed'].map(item => {
+            {['all', 'active', 'closed'].map(item => {
               return (
                 <div
                   onClick={() => setProposalsType(item)}

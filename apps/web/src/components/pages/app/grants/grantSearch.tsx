@@ -89,7 +89,7 @@ export const CurrentRound = ({ grant }: GrantProps) => {
   }
 
   return (
-    <div className='flex w-full rounded-[40px] bg-vdao-dark '>
+    <div className='flex w-full rounded-[40px] mb-10 bg-vdao-dark '>
       <div className='my-10 w-full rounded-[40px] bg-vdao-dark pl-10 pr-5 text-white'>
         <div className='flex gap-3 font-heading text-3xl font-medium'>
           {grant.title}

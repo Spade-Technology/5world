@@ -47,7 +47,7 @@ export const userRouter = createTRPCRouter({
         ...(addresses && addresses.length > 0 && { where: { address: { in: addresses } } }),
         ...(search && {
           where: {
-            OR: [{ name: { contains: search } }, { address: { contains: search } }],
+            OR: [{ name: { contains: search, mode: 'insensitive' } }, { address: { contains: search, mode: 'insensitive' } }],
           },
         }),
         include: include,
