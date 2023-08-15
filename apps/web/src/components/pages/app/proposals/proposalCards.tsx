@@ -17,7 +17,6 @@ dayjs.extend(relativeTime)
 type ProposalProps = {
   setViewProposal: Dispatch<SetStateAction<boolean>>
   setProposalID: Dispatch<SetStateAction<number>>
-  setRefetchFunc: Dispatch<SetStateAction<Function>>
 }
 
 type CardProps = {
@@ -26,7 +25,7 @@ type CardProps = {
   setProposalID: Dispatch<SetStateAction<number>>
 }
 
-const ProposalCards = ({ setProposalID, setViewProposal, setRefetchFunc }: ProposalProps) => {
+const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
   const [pageCount, setPageCount] = useState(1)
   const [pageNumbers, setPageNumbers] = useState<any>([])
   const [updatedproposals, setUpdatedProposals] = useState<any>([])
@@ -42,7 +41,6 @@ const ProposalCards = ({ setProposalID, setViewProposal, setRefetchFunc }: Propo
       setProposalsType('all')
     }, 500)
 
-    setRefetchFunc(refetch)
     return () => {
       clearTimeout(timer)
     }
