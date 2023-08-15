@@ -110,7 +110,7 @@ const PreviewProposal = ({ grantName, tokenAddress, matchingAmount, selectedDate
             <div className='text-[22px] font-bold'>Round Theme*</div>
             {theme && (
               <div className='mt-5 h-full w-fit rounded-[10px] text-center'>
-                <Image src={URL.createObjectURL(theme)} alt='upload' className='mx-auto' width={183} height={480} />
+                <Image src={URL.createObjectURL(theme)} alt='upload' className='mx-auto' height={183} width={300}  />
               </div>
             )}
           </div>
@@ -134,7 +134,7 @@ const PreviewProposal = ({ grantName, tokenAddress, matchingAmount, selectedDate
         <div className='cursor-pointer rounded-[5px] border-[1px] border-vdao-dark px-[35px] pt-[5px] font-heading text-lg font-medium' onClick={() => setState('grantMeta')}>
           Previous
         </div>
-        <PrimaryButton text='Submit' loading={loader} className='float-right text-xl font-medium' onClick={submitProposal} />
+        <PrimaryButton text='Confirm' loading={loader} className='float-right text-xl font-medium' onClick={submitProposal} />
       </div>
     </div>
   )
