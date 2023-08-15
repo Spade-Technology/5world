@@ -52,7 +52,7 @@ export function MembershipComponent() {
           { title: 'Liquid Holdings', amount: '$ 1.9m' },
         ].map(({ title, amount }) => {
           return (
-            <div className='flex w-full flex-col gap-5 rounded-2xl bg-vdao-dark px-[30px] py-5 pt-5 md:w-[23%] md:px-7 md:pb-10'>
+            <div className='flex w-full flex-col gap-5 rounded-2xl bg-vdao-dark px-[30px] py-5 pt-5 md:w-[48%] md:px-7 md:pb-10 lg:w-[23%] md:mt-5 lg:mt-0'>
               <div className='satoshi text-lg font-medium leading-5 text-white'>{title}</div>
               <div className='satoshi text-[32px] font-bold leading-8 text-vdao-light'>{amount}</div>
             </div>

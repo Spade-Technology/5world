@@ -96,7 +96,7 @@ const Header = (props: Props) => {
     <header className={!props.dark && router.pathname !== '/app/support' ? 'overflow-hidden bg-white' : 'w-full overflow-hidden bg-vdao-deep'}>
       {/* Desktop */}
       <div className={`z-50 mx-auto hidden h-[100px] max-w-[1140px] items-center justify-center px-6 md:flex xl:px-0`}>
-        <Link href='/'>
+        <Link href={props.web2 ? '/' : '/app'}>
           <Image src={logo} alt='VDAO' height={30} />
         </Link>
 
