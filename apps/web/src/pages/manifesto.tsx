@@ -5,7 +5,7 @@ import { HeaderManifesto } from '~/components/layout/header'
 
 // VDAO-get-involved.png
 import VDAOApply from 'public/illustrations/apply/PNG/VDAO-apply.png'
-import VDAOGetInvolved from 'public/illustrations/home/PNG/VDAO-get-involved.png'
+import VDAOGetInvolved from 'public/illustrations/home/SVG/VDAO-getinvolved.svg'
 import VDAOTweetManifesto from 'public/illustrations/home/PNG/tweet-manifesto.png'
 
 import { Button, Divider, Skeleton, Spin, notification } from 'antd'
@@ -121,7 +121,9 @@ const Home: NextPage<any> = () => {
           {contextHolder}
           <SectionOne />
           <div className='pointer-events-none left-0 right-0 px-4 md:absolute md:h-[5150px] md:px-0'>
-            <div className='z-50 mx-auto mt-10 hidden w-full max-w-[342px] items-center justify-between rounded-[20px] bg-vdao-dark py-5 px-[38px] font-body text-xl font-medium text-white md:sticky md:top-10 md:mt-20 md:flex md:w-11/12 md:max-w-[1140px] md:px-10 lg:h-[96px] lg:py-0'>
+            <div className='z-50 mx-auto mt-10  w-full max-w-[342px] items-center justify-between rounded-[20px]
+             bg-vdao-dark py-5 px-[38px] font-body text-xl font-medium text-white md:sticky 
+             md:top-10 md:mt-20 md:flex md:w-11/12 md:max-w-[1140px] md:px-10 lg:h-[96px] lg:py-0'>
               <div className='flex flex-col items-center justify-between gap-7 md:w-80 md:flex-row md:gap-[16px] lg:w-auto'>
                 <div className=''>
                   <div className='mx-auto h-[36px] w-[36px] bg-[url(/icons/manifesto/Pen.svg)] bg-contain bg-center bg-no-repeat md:mx-0' />
@@ -144,7 +146,7 @@ const Home: NextPage<any> = () => {
 
           <Signing disabled={signed} signatures={signatures} signModuleRef={signModuleRef} step={step} signManifesto={signManifesto} list={list} />
         </div>
-        <FooterManifesto signatures={signatures.total} signModuleRef={signModuleRef} loading={signatures.loading} />
+        <FooterManifesto signed={signed} signatures={signatures.total} signModuleRef={signModuleRef} loading={signatures.loading} />
       </main>
     </>
   )

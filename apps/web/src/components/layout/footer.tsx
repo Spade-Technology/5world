@@ -9,11 +9,13 @@ import twitter from 'public/illustrations/socials/Vector (10).svg'
 import discord from 'public/illustrations/socials/Vector (8).svg'
 import linkeDln from 'public/illustrations/socials/linkedin-black.svg'
 import github from 'public/illustrations/socials/Vector (9).svg'
+import { useSignMessage } from 'wagmi'
 
 type Props = {
   signatures?: number
   signModuleRef?: React.RefObject<HTMLDivElement>
   loading?: boolean
+  signed?: boolean
 }
 
 const Footer = (props: Props) => {
@@ -101,10 +103,12 @@ const Footer = (props: Props) => {
 }
 
 const FooterManifesto = (props: Props) => {
+  const { data, error, isLoading, signMessage } = useSignMessage()
+  console.log("data", data)
   return (
-    <div className=' bg-[#000912] px-14 py-5 md:py-10'>
-      <div className='mx-auto flex max-w-[208px] flex-col gap-10'>
-        <div className='flex flex-col gap-[24px] md:flex-row md:gap-[36px]'>
+    <div className=' bg-[#000912] px-14 py-5 md:py-10 mx-auto'>
+      <div className='flex  flex-col gap-10'>
+        <div className='mx-auto flex flex-col gap-[24px] md:flex-row md:gap-[36px]'>
           <Link href='#'>
             <h2 className='text-center font-heading text-[13px] font-medium  text-white'>Home</h2>
           </Link>
@@ -126,9 +130,13 @@ const FooterManifesto = (props: Props) => {
             )}{' '}
             Signatures
           </span>
-          <Button type='primary' className='mx-auto !h-10 w-44 !bg-vdao-dark' onClick={() => props.signModuleRef?.current?.scrollIntoView({ block: 'end', behavior: 'smooth' })}>
-            Sign Manifesto
-          </Button>
+          <PrimaryButton
+            // type='primary' className='mx-auto !h-10 w-44 !bg-vdao-dark'
+            disabled={props.signed}
+            text='Sign Manifesto'
+            className='pointer-events-auto w-fit mx-auto'
+            onClick={() => props.signModuleRef?.current?.scrollIntoView({ block: 'end', behavior: 'smooth' })}
+          />
         </div>
       </div>
     </div>
