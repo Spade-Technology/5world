@@ -15,6 +15,7 @@ type Props = {
   signatures?: number
   signModuleRef?: React.RefObject<HTMLDivElement>
   loading?: boolean
+  signed?: boolean
 }
 
 const Footer = (props: Props) => {
@@ -131,7 +132,7 @@ const FooterManifesto = (props: Props) => {
           </span>
           <PrimaryButton
             // type='primary' className='mx-auto !h-10 w-44 !bg-vdao-dark'
-            // disabled={signed}
+            disabled={props.signed}
             text='Sign Manifesto'
             className='pointer-events-auto w-fit mx-auto'
             onClick={() => props.signModuleRef?.current?.scrollIntoView({ block: 'end', behavior: 'smooth' })}

@@ -146,7 +146,7 @@ const Home: NextPage<any> = () => {
 
           <Signing disabled={signed} signatures={signatures} signModuleRef={signModuleRef} step={step} signManifesto={signManifesto} list={list} />
         </div>
-        <FooterManifesto signatures={signatures.total} signModuleRef={signModuleRef} loading={signatures.loading} />
+        <FooterManifesto signed={signed} signatures={signatures.total} signModuleRef={signModuleRef} loading={signatures.loading} />
       </main>
     </>
   )
