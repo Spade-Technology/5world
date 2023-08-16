@@ -30,7 +30,7 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
   const { data } = useSession()
   const [searchVal, setSearchVal] = useState<string>('')
   const { data: allUsersInfo } = useUserReads({ search: searchVal })
-  console.log('allUsersInfo',searchVal,  allUsersInfo)
+  console.log('allUsersInfo',  allUsersInfo, ">>", options)
 
   useEffect(() => {
     if (pod) {
@@ -201,16 +201,28 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
 
   useEffect(() => {
     if (allUsersInfo && allUsersInfo.length > 0) {
+      // const newOptions = [
+      //   ...allUsersInfo.map((info: any) => ({
+      //     value: info.address,
+      //     label: info.name!,
+      //   })),
+      //   {
+      //     value: address,
+      //     label: data?.user?.name,
+      //   },
+      // ]
+
       const newOptions = [
         ...allUsersInfo.map((info: any) => ({
           value: info.address,
           label: info.name!,
         })),
-        {
-          value: address,
-          label: data?.user?.name,
-        },
+        // ...[allUsersInfo.find((el: any) => el.value == address) ? undefined : {
+        //   value: address,
+        //   label: data?.user?.name,
+        // }],
       ]
+
       setOptions(newOptions)
       if (address) {
         setManagerAddr(address)
@@ -262,7 +274,7 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
 
         {/* <input className='mt-5 h-10 w-full max-w-[424px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none' onChange={evt => setMemberAddr(evt.target.value)} value={memberAddr} /> */}
         <Select
-          mode='tags'
+          mode='multiple'
           style={{ width: '100%' }}
           placeholder='Enter Address'
           onChange={handleMembers}

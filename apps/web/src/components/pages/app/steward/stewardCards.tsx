@@ -45,8 +45,7 @@ const StewardCards = ({ setOpenProfile }: Props) => {
     } else {
       setFinalData(users)
     }
-  }, [users, filteredData])
-
+  }, [filteredData?.length])
 
   return (
     <div className='mx-auto w-full bg-vdao-deep px-6 md:px-0'>
@@ -105,7 +104,7 @@ export const Card = ({ setOpenProfile, user }: CardProps) => {
     } else {
       setPraiseScore(0)
     }
-  })
+  },[userInfo?.length])
 
   return (
     <div className='rounded-[20px] bg-vdao-dark text-white'>
