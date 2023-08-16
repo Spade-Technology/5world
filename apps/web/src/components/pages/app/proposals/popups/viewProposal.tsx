@@ -14,7 +14,7 @@ import TenderlyIcon from 'public/icons/proposal/tenderly.svg'
 import ViewsIcon from 'public/icons/proposal/viewsIcon.svg'
 import PolygonIcon from 'public/icons/stewards/polygon.svg'
 import { Address } from 'viem'
-import { useAccount, useBlockNumber, useContractRead, useNetwork } from 'wagmi'
+import { useAccount, useBlockNumber, useContractRead, useContractReads, useNetwork } from 'wagmi'
 import VDAOImplementation from '~/abi/VDAOImplementation.json'
 import { Skeleton } from '~/components/ui/skeleton'
 import { DropdownPrimaryButton } from '~/styles/shared/buttons/primaryButton'
@@ -48,15 +48,28 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
   const [supporters_raw, setSupporters] = useState<any[]>([])
   const { data: supporters } = api.user.getUsers.useQuery({ addresses: supporters_raw.map(el => el.voter) }, { enabled: !!supporters_raw.length })
 
-  console.log({ supporters_raw })
   const { data: block } = useBlockNumber({ watch: true })
 
-  const { data: proposalState } = useContractRead({
-    abi: VDAOImplementation,
-    address: currentContracts.proxiedVDao as Address,
-    functionName: 'state',
-    args: [proposalID],
+  const { data: ctrRead } = useContractReads({
+    contracts: [
+      {
+        abi: VDAOImplementation as any,
+        address: currentContracts.proxiedVDao as Address,
+        functionName: 'state',
+        args: [proposalID],
+      },
+      {
+        abi: VDAOImplementation as any,
+        address: currentContracts.proxiedVDao as Address,
+        functionName: 'quorumVotes',
+        args: [],
+      },
+    ],
   })
+
+  const proposalState = ctrRead?.[0]?.result as any
+  const quorumVotes = ctrRead?.[1]?.result as any
+  const deltaQuorumVotes = quorumVotes && proposal ? BigInt(quorumVotes) - BigInt(proposal?.forVotes) - BigInt(proposal?.againstVotes) - BigInt(proposal?.abstainVotes) : 0n
 
   enum ProposalState {
     Pending,
@@ -222,6 +235,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
               <div className='flex items-center gap-5'>
                 <div className='font-heading text-[26px] font-medium leading-9 md:text-[30px]'>{proposal?.title ? shortenText(proposal.title) : 'No title'}</div>
                 {proposal.grant && <div className={`h-fit cursor-pointer text-lg font-medium text-vdao-light`}>grant proposal</div>}
+                {deltaQuorumVotes && deltaQuorumVotes > 0n ? 'Required Quorum Votes left: ' + (deltaQuorumVotes / 10n ** 18n).toString() : 'Quorum Votes reached'}
               </div>
               <div className='grid grid-cols-2 pt-[10px] md:grid-cols-3 md:pt-5'>
                 <ProfileCard icon={proposal ? proposal.picture : DummyIcon} name={proposal ? proposal?.author?.name : 'Unnamed'} address={proposal?.authorId} />
@@ -269,7 +283,6 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                       dropDown
                       loading={isLoading}
                     />
-
                     <div
                       className={`float-right mx-auto flex w-full flex-col  justify-end gap-[1px] overflow-hidden rounded-md bg-vdao-light duration-200 ${
                         dropDownOn ? 'visible mt-1 opacity-100' : 'invisible mt-5 opacity-0 '
