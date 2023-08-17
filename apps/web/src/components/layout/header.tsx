@@ -120,7 +120,7 @@ const Header = (props: Props) => {
                 title={
                   element.children &&
                   element.children.length > 0 && (
-                    <div className='flex flex-col gap-5 px-10 py-8 '>
+                    <div className='flex flex-col gap-4 p-4 '>
                       {element.children?.map(child => (
                         <Link className='small-text !text-vdao-dark hover:opacity-80' href={child.link} key={child.name}>
                           {child.name}

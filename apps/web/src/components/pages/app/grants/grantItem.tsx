@@ -85,7 +85,7 @@ export const Card = ({ details, setViewDetails, setRequestId, votesHandler, stat
 
         <div className='flex justify-between'>
           <div>
-            <ProfileCard address={details.user.address} name={details.user.name} icon={details.user.picture} />
+            <ProfileCard address={details?.user?.address} name={details?.user?.name} icon={details?.user?.picture} />
           </div>
         </div>
 

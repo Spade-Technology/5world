@@ -126,7 +126,6 @@ const PreviewProposal = ({ grantName, tokenAddress, matchingAmount, selectedDate
               className='mt-5 w-full rounded-[10px] border-[1px] bg-[#F0F0F0] border-[#A7A7A7] p-5 outline-none '
               rows={10}
               value={grantDescription}
-             
             />
           </div>
 
