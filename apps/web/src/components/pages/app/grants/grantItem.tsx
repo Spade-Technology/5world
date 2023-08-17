@@ -42,13 +42,15 @@ const GrantItem = ({ setViewDetails, grant, votingPowerEnabled, votingPower, set
 
         {grant && (
           <div>
-            <div id='currentGrants' className='mx-6 mt-20 flex max-w-[1280px] justify-between font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'>
-              <div>Grant Requests</div>
+            <div id='currentGrants' className='mx-6 mt-20 flex flex-col md:flex-row max-w-[1280px] justify-between font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:text-[46px]'>
+              <div>Grant Requests
+              {votingPowerEnabled && <div className='font-heading text-xl font-medium text-vdao-light'>your available voting power: {votingPower}</div>}
+
+              </div>
               <div className='cursor-pointer text-white underline underline-offset-4 opacity-75' onClick={() => router.push('/app/grants')}>
                 Past Rounds
               </div>
             </div>
-            {votingPowerEnabled && <div className='font-heading text-xl font-medium text-vdao-light'>your available voting power: {votingPower}</div>}
             <div className='mx-6 mt-5 grid grid-cols-1 gap-5 md:mx-0 md:grid-cols-2'>
               {grant?.requests && grant?.requests.length > 0 ? (
                 grant?.requests?.map((details: any, idx: number) => {
@@ -78,7 +80,9 @@ export const Card = ({ details, setViewDetails, setRequestId, votesHandler, stat
         alt='image'
         style={{
           borderRadius: '20px 20px 0 0',
+          maxHeight: '300px'
         }}
+
       />
       <div className='px-[50px] py-10'>
         <div className='font-heading text-[30px] font-medium'>{details.name}</div>

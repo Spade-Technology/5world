@@ -15,6 +15,7 @@ import { waitForTransaction, writeContract } from '@wagmi/core'
 import RoundImplementation from '~/abi/RoundImplementation.json'
 import { currentChainId } from '~/config/contracts'
 import ProjectPreview from './projectPreview'
+import { error } from 'console'
 
 type CreateProjectProps = {
   show: boolean
@@ -77,6 +78,12 @@ const CreateProject = ({ show, close, grant }: CreateProjectProps) => {
         onSuccess: data => {
           setHash(data.IpfsHash)
           setState('confirm')
+        },
+        onError: error => {
+          return notification.error({
+            message: 'Error',
+            description: JSON.stringify(error),
+          })
         },
       },
     )
@@ -236,7 +243,17 @@ const CreateProject = ({ show, close, grant }: CreateProjectProps) => {
       )}
 
       {state === 'confirm' && (
-        <ProjectPreview submitRequest={submitRequest} setState={setState} projectName={projectName} projectAddress={projectAddress} website={website} twitter={twitter} logo={logo} theme={theme} projectDescription={projectDescription} />
+        <ProjectPreview
+          submitRequest={submitRequest}
+          setState={setState}
+          projectName={projectName}
+          projectAddress={projectAddress}
+          website={website}
+          twitter={twitter}
+          logo={logo}
+          theme={theme}
+          projectDescription={projectDescription}
+        />
       )}
     </CustomModal>
   )

@@ -97,7 +97,7 @@ const FormOne = ({ title, setTitle, description, setDescription, setNextForm }: 
         />
 
         <div className='pt-5 pb-1 md:pt-[35px]'>
-          <PrimaryButton text='Next' className='float-right text-lg font-medium' onClick={nextHandler} disabled={!canCreateProposal} />
+          <PrimaryButton text='Next' className='float-right text-lg font-medium' onClick={nextHandler} disabled={!canCreateProposal || chain?.id !== 11155111} />
           {!canCreateProposal && (
             <span className='text-red-500'>
               Insufficient voting power, you need {(BigInt((proposalThreshold as any) || 0n) / 10n ** 18n).toString()} VDAO to create a proposal, you have{' '}
