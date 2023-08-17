@@ -14,6 +14,7 @@ import { imageToBase64String } from '~/utils/helpers'
 import { waitForTransaction, writeContract } from '@wagmi/core'
 import RoundImplementation from '~/abi/RoundImplementation.json'
 import { currentChainId } from '~/config/contracts'
+import ProjectPreview from './projectPreview'
 
 type CreateProjectProps = {
   show: boolean
@@ -168,8 +169,8 @@ const CreateProject = ({ show, close, grant }: CreateProjectProps) => {
               <div>
                 <div className='text-[22px] font-bold'>{state === 'projectRequest' ? 'Project Logo' : 'Round Logo'}</div>
                 {logo ? (
-                  <div className='mt-5 h-[300px] w-[300px] rounded-[10px] py-5 text-center outline-dashed md:py-9'>
-                    <Image src={URL.createObjectURL(logo)} alt='upload' className='mx-auto' width={300} height={300} />
+                  <div className='mt-5 h-fit w-fit rounded-[100px]  text-center'>
+                    <Image src={URL.createObjectURL(logo)} alt='upload' className='mx-auto' height={183} width={183} />
                   </div>
                 ) : (
                   <div className='mt-5 rounded-[10px] py-5 text-center outline-dashed md:px-16 md:py-9' {...getLogoRootProps()}>
@@ -184,8 +185,8 @@ const CreateProject = ({ show, close, grant }: CreateProjectProps) => {
               <div className='pt-[30px]'>
                 <div className='text-[22px] font-bold'>{state === 'projectRequest' ? 'Project Banner' : 'Round Theme'}</div>
                 {theme ? (
-                  <div className='mt-5 h-[300px] w-[300px] rounded-[10px] py-5 text-center outline-dotted md:py-9'>
-                    <Image src={URL.createObjectURL(theme)} alt='upload' className='mx-auto' width={300} height={300} />
+                  <div className='mt-5 h-full w-fit rounded-[10px] text-center'>
+                    <Image src={URL.createObjectURL(theme)} alt='upload' className='mx-auto' height={183} width={300} />
                   </div>
                 ) : (
                   <div className='mt-5 rounded-[10px] px-20 py-5 text-center outline-dotted md:px-16 md:py-9' {...getThemeRootProps()}>
@@ -225,7 +226,7 @@ const CreateProject = ({ show, close, grant }: CreateProjectProps) => {
           <div className='pt-[20px] md:pt-10'>
             <PrimaryButton
               text='Submit'
-              className='float-right py-[5px] px-[35px] text-xl font-medium'
+              className='float-right text-xl font-medium'
               onClick={() => {
                 confirm()
               }}
@@ -235,13 +236,7 @@ const CreateProject = ({ show, close, grant }: CreateProjectProps) => {
       )}
 
       {state === 'confirm' && (
-        <div className='w-full pt-10 pb-[24px] font-body text-lg font-normal md:pt-[60px]'>
-          UI IS TODO
-          <div className=' pt-[20px] md:pt-10'>
-            <PrimaryButton text='Submit' className='float-right ml-5 py-[5px] px-[35px] text-xl font-medium' onClick={submitRequest} />
-            <PrimaryButton text='Back' className='float-right py-[5px] px-[35px] text-xl font-medium' onClick={() => setState('projectRequest')} />
-          </div>
-        </div>
+        <ProjectPreview submitRequest={submitRequest} setState={setState} projectName={projectName} projectAddress={projectAddress} website={website} twitter={twitter} logo={logo} theme={theme} projectDescription={projectDescription} />
       )}
     </CustomModal>
   )

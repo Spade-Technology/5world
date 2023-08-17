@@ -60,19 +60,30 @@ const navigationElementsWeb2: NavigationElement[] = [
 ]
 
 const navigationElementsWeb3: NavigationElement[] = [
-  { name: 'Home', link: '/' },
+  { name: 'Dashboard', link: '/app' },
   {
     name: 'Vote',
     link: '#',
     children: [
+      { name: 'Home', link: '/app' },
       { name: 'Operational Proposals', link: '/app/proposals' },
       { name: 'Grants Round', link: '/app/grants' },
       { name: 'Steward Election', link: '/app/election' },
       { name: 'Forum Discussion', link: '#' },
     ],
   },
-  { name: 'Steward Profile', link: '/app/steward' },
-  { name: 'Pods Profile', link: '/app/pods' },
+
+  {
+    name: 'Profiles',
+    link: '#',
+    children: [
+      { name: 'Steward Profile', link: '/app/steward' },
+      { name: 'Pods Profile', link: '/app/pods' },
+    ],
+  },
+
+
+
   { name: 'Support', link: '/app/support' },
   { name: 'Analytics', link: '/app/analytics' },
 ]
@@ -102,14 +113,14 @@ const Header = (props: Props) => {
 
         <div className={'ml-auto mr-[50px] flex justify-between gap-5 lg:gap-[35px] ' + (!props.dark ? '!text-vdao-dark' : 'text-white')}>
           {(props.web2 ? navigationElementsWeb2 : navigationElementsWeb3).map((element, index) =>
-            !props.web2 && index > 0 ? (
+            !props.web2 && index >= 0 ? (
               <Tooltip
                 placement='bottomLeft'
                 color='white'
                 title={
                   element.children &&
                   element.children.length > 0 && (
-                    <div className='flex flex-col gap-5 px-10 py-8 '>
+                    <div className='flex flex-col gap-4 p-4 '>
                       {element.children?.map(child => (
                         <Link className='small-text !text-vdao-dark hover:opacity-80' href={child.link} key={child.name}>
                           {child.name}
@@ -159,7 +170,7 @@ const Header = (props: Props) => {
           <Image src={!props.dark && router.pathname !== '/app/support' ? discordCircle : darkDiscord} alt='VDAO' width={30} height={30} className='hidden md:block' />
           <VDAOConnectButton
             web2={props.web2}
-            className={!props.dark && router.pathname !== '/app/support' ? 'border-vdao-dark text-xl font-medium text-vdao-dark' : 'border-vdao-light text-vdao-light'}
+            className={!props.dark && router.pathname !== '/app/support' ? 'border-vdao-dark text-xl font-medium text-vdao-dark' : 'bg-vdao-dark text-white border-none'}
           />
         </div>
       </div>
@@ -284,7 +295,10 @@ const MobileSubmenu = (props: {
 const HeaderManifesto = (props: Props) => {
   return (
     <div className='mx-auto flex w-full items-center justify-between bg-vdao-deep px-4 py-11 lg:max-w-[1140px]'>
-      <Image src={logo} alt='VDAO' className='my-auto h-[17.74px] w-[76px] md:h-[30px]  md:w-[130px]' />
+      {/* <Image src={logo} alt='VDAO' className='my-auto h-[17.74px] w-[76px] md:h-[30px]  md:w-[130px]' /> */}
+      <Link href='/'>
+          <Image src={logo} alt='VDAO' height={30} />
+        </Link>
       <div className='flex items-center gap-[56px]'>
         <section className='hidden items-center justify-between gap-[35px] lg:flex'>
           {navigationElementsWeb2.map(

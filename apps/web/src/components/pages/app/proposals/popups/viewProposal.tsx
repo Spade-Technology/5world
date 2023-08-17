@@ -232,7 +232,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
 
           <div className='grid grid-cols-1 gap-[73px] py-[10px] md:py-5 lg:grid-cols-3 lg:gap-10 xl:gap-[100px]'>
             <div className={supporters_raw.length > 0 ? 'col-span-2' : 'col-span-3'}>
-              <div className='flex items-center gap-5'>
+              <div className='flex flex-col md:flex-row md:items-center gap-2 md:gap-5 '>
                 <div className='font-heading text-[26px] font-medium leading-9 md:text-[30px]'>{proposal?.title ? shortenText(proposal.title) : 'No title'}</div>
                 {proposal.grant && <div className={`h-fit cursor-pointer text-lg font-medium text-vdao-light`}>grant proposal</div>}
                 {deltaQuorumVotes && deltaQuorumVotes > 0n ? 'Required Quorum Votes left: ' + (deltaQuorumVotes / 10n ** 18n).toString() : 'Quorum Votes reached'}
@@ -242,7 +242,7 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                 <div className={`mt-6 h-fit w-fit cursor-pointer rounded-[20px] border-[1px] border-vdao-dark px-7 text-lg  font-medium text-vdao-light lg:ml-5`}>{proposalStatus}</div>
               </div>
 
-              <div className='flex justify-between'>
+              <div className='flex justify-between flex-col md:flex-row'>
                 <div className={` mt-[25px] flex flex-col gap-3 md:mt-11 md:flex-row md:gap-5`}>
                   <div>
                     <div className=' flex gap-1 font-medium text-vdao-dark md:text-[22px]'>
