@@ -106,12 +106,17 @@ const Header = (props: Props) => {
               <Tooltip
                 placement='bottomLeft'
                 color='white'
+                overlayStyle={{ width: '390px', maxWidth: 'auto', boxShadow: ' 0px 4px 20px 0px rgba(0, 0, 0, 0.25)', padding: '0px' }}
                 title={
                   element.children &&
                   element.children.length > 0 && (
-                    <div className='flex flex-col gap-5 px-10 py-8 '>
+                    <div className='flex flex-col py-5 '>
                       {element.children?.map(child => (
-                        <Link className='small-text !text-vdao-dark hover:opacity-80' href={child.link} key={child.name}>
+                        <Link
+                          className='rounded-sm px-10 py-2.5 font-inter text-base font-normal !text-vdao-dark duration-500 hover:bg-[rgb(3,218,247,.2)] hover:text-lg hover:font-bold'
+                          href={child.link}
+                          key={child.name}
+                        >
                           {child.name}
                         </Link>
                       ))}
@@ -284,7 +289,7 @@ const MobileSubmenu = (props: {
 const HeaderManifesto = (props: Props) => {
   return (
     <div className='mx-auto flex w-full items-center justify-between bg-vdao-deep px-4 py-11 lg:max-w-[1140px]'>
-      <Image src={logo} alt='VDAO' className='my-auto h-[17.74px] w-[76px] md:h-[30px]  md:w-[130px]' />
+      <Image src={logo} alt='VDAO' className='my-auto h-[17.74px] w-[76px] max-[350px]:h-4 max-[350px]:w-[69px] md:h-[30px]  md:w-[130px]' />
       <div className='flex items-center gap-[56px]'>
         <section className='hidden items-center justify-between gap-[35px] lg:flex'>
           {navigationElementsWeb2.map(
@@ -314,11 +319,11 @@ const HeaderManifesto = (props: Props) => {
               ),
           )}
         </section>
-        <div className='flex items-center justify-center gap-4 md:gap-7'>
-          <Image src={twitter} alt='VDAO' width={30} height={30} className='max-[350px]:hidden' />
-          <Image src={discord} alt='VDAO' width={30} height={30} className='max-[350px]:hidden' />
+        <div className='flex items-center justify-center gap-4 max-[350px]:gap-3 md:gap-7'>
+          <Image src={twitter} alt='VDAO' width={30} height={30} className='max-[350px]:h-[25.7px] max-[350px]:w-[24.6px]' />
+          <Image src={discord} alt='VDAO' width={30} height={30} className='max-[350px]:h-[25.7px] max-[350px]:w-[24.6px]' />
 
-          <VDAOConnectButton className='!mx-0 flex items-center justify-center border-vdao-light !px-[23px] !py-[11px] text-sm text-vdao-light' />
+          <VDAOConnectButton className='!mx-0 flex items-center justify-center border-vdao-light !px-[23px] !py-[11px] text-sm text-vdao-light max-[350px]:!py-[10.4px] max-[350px]:!px-[14px] max-[350px]:!text-[13.3px]' />
         </div>
       </div>
     </div>
