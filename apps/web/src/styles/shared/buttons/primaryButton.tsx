@@ -32,7 +32,7 @@ export const DropdownPrimaryButton = ({ text, className, onClick, icon, dropDown
 const PrimaryButton = ({ text, className, spanClass, onClick, icon, dropDown, disabled, loading }: ButtonProps) => {
   return (
     <div
-      className={`w-fit rounded-md ${disabled ? 'border-[1px] border-vdao-dark bg-white' : 'cursor-pointer bg-vdao-light'} ${className} `}
+      className={`w-fit rounded-md !px-0 !py-0 ${disabled ? ' cursor-not-allowed opacity-50' : ' cursor-pointer '} bg-vdao-light ${className} `}
       onClick={() => onClick && !disabled && !loading && onClick()}
     >
       <span

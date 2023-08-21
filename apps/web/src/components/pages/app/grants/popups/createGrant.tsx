@@ -111,7 +111,12 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
   }
 
   return (
-    <CustomModal show={show} close={close} heading={state === 'confirm' ? 'Preview your proposal' : '  Create Grant Operational Proposal'}>
+    <CustomModal
+      show={show}
+      close={close}
+      heading={state === 'confirm' ? 'Preview your proposal' : '  Create Grant Operational Proposal'}
+      externalStyle={'w-full custom-scrollbar md:mx-10 xl:mx-auto md:!px-5 lg:!px-10'}
+    >
       {state === 'proposalMeta' && <FormOne description={description} setDescription={setDescription} title={title} setTitle={setTitle} setNextForm={() => setState('grantMeta')} />}
 
       {state === 'grantMeta' && (
@@ -144,9 +149,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
                     value={tokenAddress}
                     // defaultValue={'0x9E873b3A125040B2295FbED16aF22Ed9b101e470'}
                   />
-                  <Button className='w-full' 
-                  onClick={e => setTokenAddress('0x0000000000000000000000000000000000000000')}
-                  >
+                  <Button className='w-full' onClick={e => setTokenAddress('0x0000000000000000000000000000000000000000')}>
                     send ETH
                   </Button>
                 </div>
@@ -185,7 +188,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
                   className={cn('!mt-[17px] !h-10 w-full justify-start !rounded-[10px] !border-vdao-dark text-left font-normal', !date && 'text-muted-foreground')}
                   format='YYYY-MM-DD HH:mm:ss'
                   // defaultValue={dayjs().add(1, 'day')}
-              
+
                   showTime={{ defaultValue: dayjs().add(1, 'day') }}
                   onChange={e => setDate(e?.toDate())}
                   disabledDate={current => current && current < dayjs()}
@@ -207,7 +210,9 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
                   ]}
                 />
 
-                <div>Time will be around {date ?  `${date.getHours() + " : " + date.getMinutes() + " : " + date.getSeconds()}` : "00:00"} UTC, imprecisions could be caused by inconsistent block times</div>
+                <div>
+                  Time will be around {date ? `${date.getHours() + ' : ' + date.getMinutes() + ' : ' + date.getSeconds()}` : '00:00'} UTC, imprecisions could be caused by inconsistent block times
+                </div>
               </div>
             </div>
 
@@ -271,29 +276,32 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
           </div>
 
           <div className='float-right flex gap-5 py-6 md:pt-10 '>
-          <div
-            className='cursor-pointer rounded-[5px] border-[1px] border-vdao-dark px-[35px] pt-[5px] font-heading text-lg font-medium'
-            onClick={() => {
-              setState('proposalMeta')
-            }}
-          >
-            Previous
-          </div>
+            <div
+              className='cursor-pointer rounded-[5px] border-[1px] border-vdao-dark px-[35px] pt-[5px] font-heading text-lg font-medium'
+              onClick={() => {
+                setState('proposalMeta')
+              }}
+            >
+              Previous
+            </div>
             <PrimaryButton text='Submit' className='float-right text-xl font-medium' onClick={submitIPFS} />
           </div>
         </div>
       )}
 
       {state === 'confirm' && (
-        <PreviewProposal  setState={setState} loader={loader} submitProposal={submitProposal}
-        grantName={grantName}
-        tokenAddress={tokenAddress}
-        matchingAmount={matchingAmount}
-        selectedDate = {date}
-        logo={logo}
-        theme={theme}
-        grantDescription={grantDescription}
-         />
+        <PreviewProposal
+          setState={setState}
+          loader={loader}
+          submitProposal={submitProposal}
+          grantName={grantName}
+          tokenAddress={tokenAddress}
+          matchingAmount={matchingAmount}
+          selectedDate={date}
+          logo={logo}
+          theme={theme}
+          grantDescription={grantDescription}
+        />
       )}
     </CustomModal>
   )

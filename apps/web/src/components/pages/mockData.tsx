@@ -87,60 +87,109 @@ export const expenditureData = [
   { title: 'Expenses', amount: '156,152,53', percent: '16.57%' },
 ]
 
-export const LinearChart: any = {
-  series: [
-    {
-      name: 'Desktops',
-      data: [10, 41, 35, 51, 49, 62, 69],
-    },
-    {
-      name: 'ggg',
-      data: [0, 41, 35, 51, 0, 62, 69],
-    },
-  ],
-  options: {
-    chart: {
-      type: 'line',
-      zoom: {
+export const LinearChart: any = (duration: string) => {
+  const days = {
+    series: [
+      {
+        name: 'Desktops',
+        data: [10, 41, 35, 51, 49, 62, 69],
+      },
+      {
+        name: 'ggg',
+        data: [0, 41, 35, 51, 0, 62, 69],
+      },
+    ],
+    categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  }
+
+  const month = {
+    series: [
+      {
+        name: 'Net Profit',
+        data: [24, 55, 40, 60, 66],
+      },
+      {
+        name: 'Revenue',
+        data: [16, 31, 64, 94, 10],
+      },
+    ],
+    categories: ['1week', '2week', '3week', '4week', '5week'],
+  }
+
+  const sixmonths = {
+    series: [
+      {
+        name: 'Desktops',
+        data: [10, 41, 35, 51, 49, 62],
+      },
+      {
+        name: 'ggg',
+        data: [0, 41, 35, 51, 0, 62],
+      },
+    ],
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  }
+
+  const year = {
+    series: [
+      {
+        name: 'Net Profit',
+        data: [24, 55, 57, 56, 61, 58, 63, 40, 30, 30, 60, 66],
+      },
+      {
+        name: 'Revenue',
+        data: [16, 45, 31, 68, 77, 65, 61, 64, 94, 10, 9, 30],
+      },
+    ],
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  }
+
+  return {
+    series: duration === '1m' ? month.series : duration === '6m' ? sixmonths.series : duration === '1y' ? year.series : days.series,
+    options: {
+      chart: {
+        type: 'line',
+        zoom: {
+          enabled: false,
+        },
+      },
+      dataLabels: {
         enabled: false,
       },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: 'smooth',
-    },
-    colors: ['#36DFAE', '#FBB0B3'],
-    grid: {
-      show: false,
-    },
-    legend: {
-      show: false,
-    },
-    xaxis: {
-      categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      labels: {
-        style: {
-          colors: 'white',
-          fontSize: '14px',
-          fontFamily: 'Satoshi',
+      stroke: {
+        curve: 'smooth',
+      },
+      colors: ['#36DFAE', '#FBB0B3'],
+      grid: {
+        show: false,
+      },
+      legend: {
+        show: false,
+      },
+      xaxis: {
+        categories: duration === '1m' ? month.categories : duration === '6m' ? sixmonths.categories : duration === '1y' ? year.categories : days.categories,
+        labels: {
+          style: {
+            colors: 'white',
+            fontSize: '14px',
+            fontFamily: 'Satoshi',
+          },
+        },
+      },
+      yaxis: {
+        tickAmount: 5,
+        max: 100,
+        min: 0,
+        labels: {
+          style: {
+            colors: 'white',
+            fontSize: '14px',
+            fontFamily: 'Satoshi',
+          },
         },
       },
     },
-    yaxis: {
-      tickAmount: 5,
-      max: 100,
-      min: 0,
-      labels: {
-        style: {
-          colors: 'white',
-          fontSize: '14px',
-          fontFamily: 'Satoshi',
-        },
-      },
-    },
-  },
+  }
 }
 
 export const horizontalBarchart: any = {

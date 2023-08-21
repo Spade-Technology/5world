@@ -44,7 +44,7 @@ const PodsProfile = ({ setOpenCreatePod }: Props) => {
       <div className='flex flex-col md:flex-row '>
         <div className='lg:flex-1'></div>
         <div className='mt-[30px] flex flex-1 flex-col gap-5 pl-6 md:mt-0 md:flex-row lg:pl-16'>
-          <PrimaryButton text='Create Pods' onClick={() => (siwe ? setOpenCreatePod(true) : router.push('/app/pods/#restrictedContent'))} className='pt-[1px] px-[35px] text-xl' />
+          <PrimaryButton text='Create Pods' onClick={() => (siwe ? setOpenCreatePod(true) : router.push('/app/pods/#restrictedContent'))} className='' />
           <div className='w-fit cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] font-heading text-xl text-white'>
             <a href={siwe ? '#currentPods' : '#restrictedContent'}>See all Pods </a>
           </div>

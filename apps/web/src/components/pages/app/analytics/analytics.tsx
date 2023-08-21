@@ -12,7 +12,9 @@ export function ProposalComponent() {
 }
 
 export function MembershipComponent() {
-  const [duration, setDuration] = useState('1y')
+  const [duration, setDuration] = useState<any>({ treasury: '7d', members: '7d' })
+
+  const charts = LinearChart()
 
   const data = [
     {
@@ -48,9 +50,9 @@ export function MembershipComponent() {
           { title: 'Membership Value', amount: '$ 350' },
           { title: 'Treasury Holdings', amount: '$ 3.5m' },
           { title: 'Liquid Holdings', amount: '$ 1.9m' },
-        ].map(({ title, amount }, index) => {
+        ].map(({ title, amount }) => {
           return (
-            <div className='flex w-full flex-col gap-5 rounded-2xl bg-vdao-dark px-[30px] py-5 pt-5 md:w-[23%] md:px-7 md:pb-10'>
+            <div className='flex w-full flex-col gap-5 rounded-2xl bg-vdao-dark px-[30px] py-5 pt-5 md:w-[48%] md:px-7 md:pb-10 lg:w-[23%] md:mt-5 lg:mt-0'>
               <div className='satoshi text-lg font-medium leading-5 text-white'>{title}</div>
               <div className='satoshi text-[32px] font-bold leading-8 text-vdao-light'>{amount}</div>
             </div>
@@ -63,29 +65,34 @@ export function MembershipComponent() {
             title: 'Members Growth',
             period: ['7d', '1m', '6m', '1y'],
             percent: '121.15% Last 1 Year',
+            type: 'members',
           },
           {
             title: 'Treasury Growth',
             period: ['7d', '1m', '6m', '1y'],
             percent: '121.15% Last 1 Year',
+            type: 'treasury',
           },
-        ].map(({ title, period, percent }, index) => {
+        ].map(({ title, period, percent, type }, index) => {
           return (
-            <div key={index} className='mt-5 flex w-full flex-col rounded-2xl bg-vdao-dark px-7 pt-5 pb-10 md:w-[48.5%]'>
-              <div className='flex items-center justify-between'>
+            <div key={index} className='mt-5 flex w-full flex-col rounded-2xl bg-vdao-dark pr-7 pt-5 pb-10 md:w-[48.5%]'>
+              <div className='flex items-center justify-between pl-7'>
                 <div className='satoshi text-lg font-bold leading-[22px] text-white'>{title}</div>
                 <div className='flex gap-5'>
                   {period.map(time => {
                     return (
-                      <div onClick={() => setDuration(time)} className={`satoshi cursor-pointer text-sm font-normal leading-5 ${duration !== time ? 'text-white' : 'text-vdao-light'}`}>
+                      <div
+                        onClick={() => setDuration({ ...duration, [type]: time })}
+                        className={`satoshi cursor-pointer text-sm font-normal leading-5 ${duration[type] !== time ? 'text-white' : 'text-vdao-light'}`}
+                      >
                         {time}
                       </div>
                     )
                   })}
                 </div>
               </div>
-              <div className='satoshi text-sm font-normal leading-5 text-white'>{percent}</div>
-              <Chart options={LinearChart.options} series={LinearChart.series} type='line' width={'100%'} height={'333px'} />
+              <div className='satoshi pl-7 text-sm font-normal leading-5 text-white'>{percent}</div>
+              <Chart options={LinearChart(duration[type]).options} series={LinearChart(duration[type]).series} type='line' width={'100%'} height={'333px'} />
             </div>
           )
         })}
