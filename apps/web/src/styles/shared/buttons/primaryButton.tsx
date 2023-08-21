@@ -15,15 +15,15 @@ type ButtonProps = {
 export const DropdownPrimaryButton = ({ text, className, onClick, icon, dropDown, loading = false, disabled }: ButtonProps) => {
   return (
     <div
-      className={` w-fit cursor-pointer rounded-md bg-vdao-light px-9 py-1.5 font-heading text-xl font-medium text-vdao-dark md:py-[5px] md:px-[35px] ${
-        (loading || disabled) && 'cursor-not-allowed opacity-80'
-      } ${className}`}
+      className={` w-fit rounded-md cursor-pointer ${
+        disabled ? 'border-[1px] border-vdao-dark text-vdao-dark' : 'bg-vdao-light'
+      }  px-9 py-1.5 font-heading text-xl font-medium text-vdao-dark md:py-[5px] md:px-[35px] ${loading || disabled && 'cursor-not-allowed opacity-80 ' } ${className}`}
       onClick={() => onClick && !loading && !disabled && onClick()}
     >
       <div className={`mx-auto flex gap-1 ${dropDown ? 'flex-row-reverse justify-between' : ''}`}>
         {icon && <Image src={icon} alt='icon' className={dropDown ? 'my-auto h-4 w-4' : ''} />}
         {text}
-        {loading && <Spin className='!mr-3 !mt-1' spinning={true} />}
+        {loading && <Spin className='!mr-3 !mt-1' spinning={loading} />}
       </div>
     </div>
   )
@@ -32,13 +32,13 @@ export const DropdownPrimaryButton = ({ text, className, onClick, icon, dropDown
 const PrimaryButton = ({ text, className, spanClass, onClick, icon, dropDown, disabled, loading }: ButtonProps) => {
   return (
     <div
-      className={`w-fit rounded-md ${disabled ? 'border-[1px] border-vdao-dark bg-white' : 'cursor-pointer bg-vdao-light'} ${className} `}
+      className={`w-fit rounded-md !px-0 !py-0 ${disabled ? ' cursor-not-allowed opacity-50' : ' cursor-pointer '} bg-vdao-light ${className} `}
       onClick={() => onClick && !disabled && !loading && onClick()}
     >
       <span
         className={`mx-auto ${spanClass} flex w-full justify-center gap-1 px-9 py-1.5 font-heading text-xl font-medium !text-vdao-dark md:py-[5px] md:px-[35px] ${
-          dropDown ? 'flex-row-reverse !justify-between' : '' + loading ? 'opacity-80' : ''
-        }`}
+          dropDown ? 'flex-row-reverse !justify-between' : ''
+        } ${loading ? 'opacity-80' : ''}`}
       >
         {loading && <Spin className='!mr-3 !mt-1' spinning={true} />}
         {icon && <Image src={icon} alt='icon' className={dropDown ? 'my-auto h-4 w-4' : ''} />}

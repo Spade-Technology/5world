@@ -148,7 +148,7 @@ export const stewardRouter = createTRPCRouter({
         abi: VDaoToken,
         functionName: 'getPriorBalance',
         args: [voterAddress, applyBlock],
-      })
+      }).catch(() => null)
 
       if (!tokenAmountAtApplicationBlock)
         throw new TRPCError({

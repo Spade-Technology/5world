@@ -45,7 +45,11 @@ export const userRouter = createTRPCRouter({
     .query(async ({ input: { addresses, search, include }, ctx: { prisma } }) => {
       const users = await prisma.user.findMany({
         ...(addresses && addresses.length > 0 && { where: { address: { in: addresses } } }),
-        ...(search && { where: { address: { contains: search } } }),
+        ...(search && {
+          where: {
+            OR: [{ name: { contains: search, mode: 'insensitive' } }, { address: { contains: search, mode: 'insensitive' } }],
+          },
+        }),
         include: include,
         take: 10,
       })

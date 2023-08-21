@@ -60,7 +60,7 @@ const FormOne = ({ podName, description, podImage, setPodImage, setNextForm, set
 
         <div className='pt-[5px]'>You cannot change it after this step.</div>
         <input
-          className={`mt-[22px] flex h-10 w-full items-center rounded-[5px] border-[1px] border-vdao-dark pl-5  font-body text-base font-normal text-vdao-dark duration-500 placeholder:text-vdao-dark placeholder:opacity-50 ${
+          className={`mt-[22px] outline-none flex h-10 w-full items-center rounded-[5px] border-[1px] border-vdao-dark pl-5  font-body text-base font-normal text-vdao-dark duration-500 placeholder:text-vdao-dark placeholder:opacity-50 ${
             error && !podName ? 'border-red-600 placeholder:text-red-400' : 'border-vdao-dark'
           }`}
           placeholder={`${error && !podName ? '*Required' : 'Enter pod name'}`}

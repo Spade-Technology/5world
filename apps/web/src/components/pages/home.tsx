@@ -209,8 +209,8 @@ export const OurPartners = () => {
         </div>
       </div>
       <div className='mx-auto flex gap-10 md:flex-col lg:ml-auto lg:mr-0 lg:flex-row'>
-        <Image src={FifthWorldIcon} className='h-[157px] w-[150px] md:w-[212px]' alt='5thworld' />
-        <Image src={ConsensysIcon} className='h-[157px] w-[150px]  md:w-[212px]' alt='Consensys' />
+        <Image src={FifthWorldIcon} className='md:max-w-auto h-[157px] w-5/12 max-w-[150px] md:w-[212px]' alt='5thworld' />
+        <Image src={ConsensysIcon} className='md:max-w-auto h-[157px] w-5/12 max-w-[150px]  md:w-[212px]' alt='Consensys' />
       </div>
     </Section>
   )
@@ -368,17 +368,18 @@ export function HomeWelcomeComponent() {
         </div>
       </div>
 
-      <main className='relative left-[-43.333vw] mx-auto h-[86.154vw] w-[190.769vw] bg-[url(/illustrations/home/PNG/VDAO-home-hero.png)] bg-cover bg-top bg-no-repeat pt-[23px] md:hidden '>
-        <PrimaryButton text='Join Us' className='relative left-[-5vw] !mx-auto mt-10 ' />
+      <main className='z-10 w-full md:hidden '>
+        <PrimaryButton text='Join Us' className='relative bottom-[-40px] !mx-auto' />
+        <Image alt='' src={WelcomeHeroMobile} className='top[-50px] relative -z-10 h-[336px] w-full' />
       </main>
 
-      <main className='relative hidden h-[50.139vw] w-full md:block '>
+      <main className='relative hidden h-[722px] w-full max-[1400px]:h-[50.139vw] md:block '>
         <div className='mx-[45px] max-w-[818px] text-center font-body text-lg font-medium leading-[26px] text-vdao-dark md:mx-auto md:w-full md:px-6 md:text-xl lg:px-0'>
           Join our DAO’s mission to realize the promise and potential of regenerative agriculture. Inspire new ideas, fund research, and help create scalable solutions for global change. 
         </div>
         <PrimaryButton text='Join Us' className='z-50 !mx-auto mt-10' />
 
-        <div className='absolute left-[-4.583vw] z-[-1] h-full w-[110.903vw] bg-[url(/illustrations/home/PNG/VDAO-home-hero.png)] bg-cover bg-top bg-no-repeat md:top-[0px] lg:top-[-30px]'></div>
+        <div className='absolute z-[-1] h-full w-[110.903vw] max-w-[1440px] bg-[url(/illustrations/home/PNG/VDAO-home-hero.png)] bg-contain bg-top bg-no-repeat max-[1400px]:left-[-4.583vw] max-[1400px]:bg-cover  md:top-[50px] lg:top-[-30px]'></div>
       </main>
     </Section>
   )

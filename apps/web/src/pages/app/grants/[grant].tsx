@@ -6,7 +6,6 @@ import Page from '~/components/layout/page'
 import { EnforceAuth } from '~/components/misc/enforceAuth'
 import GrantItem from '~/components/pages/app/grants/grantItem'
 import GrantsRound from '~/components/pages/app/grants/grantsRound'
-import CreateGrant from '~/components/pages/app/grants/popups/createGrant'
 import ViewDetails from '~/components/pages/app/grants/popups/viewDetails'
 import { api } from '~/utils/api'
 import RoundImplementation from '~/abi/RoundImplementation.json'
@@ -44,7 +43,6 @@ const Grants = ({ id }: { id: Number }) => {
         notification.error({
           message: 'Error',
           description: err.shortMessage || err.message,
-          placement: 'bottomRight',
         })
       })
     }

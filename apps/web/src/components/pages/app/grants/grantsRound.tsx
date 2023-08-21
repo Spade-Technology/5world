@@ -43,7 +43,8 @@ const GrantsRound = ({ setCreateGrant, grant }: Props) => {
           <PrimaryButton
             text={grant ? 'Request' : 'Create Grant'}
             onClick={() => (grant ? (grant.state === 1n ? setCreateGrant(true) : notification.info({ message: 'Grant applications are closed' })) : setCreateGrant(true))}
-            className='py-[5px] px-[35px] text-xl'
+            className='px-[35px] w-fit text-xl opacity-100'
+           
           />
           {grant && (
             <div className='w-fit  cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white'>

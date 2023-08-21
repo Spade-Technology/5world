@@ -37,9 +37,19 @@ const Insights = () => {
 
 const RecentProposals = () => {
   const [filter, setFilter] = useState(false)
-  const [filterType, setFilterType] = useState('')
+  const [filters, setFilters] = useState<string[]>([])
   const [sortby, setSortBy] = useState(false)
   const [sortbyType, setSortByType] = useState('')
+
+  const filterHandler = (type:string) => {
+    const found = filters.includes(type)
+    if(found) {
+      const newFilters = filters.filter((item) => item !== type) 
+      setFilters(newFilters)
+    } else {
+      setFilters((prev) => [...prev, type])
+    }
+  }
   return (
     <article className='relative mt-5 flex w-full flex-col rounded-2xl bg-vdao-dark px-[30px] py-5 pt-5 md:px-7 md:pb-10'>
       <div className='flex flex-col justify-between gap-5 md:flex-row'>
@@ -119,16 +129,16 @@ const RecentProposals = () => {
         {/* <div className='absolute right-6 top-28 w-[120px] items-end rounded-[5px] bg-white p-4 md:top-16'> */}
         <div className='-mt-[520px] ml-[120px] w-[120px] items-end rounded-[5px] bg-white p-4 md:-mt-[500px] md:ml-[670px]'>
           <div className='flex cursor-pointer justify-between gap-2'>
-            <div className='text-sm font-medium' onClick={() => setFilterType('active')}>
+            <div className='text-sm font-medium' onClick={() => filterHandler('active')}>
               Active
             </div>
-            {filterType === 'active' && <Image src={CorrectIcon} alt='correct' />}
+            {filters.includes('active') && <Image src={CorrectIcon} alt='correct' />}
           </div>
           <div className='mt-2 flex cursor-pointer justify-between gap-2'>
-            <div className='text-sm font-medium' onClick={() => setFilterType('closed')}>
+            <div className='text-sm font-medium' onClick={() => filterHandler('closed')}>
               Closed
             </div>
-            {filterType === 'closed' && <Image src={CorrectIcon} alt='correct' />}
+            {filters.includes('closed') && <Image src={CorrectIcon} alt='correct' />}
           </div>
         </div>
       </div>

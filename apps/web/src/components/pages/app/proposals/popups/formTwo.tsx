@@ -199,7 +199,7 @@ const FormTwo = ({ setNextForm, setShowPreview, spells, setSpells }: FormProps) 
           >
             Previous
           </div>
-          <PrimaryButton text='Confirm' className=' py-[5px] font-heading text-lg font-medium' onClick={confirmHandler} />
+          <PrimaryButton text='Confirm' className='font-heading text-lg font-medium' onClick={confirmHandler} />
         </div>
       </div>
     </div>

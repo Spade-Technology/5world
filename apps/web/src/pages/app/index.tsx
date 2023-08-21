@@ -36,15 +36,13 @@ const Home: NextPage = () => {
         <WelcomeComponent />
 
         <EnforceAuth>
-          <div className='mx-auto  flex w-fit'>
-            <Section className='mx-6 grid justify-between gap-5 md:grid-cols-12 lg:max-w-[1280px]'>
-              <ProfileHomeComponent setOpenProfile={setOpenProfile} setNewMembersArr={setNewMembersArr} data={data} />
+          <Section className='mx-6 grid justify-between gap-5 md:grid-cols-12 xl:mx-auto xl:max-w-[1140px]'>
+            <ProfileHomeComponent setOpenProfile={setOpenProfile} setNewMembersArr={setNewMembersArr} data={data} />
 
-              <NewMembersComponent newMembersArr={newMembersArr} />
+            <NewMembersComponent newMembersArr={newMembersArr} />
 
-              <StatisticsHomeComponent />
-            </Section>
-          </div>
+            <StatisticsHomeComponent />
+          </Section>
           <ProfilePopup show={openProfile} close={() => setOpenProfile(false)} setEditProfile={setEditProfile} />
           {editProfile && <EditProfile show={editProfile} close={() => setEditProfile(false)} setOpenProfile={setOpenProfile} refetch={refetch} />}
         </EnforceAuth>

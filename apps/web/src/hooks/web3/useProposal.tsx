@@ -1,17 +1,17 @@
 import { Proposal } from '@prisma/client'
-import { Address, useAccount, useBlockNumber, useContractWrite } from 'wagmi'
+import { Address, useAccount, useBlockNumber } from 'wagmi'
 import { z } from 'zod'
 
 import { api } from '~/utils/api'
 import { InferArgs, InferReturn } from '~/utils/type'
 
-import VDAOImplementation from '~/abi/VDAOImplementation.json'
-import { currentChain, currentChainId, currentContracts } from '~/config/contracts'
 import { waitForTransaction, writeContract } from '@wagmi/core'
 import { notification } from 'antd'
 import { useState } from 'react'
+import { encodeAbiParameters, encodePacked } from 'viem'
 import RoundFactoryAbi from '~/abi/RoundFactory.json'
-import { encodeAbiParameters, encodeFunctionData, encodePacked, getContract, parseAbi } from 'viem'
+import VDAOImplementation from '~/abi/VDAOImplementation.json'
+import { currentChainId, currentContracts } from '~/config/contracts'
 
 /* Proposal schema */
 interface ProposalInclude {
@@ -45,7 +45,7 @@ export function useProposalAction(id: number) {
   const [isLoading, setIsLoading] = useState(false)
 
   // @param support The support value for the vote. 0=against, 1=for, 2=abstain
-  const castVote = async (support: number) => {
+  const castVote = async (support: number, callback?: (successful: boolean) => {}) => {
     setIsLoading(true)
     const tx = await writeContract({
       address: currentContracts.proxiedVDao as Address,
@@ -53,12 +53,24 @@ export function useProposalAction(id: number) {
       functionName: 'castVote',
       chainId: currentChainId,
       args: [id, support],
-    }).catch(error => {
-      notification.error({
-        message: 'Error casting vote',
-        description: error.shortMessage,
-      })
     })
+      .then(tx => {
+        notification.info({
+          message: 'Transaction sent',
+          description: 'waiting for the transaction receipt. do not leave the page.',
+        })
+
+        return tx
+      })
+      .catch(error => {
+        callback?.(false)
+        notification.error({
+          message: 'Error casting vote',
+          description: error.shortMessage,
+        })
+      }).finally(() => {
+        setIsLoading(false)
+      })
 
     if (tx) {
       await waitForTransaction({ hash: tx.hash, timeout: currentContracts.blockTime * 1000 + 3000, chainId: currentChainId, confirmations: 1 })
@@ -68,12 +80,13 @@ export function useProposalAction(id: number) {
       })
     }
 
+    callback?.(true)
     setIsLoading(false)
   }
 
-  const voteFor = async () => await castVote(1)
-  const voteAgainst = async () => await castVote(0)
-  const voteAbstain = async () => await castVote(2)
+  const voteFor = async (callback?: (successful: boolean) => {}) => await castVote(1, callback)
+  const voteAgainst = async (callback?: (successful: boolean) => {}) => await castVote(0, callback)
+  const voteAbstain = async (callback?: (successful: boolean) => {}) => await castVote(2, callback)
 
   return { voteFor, voteAgainst, voteAbstain, isLoading }
 }
@@ -96,6 +109,7 @@ export function useCreateProposal() {
     authorAddress,
     description,
     title,
+    callback,
   }: {
     calldatas: string[]
     targets: string[]
@@ -104,10 +118,12 @@ export function useCreateProposal() {
     description: string
     title: string
     authorAddress: string
+    callback?: (successful: boolean) => void
   }): Promise<({ data: Proposal & {} } & InferReturn<typeof createProposalMutation.mutate>) | void> => {
     setIsLoading(true)
     // check that calldatas, targets, and values are all the same length
     if (calldatas.length !== targets.length || targets.length !== values.length) {
+      callback?.(false)
       setIsLoading(false)
       console.error('calldatas, targets, and values must all be the same length')
       return notification.error({
@@ -123,10 +139,17 @@ export function useCreateProposal() {
         abi: VDAOImplementation,
         functionName: 'propose',
         args: [targets, values, calldatas, calldatas, description],
+      }).then(tx => {
+        notification.info({
+          message: 'Transaction sent',
+          description: 'waiting for the transaction receipt. do not leave the page.',
+        })
+
+        return tx
       })
     } catch (e) {
+      callback?.(false)
       setIsLoading(false)
-      console.error(e)
       return notification.error({
         message: 'Error creating proposal',
         description: (e as any)?.shortMessage || 'Unknown error',
@@ -158,6 +181,7 @@ export function useCreateProposal() {
       return el
     }) as any
 
+    callback?.(true)
     setIsLoading(false)
   }
 
@@ -174,6 +198,8 @@ export function useCreateProposal() {
     grantToken,
     grantImage,
     grantTheme,
+
+    callback,
   }: {
     authorAddress: string
     description: string
@@ -187,6 +213,8 @@ export function useCreateProposal() {
     grantToken: string
     grantImage: string
     grantTheme: string
+
+    callback?: (successful: boolean) => void
   }) => {
     setIsLoading(true)
 
@@ -202,6 +230,7 @@ export function useCreateProposal() {
         authorAddress,
       })
       .catch(e => {
+        callback?.(false)
         setIsLoading(false)
         console.error(e)
         return notification.error({
@@ -310,6 +339,7 @@ export function useCreateProposal() {
       abi: VDAOImplementation,
       address: currentContracts.proxiedVDao as Address,
       functionName: 'propose',
+      chainId: currentChainId,
       args: [
         [currentContracts.roundFactory, currentContracts.treasury],
         [0, 0],
@@ -340,7 +370,10 @@ export function useCreateProposal() {
         // just being typesafe, quite painful to look at.
         const transactionHash = res.hash as string
 
-        console.log('Waiting for transaction to be confirmed')
+        notification.info({
+          message: 'Waiting for confirmation',
+          description: 'Waiting for confirmation of your transaction. do not leave the page.',
+        })
 
         await waitForTransaction({ hash: res.hash, timeout: 10000, chainId: currentChainId, confirmations: 1 }).catch(err => {
           console.error("Couldn't confirm transaction", err)
@@ -363,6 +396,7 @@ export function useCreateProposal() {
         ]
 
         return createProposalMutation.mutateAsync(...new_args).then(el => {
+          callback?.(false)
           setIsLoading(false)
           notification.success({
             message: 'Grant Proposal created',
@@ -376,6 +410,7 @@ export function useCreateProposal() {
         notification.error({ message: 'Error', description: err.shortMessage, placement: 'bottomRight' })
       })
 
+    callback?.(true)
     setIsLoading(false)
   }
 
