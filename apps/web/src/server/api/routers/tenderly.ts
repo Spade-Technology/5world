@@ -1,4 +1,4 @@
-import { encodeFunctionData, encodePacked, getFunctionSelector, pad } from 'viem'
+import { decodeAbiParameters, encodeFunctionData, encodePacked, getFunctionSelector, pad } from 'viem'
 import { z } from 'zod'
 import { currentChainId, currentContracts } from '~/config/contracts'
 import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc'
@@ -22,13 +22,7 @@ export const tenderlyRouter = createTRPCRouter({
 
       const { simulation } = proposal
 
-      // const calldata = encodePacked(['bytes', 'bytes'], ['0xa490d221', proposal?.spellCalldatas?.[spell]])
-      console.log(proposal?.spellSignatures)
-      const calldata =
-        pad(getFunctionSelector(proposal?.spellSignatures?.[spell] as any), {
-          dir: 'right',
-          size: 16,
-        }) + (proposal?.spellCalldatas?.[spell] || '').slice(2)
+      const calldata = getFunctionSelector(proposal?.spellSignatures?.[spell] as any) + (proposal?.spellCalldatas?.[spell] || '').slice(2)
 
       const resp = await fetch(
         `https://api.tenderly.co/api/v1/account/${TENDERLY_USER}/project/${TENDERLY_PROJECT}/simulate`,

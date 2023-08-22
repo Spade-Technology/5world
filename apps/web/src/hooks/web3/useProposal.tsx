@@ -68,7 +68,8 @@ export function useProposalAction(id: number) {
           message: 'Error casting vote',
           description: error.shortMessage,
         })
-      }).finally(() => {
+      })
+      .finally(() => {
         setIsLoading(false)
       })
 
@@ -133,12 +134,13 @@ export function useCreateProposal() {
     }
 
     let result
+    console.log(signatures, calldatas)
     try {
       result = await writeContract({
         address: currentContracts.proxiedVDao as Address,
         abi: VDAOImplementation,
         functionName: 'propose',
-        args: [targets, values, calldatas, calldatas, description],
+        args: [targets, values, signatures, calldatas, description],
       }).then(tx => {
         notification.info({
           message: 'Transaction sent',
@@ -335,36 +337,28 @@ export function useCreateProposal() {
       [args_bytes as any],
     )
 
+    const funding_encoded_parameters = encodeAbiParameters(
+      [
+        {
+          internalType: 'address',
+          name: 'token_',
+          type: 'address',
+        },
+        {
+          internalType: 'uint256',
+          name: 'amount_',
+          type: 'uint256',
+        },
+      ],
+      [grantToken as Address, BigInt(grantAmount)],
+    )
+
     await writeContract({
       abi: VDAOImplementation,
       address: currentContracts.proxiedVDao as Address,
       functionName: 'propose',
       chainId: currentChainId,
-      args: [
-        [currentContracts.roundFactory, currentContracts.treasury],
-        [0, 0],
-        [signature, signature_proposal],
-        [
-          callData,
-
-          encodeAbiParameters(
-            [
-              {
-                internalType: 'address',
-                name: 'token_',
-                type: 'address',
-              },
-              {
-                internalType: 'uint256',
-                name: 'amount_',
-                type: 'uint256',
-              },
-            ],
-            [grantToken as Address, BigInt(grantAmount)],
-          ),
-        ],
-        description,
-      ],
+      args: [[currentContracts.roundFactory, currentContracts.treasury], [0, 0], [signature, signature_proposal], [callData, funding_encoded_parameters], description],
     })
       .then(async res => {
         // just being typesafe, quite painful to look at.
@@ -387,7 +381,7 @@ export function useCreateProposal() {
             spells: [currentContracts.roundFactory, currentContracts.treasury],
             spellValues: [0n, 0n],
             spellSignatures: [signature, signature_proposal],
-            spellCalldatas: [callData, encodePacked(['address', 'uint256'], [grantToken as Address, BigInt(grantAmount)])],
+            spellCalldatas: [callData, funding_encoded_parameters],
 
             authorAddress: authorAddress,
             transactionHash,

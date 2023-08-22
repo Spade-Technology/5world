@@ -32,7 +32,7 @@ const StewardElection = ({ state, timeUntilNextState }: { state: 'Application' |
 
       <div className='px-6 md:px-0'>
         <div className='mx-auto mt-[60px] w-fit rounded-2xl bg-vdao-dark px-10 py-6 text-center font-body text-white md:mt-10 md:p-6'>
-          <div className='text-[22px] font-medium leading-[30px] '>{state === 'Application' ? 'Before the election closing' : 'Elections have started !'}</div>
+          <div className='text-[22px] font-medium leading-[30px] '>{state === 'Application' ? 'Before the election starts' : 'Elections have started !'}</div>
 
           {state === 'Application' ? (
             <div className='mt-[13px] flex justify-center font-bold text-vdao-light md:justify-between'>
@@ -82,11 +82,11 @@ const StewardElection = ({ state, timeUntilNextState }: { state: 'Application' |
             <div className='mt-[13px] flex justify-center font-bold text-vdao-light md:justify-between'>Please vote for your favourite candidates, they will be the next stewards !</div>
           )}
 
-          <PrimaryButton text={'Apply to be a Steward'} spanClass='md:!px-5' className='mx-auto mt-10 md:!w-full' onClick={() => applyToBeSteward()} />
+          <PrimaryButton text={isLoading ? 'Applying to Steward':'Apply to be a Steward'} loading={isLoading} disabled={state === 'Application'}  spanClass='md:!px-5' className='mx-auto mt-10 md:!w-fit' onClick={() => applyToBeSteward()} />
 
           {state === 'Application' && <div className='pt-4 font-body text-lg font-normal md:pt-[21px]'>OR</div>}
 
-          <div className='mx-auto max-w-[231px] px-4 pt-4 font-body text-lg font-normal leading-[22px]'>Next Stewards elected in {timeUntilNextState.humanize()}</div>
+          <div className='mx-auto max-w-[231px] px-4 pt-4 font-body text-lg font-normal leading-[22px]'>{state === 'Application' ? "Applications starts in " : "Application deadline is in "}  {timeUntilNextState.humanize()}</div>
           {/* </div> */}
         </div>
       </div>
