@@ -40,6 +40,7 @@ const Home: NextPage<any> = () => {
   const fetchSignatures = async () => {
     const res = await fetch('/api/manifesto/api')
     const data = await res.json()
+    console.log("siganture fata", data)
     setSignatures({ ...data, loading: false })
     return res
   }
@@ -193,7 +194,7 @@ function Signing({
             <div className='d-none flex flex-col justify-between'>
               {/* step 0 */}
               <VDAOConnectButton
-                className={`${step != 0 ? 'cursor-not-allowed' : ''} border-vdao-light bg-vdao-light font-roboto !text-sm font-medium text-vdao-dark outline-none`}
+                className={`${step != 0 ? 'cursor-not-allowed border-vdao-light !text-vdao-light' : ' border-vdao-light bg-vdao-light'}  font-roboto !text-sm font-medium text-vdao-dark outline-none`}
                 messageOverrides={{ register: 'Wallet Connected', verify: 'Wallet Connected', verified: 'Wallet Connected' }}
                 web2
                 redirectDisabled
@@ -202,7 +203,7 @@ function Signing({
               {/* step 1 */}
               <VDAOConnectButton
                 className={` ${step != 1 ? 'cursor-not-allowed' : ''} !h-10 w-fit font-roboto !text-sm font-medium ${
-                  step < 1 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : step == 1 ? 'border-vdao-light !text-vdao-light' : 'border-vdao-light bg-vdao-light text-vdao-dark'
+                  step < 1 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : step == 1 ? 'border-vdao-light bg-vdao-light !text-vdao-light' : 'border-vdao-light !text-vdao-light'
                 }`}
                 disabled={step != 1}
                 redirectDisabled
@@ -212,7 +213,7 @@ function Signing({
               {/* step 2 */}
               <VDAOConnectButton
                 className={`${step != 2 ? 'cursor-not-allowed' : ''} !h-10 w-fit !font-roboto !text-sm font-medium ${
-                  disabled ? 'border-vdao-light bg-vdao-light text-vdao-dark' : step < 2 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : '!border-vdao-light !text-vdao-light'
+                  disabled ? 'border-vdao-light  text-vdao-light' : step < 2 ? '!border-[#9B9B9B] !bg-[#9B9B9B] !text-[#515151]' : '!border-vdao-light bg-vdao-light !text-vdao-light'
                 }`}
                 disabled={step != 2 || disabled}
                 onClickOverride={signManifesto}
@@ -254,7 +255,7 @@ function Signing({
                   <span className=' overflow-hidden overflow-ellipsis text-sm font-medium md:hidden md:w-full'>{item?.name || item?.eoa.substring(0, 13)}</span>
                   <span className='hidden w-48 overflow-hidden overflow-ellipsis text-sm font-medium md:block md:w-full'>{item?.name || item?.eoa}</span>
                 </div>
-                <span className='w-full text-right font-body  text-[13px] font-normal'>{dayjs(item.updatedAt).fromNow()}</span>
+                <span className='w-full text-right font-body  text-[13px] font-normal'>{dayjs(item.updatedAt ? item.updatedAt : item.createdAt).fromNow()}</span>
               </div>
               {i !== list.length - 1 && <div className='h-[1px] w-full bg-white opacity-20' />}
             </>

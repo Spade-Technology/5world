@@ -65,7 +65,6 @@ const navigationElementsWeb3: NavigationElement[] = [
     name: 'Vote',
     link: '#',
     children: [
-      { name: 'Home', link: '/app' },
       { name: 'Operational Proposals', link: '/app/proposals' },
       { name: 'Grants Round', link: '/app/grants' },
       { name: 'Steward Election', link: '/app/election' },
