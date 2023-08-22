@@ -81,6 +81,12 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
         onSuccess: async (data, variables, context) => {
           setState('confirm')
         },
+        onError: error => {
+          return notification.error({
+            message: 'Error',
+            description: JSON.stringify(error),
+          })
+        }
       },
     )
   }
