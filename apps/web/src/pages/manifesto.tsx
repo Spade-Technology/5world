@@ -32,16 +32,17 @@ const Home: NextPage<any> = () => {
   const signModuleRef = useRef<HTMLDivElement>(null)
   const [signatures, setSignatures] = useState({ total: 0, list: [], loading: true })
   const [signed, setSigned] = useState<boolean>(false)
+  const { address } = useAccount()
 
   useEffect(() => {
     fetchSignatures()
   }, [])
 
   const fetchSignatures = async () => {
-    const res = await fetch('/api/manifesto/api')
+    const res = await fetch('/api/manifesto/api?eoa=' + address)
     const data = await res.json()
-    console.log("siganture fata", data)
     setSignatures({ ...data, loading: false })
+    if (data.hasSigned) setSigned(true)
     return res
   }
 
@@ -49,7 +50,7 @@ const Home: NextPage<any> = () => {
   const [step, setStep] = useState(0)
 
   // wagmi get address
-  const { address } = useAccount()
+
   const { mutateAsync } = api.manifesto.sign.useMutation()
 
   const [notificationApi, contextHolder] = notification.useNotification()
@@ -58,13 +59,15 @@ const Home: NextPage<any> = () => {
   const { data, error, isLoading, signMessage } = useSignMessage({
     onSuccess: async (data, variables) => {
       // const address = verifyMessage(variables.message, data)
-
+      setSignatures({
+        ...signatures,
+        total: signatures.total + 1,
+      })
       mutateAsync({
         eoa: String(address),
         signature: data,
         message: variables.message.toString(),
       }).then(res => {
-        fetchSignatures()
         notificationApi.success({
           message: <span>Signed Manifesto</span>,
           description: (
@@ -122,9 +125,11 @@ const Home: NextPage<any> = () => {
           {contextHolder}
           <SectionOne />
           <div className='pointer-events-none left-0 right-0 px-4 md:absolute md:h-[5150px] md:px-0'>
-            <div className='z-50 mx-auto mt-10  w-full max-w-[342px] items-center justify-between rounded-[20px]
+            <div
+              className='z-50 mx-auto mt-10  w-full max-w-[342px] items-center justify-between rounded-[20px]
              bg-vdao-dark py-5 px-[38px] font-body text-xl font-medium text-white md:sticky 
-             md:top-10 md:mt-20 md:flex md:w-11/12 md:max-w-[1140px] md:px-10 lg:h-[96px] lg:py-0'>
+             md:top-10 md:mt-20 md:flex md:w-11/12 md:max-w-[1140px] md:px-10 lg:h-[96px] lg:py-0'
+            >
               <div className='flex flex-col items-center justify-between gap-7 md:w-80 md:flex-row md:gap-[16px] lg:w-auto'>
                 <div className=''>
                   <div className='mx-auto h-[36px] w-[36px] bg-[url(/icons/manifesto/Pen.svg)] bg-contain bg-center bg-no-repeat md:mx-0' />
