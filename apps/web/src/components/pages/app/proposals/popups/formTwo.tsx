@@ -57,6 +57,7 @@ const FormTwo = ({ setNextForm, setShowPreview, spells, setSpells }: FormProps) 
       const newSpell = {
         calldata: {},
         name: newAction.name,
+        signature: newAction.name + (newAction.inputs.length > 0 ? '(' + newAction.inputs.map((el: any) => el.type).join(',') + ')' : '()'),
         target: contractAddress,
         abi: abi,
         value: '0',

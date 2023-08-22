@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { encodeFunctionData } from 'viem'
+import { encodeAbiParameters, encodeFunctionData } from 'viem'
 import { useAccount } from 'wagmi'
 import CustomModal from '~/components/misc/customModal'
 import { useCreateProposal } from '~/hooks/web3/useProposal'
@@ -15,6 +15,7 @@ type CreateProposalProps = {
 
 export type Spell = {
   name: string
+  signature: string
   calldata: any
   target: string
   abi: any
@@ -48,7 +49,7 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
     let cds: string[] = []
     if (address && spells.length > 0) {
       // Encode arguments using ethers.js or a similar library
-      spells.map(async (spell, idx) => {
+      spells.forEach(async (spell, idx) => {
         type typing = {
           name: string
           type: string
@@ -69,7 +70,7 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
         })
 
         // const callData = types && encodeAbiParameters(types, Object.values(args))
-        const callData = types && encodeFunctionData({ abi: spell?.abi, args: valuesArr, functionName: spell.name })
+        const callData = types && encodeAbiParameters(spell?.abi.find((item: abiItem) => item.name === spell.name).inputs, valuesArr)
 
         // Construct calldatas, targets, values
         cds.push(callData)
@@ -79,15 +80,6 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
     }
   }
 
-  if (spells[0]) {
-    try {
-      console.log(Object.values(spells[0]?.calldata))
-      console.log(spells[0]?.abi.find((item: abiItem) => item.name === spells[0]?.name))
-      console.log(encodeFunctionData({ abi: spells[0]?.abi, args: Object.values(spells[0]?.calldata), functionName: spells[0]?.name }))
-    } catch (e) {
-      console.log(e)
-    }
-  }
   const setShowPreview = (preview: boolean) => {
     _setShowPreview(preview)
     preview && handlePreviews()
@@ -103,7 +95,7 @@ const CreateNewProposal = ({ show, close }: CreateProposalProps) => {
         calldatas: callDatas,
         targets: spells.map(spell => spell.target),
         values: spells.map(spell => BigInt(spell.value)),
-        signatures: spells.map(spell => spell.name),
+        signatures: spells.map(spell => spell.signature),
         callback: successful => {
           successful && close()
         },
