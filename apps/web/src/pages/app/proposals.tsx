@@ -8,13 +8,15 @@ import OperationalProposals from '~/components/pages/app/proposals/operationalPr
 import CreateNewProposal from '~/components/pages/app/proposals/popups/createProposal'
 import ViewProposal from '~/components/pages/app/proposals/popups/viewProposal'
 import ProposalCards from '~/components/pages/app/proposals/proposalCards'
+import { useProposalReads } from '~/hooks/web3/useProposal'
 
 const Proposals = () => {
   const [openCreateProposal, setOpenCreateProposal] = useState(false)
   const [openCreateGrantProposal, setOpenCreateGrantProposal] = useState(false)
   const [viewProposal, setViewProposal] = useState(false)
-  const [refetchFunc, setRefetchFunc] = useState<Function>()
   const [proposalID, setProposalID] = useState(0)
+  const { refetch } = useProposalReads({ include: { author: true, pod: true } })
+
 
   return (
     <Page>
@@ -22,14 +24,14 @@ const Proposals = () => {
         <OperationalProposals {...{ setOpenCreateProposal, setOpenCreateGrantProposal }} />
 
         <EnforceAuth>
-          <ProposalCards setViewProposal={setViewProposal} setProposalID={setProposalID} setRefetchFunc={setRefetchFunc} />
+          <ProposalCards setViewProposal={setViewProposal} setProposalID={setProposalID} />
 
           <div className='px-6 md:px-10 xl:px-0'>
             <Insights />
           </div>
 
           {openCreateProposal && <CreateNewProposal show={openCreateProposal} close={() => setOpenCreateProposal(false)} />}
-          {openCreateGrantProposal && <CreateGrant show={openCreateGrantProposal} close={() => setOpenCreateGrantProposal(false)} refetchFunc={refetchFunc} />}
+          {openCreateGrantProposal && <CreateGrant show={openCreateGrantProposal} close={() => setOpenCreateGrantProposal(false)} refetchFunc={() => refetch()} />}
           {viewProposal && <ViewProposal show={viewProposal} proposalID={proposalID} close={() => setViewProposal(false)} />}
         </EnforceAuth>
       </div>

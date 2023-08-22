@@ -88,7 +88,9 @@ export const VDAOConnectButton = ({
         {message}
       </button>
 
-      <div className={` fixed left-0 bottom-0 top-0 flex h-screen w-screen items-center justify-center transition-all ease-in-out ${openModal ? 'visible z-50 opacity-100' : 'invisible opacity-0'}`}>
+      <div
+        className={` fixed left-0 bottom-0 top-0 flex h-screen w-screen items-center justify-center transition-all ease-in-out ${openModal ? 'visible z-[1000] opacity-100' : 'invisible opacity-0'}`}
+      >
         <div
           className={`absolute -z-10 h-full w-full bg-vdao-dark bg-opacity-60 backdrop-blur-lg backdrop-opacity-0 transition-all ${openModal && 'hidden backdrop-opacity-100 md:block'}`}
           onClick={() => {
@@ -315,7 +317,7 @@ function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Se
   }
 
   const ImageInput = ({ className }: { className?: string }) => (
-    <div className={`mb-[46px] flex justify-start gap-5 max-md:mx-auto md:mb-0 md:flex-col md:pt-8 md:text-center md:align-middle lg:flex-row ${className}`}>
+    <div className={`mb-5 flex justify-start gap-5 max-md:mx-auto md:mb-0 md:flex-col md:text-center md:align-middle lg:flex-row ${className}`}>
       <Image src={image ? image : PodImage} alt='PodImage' className='ml-0 h-[75.17px] w-[75.17px] md:mx-auto lg:mx-0' />
       <div className='flex flex-col'>
         <label className='w-fit cursor-pointer rounded-[5px] bg-vdao-pink py-[5px] px-[35px] font-heading text-xl font-medium md:mx-auto'>
@@ -347,19 +349,29 @@ function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Se
         <Image src={closeIcon} onClick={() => setOpenModal(false)} alt='VDAO' height={24} className='cursor-pointer' />
       </div>
       <div className='mb-4 flex flex-col justify-between gap-[100px] md:mb-[24px] md:flex-row md:gap-10 md:pt-[60px]'>
-        <div className='flex flex-col  gap-5 lg:w-[450px]'>
+        <div className='flex w-full flex-col gap-5'>
           <div className='w-full font-heading text-[26px] font-medium leading-[30.58px] text-vdao-light md:text-[46px] md:leading-[52px]'>Oh, You're new here</div>
-          <Input placeholder='Enter your name' className='!h-9 !font-body !text-lg !text-vdao-dark' onChange={e => setName(e.target.value)} />
-          <Input.TextArea placeholder='Enter your bio' className='!h-[102px] !font-body !text-lg !text-vdao-dark md:h-auto' onChange={e => setBio(e.target.value)} />
-          <div className=''>
-            <ImageInput className='md:hidden' />
+          <div className='flex w-full flex-col gap-5 md:flex-row md:gap-[30px]'>
+            <aside className='md:w-[calc(100%-231px)] lg:w-[460px]'>
+              <Input placeholder='Enter your name' className='!h-9 !font-body !text-lg !text-vdao-dark' onChange={e => setName(e.target.value)} />
+              <div className='mb-5'></div>
+              <Input.TextArea placeholder='Enter your bio' className='!h-[102px] !font-body !text-lg !text-vdao-dark md:h-auto' onChange={e => setBio(e.target.value)} />
+            </aside>
+            <div className=''>
+              <ImageInput className='' />
+            </div>
           </div>
           <Button type='primary' className=' !h-9 w-fit !px-[35px] !text-xl !text-vdao-dark md:mx-0' onClick={verify} loading={isLoading}>
             Submit
           </Button>
           <div className=' flex flex-row-reverse justify-start gap-2 md:flex-row'>
             <span className='mr-auto max-w-[206px] text-sm leading-4 text-vdao-light md:mr-0 md:max-w-[368px]'>Next steps: Apply to join a guild to be a member of the DAO</span>
-            <Tooltip title='Apply to join a guild to be a member of the DAO' className='my-auto text-white '>
+            <Tooltip
+              showArrow={true}
+              overlayInnerStyle={{ background: 'white' }}
+              title={<div className=' bg-white font-body text-base font-normal text-black '> Apply to join a guild to be a member of the DAO</div>}
+              className='my-auto text-white '
+            >
               <BsFillInfoCircleFill />
             </Tooltip>
           </div>
@@ -373,11 +385,20 @@ function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Se
 function DisplayWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<SetStateAction<boolean>>; openModal: Boolean }) {
   const { data: siwe } = useSession()
   const ref: any = useRef()
+  const [copy, setCopy] = useState(false)
 
   useEffect(() => {
     ref?.current?.scrollIntoView()
   }, [openModal])
 
+  const copyHanlder = () => {
+    navigator.clipboard.writeText(siwe?.address!)
+    setCopy(true)
+
+    setTimeout(() => {
+      setCopy(false)
+    }, 1000)
+  }
   return (
     <div
       ref={ref}
@@ -396,9 +417,17 @@ function DisplayWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Set
           <Image src={siwe?.user.picture || PodImage} alt='PodImage' className='' sizes='square' fill />
         </div>
         <div className='mr-0'>
-          <div className='font-inter text-base leading-5 text-white'>{shortenText(siwe?.user.name!, 20)}eth_ninja1</div>
-          <div className=' flex items-center pt-2 font-inter text-base leading-5 text-vdao-light'>
-            {shortenAddress(siwe?.address || '')} <div className='ml-[9px] h-[17.411px] w-[15px] cursor-pointer bg-[url(/logo/svg/Vector.svg)] bg-contain bg-center bg-no-repeat'></div>
+          <div className='font-inter text-base leading-5 text-white'>{shortenText(siwe?.user.name!, 20)}</div>
+          <div className='flex cursor-pointer items-center pt-2 font-inter text-base leading-5 text-vdao-light' onClick={copyHanlder}>
+            {' '}
+            {copy ? (
+              'Address Copied...!!'
+            ) : (
+              <>
+                {shortenAddress(siwe?.address || '')}
+                <div className='ml-[9px] h-[17.411px] w-[15px] cursor-pointer bg-[url(/logo/svg/Vector.svg)] bg-contain bg-center bg-no-repeat'></div>
+              </>
+            )}
           </div>{' '}
         </div>
       </div>

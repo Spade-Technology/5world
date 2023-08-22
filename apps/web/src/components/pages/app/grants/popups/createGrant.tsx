@@ -101,8 +101,8 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
       grantTheme: await imageToBase64String(theme),
       callback: successful => {
         if (successful) {
-          refetchFunc && refetchFunc()
-          close()
+          refetchFunc &&  refetchFunc()
+          close()      
         }
       },
     }).finally(() => {
@@ -220,8 +220,8 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
               <div>
                 <div className='text-[22px] font-bold'>Round Logo*</div>
                 {logo ? (
-                  <div className='mt-5 h-[300px] w-[300px] rounded-[10px] py-5 text-center outline-dashed md:py-9'>
-                    <Image src={URL.createObjectURL(logo)} alt='upload' className='mx-auto' width={300} height={300} />
+                  <div className='mt-5 rounded-[10px]  text-center'>
+                    <Image src={URL.createObjectURL(logo)} alt='upload' width={183} height={183} />
                   </div>
                 ) : (
                   <div className='mt-5 rounded-[10px] py-5 text-center outline-dashed md:px-16 md:py-9' {...getLogoRootProps()}>
@@ -236,8 +236,8 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
               <div className='pt-[30px]'>
                 <div className='text-[22px] font-bold'>Round Theme*</div>
                 {theme ? (
-                  <div className='mt-5 h-[300px] w-[300px] rounded-[10px] py-5 text-center outline-dotted md:py-9'>
-                    <Image src={URL.createObjectURL(theme)} alt='upload' className='mx-auto' width={300} height={300} />
+                  <div className='mt-5 h-full w-full rounded-[10px] text-center '>
+                    <Image src={URL.createObjectURL(theme)} alt='upload'  width={300} height={183} />
                   </div>
                 ) : (
                   <div className='mt-5 rounded-[10px] px-20 py-5 text-center outline-dotted md:px-16 md:py-9' {...getThemeRootProps()}>
