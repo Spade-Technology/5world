@@ -1,7 +1,4 @@
 import Image from 'next/image'
-import ProfileCard from '~/components/misc/profileCard'
-import PrimaryButton from '~/styles/shared/buttons/primaryButton'
-import WhiteButton from '~/styles/shared/buttons/whiteButton'
 import { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import grantImage from 'public/illustrations/grants/image5.svg'
 import { useRouter } from 'next/router'
@@ -89,7 +86,7 @@ export const CurrentRound = ({ grant }: GrantProps) => {
   }
 
   return (
-    <div className='mb-10 flex w-full flex-col-reverse md:flex-row rounded-[40px] bg-vdao-dark '>
+    <div className='mb-10 flex w-full rounded-[40px] bg-vdao-dark '>
       <div className='my-10 w-full rounded-[40px] bg-vdao-dark pl-10 pr-5 text-white'>
         <div className='flex gap-3 flex-col md:flex-row font-heading text-3xl font-medium'>
           {grant.title}

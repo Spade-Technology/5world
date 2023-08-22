@@ -385,7 +385,9 @@ function SectionTwo() {
           model, as well as the NFT art collaboration model.
         </span>
 
-        <h4 className='mt-[100px] mr-auto text-left font-heading text-[28px] font-medium leading-[28px] text-vdao-light md:mt-40 md:text-[32px]'>Time for Action</h4>
+        <h4 id='action' className='mr-auto pt-[100px] text-left font-heading text-[28px] font-medium leading-[28px] text-vdao-light md:pt-40 md:text-[32px]'>
+          Time for Action
+        </h4>
         <span className='mt-5 mr-auto font-body text-base font-normal leading-[28px] text-white md:mt-8 md:mb-0 md:text-xl'>
           If you agree with this manifesto and want to be part of our community, please <u className='font-bold'>sign here.</u>
         </span>
@@ -398,13 +400,13 @@ function SectionOne() {
   return (
     <section className=' mt-9 flex max-w-[1140px] flex-col !px-4 md:mx-auto md:mt-20'>
       <div className='font-heading text-[38px] font-medium leading-[48px] tracking-[-1.5px] text-vdao-light md:text-center md:text-[96px] md:leading-[72px]'>VDAO Manifesto</div>
-      <div className='mt-[16px] w-[307px] font-heading text-xl font-medium leading-5 text-white md:mt-[24px] md:w-full md:text-center md:text-[32px]'>Restoring Ecosystems From the Soil up.</div>
+      <div className='mt-[16px] font-heading text-xl font-medium leading-5 text-white md:mt-[24px] md:w-full md:text-center md:text-[32px]'>Restoring Ecosystems From the Soil up.</div>
 
       <div className='mt-10 flex flex-col-reverse gap-10 md:mt-[64px] md:flex-row md:gap-0'>
         <Image src={VDAOGetInvolved} alt='VDAO' width={0} height={0} className='mx-auto h-[248px] w-[230px] md:h-[364px] md:w-[338px] ' />
         {/* line height 28px */}
         <div className='my-auto flex flex-col gap-4  md:w-1/2'>
-          <span className='mb-[16px] w-[341px] font-body text-base font-medium leading-[28px] text-white md:mb-[25px] md:w-[412px] md:text-xl'>
+          <span className='mb-[16px] font-body text-base font-medium leading-[28px] text-white md:mb-[25px] md:text-xl lg:w-[412px]'>
             Complete all 4 steps to join the Vcommunity & gain full access to future benefits.
           </span>
           <div className=' flex w-full items-start gap-3'>
@@ -440,6 +442,9 @@ function SectionOne() {
           </span>
         </div>
       </div>
+      <a href='#action' className='fixed right-5 bottom-5 z-50 flex h-[58px] w-[58px] items-center  justify-center rounded-full bg-vdao-light md:hidden '>
+        <div className='mx-auto h-[30.642px] w-[30.642px] bg-[url(/icons/manifesto/Pencil.svg)] bg-contain bg-center bg-no-repeat md:mx-0' />
+      </a>
     </section>
   )
 }

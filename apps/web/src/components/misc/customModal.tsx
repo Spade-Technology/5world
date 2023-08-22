@@ -31,7 +31,7 @@ const CustomModal = ({ show, close, children, heading, modalMarginTop, padding, 
             <Image
               src={CloseIcon}
               alt='close'
-              className='float-right cursor-pointer'
+              className='float-right cursor-pointer duration-300 hover:rotate-[90deg] hover:scale-110'
               onClick={() => {
                 close()
               }}
