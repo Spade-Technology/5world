@@ -60,19 +60,28 @@ const navigationElementsWeb2: NavigationElement[] = [
 ]
 
 const navigationElementsWeb3: NavigationElement[] = [
-  { name: 'Home', link: '/' },
+  { name: 'Dashboard', link: '/app' },
   {
     name: 'Vote',
     link: '#',
     children: [
+      { name: 'Home', link: '/app' },
       { name: 'Operational Proposals', link: '/app/proposals' },
       { name: 'Grants Round', link: '/app/grants' },
       { name: 'Steward Election', link: '/app/election' },
       { name: 'Forum Discussion', link: '#' },
     ],
   },
-  { name: 'Steward Profile', link: '/app/steward' },
-  { name: 'Pods Profile', link: '/app/pods' },
+
+  {
+    name: 'Profiles',
+    link: '#',
+    children: [
+      { name: 'Steward Profile', link: '/app/steward' },
+      { name: 'Pods Profile', link: '/app/pods' },
+    ],
+  },
+
   { name: 'Support', link: '/app/support' },
   { name: 'Analytics', link: '/app/analytics' },
 ]
@@ -102,7 +111,7 @@ const Header = (props: Props) => {
 
         <div className={'ml-auto mr-[50px] flex justify-between gap-5 lg:gap-[35px] ' + (!props.dark ? '!text-vdao-dark' : 'text-white')}>
           {(props.web2 ? navigationElementsWeb2 : navigationElementsWeb3).map((element, index) =>
-            !props.web2 && index > 0 ? (
+            !props.web2 && index >= 0 ? (
               <Tooltip
                 placement='bottomLeft'
                 color='white'
@@ -164,7 +173,7 @@ const Header = (props: Props) => {
           <Image src={!props.dark && router.pathname !== '/app/support' ? discordCircle : darkDiscord} alt='VDAO' width={30} height={30} className='hidden md:block' />
           <VDAOConnectButton
             web2={props.web2}
-            className={!props.dark && router.pathname !== '/app/support' ? 'border-vdao-dark text-xl font-medium text-vdao-dark' : 'border-vdao-light text-vdao-light'}
+            className={!props.dark && router.pathname !== '/app/support' ? 'border-vdao-dark text-xl font-medium text-vdao-dark' : 'border-none bg-vdao-dark text-white'}
           />
         </div>
       </div>

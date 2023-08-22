@@ -373,11 +373,20 @@ function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Se
 function DisplayWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<SetStateAction<boolean>>; openModal: Boolean }) {
   const { data: siwe } = useSession()
   const ref: any = useRef()
+  const [copy, setCopy] = useState(false)
 
   useEffect(() => {
     ref?.current?.scrollIntoView()
   }, [openModal])
 
+  const copyHanlder = () => {
+    navigator.clipboard.writeText(siwe?.address!)
+    setCopy(true)
+
+    setTimeout(() => {
+      setCopy(false)
+    }, 1000)
+  }
   return (
     <div
       ref={ref}
@@ -396,9 +405,17 @@ function DisplayWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Set
           <Image src={siwe?.user.picture || PodImage} alt='PodImage' className='' sizes='square' fill />
         </div>
         <div className='mr-0'>
-          <div className='font-inter text-base leading-5 text-white'>{shortenText(siwe?.user.name!, 20)}eth_ninja1</div>
-          <div className=' flex items-center pt-2 font-inter text-base leading-5 text-vdao-light'>
-            {shortenAddress(siwe?.address || '')} <div className='ml-[9px] h-[17.411px] w-[15px] cursor-pointer bg-[url(/logo/svg/Vector.svg)] bg-contain bg-center bg-no-repeat'></div>
+          <div className='font-inter text-base leading-5 text-white'>{shortenText(siwe?.user.name!, 20)}</div>
+          <div className='flex cursor-pointer items-center pt-2 font-inter text-base leading-5 text-vdao-light' onClick={copyHanlder}>
+            {' '}
+            {copy ? (
+              'Address Copied...!!'
+            ) : (
+              <>
+                {shortenAddress(siwe?.address || '')}
+                <div className='ml-[9px] h-[17.411px] w-[15px] cursor-pointer bg-[url(/logo/svg/Vector.svg)] bg-contain bg-center bg-no-repeat'></div>
+              </>
+            )}
           </div>{' '}
         </div>
       </div>
