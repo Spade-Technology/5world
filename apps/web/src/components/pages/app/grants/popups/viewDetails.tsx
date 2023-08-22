@@ -85,11 +85,14 @@ const ViewDetails = ({ show, close, requestId, grant, votesHandler }: Props) => 
               </div>
             </div>
           )}
-
-          <div className='pt-10 text-[22px] font-bold'>{claimed ? 'Estimated funding received' : 'funding claimed'} </div>
-          <div className='pt-[10px] text-[22px] font-medium text-vdao-light md:text-[26px] '>
-            {matchedAmount ? humanReadable.toString() : '0.00'} {symbol} ({percent.toFixed(2)}%)
-          </div>
+          {quadraticVotes > 1n && (
+            <>
+              <div className='pt-10 text-[22px] font-bold'>{claimed ? 'funding claimed' : 'Estimated funding amount'} </div>
+              <div className='pt-[10px] text-[22px] font-medium text-vdao-light md:text-[26px] '>
+                {matchedAmount ? humanReadable.toString() : '0.00'} {symbol} ({percent.toFixed(2)}%)
+              </div>
+            </>
+          )}
 
           <div className='pt-[30px] text-[22px] font-bold md:pt-10'>Delegate your vote</div>
 
