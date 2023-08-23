@@ -146,7 +146,7 @@ const Home: NextPage<any> = () => {
         <div className='overflow-hidden md:px-4'>
           {contextHolder}
           <SectionOne />
-          <div className='pointer-events-none left-0 right-0 px-4 md:absolute md:h-[5150px] md:px-0'>
+          <div className='pointer-events-none left-0 right-0 hidden px-4 md:absolute md:block md:h-[5150px] md:px-0'>
             <div
               className='z-50 mx-auto mt-10  w-full max-w-[342px] items-center justify-between rounded-[20px]
              bg-vdao-dark py-5 px-[38px] font-body text-xl font-medium text-white md:sticky 
@@ -321,6 +321,19 @@ function Signing({
 }
 
 function SectionTwo() {
+  const isIntersectingRef = useRef<any>(null)
+  const [isIntersecting, setIntersecting] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      setIntersecting(entry.isIntersecting)
+      console.log(entry.isIntersecting)
+    })
+    observer.observe(isIntersectingRef.current)
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
     // light to dark
 
@@ -412,7 +425,14 @@ function SectionTwo() {
           model, as well as the NFT art collaboration model.
         </span>
 
-        <h4 id='action' className='mr-auto pt-[100px] text-left font-heading text-[28px] font-medium leading-[28px] text-vdao-light md:pt-40 md:text-[32px]'>
+        {isIntersecting ? (
+          ''
+        ) : (
+          <a href='#action' className='fixed right-5 bottom-5 z-50 flex h-[58px] w-[58px] items-center  justify-center rounded-full bg-vdao-light md:hidden '>
+            <div className='mx-auto h-[30.642px] w-[30.642px] bg-[url(/icons/manifesto/Pencil.svg)] bg-contain bg-center bg-no-repeat md:mx-0' />
+          </a>
+        )}
+        <h4 ref={isIntersectingRef} id='action' className='mr-auto pt-[100px] text-left font-heading text-[28px] font-medium leading-[28px] text-vdao-light md:pt-40 md:text-[32px]'>
           Time for Action
         </h4>
         <span className='mt-5 mr-auto font-body text-base font-normal leading-[28px] text-white md:mt-8 md:mb-0 md:text-xl'>
@@ -469,9 +489,6 @@ function SectionOne() {
           </span>
         </div>
       </div>
-      <a href='#action' className='fixed right-5 bottom-5 z-50 flex h-[58px] w-[58px] items-center  justify-center rounded-full bg-vdao-light md:hidden '>
-        <div className='mx-auto h-[30.642px] w-[30.642px] bg-[url(/icons/manifesto/Pencil.svg)] bg-contain bg-center bg-no-repeat md:mx-0' />
-      </a>
     </section>
   )
 }
