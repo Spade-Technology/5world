@@ -15,9 +15,9 @@ type ButtonProps = {
 export const DropdownPrimaryButton = ({ text, className, onClick, icon, dropDown, loading = false, disabled }: ButtonProps) => {
   return (
     <div
-      className={` w-fit rounded-md cursor-pointer ${
+      className={` w-fit cursor-pointer rounded-md ${
         disabled ? 'border-[1px] border-vdao-dark text-vdao-dark' : 'bg-vdao-light'
-      }  px-9 py-1.5 font-heading text-xl font-medium text-vdao-dark md:py-[5px] md:px-[35px] ${loading || disabled && 'cursor-not-allowed opacity-80 ' } ${className}`}
+      }  px-9 py-1.5 font-heading text-xl font-medium text-vdao-dark md:py-[5px] md:px-[35px] ${loading || (disabled && 'cursor-not-allowed opacity-80 ')} ${className}`}
       onClick={() => onClick && !loading && !disabled && onClick()}
     >
       <div className={`mx-auto flex gap-1 ${dropDown ? 'flex-row-reverse justify-between' : ''}`}>
@@ -32,7 +32,7 @@ export const DropdownPrimaryButton = ({ text, className, onClick, icon, dropDown
 const PrimaryButton = ({ text, className, spanClass, onClick, icon, dropDown, disabled, loading }: ButtonProps) => {
   return (
     <div
-      className={`w-fit rounded-md !px-0 !py-0 ${disabled ? ' cursor-not-allowed opacity-50' : ' cursor-pointer '} bg-vdao-light ${className} `}
+      className={` relative z-10 w-fit rounded-md !px-0 !py-0 ${disabled ? ' cursor-not-allowed overflow-hidden opacity-50' : ' btn cursor-pointer '} bg-vdao-light ${className} `}
       onClick={() => onClick && !disabled && !loading && onClick()}
     >
       <span

@@ -61,7 +61,7 @@ const CreateProject = ({ show, close, grant }: CreateProjectProps) => {
     if (projectAddress.match(/0x[a-fA-F0-9]{40}/) === null)
       return notification.error({
         message: 'Error',
-        description: 'Invalid project address',
+        description: 'Invalid project beneficiary',
       })
 
     const hash = generateGrantIPFSHash.mutate(
@@ -132,12 +132,12 @@ const CreateProject = ({ show, close, grant }: CreateProjectProps) => {
 
               <div className='pt-10'>
                 <div className='flex justify-between'>
-                  <div className='text-[22px] font-bold'>Project Address*</div>
+                  <div className='text-[22px] font-bold'>Project Beneficiary*</div>
                   {/* <div className='text-vdao-light'>*Required</div> */}
                 </div>
                 <input
                   className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none placeholder:py-2 md:mt-5'
-                  placeholder='What’s the token address ?'
+                  placeholder='What’s the multisig wallet address ?'
                   onChange={e => setProjectAddress(e.target.value)}
                   defaultValue={address}
                 />
