@@ -1,8 +1,8 @@
 import { z } from 'zod'
 import { api } from '~/utils/api'
-import { useSignMessage } from 'wagmi'
+import { useContractRead, useSignMessage } from 'wagmi'
 import { signMessage, writeContract } from '@wagmi/core'
-import Vtoken from '~/abi/VToken.json'
+import Vtoken from '~/abi/VDaoToken.json'
 import { currentContracts } from '~/config/contracts'
 import { Address } from 'viem'
 import { notification } from 'antd'
@@ -128,6 +128,15 @@ export function useDelegate() {
     })
 
   return { delegate }
+}
+
+export function useGetDelegate({ address }: { address: Address }) {
+  return useContractRead({
+    abi: Vtoken,
+    address: currentContracts.vDao as Address,
+    functionName: 'getCurrentVotes',
+    args: [address],
+  })
 }
 
 export function useSteward(address: string, args: StewardArgs = {}) {

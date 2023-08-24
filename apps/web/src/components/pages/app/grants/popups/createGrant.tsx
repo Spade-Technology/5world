@@ -84,9 +84,9 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
         onError: error => {
           return notification.error({
             message: 'Error',
-            description: JSON.stringify(error),
+            description: error.message,
           })
-        }
+        },
       },
     )
   }
@@ -107,8 +107,8 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
       grantTheme: await imageToBase64String(theme),
       callback: successful => {
         if (successful) {
-          refetchFunc &&  refetchFunc()
-          close()      
+          refetchFunc && refetchFunc()
+          close()
         }
       },
     }).finally(() => {
@@ -243,7 +243,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
                 <div className='text-[22px] font-bold'>Round Theme*</div>
                 {theme ? (
                   <div className='mt-5 h-full w-full rounded-[10px] text-center '>
-                    <Image src={URL.createObjectURL(theme)} alt='upload'  width={300} height={183} />
+                    <Image src={URL.createObjectURL(theme)} alt='upload' width={300} height={183} />
                   </div>
                 ) : (
                   <div className='mt-5 rounded-[10px] px-20 py-5 text-center outline-dotted md:px-16 md:py-9' {...getThemeRootProps()}>

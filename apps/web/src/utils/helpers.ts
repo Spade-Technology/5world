@@ -57,14 +57,19 @@ export const JoinedAtFormat = (date: any) => {
   return joinedAt
 }
 
-export const imageToBase64String = (file: any) => {
+export const imageToBase64String = (file: any, maxSize: number = 2097152) => {
   return new Promise<string>((resolve, reject) => {
     var reader = new FileReader()
 
     reader.readAsDataURL(file)
     reader.onload = function () {
-      if (reader.result) return resolve(reader.result.toString())
-      else return resolve('')
+      if (reader.result) {
+        if (reader.result.toString().length > maxSize) {
+          return reject('File size is too large')
+        }
+
+        return resolve(reader.result.toString())
+      } else return resolve('')
     }
     reader.onerror = function (error) {
       console.error(error)

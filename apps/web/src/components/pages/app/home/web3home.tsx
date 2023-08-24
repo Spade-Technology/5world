@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
 import { useUserReads } from '~/hooks/web3/useUser'
-import { useAccount } from 'wagmi'
+import { Address, useAccount, useContractRead } from 'wagmi'
 import { Skeleton } from 'antd'
 
 import { shortenAddress, shortenText } from '~/utils/helpers'
@@ -18,14 +18,13 @@ import { monthNames } from '~/utils/date'
 import { useSession } from 'next-auth/react'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { User } from '@prisma/client'
-import { useDelegate } from '~/hooks/web3/useStewards'
+import { useDelegate, useGetDelegate } from '~/hooks/web3/useStewards'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 type ProfileProps = {
   setOpenProfile: Dispatch<SetStateAction<boolean>>
-  setNewMembersArr: any
-  data: User
+  data: User | any
 }
 
 type NewMembersProps = {
@@ -165,7 +164,7 @@ export function NewMembersComponent({ newMembersArr }: NewMembersProps) {
           <div className='font-body text-[22px] font-bold text-white'>New Members</div>
           <div className='font-body text-lg font-normal text-white'>{newMembersArr ? newMembersArr?.length : 0}</div>
         </div>
-        <div className='custom-scrollbar mt-5 flex max-h-[220px] flex-col gap-5 overflow-y-auto overflow-x-hidden pr-2 md:max-h-[263px]'>
+        <div className='custom-scrollbar mt-5 flex flex-col gap-5 overflow-y-auto overflow-x-hidden pr-2 '>
           {newMembersArr?.map((member: any, index: number) => {
             return (
               <div className=' flex items-center justify-between md:w-80 lg:w-auto' key={index}>
@@ -195,7 +194,7 @@ export function NewMembersComponent({ newMembersArr }: NewMembersProps) {
       </div>
 
       {/* ONLINE MEMBERS */}
-      <div className='xl:px-10'>
+      {/* <div className='xl:px-10'>
         <div className=' mt-10 flex items-center gap-2.5 md:mt-0 lg:mt-10'>
           <div className='font-body text-[22px] font-bold text-white'>Online</div>
           <div className='font-body text-lg font-normal text-white'>{0}</div>
@@ -211,39 +210,18 @@ export function NewMembersComponent({ newMembersArr }: NewMembersProps) {
             )
           })}
         </article>
-      </div>
+      </div> */}
     </Section>
   )
 }
 
-export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr, data }: ProfileProps) {
+export function ProfileHomeComponent({ setOpenProfile, data }: ProfileProps) {
   const { address, isConnecting, isDisconnected } = useAccount()
-
-  const { data: newData } = useUserReads({})
-  const { data: siwe } = useSession()
 
   let skeletonActive = !data
 
   const [praiseScore, setPraiseScore] = useState(0)
   const date = new Date()
-
-  useEffect(() => {
-    if (newData) {
-      const newDataArr: any = []
-      newData.map(member => {
-        const joinedAt = member.JoinedAt
-        if (
-          joinedAt.getFullYear() === date.getFullYear() &&
-          ((joinedAt.getMonth() + 1 === date.getMonth() && joinedAt.getDate() <= date.getDate()) || (joinedAt.getMonth() === date.getMonth() - 1 && joinedAt.getDate() >= date.getDate()))
-        ) {
-          newDataArr.push(member)
-        }
-      })
-      setNewMembersArr(newDataArr)
-    } else {
-      setNewMembersArr([])
-    }
-  }, [newData])
 
   useEffect(() => {
     if (data) {
@@ -282,14 +260,14 @@ export function ProfileHomeComponent({ setOpenProfile, setNewMembersArr, data }:
         <div className='mt-5 mr-7 font-body text-lg leading-6 md:mr-0 md:w-full'>
           <Skeleton active={skeletonActive} paragraph={{ rows: 1 }} title={false} className='mt-5 mr-7 font-body text-lg leading-6 md:mr-0 md:w-9/12' loading={skeletonActive}>
             <span>
-              {data?.description?.length > 250 ? (
+              {data?.description && data?.description?.length > 250 ? (
                 <div className=''>
                   {data?.description.substring(0, 250)}{' '}
                   <span onClick={() => setOpenProfile(true)} className=' cursor-pointer text-base text-gray-200 '>
                     ...Read more
                   </span>
                 </div>
-              ) : data?.description?.length < 250 ? (
+              ) : data?.description && data?.description?.length < 250 ? (
                 data?.description
               ) : (
                 'No Description available'
@@ -356,7 +334,11 @@ export function WelcomeComponent() {
 
 export function SelfDelegate({ data }: SelfDelegateProps) {
   const { delegate } = useDelegate()
+  const { data: votes } = useGetDelegate({ address: data?.address as Address })
   const { data: siwe } = useSession()
+
+  if (!siwe || Number(votes) > 0) return null
+
   return (
     <Section className='mx-auto max-w-[937px]  px-6 pb-6'>
       <div className='my-auto mt-5 flex flex-col justify-between gap-5 rounded-[20px] bg-vdao-dark px-6 py-5 text-lg font-light text-white md:flex-row md:px-12'>

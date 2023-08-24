@@ -17,7 +17,10 @@ type ModalProps = {
 const CustomModal = ({ show, close, children, heading, modalMarginTop, padding, removeCloseIcon, externalStyle, canExit = true }: ModalProps) => {
   return (
     <div className={`fixed top-0 left-0 bottom-0 flex h-[100vh] w-full items-center justify-center transition-all ease-in-out ${show ? 'visible z-50 opacity-100' : 'invisible opacity-0'}`}>
-      <div className={`absolute -z-10 h-full w-full bg-black bg-opacity-60 backdrop-blur-sm backdrop-opacity-0 transition-all ${show && 'backdrop-opacity-100'}`} onClick={canExit && close} />
+      <div
+        className={`absolute -z-10 h-full w-full bg-black bg-opacity-60 backdrop-blur-sm backdrop-opacity-0 transition-all ${show && 'backdrop-opacity-100'}`}
+        // onClick={canExit && close}
+      />
 
       <div
         className={`${modalMarginTop ? modalMarginTop : 'md:my-[100px]'} ${externalStyle} ${

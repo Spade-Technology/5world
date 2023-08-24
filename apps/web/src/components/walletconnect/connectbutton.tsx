@@ -42,14 +42,24 @@ export const VDAOConnectButton = ({
 }) => {
   const buttonStyle = `rounded-md border-[1px] h-10 px-5 font-heading text-sm md:text-xl font-medium ${className || ''}`
 
-  const { address } = useAccount()
+  const { address, isConnected } = useAccount()
   const { data: siwe, status } = useSession()
 
   const [openModal, setOpenModal] = useState(false)
   const [modalState, setModalState] = useState<'walletselect' | 'verify' | 'verified' | 'register' | 'loading'>('walletselect')
-  const { data, isLoading } = useUserRead({
-    address: address as Address,
-  })
+  const {
+    data,
+    isLoading,
+    refetch: refetchUserData,
+  } = useUserRead(
+    {
+      address: address as Address,
+    },
+    {
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    },
+  )
   const router = useRouter()
   const [isDisabled, setIsDisabled] = useState(false)
   const [message, setMessage] = useState('')
@@ -60,11 +70,13 @@ export const VDAOConnectButton = ({
       setIsDisabled((isLoading && address) || !!disabled)
 
       const new_state: 'walletselect' | 'verify' | 'verified' | 'register' | 'loading' =
-        isLoading && address ? 'loading' : address ? (data ? (siwe ? 'verified' : 'verify') : 'register') : 'walletselect'
+        isLoading && address && isConnected ? 'loading' : address ? (data ? (siwe ? 'verified' : 'verify') : 'register') : 'walletselect'
       setModalState(new_state)
       setMessage(siwe?.address && !web2 ? shortenAddress(siwe.address) : messages[new_state])
+
+      if (!isConnected && siwe?.address) setModalState('walletselect')
     }
-  }, [address, siwe, data, status, disabled, isLoading])
+  }, [address, siwe, data, status, disabled, isLoading, isConnected])
 
   const handleButtonClick =
     onClickOverride ||
@@ -99,7 +111,7 @@ export const VDAOConnectButton = ({
         />
         {modalState === 'walletselect' && <WalletSelect setOpenModal={setOpenModal} openModal={openModal} />}
         {modalState === 'verify' && <VerifyWallet setOpenModal={setOpenModal} openModal={openModal} web2={!!web2} />}
-        {modalState === 'register' && <RegisterWallet setOpenModal={setOpenModal} openModal={openModal} />}
+        {modalState === 'register' && <RegisterWallet setOpenModal={setOpenModal} openModal={openModal} refetchUserData={refetchUserData} />}
         {modalState === 'verified' && <DisplayWallet setOpenModal={setOpenModal} openModal={openModal} />}
       </div>
     </>
@@ -201,6 +213,7 @@ function VerifyWallet({ setOpenModal, web2, openModal }: { setOpenModal: Dispatc
   useEffect(() => {
     ref?.current?.scrollIntoView()
   }, [openModal])
+
   return (
     <div
       ref={ref}
@@ -228,7 +241,7 @@ function VerifyWallet({ setOpenModal, web2, openModal }: { setOpenModal: Dispatc
   )
 }
 
-function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<SetStateAction<boolean>>; openModal: Boolean }) {
+function RegisterWallet({ setOpenModal, openModal, refetchUserData }: { setOpenModal: Dispatch<SetStateAction<boolean>>; openModal: Boolean; refetchUserData: () => {} }) {
   const { chain } = useNetwork()
   const { address, isConnected } = useAccount()
   const { signMessageAsync } = useSignMessage()
@@ -239,7 +252,7 @@ function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Se
 
   const { mutateAsync, isLoading } = api.user.register.useMutation()
 
-  const verify = async () => {
+  const register = async () => {
     try {
       const callbackUrl = '/protected'
       const message = new SiweMessage({
@@ -254,6 +267,7 @@ function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Se
       const signature = await signMessageAsync({
         message: message.prepareMessage(),
       })
+
       await mutateAsync(
         {
           address: address as Address,
@@ -270,7 +284,7 @@ function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Se
               message: 'Success',
               description: 'You have successfully registered a Vdao Account.',
             })
-            const res = await signIn('credentials', {
+            await signIn('credentials', {
               message: JSON.stringify(message),
               signature,
               redirect: false,
@@ -289,8 +303,9 @@ function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Se
         console.error(error)
       })
 
-      setOpenModal(false)
-      window.location.reload()
+      refetchUserData()
+
+      // setOpenModal(false)
     } catch (error) {
       notification.error({
         message: 'Error',
@@ -307,28 +322,9 @@ function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Se
     var reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onload = function () {
-      if (reader.result) {
-        setImage(reader.result.toString())
-      }
-    }
-    reader.onerror = function (error) {
-      console.log('Error: ', error)
+      if (reader.result) setImage(reader.result.toString())
     }
   }
-
-  const ImageInput = ({ className }: { className?: string }) => (
-    <div className={`mb-5 flex justify-start gap-5 max-md:mx-auto md:mb-0 md:flex-col md:text-center md:align-middle lg:flex-row ${className}`}>
-      <Image src={image ? image : PodImage} alt='PodImage' className='ml-0 h-[75.17px] w-[75.17px] md:mx-auto lg:mx-0' />
-      <div className='flex flex-col'>
-        <label className='w-fit cursor-pointer rounded-[5px] bg-vdao-pink py-[5px] px-[35px] font-heading text-xl font-medium md:mx-auto'>
-          <input type='file' accept='image/*' className='hidden cursor-pointer pt-5' form='register-form' name='image' onChange={onImageChange} max={1} />
-          Upload Image
-        </label>
-        <div className='pt-[5px] text-sm text-vdao-light md:pt-2 lg:text-start'>Optional</div>
-        <div className=' text-sm text-vdao-light lg:text-start'>800 x 800px png or jpeg</div>
-      </div>
-    </div>
-  )
 
   const ref: any = useRef()
 
@@ -358,10 +354,27 @@ function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Se
               <Input.TextArea placeholder='Enter your bio' className='!h-[102px] !font-body !text-lg !text-vdao-dark md:h-auto' onChange={e => setBio(e.target.value)} />
             </aside>
             <div className=''>
-              <ImageInput className='' />
+              <div className={`mb-5 flex justify-start gap-5 max-md:mx-auto md:mb-0 md:flex-col md:text-center md:align-middle lg:flex-row `}>
+                <Image
+                  // src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAE1QAABJACAYAAABDeX9hAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QA'
+                  src={image ? image : PodImage}
+                  width={75}
+                  height={75}
+                  alt='PodImage'
+                  className='ml-0 h-[75.17px] w-[75.17px] md:mx-auto lg:mx-0'
+                />
+                <div className='flex flex-col'>
+                  <label className='w-fit cursor-pointer rounded-[5px] bg-vdao-pink py-[5px] px-[35px] font-heading text-xl font-medium md:mx-auto'>
+                    <input type='file' accept='image/*' className='hidden cursor-pointer pt-5' form='register-form' name='image' onChange={onImageChange} max={1} />
+                    Upload Image
+                  </label>
+                  <div className='pt-[5px] text-sm text-vdao-light md:pt-2 lg:text-start'>Optional</div>
+                  <div className=' text-sm text-vdao-light lg:text-start'>800 x 800px png or jpeg</div>
+                </div>
+              </div>
             </div>
           </div>
-          <Button type='primary' className=' !h-9 w-fit !px-[35px] !text-xl !text-vdao-dark md:mx-0' onClick={verify} loading={isLoading}>
+          <Button type='primary' className=' !h-9 w-fit !px-[35px] !text-xl !text-vdao-dark md:mx-0' onClick={register} loading={isLoading}>
             Submit
           </Button>
           <div className=' flex flex-row-reverse justify-start gap-2 md:flex-row'>
@@ -376,7 +389,6 @@ function RegisterWallet({ setOpenModal, openModal }: { setOpenModal: Dispatch<Se
             </Tooltip>
           </div>
         </div>
-        {/* <ImageInput className='max-md:hidden' /> */}
       </div>
     </div>
   )

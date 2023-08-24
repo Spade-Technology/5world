@@ -7,14 +7,14 @@ import { EnforceAuth } from '~/components/misc/enforceAuth'
 import EditProfile from '~/components/pages/app/home/editProfile'
 import ProfilePopup from '~/components/pages/app/home/profilePopup'
 import { NewMembersComponent, ProfileHomeComponent, SelfDelegate, StatisticsHomeComponent, WelcomeComponent } from '~/components/pages/app/home/web3home'
-import { useUserRead } from '~/hooks/web3/useUser'
+import { useUserRead, useUserReads } from '~/hooks/web3/useUser'
 import { Address } from 'viem'
 import { useAccount } from 'wagmi'
 
 const Home: NextPage = () => {
   const { address } = useAccount()
   const [openProfile, setOpenProfile] = useState(false)
-  const [newMembersArr, setNewMembersArr] = useState<any>([])
+
   const [editProfile, setEditProfile] = useState(false)
 
   const { data, refetch } = useUserRead({
@@ -29,6 +29,8 @@ const Home: NextPage = () => {
     },
   })
 
+  const { data: newUsers } = useUserReads({ take: 6 })
+
   return (
     <>
       <Page>
@@ -37,9 +39,9 @@ const Home: NextPage = () => {
 
         <EnforceAuth>
           <Section className='mx-6 grid justify-between gap-5 md:grid-cols-12 xl:mx-auto xl:max-w-[1140px]'>
-            <ProfileHomeComponent setOpenProfile={setOpenProfile} setNewMembersArr={setNewMembersArr} data={data} />
+            <ProfileHomeComponent setOpenProfile={setOpenProfile} data={data} />
 
-            <NewMembersComponent newMembersArr={newMembersArr} />
+            <NewMembersComponent newMembersArr={newUsers} />
 
             <StatisticsHomeComponent />
           </Section>

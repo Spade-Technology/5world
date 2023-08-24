@@ -40,9 +40,10 @@ export const userRouter = createTRPCRouter({
         search: z.string().optional(),
         addresses: z.array(z.string()).max(10, 'Too many addresses').optional(),
         include: includeZod,
+        take: z.number().max(10, 'Too many users').default(10).optional(),
       }),
     )
-    .query(async ({ input: { addresses, search, include }, ctx: { prisma } }) => {
+    .query(async ({ input: { addresses, search, include, take }, ctx: { prisma } }) => {
       const users = await prisma.user.findMany({
         ...(addresses && addresses.length > 0 && { where: { address: { in: addresses } } }),
         ...(search && {
@@ -50,8 +51,9 @@ export const userRouter = createTRPCRouter({
             OR: [{ name: { contains: search, mode: 'insensitive' } }, { address: { contains: search, mode: 'insensitive' } }],
           },
         }),
+        orderBy: { JoinedAt: 'desc' },
         include: include,
-        take: 10,
+        take,
       })
       if (!users || users.length === 0) throw new Error('Users not found')
       return users
