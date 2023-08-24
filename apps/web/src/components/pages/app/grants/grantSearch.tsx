@@ -88,9 +88,9 @@ export const CurrentRound = ({ grant }: GrantProps) => {
   return (
     <div className='mb-10 flex w-full rounded-[40px] bg-vdao-dark '>
       <div className='my-10 w-full rounded-[40px] bg-vdao-dark pl-10 pr-5 text-white'>
-        <div className='flex gap-3 flex-col md:flex-row font-heading text-3xl font-medium'>
+        <div className='flex flex-col gap-3 font-heading text-3xl font-medium md:flex-row'>
           {grant.title}
-          <div className='my-auto rounded-[20px] w-fit border-[1px] border-vdao-light px-9 py-1 font-body text-lg text-vdao-light'> {statusHumanReadable}</div>
+          <div className='my-auto w-fit rounded-[20px] border-[1px] border-vdao-light px-9 py-1 font-body text-lg text-vdao-light'> {statusHumanReadable}</div>
           {timeUntilHumanReadable()}
         </div>
 
@@ -98,7 +98,7 @@ export const CurrentRound = ({ grant }: GrantProps) => {
           <div className='mt-5'>
             <div className='font-heading text-[26px] font-medium text-vdao-light'>Rules</div>
             <div className='mt-5 text-lg font-normal '>{grant?.rules}</div>
-            <div className='flex flex-col md:flex-row gap-10'>
+            <div className='flex flex-col gap-10 md:flex-row'>
               <div className='mt-5 cursor-pointer text-lg font-bold underline underline-offset-2' onClick={() => router.push(`/app/grants/${grant.id}`)}>
                 View Grant Details
               </div>
@@ -109,7 +109,7 @@ export const CurrentRound = ({ grant }: GrantProps) => {
           </div>
         </div>
       </div>
-      <Image src={grant.theme || grantImage} alt='grantImage' width={300} height={300} className='mr-10 p-4 w-full md:w-80' />
+      <Image src={grant.theme || grantImage} alt='grantImage' width={300} height={300} className='mr-10 max-h-80 w-full p-4 md:w-80' />
     </div>
   )
 }
