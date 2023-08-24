@@ -32,13 +32,15 @@ const Grants = ({ id }: { id: Number }) => {
     enabled: votingPowerEnabled,
   })
 
-  const votesHandler = async (votes: string, requestId: string) => {
-    if (votes && address) {
+  const [cart, setCart] = useState<any>([])
+
+  const votesHandler = async () => {
+    if (cart && address) {
       await writeContract({
         abi: RoundImplementation,
         address: grant?.address,
         functionName: 'vote',
-        args: [[encodePacked(['uint256', 'uint256'], [BigInt(requestId), BigInt(votes)])]],
+        args: [cart.map((el: any) => encodePacked(['uint256', 'uint256'], [BigInt(el.proposalId), BigInt(el.temporaryVotes)]))],
       }).catch(err => {
         notification.error({
           message: 'Error',
@@ -48,6 +50,25 @@ const Grants = ({ id }: { id: Number }) => {
     }
   }
 
+  const addToCart = (grantRequest: any, votes: string) => {
+    setCart([
+      ...cart.filter((item: any) => item.id !== grantRequest.id),
+      {
+        ...grantRequest,
+        temporaryVotes: BigInt(votes) * 10n ** 18n,
+      },
+    ])
+
+    notification.success({
+      message: 'Success',
+      description: 'Added to cart',
+    })
+  }
+
+  const removeFromCart = (id: number) => {
+    setCart([...cart.filter((item: any) => item.id !== id)])
+  }
+
   return (
     <Page>
       <GrantsRound setCreateGrant={setCreateRequest} grant={grant || true} />
@@ -55,9 +76,19 @@ const Grants = ({ id }: { id: Number }) => {
       <EnforceAuth>
         {grant && (
           <>
-            <GrantItem setViewDetails={setViewDetails} grant={grant} votingPowerEnabled={votingPowerEnabled} votingPower={votingPower} setRequestId={setRequestId} votesHandler={votesHandler} />
+            <GrantItem
+              setViewDetails={setViewDetails}
+              grant={grant}
+              votingPowerEnabled={votingPowerEnabled}
+              votingPower={votingPower}
+              setRequestId={setRequestId}
+              addToCart={addToCart}
+              removeFromCart={removeFromCart}
+              votesHandler={votesHandler}
+              cart={cart}
+            />
             {createRequest && <CreateProject show={createRequest} close={() => setCreateRequest(false)} grant={grant} />}
-            {viewDetails && <ViewDetails show={viewDetails} close={() => setViewDetails(false)} grant={grant} requestId={requestId} votesHandler={votesHandler} />}
+            {viewDetails && <ViewDetails show={viewDetails} close={() => setViewDetails(false)} grant={grant} requestId={requestId} addToCart={addToCart} />}
           </>
         )}
       </EnforceAuth>

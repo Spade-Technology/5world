@@ -109,7 +109,7 @@ export const CurrentRound = ({ grant }: GrantProps) => {
           </div>
         </div>
       </div>
-      <Image src={grant.theme || grantImage} alt='grantImage' width={300} height={300} className='mr-10 max-h-80 w-full p-4 md:w-80' />
+      <Image src={grant.theme || grantImage} alt='grantImage' width={300} height={300} className='mr-10 aspect-square max-h-64 w-full p-4 md:w-64' />
     </div>
   )
 }

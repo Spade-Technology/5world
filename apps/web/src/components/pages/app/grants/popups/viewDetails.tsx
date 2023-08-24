@@ -1,12 +1,12 @@
-import { erc20ABI, writeContract } from '@wagmi/core'
-import { Tooltip, notification } from 'antd'
+import { erc20ABI } from '@wagmi/core'
+import { Tooltip } from 'antd'
 import Image from 'next/image'
 import ETHIcon from 'public/icons/grants/ethIcon.svg'
 import LinkIcon from 'public/icons/grants/linkIcon.svg'
 import TwitterIcon from 'public/icons/grants/twitterIcon.svg'
 import Image1 from 'public/illustrations/grants/stretchedImage1.svg'
-import { Dispatch, SetStateAction, useState } from 'react'
-import { encodePacked, formatUnits } from 'viem'
+import { useState } from 'react'
+import { formatUnits } from 'viem'
 import { useAccount, useContractReads, useNetwork } from 'wagmi'
 import RoundImplementation from '~/abi/RoundImplementation.json'
 import CustomModal from '~/components/misc/customModal'
@@ -14,13 +14,7 @@ import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { shortenAddress } from '~/utils/helpers'
 import { TeamDetails } from './team'
 
-import Details from '~/components/pages/blog/details'
-import { useToken } from 'antd/es/theme/internal'
 import Link from 'next/link'
-
-function expo(x, f) {
-  return Number.parseFloat(x).toExponential(f)
-}
 
 type Props = {
   show: boolean
@@ -28,9 +22,9 @@ type Props = {
   requestId: number
   grant: any
 
-  votesHandler: Function
+  addToCart: Function
 }
-const ViewDetails = ({ show, close, requestId, grant, votesHandler }: Props) => {
+const ViewDetails = ({ show, close, requestId, grant, addToCart }: Props) => {
   const { address } = useAccount()
 
   const [estimatedAmt, setEstimatedAmt] = useState(0)
@@ -58,7 +52,7 @@ const ViewDetails = ({ show, close, requestId, grant, votesHandler }: Props) => 
 
   return (
     <CustomModal show={show} close={close} padding='p-0' removeCloseIcon>
-      <Image src={grant?.requests[requestId - 1 - 1]?.theme || Image1} height={100} width={800} alt='Image1' className='h-96 w-full object-cover' />
+      <Image src={grant?.requests[requestId - 1]?.theme || Image1} height={100} width={800} alt='Image1' className='h-96 w-full object-cover' />
 
       <div className='grid grid-cols-1 gap-[73px] py-[27px] px-[24px] font-body text-lg font-normal text-vdao-dark md:grid-cols-3 md:py-10 md:px-[50px]'>
         <div className='col-span-2'>
@@ -109,7 +103,7 @@ const ViewDetails = ({ show, close, requestId, grant, votesHandler }: Props) => 
               placement='top'
             >
               <div>
-                <PrimaryButton text='Vote' disabled={grant.state !== 3n} onClick={() => votesHandler(votes, requestId)} className='font-heading text-xl font-medium' />
+                <PrimaryButton text='Add To Cart' disabled={grant.state !== 3n} onClick={() => addToCart(grant?.requests[requestId - 1], votes)} className='font-heading text-xl font-medium' />
               </div>
             </Tooltip>
           </div>

@@ -80,9 +80,7 @@ const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
 
         <div className='mt-5 flex h-[43px] w-full max-w-[409px] items-center gap-[18px] overflow-hidden rounded-xl bg-vdao-dark px-3 '>
           <div className='h-7 w-7 bg-[url(/icons/stewards/search.svg)] bg-contain bg-center bg-no-repeat '></div>{' '}
-          <input type='text' className='h-full w-full bg-transparent  font-body text-lg font-medium text-white outline-none '
-           placeholder='Search by username or address' onChange={handleChange}
-            />
+          <input type='text' className='h-full w-full bg-transparent  font-body text-lg font-medium text-white outline-none ' placeholder='Search by username or address' onChange={handleChange} />
         </div>
       </div>
 
@@ -105,6 +103,7 @@ export const Card = ({ data, setOpenProfile, setOpenVotesNscores }: CardProps) =
   const [votes, setVotes] = useState('')
   const { vote } = useVote()
   const { address } = useAccount()
+
   const votesHandler = () => {
     if (votes && address && data.address) {
       vote({ voterAddress: address, candidateAddress: data.address, amount: parseFloat(votes), message: '' })

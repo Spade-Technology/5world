@@ -25,9 +25,10 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import Link from 'next/link'
 import { currentChainId, currentContracts } from '~/config/contracts'
+import { Typography } from 'antd'
 
 dayjs.extend(relativeTime)
-const formatter = Intl.NumberFormat('en', { notation: 'compact' })
+const formatter = Intl.NumberFormat('en', { notation: 'compact', compactDisplay: 'long' })
 
 type ViewProposalProps = {
   show: boolean
@@ -321,13 +322,13 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                     return (
                       <div className='flex justify-between pt-5' key={idx}>
                         <div className='flex'>
-                          <Image src={el?.picture || DummyIcon} height={40} width={40} alt='icon' />
+                          <Image src={el?.picture || DummyIcon} height={40} width={40} alt='icon' className='h-10 w-10 rounded-full' />
                         </div>
                         <div className='flex flex-col'>
                           <div className='ml-auto text-sm'>
                             {el?.name || shortenAddress(el?.voter)} <span className={'text-sm ' + supportColor}>{supportText}</span>
                           </div>
-                          <div className='my-auto ml-auto text-xs font-bold'>{formatter.format(el.votes)}</div>
+                          <div className='my-auto ml-auto text-xs font-bold'>{formatter.format(el.votes / 10n ** 18n)} V Tokens</div>
                         </div>
                       </div>
                     )
@@ -369,7 +370,9 @@ const ActionDetails = ({ proposal }: { proposal: any }) => {
           </div>
           <br />
           <div className=' font-bold'>and Calldata:</div>
-          <div className='break-all'>{proposal?.spellCalldatas[idx]}</div>
+          <Typography.Paragraph ellipsis={{ rows: 3, expandable: true }} className='antd-stop-propagation break-all !text-black' color='black'>
+            {proposal?.spellCalldatas[idx]}
+          </Typography.Paragraph>
           <br />
           <br />
         </div>

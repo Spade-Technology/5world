@@ -11,7 +11,7 @@ import { DropzoneOptions, useDropzone } from 'react-dropzone'
 import { BsFillInfoCircleFill } from 'react-icons/bs'
 import { Address, useAccount } from 'wagmi'
 import { Button } from '~/components/ui/button'
-import { useCreateProposal } from '~/hooks/web3/useProposal'
+import { MIN_GRANT_PROPOSAL_TIME, useCreateProposal } from '~/hooks/web3/useProposal'
 import { imageToBase64String } from '~/utils/helpers'
 import FormOne from '../../proposals/popups/formOne'
 import PreviewProposal from './previewProposal'
@@ -39,12 +39,14 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
   const [loader, setLoader] = useState(false)
   const dropzoneParams: DropzoneOptions = { accept: { 'image/*': [] }, multiple: false, maxSize: 1000000 }
   const [logo, setLogo] = useState<File>()
+  const [logoDisplay, setLogoDisplay] = useState<string>('')
   const {
     getRootProps: getLogoRootProps,
     getInputProps: getLogoInputProps,
     acceptedFiles: { 0: _logo },
   } = useDropzone(dropzoneParams)
   const [theme, setTheme] = useState<File>()
+  const [themeDisplay, setThemeDisplay] = useState<string>('')
   const {
     getRootProps: getThemeRootProps,
     getInputProps: getThemeInputProps,
@@ -53,27 +55,34 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
 
   useEffect(() => {
     setLogo(_logo)
+    if (_logo) setLogoDisplay(URL.createObjectURL(_logo))
   }, [_logo])
 
   useEffect(() => {
     setTheme(_theme)
+    if (_theme) setThemeDisplay(URL.createObjectURL(_theme))
   }, [_theme])
 
   const submitIPFS = async () => {
+    setLoader(true)
     const requiredFields = { grantName, tokenAddress, matchingAmount, date, grantDescription, logo, theme }
     const emptyFields = Object.keys(requiredFields).filter(field => !(requiredFields as any)[field])
 
-    if (emptyFields.length)
+    if (emptyFields.length) {
+      setLoader(false)
       return notification.error({
         message: 'Error',
         description: `Fields cannot be empty: ${emptyFields.join(', ')}`,
       })
+    }
 
-    if (tokenAddress.match(/0x[a-fA-F0-9]{40}/) === null)
+    if (tokenAddress.match(/0x[a-fA-F0-9]{40}/) === null) {
+      setLoader(false)
       return notification.error({
         message: 'Error',
         description: 'Invalid token address',
       })
+    }
 
     const hash = await generateGrantIPFSHash.mutateAsync(
       {
@@ -92,6 +101,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
           setState('confirm')
         },
         onError: error => {
+          setLoader(false)
           return notification.error({
             message: 'Error',
             description: error.message,
@@ -99,6 +109,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
         },
       },
     )
+    setLoader(false)
   }
 
   const submitProposal = async () => {
@@ -217,7 +228,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
                   showTime={{ defaultValue: dayjs().add(1, 'day') }}
                   onChange={e => setDate(e?.toDate())}
                   disabledDate={current => current && current < dayjs()}
-                  disabledTime={current => dayjs().add(10, 'minute').isAfter(current) as any}
+                  disabledTime={current => dayjs().add(MIN_GRANT_PROPOSAL_TIME, 's').isAfter(current) as any}
                   showNow={false}
                   presets={[
                     {
@@ -247,7 +258,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
                 {logo ? (
                   <div className='mt-5 rounded-[10px]  text-center'>
                     <Image
-                      src={URL.createObjectURL(logo)}
+                      src={logoDisplay}
                       alt='upload'
                       width={183}
                       height={183}
@@ -271,7 +282,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
                 {theme ? (
                   <div className='mt-5 h-full w-full rounded-[10px] text-center '>
                     <Image
-                      src={URL.createObjectURL(theme)}
+                      src={themeDisplay}
                       alt='upload'
                       width={300}
                       height={183}
@@ -325,7 +336,7 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
             >
               Previous
             </div>
-            <PrimaryButton text='Submit' className='float-right text-xl font-medium' onClick={submitIPFS} />
+            <PrimaryButton text='Submit' className='float-right text-xl font-medium' onClick={submitIPFS} loading={loader} />
           </div>
         </div>
       )}

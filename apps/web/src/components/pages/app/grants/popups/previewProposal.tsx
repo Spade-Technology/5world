@@ -20,7 +20,7 @@ type PreviewProps = {
   theme: File | undefined
   grantDescription: string
 }
-const PreviewProposal = ({ grantName, tokenAddress, matchingAmount, selectedDate, logo, theme,grantDescription, setState, loader, submitProposal }: PreviewProps) => {
+const PreviewProposal = ({ grantName, tokenAddress, matchingAmount, selectedDate, logo, theme, grantDescription, setState, loader, submitProposal }: PreviewProps) => {
   const { address } = useAccount()
 
   const { data } = useUserRead({ address: address! })
@@ -28,7 +28,7 @@ const PreviewProposal = ({ grantName, tokenAddress, matchingAmount, selectedDate
     <div className='py-5 font-body text-lg font-normal '>
       <ProfileCard icon={data.picture} name={data.name!} address={data.address} />
 
-      <div className='pt-11 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-[76px]'>
+      <div className='grid grid-cols-1 gap-10 pt-11 md:grid-cols-2 md:gap-[76px]'>
         <div>
           <div>
             <div className='flex justify-between'>
@@ -36,7 +36,8 @@ const PreviewProposal = ({ grantName, tokenAddress, matchingAmount, selectedDate
               {/* <div className='text-vdao-light'>*Required</div> */}
             </div>
             <input
-              className=' mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] bg-[#F0F0F0] border-[#A7A7A7] px-5 outline-none placeholder:py-2 md:mt-5'
+              readOnly
+              className=' mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] border-[#A7A7A7] bg-[#F0F0F0] px-5 outline-none placeholder:py-2 md:mt-5'
               placeholder='What’s the round name?'
               value={grantName}
             />
@@ -49,7 +50,8 @@ const PreviewProposal = ({ grantName, tokenAddress, matchingAmount, selectedDate
             </div>
             <div className='flex items-end gap-4'>
               <input
-                className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] bg-[#F0F0F0] border-[#A7A7A7] px-5 outline-none placeholder:py-2 md:mt-5'
+                readOnly
+                className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] border-[#A7A7A7] bg-[#F0F0F0] px-5 outline-none placeholder:py-2 md:mt-5'
                 placeholder='Token address ?'
                 value={tokenAddress}
               />
@@ -61,7 +63,8 @@ const PreviewProposal = ({ grantName, tokenAddress, matchingAmount, selectedDate
               <div className='text-[22px] font-bold'>Matching Amount*</div>
             </div>
             <input
-              className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] bg-[#F0F0F0] border-[#A7A7A7] px-5 outline-none placeholder:py-2 md:mt-5'
+              readOnly
+              className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] border-[#A7A7A7] bg-[#F0F0F0] px-5 outline-none placeholder:py-2 md:mt-5'
               placeholder='How much should the grant be financed'
               type='number'
               value={matchingAmount}
@@ -84,9 +87,10 @@ const PreviewProposal = ({ grantName, tokenAddress, matchingAmount, selectedDate
               </Tooltip>
             </div>
             <input
-              className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] bg-[#F0F0F0] border-[#A7A7A7] px-5 outline-none placeholder:py-2 md:mt-5'
+              readOnly
+              className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] border-[#A7A7A7] bg-[#F0F0F0] px-5 outline-none placeholder:py-2 md:mt-5'
               placeholder='How much should the grant be financed'
-              value={selectedDate?.getDate() + ' ' + monthNames[selectedDate?.getMonth()].name + ', ' + selectedDate?.getFullYear()}
+              value={selectedDate?.getDate() + ' ' + (monthNames[Number(selectedDate?.getMonth())] as any).name + ', ' + selectedDate?.getFullYear()}
             />
 
             <div className='pt-2'>
@@ -110,7 +114,7 @@ const PreviewProposal = ({ grantName, tokenAddress, matchingAmount, selectedDate
             <div className='text-[22px] font-bold'>Round Theme*</div>
             {theme && (
               <div className='mt-5 h-full w-fit rounded-[10px] text-center'>
-                <Image src={URL.createObjectURL(theme)} alt='upload' className='mx-auto' height={183} width={300}  />
+                <Image src={URL.createObjectURL(theme)} alt='upload' className='mx-auto' height={183} width={300} />
               </div>
             )}
           </div>
@@ -118,16 +122,12 @@ const PreviewProposal = ({ grantName, tokenAddress, matchingAmount, selectedDate
       </div>
 
       <div className='mt-10'>
-            <div className='flex justify-between'>
-              <div className='text-[22px] font-bold'>Grant Round Description*</div>
-            </div>
+        <div className='flex justify-between'>
+          <div className='text-[22px] font-bold'>Grant Round Description*</div>
+        </div>
 
-            <textarea
-              className='mt-5 w-full rounded-[10px] border-[1px] bg-[#F0F0F0] border-[#A7A7A7] p-5 outline-none '
-              rows={10}
-              value={grantDescription}
-            />
-          </div>
+        <textarea className='mt-5 w-full rounded-[10px] border-[1px] border-[#A7A7A7] bg-[#F0F0F0] p-5 outline-none ' rows={10} value={grantDescription} readOnly />
+      </div>
 
       <div className='float-right flex gap-5 py-6'>
         <div className='cursor-pointer rounded-[5px] border-[1px] border-vdao-dark px-[35px] pt-[5px] font-heading text-lg font-medium' onClick={() => setState('grantMeta')}>

@@ -13,6 +13,10 @@ import RoundFactoryAbi from '~/abi/RoundFactory.json'
 import VDAOImplementation from '~/abi/VDAOImplementation.json'
 import { currentChainId, currentContracts } from '~/config/contracts'
 
+export const MIN_GRANT_PROPOSAL_TIME = 10 * 60
+export const GRANT_REQUEST_TIME = 10 * 60
+export const GRANT_VOTE_TIME = 10 * 60
+
 /* Proposal schema */
 interface ProposalInclude {
   pod?: boolean
@@ -261,9 +265,9 @@ export function useCreateProposal() {
 
     // dev
     const startApplicationBlock = (grantDate?.getTime() / 1000 - Date.now() / 1000) / currentBlockTimeToNextBlock + Number(currentBlock)
-    const endApplicationBlock = startApplicationBlock + (20 * 60) / currentBlockTimeToNextBlock
+    const endApplicationBlock = startApplicationBlock + (10 * 60) / currentBlockTimeToNextBlock
     const startRoundBlock = endApplicationBlock
-    const endRoundBlock = startRoundBlock + (20 * 60) / currentBlockTimeToNextBlock
+    const endRoundBlock = startRoundBlock + (10 * 60) / currentBlockTimeToNextBlock
 
     const args = [
       [startApplicationBlock.toFixed(), endApplicationBlock.toFixed(), startRoundBlock.toFixed(), endRoundBlock.toFixed()],
