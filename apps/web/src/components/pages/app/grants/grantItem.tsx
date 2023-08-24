@@ -18,6 +18,7 @@ type CardProps = {
   setRequestId: Dispatch<SetStateAction<number>>
   addToCart: Function
   state: bigint
+  loading: boolean
 }
 
 type Props = {
@@ -30,6 +31,8 @@ type Props = {
   cart: any[]
   removeFromCart: Function
   votesHandler: () => {}
+  loading: boolean
+  voted: any
 }
 
 type GrantProps = {
@@ -38,7 +41,7 @@ type GrantProps = {
 
 const formatter = Intl.NumberFormat('en', { notation: 'compact', compactDisplay: 'short' })
 
-const GrantItem = ({ setViewDetails, grant, votingPowerEnabled, votingPower, setRequestId, addToCart, cart, removeFromCart, votesHandler }: Props) => {
+const GrantItem = ({ setViewDetails, grant, votingPowerEnabled, votingPower, setRequestId, voted, addToCart, cart, removeFromCart, votesHandler, loading }: Props) => {
   const router = useRouter()
 
   return (
@@ -48,7 +51,7 @@ const GrantItem = ({ setViewDetails, grant, votingPowerEnabled, votingPower, set
           <div>
             <CurrentRound grant={grant} />
             <div className='flex flex-col'>
-              {cart.length > 0 && grant.state === 3n && (
+              {cart.length > 0 && (grant.state === 3n || voted) && (
                 <>
                   <div className='mx-6 mt-20 flex max-w-[1280px] flex-col justify-between font-heading text-[32px] font-medium text-vdao-light md:mx-auto md:flex-row md:text-[46px]'>Your Cart</div>
                   {cart.map((el: any) => {
@@ -70,13 +73,13 @@ const GrantItem = ({ setViewDetails, grant, votingPowerEnabled, votingPower, set
                   })}
 
                   <div className='mt-16 flex gap-8'>
-                    <Button disabled={votingPower < cart.reduce((acc, el) => acc + el.temporaryVotes, 0n)} onClick={votesHandler}>
-                      Vote !
-                    </Button>
-                    {votingPower < cart.reduce((acc, el) => acc + el.temporaryVotes, 0n) && <div className='my-auto font-heading text-lg font-medium text-red-500'>Insufficient Voting Power</div>}
-                    <div className='my-auto ml-auto font-heading text-2xl font-medium text-white'>
+                    <div className='my-auto mr-auto font-heading text-2xl font-medium text-white'>
                       Total Votes: {formatter.format(Number(cart.reduce((acc, el) => acc + el.temporaryVotes, 0n) / 10n ** 18n))} V
                     </div>
+                    <PrimaryButton loading={loading} disabled={votingPower < cart.reduce((acc, el) => acc + el.temporaryVotes, 0n)} onClick={votesHandler}>
+                      Vote !
+                    </PrimaryButton>
+                    {votingPower < cart.reduce((acc, el) => acc + el.temporaryVotes, 0n) && <div className='my-auto font-heading text-lg font-medium text-red-500'>Insufficient Voting Power</div>}
                   </div>
                 </>
               )}
@@ -93,7 +96,7 @@ const GrantItem = ({ setViewDetails, grant, votingPowerEnabled, votingPower, set
             <div className='mx-6 mt-5 grid grid-cols-1 gap-5 md:mx-0 md:grid-cols-2'>
               {grant?.requests && grant?.requests.length > 0 ? (
                 grant?.requests?.map((details: any, idx: number) => {
-                  return <Card details={details} setViewDetails={setViewDetails} key={idx} setRequestId={setRequestId} state={grant.state} addToCart={addToCart} />
+                  return <Card details={details} setViewDetails={setViewDetails} key={idx} setRequestId={setRequestId} state={grant.state} addToCart={addToCart} loading={loading} />
                 })
               ) : (
                 <div className='flex h-52 w-full items-center justify-center text-xl font-medium text-vdao-light md:col-span-2'>No requests yet</div>
@@ -110,7 +113,7 @@ const GrantItem = ({ setViewDetails, grant, votingPowerEnabled, votingPower, set
   )
 }
 
-export const Card = ({ details, setViewDetails, setRequestId, state, addToCart }: CardProps) => {
+export const Card = ({ details, setViewDetails, setRequestId, state, addToCart, loading }: CardProps) => {
   const { address } = useAccount()
   const [votes, setVotes] = useState('')
 
@@ -152,7 +155,7 @@ export const Card = ({ details, setViewDetails, setRequestId, state, addToCart }
             placement='top'
           >
             <div>
-              <PrimaryButton text='Add To Cart' className={`font-heading text-xl`} disabled={state !== 3n} onClick={() => addToCart(details, votes)} />
+              <PrimaryButton loading={loading} text='Add To Cart' className={`font-heading text-xl`} disabled={state !== 3n} onClick={() => addToCart(details, votes)} />
             </div>
           </Tooltip>
         </div>

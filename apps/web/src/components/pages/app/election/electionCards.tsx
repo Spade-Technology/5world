@@ -26,7 +26,7 @@ type CardProps = {
 const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
   const [debouncedInput, setDebouncedInput] = useState('')
   const [searchValue, setSearchValue] = useState('')
-  const [searchedCandidates, setSearchedCandidates] = useState([])
+
   const { address } = useAccount()
   const { data, isLoading } = useElectionReads({})
   const [searchField, setSearchField] = useState('')
@@ -55,12 +55,11 @@ const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
   }
 
   // USEFFECT FOR SEARCHING CANDIDATES
-  useEffect(() => {
-    const filteredCards: any = data?.filter(item => {
-      return [searchValue]?.some(el => Object.values(item).join('').toLowerCase().includes(el.toLocaleLowerCase()))
-    })
-    setSearchedCandidates(filteredCards)
-  }, [debouncedInput])
+  // useEffect(() => {
+  //   const filteredCards: any = data?.filter(item => {
+  //     return [searchValue]?.some(el => Object.values(item).join('').toLowerCase().includes(el.toLocaleLowerCase()))
+  //   })
+  // }, [debouncedInput])
 
   // USEFFECT THAT DELAYS SEACH FUNCTION
   useEffect(() => {
@@ -92,7 +91,7 @@ const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
             <Skeleton.Avatar shape='square' style={{ height: '400px', width: '100%' }} className='col-span-2' active />
           </>
         ) : (
-          finalData && finalData.length > 0 && finalData?.map(steward => <Card data={steward} setOpenProfile={setOpenProfile} setOpenVotesNscores={setOpenVotesNscores} />)
+          finalData && finalData.length > 0 && finalData?.map(steward => <Card data={steward} setOpenProfile={setOpenProfile} setOpenVotesNscores={setOpenVotesNscores} key={steward.address} />)
         )}
       </div>
     </div>

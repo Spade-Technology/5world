@@ -17,8 +17,8 @@ let contracts = {
     proxiedVDao: '0xc9279EB8db7576399070AB3546639696ba574562',
     treasury: '0x4a8b86c56E8416Bd752073E5ae68d89281093524',
     donationSBT: '0x71C5808EaB046c52Db0E725934f492f89C035aAB',
-    roundImplementation: '0x79C3a02cBABDc2276f31B4EEdda873D5509fb7F0',
-    roundFactory: '0x6DDD8655dcf26b69647fE65b5D4821871d4181Ca',
+    roundImplementation: '0x5418C23F362496312E3555BEAB66B4B88e0AA53c',
+    roundFactory: '0xE06B7E24C1AE7B7CC221f7A5E539F22b63a1eEB4',
     // 15 seconds
     blockTime: 12,
   },

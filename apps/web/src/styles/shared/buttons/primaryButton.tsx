@@ -2,7 +2,7 @@ import { Spin } from 'antd'
 import Image from 'next/image'
 
 type ButtonProps = {
-  text: string
+  text?: string
   className?: string
   spanClass?: string
   onClick?: any
@@ -10,6 +10,7 @@ type ButtonProps = {
   dropDown?: boolean
   disabled?: boolean
   loading?: boolean
+  children?: any
 }
 
 export const DropdownPrimaryButton = ({ text, className, onClick, icon, dropDown, loading = false, disabled }: ButtonProps) => {
@@ -29,7 +30,7 @@ export const DropdownPrimaryButton = ({ text, className, onClick, icon, dropDown
   )
 }
 
-const PrimaryButton = ({ text, className, spanClass, onClick, icon, dropDown, disabled, loading }: ButtonProps) => {
+const PrimaryButton = ({ text, className, spanClass, onClick, icon, dropDown, disabled, loading, children }: ButtonProps) => {
   return (
     <div
       className={` relative z-10 w-fit rounded-md !px-0 !py-0 ${disabled ? ' cursor-not-allowed overflow-hidden opacity-50' : ' btn cursor-pointer '} bg-vdao-light ${className} `}
@@ -42,7 +43,7 @@ const PrimaryButton = ({ text, className, spanClass, onClick, icon, dropDown, di
       >
         {loading && <Spin className='!mr-3 !mt-1' spinning={true} />}
         {icon && <Image src={icon} alt='icon' className={dropDown ? 'my-auto h-4 w-4' : ''} />}
-        {text}
+        {text || children}
       </span>
     </div>
   )

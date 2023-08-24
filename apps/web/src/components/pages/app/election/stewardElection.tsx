@@ -44,7 +44,9 @@ const StewardElection = ({ state, timeUntilNextState }: { state: 'Application' |
                     .padStart(2, '0')
                     .match(/.{1,1}/g)
                     ?.map((digit, idx) => (
-                      <div className='rounded-[10px] bg-[#19444A] py-4 px-2 text-[32px]'>{digit}</div>
+                      <div className='rounded-[10px] bg-[#19444A] py-4 px-2 text-[32px]' key={idx}>
+                        {digit}
+                      </div>
                     ))}
                 </div>
                 <div className='text-left text-lg'>days</div>
@@ -58,7 +60,9 @@ const StewardElection = ({ state, timeUntilNextState }: { state: 'Application' |
                     .padStart(2, '0')
                     .match(/.{1,1}/g)
                     ?.map((digit, idx) => (
-                      <div className='rounded-[10px] bg-[#19444A] py-4 px-2 text-[32px]'>{digit}</div>
+                      <div className='rounded-[10px] bg-[#19444A] py-4 px-2 text-[32px]' key={idx}>
+                        {digit}
+                      </div>
                     ))}
                 </div>
                 <div className='text-left text-lg'>hours</div>
@@ -72,7 +76,9 @@ const StewardElection = ({ state, timeUntilNextState }: { state: 'Application' |
                     .padStart(2, '0')
                     .match(/.{1,1}/g)
                     ?.map((digit, idx) => (
-                      <div className='rounded-[10px] bg-[#19444A] py-4 px-2 text-[32px]'>{digit}</div>
+                      <div className='rounded-[10px] bg-[#19444A] py-4 px-2 text-[32px]' key={idx}>
+                        {digit}
+                      </div>
                     ))}
                 </div>
                 <div className='text-left text-lg'>minutes</div>
@@ -82,12 +88,20 @@ const StewardElection = ({ state, timeUntilNextState }: { state: 'Application' |
             <div className='mt-[13px] flex justify-center font-bold text-vdao-light md:justify-between'>Please vote for your favourite candidates, they will be the next stewards !</div>
           )}
 
-          <PrimaryButton text={isLoading ? 'Applying to Steward':'Apply to be a Steward'} loading={isLoading} disabled={state === 'Application'}  spanClass='md:!px-5' className='mx-auto mt-10 md:!w-fit' onClick={() => applyToBeSteward()} />
+          <PrimaryButton
+            text={isLoading ? 'Applying to Steward' : 'Apply to be a Steward'}
+            loading={isLoading}
+            disabled={state === 'Application'}
+            spanClass='md:!px-5'
+            className='mx-auto mt-10 md:!w-fit'
+            onClick={() => applyToBeSteward()}
+          />
 
           {state === 'Application' && <div className='pt-4 font-body text-lg font-normal md:pt-[21px]'>OR</div>}
 
-          <div className='mx-auto max-w-[231px] px-4 pt-4 font-body text-lg font-normal leading-[22px]'>{state === 'Application' ? "Applications starts in " : "Application deadline is in "}  {timeUntilNextState.humanize()}</div>
-          {/* </div> */}
+          <div className='mx-auto max-w-[231px] px-4 pt-4 font-body text-lg font-normal leading-[22px]'>
+            {state === 'Application' ? 'Applications starts in ' : 'Application deadline is in '} {timeUntilNextState.humanize()}
+          </div>
         </div>
       </div>
 

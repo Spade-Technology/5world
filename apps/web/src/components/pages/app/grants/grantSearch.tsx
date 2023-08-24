@@ -80,7 +80,7 @@ export const CurrentRound = ({ grant }: GrantProps) => {
     return (
       <div className='font-small font-heading text-[14px] text-vdao-light'>
         {contextString} {time} ({grant.roundEndBlock > currentBlock ? Number(relativeBlock - currentBlock) : Number(currentBlock - relativeBlock)} blocks
-        {grant.roundEndBlock > currentBlock ? ' ago' : ''})
+        {grant.roundEndBlock < currentBlock ? ' ago' : ''})
       </div>
     )
   }

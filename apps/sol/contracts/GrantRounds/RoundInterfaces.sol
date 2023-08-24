@@ -152,7 +152,7 @@ contract RoundImplementationStorageV1 is RoundProxyStorage {
     mapping(uint256 => bool) public isBlacklisted;
 
     /// @notice Receipts of ballots for the entire set of voters
-    mapping(address => Receipt) receipts;
+    mapping(address => Receipt) public receipts;
 
     struct InitRoundTime {
         uint256 applicationsStartBlock; // block number from when round can accept applications

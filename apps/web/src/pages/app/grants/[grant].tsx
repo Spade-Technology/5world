@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { useAccount, useBlockNumber, useContractRead } from 'wagmi'
+import { useAccount, useBlockNumber, useContractRead, useContractReads } from 'wagmi'
 import Page from '~/components/layout/page'
 import { EnforceAuth } from '~/components/misc/enforceAuth'
 import GrantItem from '~/components/pages/app/grants/grantItem'
@@ -10,7 +10,7 @@ import ViewDetails from '~/components/pages/app/grants/popups/viewDetails'
 import { api } from '~/utils/api'
 import RoundImplementation from '~/abi/RoundImplementation.json'
 import CreateProject from '~/components/pages/app/grants/popups/createRequest'
-import { encodePacked } from 'viem'
+import { Address, encodePacked } from 'viem'
 import { writeContract } from '@wagmi/core'
 import { notification } from 'antd'
 
@@ -24,18 +24,31 @@ const Grants = ({ id }: { id: Number }) => {
   const { data: currentBlock } = useBlockNumber({ watch: true })
 
   const votingPowerEnabled = Boolean(!!grant?.address && !!address && currentBlock && currentBlock > grant?.roundStartBlock)
-  const { data: votingPower } = useContractRead({
-    abi: RoundImplementation,
-    address: grant?.address,
-    functionName: 'getTotalVotes',
-    args: [address],
-    enabled: votingPowerEnabled,
+  const { data: result } = useContractReads({
+    contracts: [
+      {
+        abi: RoundImplementation as any,
+        address: grant?.address,
+        functionName: 'getTotalVotes',
+        args: [address as Address],
+      },
+      {
+        abi: RoundImplementation as any,
+        address: grant?.address,
+        functionName: 'receipts',
+        args: [address as Address],
+      },
+    ],
   })
 
+  const [{ result: votingPower }, { result: voted }] = result || [{ result: 0n }, { result: false }]
+
   const [cart, setCart] = useState<any>([])
+  const [loading, setLoading] = useState(false)
 
   const votesHandler = async () => {
     if (cart && address) {
+      setLoading(true)
       await writeContract({
         abi: RoundImplementation,
         address: grant?.address,
@@ -47,12 +60,13 @@ const Grants = ({ id }: { id: Number }) => {
           description: err.shortMessage || err.message,
         })
       })
+      setLoading(false)
     }
   }
 
   const addToCart = (grantRequest: any, votes: string) => {
     setCart([
-      ...cart.filter((item: any) => item.id !== grantRequest.id),
+      ...cart.filter((item: any) => item.proposalId !== grantRequest.proposalId),
       {
         ...grantRequest,
         temporaryVotes: BigInt(votes) * 10n ** 18n,
@@ -66,12 +80,12 @@ const Grants = ({ id }: { id: Number }) => {
   }
 
   const removeFromCart = (id: number) => {
-    setCart([...cart.filter((item: any) => item.id !== id)])
+    setCart([...cart.filter((item: any) => item.proposalId !== id)])
   }
 
   return (
     <Page>
-      <GrantsRound setCreateGrant={setCreateRequest} grant={grant || true} />
+      <GrantsRound loading={loading} setCreateGrant={setCreateRequest} grant={grant || true} />
 
       <EnforceAuth>
         {grant && (
@@ -86,6 +100,8 @@ const Grants = ({ id }: { id: Number }) => {
               removeFromCart={removeFromCart}
               votesHandler={votesHandler}
               cart={cart}
+              loading={loading}
+              voted={voted}
             />
             {createRequest && <CreateProject show={createRequest} close={() => setCreateRequest(false)} grant={grant} />}
             {viewDetails && <ViewDetails show={viewDetails} close={() => setViewDetails(false)} grant={grant} requestId={requestId} addToCart={addToCart} />}

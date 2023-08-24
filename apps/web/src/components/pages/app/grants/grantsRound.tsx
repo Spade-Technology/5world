@@ -11,9 +11,10 @@ import { api } from '~/utils/api'
 type Props = {
   setCreateGrant: Dispatch<SetStateAction<boolean>>
   grant?: any
+  loading?: boolean
 }
 
-const GrantsRound = ({ setCreateGrant, grant }: Props) => {
+const GrantsRound = ({ setCreateGrant, grant, loading }: Props) => {
   const router = useRouter()
   const [disableBtn, setDisableBtn] = useState(false)
 
@@ -42,9 +43,9 @@ const GrantsRound = ({ setCreateGrant, grant }: Props) => {
         <div className='mt-[30px] flex flex-1 flex-col gap-5 pl-6 md:mt-0 md:flex-row md:pl-16'>
           <PrimaryButton
             text={grant ? 'Request' : 'Create Grant'}
+            loading={loading}
             onClick={() => (grant ? (grant.state === 1n ? setCreateGrant(true) : notification.info({ message: 'Grant applications are closed' })) : setCreateGrant(true))}
-            className=' px-[25px] w-fit text-xl opacity-100'
-           
+            className=' w-fit px-[25px] text-xl opacity-100'
           />
           {grant && (
             <div className='w-fit  cursor-pointer rounded-[5px] border-2 border-white py-[5px] px-[35px] text-xl text-white'>
