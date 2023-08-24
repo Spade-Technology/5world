@@ -30,7 +30,6 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
   const { data } = useSession()
   const [searchVal, setSearchVal] = useState<string>('')
   const { data: allUsersInfo } = useUserReads({ search: searchVal })
-  console.log('allUsersInfo',  allUsersInfo, ">>", options)
 
   useEffect(() => {
     if (pod) {
@@ -242,14 +241,16 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
     }
   }, [allUsersInfo?.length, searchVal])
   // console.log('options', options, '????', 'memberOptions', memberOptions)
-  {console.log("options",allUsersInfo, searchVal, options)}
+  {
+    console.log('options', allUsersInfo, searchVal, options)
+  }
   return (
     <div className='grid grid-cols-1 gap-11 pt-10 font-body text-lg font-normal text-vdao-dark md:grid-cols-2 lg:gap-[106px]'>
       <div>
         <div className='text-[22px] font-bold'>Assign Pod Manager</div>
 
         <div className='pb-[22px]'>Add manager address below.</div>
- 
+
         <Select
           style={{ width: '100%' }}
           placeholder='Enter Address'
@@ -282,8 +283,9 @@ const FormTwo = ({ managerAddr, membersInfo, setManagerAddr, setMembersInfo, set
           className='antd-stop-propagation w-full'
           showSearch
           onSearch={val => {
-            console.log("options serahc" , val)
-            setSearchVal(val)}}
+            console.log('options serahc', val)
+            setSearchVal(val)
+          }}
         />
 
         <div

@@ -104,9 +104,9 @@ const Footer = (props: Props) => {
 
 const FooterManifesto = (props: Props) => {
   const { data, error, isLoading, signMessage } = useSignMessage()
-  console.log("data", data)
+
   return (
-    <div className=' bg-[#000912] px-14 py-5 md:py-10 mx-auto'>
+    <div className=' mx-auto bg-[#000912] px-14 py-5 md:py-10'>
       <div className='flex  flex-col gap-10'>
         <div className='mx-auto flex flex-col gap-[24px] md:flex-row md:gap-[36px]'>
           <Link href='#'>
@@ -134,7 +134,7 @@ const FooterManifesto = (props: Props) => {
             // type='primary' className='mx-auto !h-10 w-44 !bg-vdao-dark'
             disabled={props.signed}
             text='Sign Manifesto'
-            className='pointer-events-auto w-fit mx-auto'
+            className='pointer-events-auto mx-auto w-fit'
             onClick={() => props.signModuleRef?.current?.scrollIntoView({ block: 'end', behavior: 'smooth' })}
           />
         </div>

@@ -4,8 +4,6 @@ import { prisma } from '~/server/db'
 export default async function getManifestoData(req: NextApiRequest, res: NextApiResponse) {
   // req.query = { account: string }
 
-  console.log(req.query.eoa)
-
   const data: any[] = await prisma.$queryRaw`
         SELECT 
           (SELECT COUNT(*) FROM "Signatures") as total,

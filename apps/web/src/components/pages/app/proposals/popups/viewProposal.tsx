@@ -275,7 +275,6 @@ const ViewProposal = ({ show, close, proposalID }: ViewProposalProps) => {
                       text={btnStatus}
                       className='h-fit w-full !px-2.5 text-center'
                       onClick={() => {
-                        console.log('proposal kjb')
                         setDropDownOn(!dropDownOn)
                       }}
                       disabled={proposalStatus !== 'Active' || disableVoting}

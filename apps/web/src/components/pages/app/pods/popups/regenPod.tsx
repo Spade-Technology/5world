@@ -14,7 +14,6 @@ type PodModalProps = {
 }
 
 const PodModal = ({ pod, close, setShowManageMembers }: PodModalProps) => {
-  console.log('pod', pod)
   return (
     <CustomModal show={!!pod} close={close} heading={pod?.name} externalStyle={'w-full custom-scrollbar md:mx-10 xl:mx-auto '} modalMarginTop='my-[50px]'>
       <div className='grid grid-cols-1 gap-10 py-[30px] font-body text-lg font-normal text-vdao-dark lg:grid-cols-2 lg:py-10 xl:gap-[106px]'>
