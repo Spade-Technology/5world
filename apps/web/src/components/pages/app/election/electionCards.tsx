@@ -33,17 +33,17 @@ const ElectionCards = ({ setOpenProfile, setOpenVotesNscores }: Props) => {
   const [searchShow, setSearchShow] = useState(false)
   const [finalData, setFinalData] = useState(data)
 
-  const filteredData = data?.filter(steward => {
-    return steward.name?.toLowerCase().includes(searchField.toLowerCase()) || steward.address.toLowerCase().includes(searchField.toLowerCase())
-  })
-
   useEffect(() => {
-    if (filteredData?.length > 0) {
+    const filteredData = data?.filter(steward => {
+      return steward.name?.toLowerCase().includes(searchField.toLowerCase()) || steward.address.toLowerCase().includes(searchField.toLowerCase())
+    })
+
+    if (filteredData && filteredData?.length > 0) {
       setFinalData(filteredData)
     } else {
       setFinalData(data)
     }
-  }, [data, filteredData])
+  }, [data])
 
   const handleChange = (e: any) => {
     setSearchField(e.target.value)
