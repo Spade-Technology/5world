@@ -29,7 +29,7 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
   const [pageCount, setPageCount] = useState(1)
   const [pageNumbers, setPageNumbers] = useState<any>([])
   const [updatedproposals, setUpdatedProposals] = useState<any>([])
-  const [proposalsType, setProposalsType] = useState('')
+  const [proposalsType, setProposalsType] = useState<'all' | 'active' | 'closed' | 'executed'>('all')
   const { data, refetch, isFetching } = useProposalReads({ include: { author: true, pod: true } })
   const [updatedData, setUpdatedData] = useState<any>([])
   const itemsPerPage = 3
@@ -47,9 +47,15 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
   }, [])
 
   useEffect(() => {
-    if (proposalsType === 'closed') {
+    if (proposalsType === 'defeated') {
       const newData = data?.filter((proposal: any, idx: any) => {
-        return proposal?.vetoed
+        return proposal?.vetoed || (proposal?.endBlock < (block || 0) && !proposal?.executed)
+      })
+      setUpdatedData(newData)
+    }
+    if (proposalsType === 'executed') {
+      const newData = data?.filter((proposal: any, idx: any) => {
+        return proposal?.executed
       })
       setUpdatedData(newData)
     } else if (proposalsType === 'active') {
@@ -108,11 +114,11 @@ const ProposalCards = ({ setProposalID, setViewProposal }: ProposalProps) => {
         </div>
 
         <div className='flex w-full items-center gap-5'>
-          <div className='mt-5 grid w-full max-w-[450px] grid-cols-3 rounded-[100px] border-[1px] border-vdao-light font-heading text-xl text-vdao-light'>
-            {['all', 'active', 'closed'].map(item => {
+          <div className='mt-5 grid w-full max-w-[550px] grid-cols-4 rounded-[100px] border-[1px] border-vdao-light font-heading text-xl text-vdao-light'>
+            {['all', 'active', 'executed', 'defeated'].map(item => {
               return (
                 <div
-                  onClick={() => setProposalsType(item)}
+                  onClick={() => setProposalsType(item as any)}
                   className={`relative cursor-pointer rounded-[100px]  py-2 text-center font-medium duration-300 ${proposalsType === item ? 'bg-vdao-light text-vdao-dark opacity-100' : ''}`}
                 >
                   {item}
@@ -150,7 +156,7 @@ export const Card = ({ proposal, setViewProposal, setProposalID }: CardProps) =>
     : proposal?.vetoed
     ? 'Vetoed'
     : proposal?.endBlock < (block || 0)
-    ? 'Ended'
+    ? 'Defeated'
     : proposal?.startBlock > (block || 0)
     ? 'Pending'
     : 'Active'

@@ -6,6 +6,7 @@ import { abiItem } from '~/server/api/routers/etherscan'
 import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { shortenAddress } from '~/utils/helpers'
 import { Spell } from './createProposal'
+import { Slider, Typography } from 'antd'
 
 type PreviewProps = {
   setNextForm: Dispatch<SetStateAction<boolean>>
@@ -36,7 +37,16 @@ const Preview = ({ title, description, callDatas, setNextForm, setShowPreview, s
         </div>
         <div>
           <div>Calldata:</div>
-          <span className='h-10 w-10  text-[#909090]'>{callDatas ? callDatas.join('  --  ') : 'No calldatas'}</span>
+
+          <Typography.Paragraph
+            className='text-[#909090]'
+            ellipsis={{
+              rows: 3,
+              expandable: true,
+            }}
+          >
+            {callDatas ? callDatas.join('  --  ') : 'No calldatas'}
+          </Typography.Paragraph>
 
           <div className='float-right flex gap-5 pt-5 md:pt-[77px]'>
             <div

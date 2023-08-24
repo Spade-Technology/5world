@@ -29,7 +29,9 @@ const ProfileCard = ({ icon, name, address, edit, nameLength }: CardProps) => {
 
       <div className='my-auto'>
         {icon ? (
-          <Image src={icon} alt='' height={44} width={44} className='rounded-full' />
+          <>
+            <Image src={icon} alt='' height={44} width={44} className='h-11 w-11 rounded-full' />
+          </>
         ) : (
           <div
             className='rounded-full'

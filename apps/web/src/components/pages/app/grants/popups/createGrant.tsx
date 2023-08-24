@@ -6,7 +6,7 @@ import PrimaryButton from '~/styles/shared/buttons/primaryButton'
 import { cn } from '@/lib/utils'
 import { DatePicker, Tooltip, notification } from 'antd'
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DropzoneOptions, useDropzone } from 'react-dropzone'
 import { BsFillInfoCircleFill } from 'react-icons/bs'
 import { Address, useAccount } from 'wagmi'
@@ -37,17 +37,27 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
   const [matchingAmount, setMatchingAmount] = useState<string>('')
 
   const [loader, setLoader] = useState(false)
-  const dropzoneParams: DropzoneOptions = { accept: { 'image/*': [] }, multiple: false, maxSize: 4194304 }
+  const dropzoneParams: DropzoneOptions = { accept: { 'image/*': [] }, multiple: false, maxSize: 1000000 }
+  const [logo, setLogo] = useState<File>()
   const {
     getRootProps: getLogoRootProps,
     getInputProps: getLogoInputProps,
-    acceptedFiles: { 0: logo },
+    acceptedFiles: { 0: _logo },
   } = useDropzone(dropzoneParams)
+  const [theme, setTheme] = useState<File>()
   const {
     getRootProps: getThemeRootProps,
     getInputProps: getThemeInputProps,
-    acceptedFiles: { 0: theme },
+    acceptedFiles: { 0: _theme },
   } = useDropzone(dropzoneParams)
+
+  useEffect(() => {
+    setLogo(_logo)
+  }, [_logo])
+
+  useEffect(() => {
+    setTheme(_theme)
+  }, [_theme])
 
   const submitIPFS = async () => {
     const requiredFields = { grantName, tokenAddress, matchingAmount, date, grantDescription, logo, theme }
@@ -145,7 +155,9 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
               <div className='pt-10'>
                 <div className='flex justify-between'>
                   <div className='text-[22px] font-bold'>Token Address*</div>
-                  {/* <div className='text-vdao-light'>*Required</div> */}
+                  <Tooltip placement='bottomLeft' color='white' title={<div className='text-black'>The dead address (0x0000...0000) will instruct the contract to send ETH rather than a token.</div>}>
+                    <BsFillInfoCircleFill />
+                  </Tooltip>
                 </div>
                 <div className='flex items-end gap-4'>
                   <input
@@ -163,7 +175,14 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
 
               <div className='pt-10'>
                 <div className='flex justify-between'>
-                  <div className='text-[22px] font-bold'>Matching Amount*</div>
+                  <div className='text-[22px] font-bold'>Matching Amount in Wei*</div>
+                  <Tooltip
+                    placement='bottomLeft'
+                    color='white'
+                    title={<div className='text-black'>The amount that the grant will be distributing from the treasury in Wei, the grant projects will be matched by the amount specified here</div>}
+                  >
+                    <BsFillInfoCircleFill />
+                  </Tooltip>
                 </div>
                 <input
                   className='mt-[17px] h-10 w-full max-w-[480px] rounded-[10px] border-[1px] border-vdao-dark px-5 outline-none placeholder:py-2 md:mt-5'
@@ -227,14 +246,22 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
                 <div className='text-[22px] font-bold'>Round Logo*</div>
                 {logo ? (
                   <div className='mt-5 rounded-[10px]  text-center'>
-                    <Image src={URL.createObjectURL(logo)} alt='upload' width={183} height={183} />
+                    <Image
+                      src={URL.createObjectURL(logo)}
+                      alt='upload'
+                      width={183}
+                      height={183}
+                      onClick={() => {
+                        setLogo(undefined)
+                      }}
+                    />
                   </div>
                 ) : (
                   <div className='mt-5 rounded-[10px] py-5 text-center outline-dashed md:px-16 md:py-9' {...getLogoRootProps()}>
                     <input {...getLogoInputProps()} />
                     <Image src={UploadImage} alt='upload' className='mx-auto' />
                     <div className='py-3 font-medium md:text-[22px]'>Drop your PNG or JPG file here!</div>
-                    <div className='text-lg font-normal'>Recommended size: 300px X 300px</div>
+                    <div className='text-lg font-normal'>Max Size: 1MB</div>
                   </div>
                 )}
               </div>
@@ -243,14 +270,22 @@ const CreateGrant = ({ show, close, refetchFunc }: CreateGrantProps) => {
                 <div className='text-[22px] font-bold'>Round Theme*</div>
                 {theme ? (
                   <div className='mt-5 h-full w-full rounded-[10px] text-center '>
-                    <Image src={URL.createObjectURL(theme)} alt='upload' width={300} height={183} />
+                    <Image
+                      src={URL.createObjectURL(theme)}
+                      alt='upload'
+                      width={300}
+                      height={183}
+                      onClick={() => {
+                        setTheme(undefined)
+                      }}
+                    />
                   </div>
                 ) : (
                   <div className='mt-5 rounded-[10px] px-20 py-5 text-center outline-dotted md:px-16 md:py-9' {...getThemeRootProps()}>
                     <input {...getThemeInputProps()} />
                     <Image src={UploadImage} alt='upload' className='mx-auto' />
                     <div className='py-3 font-medium md:text-[22px]'>Drop your PNG or JPG file here!</div>
-                    <div className='text-lg font-normal'>Recommended size: 300px X 300px</div>
+                    <div className='text-lg font-normal'>Max Size: 1MB</div>
                   </div>
                 )}
               </div>
